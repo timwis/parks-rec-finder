@@ -1,1 +1,66 @@
-$foobar: blue;
+/******************************************************************
+ GLOBAL SCSS RESOURCES:
+
+ These resources will be glboally available to all Vue.js components in their <style> blocks.
+
+ Other global resources: (included via sass-resources-loader and listed in /build/utils.js line:73)
+ - './node_modules/normalize.css/normalize.css',
+ - './node_modules/phila-standards/src/sass/utils/_colors.scss',
+ - './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_unit.scss',
+ - './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_breakpoint.scss',
+
+TABLE OF CONTENTS;
+1. GLOBAL
+2. BREAKPOINTS
+3. BASE TYPOGRAPHY
+4. COLORS
+
+******************************************************************/
+
+
+
+/* =======================================================================
+  1. GLOBAL
+  @since 0.0.0
+========================================================================== */
+
+
+
+/* =======================================================================
+  2. BREAKPOINTS
+
+  Breakpoints are pulled from phila-standards (./node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_breakpoint.scss)
+  and can be overridden below.
+
+  @since 0.0.0
+  @see https://foundation.zurb.com/sites/docs/media-queries.html
+  @usage `@include breakpoint(small only) {}`
+========================================================================== */
+
+// $breakpoints: (
+//   small: 0,
+//   medium: 640px,
+//   large: 1050px,
+//   xlarge: 1200px,
+//   xxlarge: 1440px,
+// );
+
+
+
+/* =======================================================================
+  3. BASE TYPOGRAPHY
+  @since 0.0.0
+========================================================================== */
+
+
+/* =======================================================================
+  4. COLORS
+
+  Base colors are pulled from phila-standards ('./node_modules/phila-standards/src/sass/utils/_colors.scss')
+  and can be overridden below.
+
+  @since 0.0.0
+  @see http://standards.phila.gov/guidelines/design-development/brand-elements/color-palette/
+  @usage: `color($color-name)`
+========================================================================== */
+$colors: ();

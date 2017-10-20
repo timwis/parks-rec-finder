@@ -67,7 +67,16 @@ exports.cssLoaders = function (options) {
       {
         loader: 'sass-resources-loader',
         options: {
-          resources: path.resolve(__dirname, '../src/style/_vars.scss')
+
+          includePaths: ["./node_modules"],
+
+          resources: [
+            './node_modules/normalize.css/normalize.css',
+            './node_modules/phila-standards/src/sass/utils/_colors.scss',
+            './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_unit.scss',
+            './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_breakpoint.scss',
+            path.resolve(__dirname, '../src/style/*.scss'),
+          ]
         }
       }
     ),
