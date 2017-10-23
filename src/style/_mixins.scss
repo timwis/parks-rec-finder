@@ -1,0 +1,54 @@
+/******************************************************************
+GLOBAL MIXINS AND UTILITY FUNCTIONS
+
+TABLE OF CONTENTS:
+1. REM FONT SIZING
+******************************************************************/
+
+
+/* =======================================================================
+  1. REM FONT SIZING
+  @since 0.0.0
+  @see http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+  @usage `
+    @include rem(font-size, 13);
+  `
+  returns ->
+      font-size: 13px;
+      font-size: 13rem;
+========================================================================== */
+//
+
+
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@mixin rem($property, $values...) {
+  $max: length($values);
+  $pxValues: '';
+  $remValues: '';
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $pxValues: #{$pxValues + $value*10}px;
+
+    @if $i < $max {
+      $pxValues: #{$pxValues + " "};
+    }
+  }
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $remValues: #{$remValues + $value}rem;
+
+    @if $i < $max {
+      $remValues: #{$remValues + " "};
+    }
+  }
+
+  #{$property}: $pxValues;
+  #{$property}: $remValues;
+}
+
