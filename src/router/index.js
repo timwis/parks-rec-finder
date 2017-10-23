@@ -10,7 +10,7 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: HelloWorld,
-      props: { msg: 'Hello World' }
+      props: { msg: 'Welcome to your Vue.js App' }
     }
   ]
 })
