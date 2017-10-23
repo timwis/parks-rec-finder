@@ -21,12 +21,6 @@ exports.cssLoaders = function (options) {
     }
   }
 
-  const sassResources = {
-    loader: 'sass-resources-loader',
-    options: {
-      resources: './src/styles/_vars.scss'
-    }
-  }
 
 
 
@@ -63,7 +57,7 @@ exports.cssLoaders = function (options) {
     postcss: generateLoaders(),
     less:    generateLoaders('less'),
     sass:    generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass').concat(
+    scss:    generateLoaders('sass').concat(
       {
         loader: 'sass-resources-loader',
         options: {
