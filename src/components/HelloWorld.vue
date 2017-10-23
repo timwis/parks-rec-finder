@@ -21,22 +21,35 @@
 </template>
 
 <script>
+/**
+ * Simple Component to say hello to the world
+ */
 export default {
   name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  props: {
+    /**
+     * Message to show user
+     * @type {String}
+     */
+    msg: {
+      type: String,
+      default: 'default msg val'
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h1, h2 {
-  font-weight: normal;
-  color: $foobar;
+<style lang="scss">
+.hello{
+
+  h1, h2 {
+    font-weight: normal;
+    color: color(electric-blue);
+  }
+
 }
+
 
 ul {
   list-style-type: none;
