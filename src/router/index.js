@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import PprfSidebar from '@/components/pprf-sidebar'
+import PprfMap from '@/components/map/pprf-map'
 
 Vue.use(Router)
 
@@ -9,8 +10,10 @@ export default new Router({
     {
       path: '/',
       name: 'Hello',
-      component: HelloWorld,
-      props: { msg: 'Welcome to your Vue.js App' }
+      components: {
+        PprfMap,
+        PprfSidebar
+      }
     }
   ]
 })

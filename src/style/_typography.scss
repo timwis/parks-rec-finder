@@ -93,7 +93,7 @@ strong{
 
 
 /* =======================================================================
-  4. H1, H3, H4, H5 STYLE
+  4. H1, H2, H3, H4, H5 STYLES
   @since 0.0.0
 ========================================================================== */
 
@@ -116,8 +116,8 @@ h5, .h5 {
 
 h1, .h1 {
 
-  @include rem(font-size,10);
-  @include rem(line-height,9);
+  @include rem(font-size,3);
+  // @include rem(line-height,9);
 
 }
 
