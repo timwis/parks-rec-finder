@@ -9,6 +9,8 @@
  * APPLICATION SIDEBAR
  *
  * Contains Search Results Lists and Detail Items
+ *
+ * @since 0.0.0
  */
 export default {
   name: 'PprfSidebar'

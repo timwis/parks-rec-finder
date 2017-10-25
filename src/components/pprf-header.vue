@@ -1,26 +1,36 @@
 <template>
     <header class="pprf-header">
-        <h1 class="screen-reader-text">header</h1>
+        <pprf-search-container></pprf-search-container>
     </header>
 </template>
 
 <script>
+import PprfSearchContainer from '@/components/search/pprf-search-container'
 /**
  * HEADER BAR
  *
  * Contains Search Input components
  *
+ * @since 0.0.0
  */
 export default {
-  name: 'PprfHeader'
+  name: 'PprfHeader',
+  components: {
+    PprfSearchContainer
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .pprf-header{
+
     display:block;
+    position:relative;
+
     width: 100%;
     height: 63px;
-    background: color(ben-franklin-blue);
+
+    background: color(dark-ben-franklin);
+
 }
 </style>

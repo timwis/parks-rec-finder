@@ -1,6 +1,6 @@
 <template>
 
-  <div id="pprf-app-container" class="foobar">
+  <div id="pprf-app-container" >
 
     <pprf-header></pprf-header>
 
@@ -20,6 +20,8 @@ import PprfHeader from '@/components/pprf-header'
  *
  * This is the base component that lives at the top of
  * the component tree
+ *
+ * @since 0.0.0
  */
 export default {
   name: 'PprFinder',
@@ -34,8 +36,13 @@ export default {
     #pprf-app-container {
       width: 100%;
       max-width: 1440px;
+
+      display:block;
+      position:relative;
+
       margin: 0 auto;
       padding:0;
+      box-sizing: border-box;
     }
 
 
