@@ -14,6 +14,7 @@
       :aria-invalid="hasError"
       :tabindex='tabindex'
       @input="onInput"
+      @keyup.enter="onEnter"
       ref="input"
     >
 
@@ -74,14 +75,29 @@
     },
 
     computed: {
+      /**
+       * update the inputValue and emit and input event
+       * @type {Object}
+       */
       inputValue: {
         get () {
           return this.lazyValue
         },
         set (val) {
-          // this.$emit('input', val)
+          /**
+           * Text Field User Input event
+           *
+           * @event input
+           * @type {string}
+           */
+          this.$emit('input', val)
           this.lazyValue = val
         }
+      },
+      isDirty () {
+        return this.lazyValue !== null &&
+          typeof this.lazyValue !== 'undefined' &&
+          this.lazyValue.toString().length > 0
       }
     },
 
@@ -90,12 +106,51 @@
        * Set the inputValue as the user types
        * and updates the `isDirty` prop to true
        *
-       * @param  {Object} e input event object
-       * @return {Void}
+       * @param  {object} e input event object
+       * @return {void}
        * @public
+       * @since 0.0.0
        */
       onInput (e) {
         this.inputValue = e.target.value
+      },
+      /**
+       * on user "enter" kepress emit enter event
+       * @param  {object} e keyboard event
+       * @return {void}
+       * @public
+       * @since 0.0.0
+       */
+      onEnter (e) {
+        /**
+         * Emits on "enter" keypress
+         *
+         * @event enter
+         * @type {void}
+         * @since 0.0.0
+         */
+        this.$emit('enter')
+      },
+      /**
+       * Removes focus from input element and emits blur event
+       * @param  {object} e event object
+       * @return {void}
+       *
+       * @public
+       * @since 0.0.0
+       */
+      blur (e) {
+        this.$nextTick(() => {
+          this.focused = false
+        })
+        /**
+         * Emits event on input element blur
+         *
+         * @event blur
+         * @type {oject}
+         * @since 0.0.0
+         */
+        this.$emit('blur', e)
       }
     }
   }
