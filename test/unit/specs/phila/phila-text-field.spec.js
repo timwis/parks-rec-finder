@@ -11,9 +11,7 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
   it('should render an input element', () => {
     expect(PhilaTextFieldComponent.contains('input')).to.equal(true)
   })
-  it('should render div.input-error', () => {
-    expect(PhilaTextFieldComponent.contains('.input-error')).to.equal(true)
-  })
+
 
   describe(`METHODS:`, () => {
     it('')
@@ -59,11 +57,19 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
         expect(typeof PhilaTextFieldComponent.methods().focus).to.equal('function')
       })
       it('should change focused data to true', async () =>{
-        // let input = PhilaTextFieldComponent.find('input')[0]
-        // PhilaTextFieldComponent.setData({ focused: true})
-        PhilaTextFieldComponent.vm.focus()
+        let input = PhilaTextFieldComponent.find('input')[0]
+        expect(PhilaTextFieldComponent.vm.focused).to.equal(false)
+        input.trigger('focus')
         await PhilaTextFieldComponent.vm.$nextTick()
         expect(PhilaTextFieldComponent.vm.focused).to.equal(true)
+      })
+      it('should emit "focus" event', async () => {
+        const FocusSpy = sinon.spy()
+        PhilaTextFieldComponent.vm.$on('focus', FocusSpy)
+        let input = PhilaTextFieldComponent.find('input')[0]
+        input.trigger('focus')
+        await PhilaTextFieldComponent.vm.$nextTick()
+        FocusSpy.should.have.been.called
       })
     })
     describe('blur', () => {
@@ -76,6 +82,31 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
         await PhilaTextFieldComponent.vm.$nextTick()
         expect(PhilaTextFieldComponent.vm.focused).to.equal(false)
       })
+      xit('should emit "change" event if on blur input element value has changed from initial value', async () => {
+        // @TODO: figure out how to make this pass
+        let value = 'asd'
+        PhilaTextFieldComponent = mount(PhilaTextField, { propsData: { type:'text', value }})
+        const ChangeSpy = sinon.spy()
+        PhilaTextFieldComponent.vm.$on('change', ChangeSpy)
+
+
+        const input = PhilaTextFieldComponent.find('input')[0]
+        input.trigger('focus')
+        // await PhilaTextFieldComponent.vm.$nextTick()
+        input.element.value = 'fgh'
+        PhilaTextFieldComponent.vm.onInput({target: {value: 'fgh'}})
+        input.trigger('input')
+
+        // await PhilaTextFieldComponent.vm.$nextTick()
+        input.trigger('blur')
+        await PhilaTextFieldComponent.vm.$nextTick()
+        // expect(PhilaTextFieldComponent.data().lazyValue).to.equal('fgh')
+        ChangeSpy.should.have.been.called
+
+      })
     })
+  })
+  afterEach(() => {
+    PhilaTextFieldComponent.destroy()
   })
 })
