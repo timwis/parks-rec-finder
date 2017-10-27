@@ -1,20 +1,23 @@
 <template>
   <div class="text-field">
-    <label :for="name">{{ label }}<span v-if="required" aria-hidden="true"> *</span></label>
+    <label :id="name+'__label'" :for="name+'__input'">{{ label }}<span v-if="required" aria-hidden="true"> *</span></label>
     <input
       :type="type"
-      :id="name"
+      :id="name+'__input'"
       :name="name"
       :class="{ 'input-error': hasError }"
       :value="lazyValue"
       :disabled="disabled"
+      :placeholder="placeholder"
       :required="required"
       :autofocus="autofocus"
       :aria-required="required"
       :aria-invalid="hasError"
       :tabindex='tabindex'
       @input="onInput"
+      @blur="blur"
       @keyup.enter="onEnter"
+      @focus="focus"
       ref="input"
     >
 
@@ -52,6 +55,9 @@
       label: {
         type: String
       },
+      placeholder: {
+        type: String
+      },
       errorMessageLabel: {
         type: String
       },
@@ -72,6 +78,10 @@
       errorMessage: {
         type: String
       }
+    },
+
+    mounted () {
+      this.autofocus && this.focus()
     },
 
     computed: {
@@ -98,6 +108,23 @@
         return this.lazyValue !== null &&
           typeof this.lazyValue !== 'undefined' &&
           this.lazyValue.toString().length > 0
+      }
+    },
+
+    watch: {
+      focused (val) {
+        if (val) {
+          this.initialValue = this.lazyValue
+        } else if (this.initialValue !== this.lazyValue) {
+          /**
+           * Emits if input element value has changed on blur (on-focused)
+           *
+           * @event change
+           * @type {string}
+           * @since 0.0.0
+           */
+          this.$emit('change', this.lazyValue)
+        }
       }
     },
 
@@ -129,7 +156,7 @@
          * @type {void}
          * @since 0.0.0
          */
-        this.$emit('enter')
+        this.$emit('enter', e)
       },
       /**
        * Removes focus from input element and emits blur event
@@ -140,9 +167,7 @@
        * @since 0.0.0
        */
       blur (e) {
-        this.$nextTick(() => {
-          this.focused = false
-        })
+        this.focused = false
         /**
          * Emits event on input element blur
          *
@@ -151,6 +176,28 @@
          * @since 0.0.0
          */
         this.$emit('blur', e)
+      },
+      /**
+       * Sets focused state on input element focus
+       * @param  {object} e event object
+       * @return {Void}
+       *
+       * @public
+       * @since 0.0.0
+       */
+      focus (e) {
+        this.focused = true
+        if (document.activeElement !== this.$refs.input) {
+          this.$refs.input.focus()
+        }
+        /**
+         * Emits on input elemet focus with event object as payload
+         *
+         * @event focus
+         * @type {object}
+         * @since 0.0.0
+         */
+        this.$emit('focus', e)
       }
     }
   }
