@@ -1,17 +1,26 @@
 <template>
-    <form @submit.prevent="onSubmit" class="pprf-search">
+    <form
+      class="pprf-search"
+    >
+
       <phila-text-field
         name="pprf-search-freetext"
         placeholder="SEARCH BY ACTIVITY TYPE OR LOCATION NAME"
+        ref="freetextField"
       ></phila-text-field>
+
       <phila-text-field
         name="pprf-search-address"
         placeholder="ADDRESS OR ZIPCODE"
+        ref="addressField"
       ></phila-text-field>
+
       <phila-button
         id="pprf-search-submit-btn"
+        :disabled="isDisabled"
       >
       </phila-button>
+
     </form>
 </template>
 
@@ -26,12 +35,21 @@ export default {
   },
   data () {
     return {
-
+      isDisabled: true
     }
   },
-  methods: {
-    onSubmit () {
-    }
+  mounted () {
+    /**
+     * Update isDisabled when user adds input to search fields
+     */
+    this.$watch(
+        () => {
+          return this.$refs.freetextField.isDirty + this.$refs.addressField.isDirty
+        },
+        (val) => {
+          this.isDisabled = !Object.values(this.$refs).some((ref) => { return ref.isDirty === true })
+        }
+      )
   }
 }
 </script>

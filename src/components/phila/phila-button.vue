@@ -33,12 +33,17 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
   .phila-button {
     padding: .2rem;
     margin: .5rem 0;
     border: none;
     outline: none;
     background: color(ben-franklin-blue);
+  }
+  .phila-button[disabled] {
+    background: color(sidewalk);
+    pointer-events:none;
+    cursor: alia;
   }
 </style>
