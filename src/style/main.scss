@@ -1,0 +1,43 @@
+/******************************************************************
+ MAIN SCSS RESOURCES:
+
+TABLE OF CONTENTS;
+1. GLOBAL
+2. LAYOUT
+
+******************************************************************/
+@import '_vars';
+@import '_mixins';
+@import '_typography';
+
+
+
+/* =======================================================================
+  1. GLOBAL
+
+  @since 0.0.0
+========================================================================== */
+// box-sizing polly-fill
+*{
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+
+html{
+    // setup base 10 stuff for use in rem() mixin
+    font-size: 62.5%;
+    overflow-x:hidden;
+    // overflow: hidden;
+    height: 100%;
+}
+
+body {
+    @include rem(font-size, 1.6);
+    @include rem(line-height,3.6);
+    // line-height: 1.5;
+    background-color: $white;
+    -webkit-font-smoothing: antialiased;
+     // overflow: auto;
+}

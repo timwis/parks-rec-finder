@@ -1,11 +1,11 @@
 <template>
     <header class="pprf-header">
-        <pprf-search-container></pprf-search-container>
+        <pprf-search></pprf-search>
     </header>
 </template>
 
 <script>
-import PprfSearchContainer from '@/components/search/pprf-search-container'
+import pprfSearch from '@/components/search/pprf-search'
 /**
  * HEADER BAR
  *
@@ -16,19 +16,20 @@ import PprfSearchContainer from '@/components/search/pprf-search-container'
 export default {
   name: 'PPRF-Header',
   components: {
-    PprfSearchContainer
+    pprfSearch
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .pprf-header{
-
     display:block;
     position:relative;
 
     width: 100%;
     height: 63px;
+
+    padding:10px;
 
     background: color(dark-ben-franklin);
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-field">
+  <div :class="'text-field ' + name">
     <label :id="name+'__label'" :for="name+'__input'">{{ label }}<span v-if="required" aria-hidden="true"> *</span></label>
     <input
       :type="type"
