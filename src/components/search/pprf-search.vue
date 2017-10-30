@@ -1,6 +1,7 @@
 <template>
     <form
       class="pprf-search"
+      @submit.prevent=""
     >
 
       <phila-text-field
@@ -18,7 +19,9 @@
       <phila-button
         id="pprf-search-submit-btn"
         :disabled="isDisabled"
+        tabindex="3"
       >
+        <icon name="search" label="Search for Programs and Loactions"></icon>
       </phila-button>
 
     </form>
@@ -27,11 +30,15 @@
 <script>
 import PhilaTextField from '@/components/phila/phila-text-field'
 import PhilaButton from '@/components/phila/phila-button'
+import 'vue-awesome/icons/search'
+import Icon from 'vue-awesome/components/Icon'
+
 export default {
   name: 'PPRF-Search',
   components: {
     PhilaTextField,
-    PhilaButton
+    PhilaButton,
+    Icon
   },
   data () {
     return {
@@ -77,5 +84,6 @@ export default {
 
   #pprf-search-submit-btn{
     min-width: 40px;
+    .fa-icon{ color:$white;}
   }
 </style>
