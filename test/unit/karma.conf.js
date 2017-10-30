@@ -30,7 +30,7 @@ module.exports = function (config) {
       reportName: 'report-summary', // report summary filename; browser info by default
 
       // experimental
-      preserveDescribeNesting: false, // folded suites stay folded
+      preserveDescribeNesting: true, // folded suites stay folded
       foldAll: false, // reports start folded (only with preserveDescribeNesting)
     },
 
