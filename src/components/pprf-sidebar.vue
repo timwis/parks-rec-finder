@@ -13,7 +13,7 @@
  * @since 0.0.0
  */
 export default {
-  name: 'PprfSidebar'
+  name: 'PPRF-Sidebar'
 }
 </script>
 

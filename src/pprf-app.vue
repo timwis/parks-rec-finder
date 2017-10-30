@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import PprfHeader from '@/components/pprf-header'
+import pprfHeader from '@/components/pprf-header'
 /**
  * MAIN APPLICATION COMPONENT.
  *
@@ -24,9 +24,9 @@ import PprfHeader from '@/components/pprf-header'
  * @since 0.0.0
  */
 export default {
-  name: 'PprFinder',
+  name: 'PPRF-Finder',
   components: {
-    PprfHeader
+    pprfHeader
   }
 }
 </script>

@@ -14,7 +14,7 @@ import PprfSearchContainer from '@/components/search/pprf-search-container'
  * @since 0.0.0
  */
 export default {
-  name: 'PprfHeader',
+  name: 'PPRF-Header',
   components: {
     PprfSearchContainer
   }
