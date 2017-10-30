@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PprfSidebar from '@/components/pprf-sidebar'
-import PprfMap from '@/components/map/pprf-map'
+import pprfFMap from '@/components/map/pprf-map'
+import pprfSidebar from '@/components/pprf-sidebar'
 
 Vue.use(Router)
 
@@ -11,8 +11,8 @@ export default new Router({
       path: '/',
       name: 'Hello',
       components: {
-        PprfMap,
-        PprfSidebar
+        'map': pprfSidebar,
+        'sidebar': pprfFMap
       }
     }
   ]

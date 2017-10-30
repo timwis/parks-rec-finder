@@ -5,8 +5,8 @@
     <pprf-header></pprf-header>
 
     <main class="pprf-app__main">
-        <router-view name="PprfSidebar"></router-view>
-        <router-view name="PprfMap"></router-view>
+        <router-view name="map"></router-view>
+        <router-view name="sidebar"></router-view>
     </main>
 
   </div>

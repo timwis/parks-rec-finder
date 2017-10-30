@@ -20,17 +20,6 @@
       @focus="focus"
       ref="input"
     >
-
-    <div class="input-error">
-      <!-- <phila-form-error-message
-        v-if="hasError"
-        role="alert"
-        :field="name"
-        :label="errorMessageLabel || label"
-        :validationMessages="validationMessages">
-      </phila-form-error-message> -->
-    </div>
-
   </div>
 </template>
 
@@ -116,7 +105,7 @@
         if (val) {
           this.initialValue = this.lazyValue
         } else if (this.initialValue !== this.lazyValue) {
-          /**
+          /*
            * Emits if input element value has changed on blur (on-focused)
            *
            * @event change
@@ -187,9 +176,9 @@
        */
       focus (e) {
         this.focused = true
-        if (document.activeElement !== this.$refs.input) {
-          this.$refs.input.focus()
-        }
+        // if (document.activeElement !== this.$refs.input) {
+        //   this.$refs.input.focus()
+        // }
         /**
          * Emits on input elemet focus with event object as payload
          *
@@ -207,7 +196,6 @@
 
   [type='text'], [type='password'], [type='date'], [type='datetime'], [type='datetime-local'], [type='month'], [type='week'], [type='email'], [type='number'], [type='search'], [type='tel'], [type='time'], [type='url'], [type='color'], textarea {
     margin: 0;
-    margin-top: 5px;
   }
 
   input.input-error {
@@ -221,6 +209,10 @@
   }
 
   label {
+    position:absolute;
+    top:0;
+    left:0;
+    display:block;
     margin: 0;
     margin-top: 10px;
   }
