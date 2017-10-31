@@ -35,7 +35,8 @@ export default {
 <style lang="scss" >
     #pprf-app-container {
       width: 100%;
-      max-width: 1440px;
+      max-width: $max-app-width;
+      height: 1024px;
 
       display:block;
       position:relative;
@@ -47,6 +48,7 @@ export default {
 
 
     .pprf-app__main {
+        height: 100%;
         display:flex;
         flex-direction: row;
         border: 1px solid color(black);

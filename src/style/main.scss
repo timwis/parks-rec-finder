@@ -3,7 +3,7 @@
 
 TABLE OF CONTENTS;
 1. GLOBAL
-
+2. LAYOUT
 
 ******************************************************************/
 @import '_vars';
@@ -40,4 +40,16 @@ body {
     background-color: $white;
     -webkit-font-smoothing: antialiased;
      // overflow: auto;
+}
+
+
+/* =======================================================================
+  2. LAYOUT
+
+  @since 0.0.0
+========================================================================== */
+.scrollable{
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
 }

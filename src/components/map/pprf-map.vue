@@ -16,7 +16,7 @@ export default {
 <style lang="scss" scoped>
 .pprf-map-container{
     flex:1;
-    height: 100vh;
+    height: 100%;
     display:block;
     background: color(sidewalk);
 }
