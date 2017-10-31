@@ -28,7 +28,7 @@
   // import PhilaFormErrorMessage from './phila-form-error-message.vue'
 
   /**
-   * Phila Standards Input Element
+   * [Phila Standards Input Element](http://standards.phila.gov/guidelines/design-development/components/forms/)
    */
   export default {
     name: 'phila-text-field',

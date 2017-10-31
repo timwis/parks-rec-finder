@@ -10,7 +10,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 #HTMLReporter a:hover { text-decoration: underline; }
 #HTMLReporter p, #HTMLReporter h1, #HTMLReporter h2, #HTMLReporter h3, #HTMLReporter h4, #HTMLReporter h5, #HTMLReporter h6 { margin: 0; line-height: 14px; }
 #HTMLReporter .banner, #HTMLReporter .symbolSummary, #HTMLReporter .summary, #HTMLReporter .resultMessage, #HTMLReporter .specDetail .description, #HTMLReporter .alert .bar, #HTMLReporter .stackTrace { padding-left: 9px; padding-right: 9px; }
-
+#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }
 #HTMLReporter #jasmine_content { position: fixed; right: 100%; }
 #HTMLReporter .version { color: #aaaaaa; }
 #HTMLReporter .banner { margin-top: 14px; }
@@ -58,7 +58,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 
 .fold-buttons { float: right; }
 .fold-buttons a { color: #fff; font-size: 12px; }
-.fold-buttons { display: none } 
+
 #HTMLReporter .br { margin-top: 8px; }
 #HTMLReporter .section-starter { font-size: 14px; line-height: 18px }
 #HTMLReporter .summary-section { 
@@ -94,12 +94,15 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </head>
 
 <body id="HTMLReporter" class="html-reporter">
-<h1>Tested in PhantomJS 2.1.1 (Mac OS X 0.0.0) on Tue Oct 24 2017</h1>
+<h1>Tested in PhantomJS 2.1.1 (Mac OS X 0.0.0) on Tue Oct 31 2017</h1>
 
 <div class="alert">
 
 
 
+  
+  <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
+  <a href="#" onclick="unfold();">Unfold</a></span>27 specs, 0 failed, 9 pending</span>
   
 
 
@@ -108,44 +111,198 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
   <div class="summary">
   
   
-  
-  
-  
-    <div class="suite passed">
-      <span class="description">APP: pprf-app.vue</span>
-    
-      <div class="specSummary skipped">
-      <span class="description">should render correct contents</span>
-      </div>
-    
+    <div class="summary-section" onclick="toggleSection(this);">
+      
+        <div class="description section-starter" style="margin-left:0px">APP: pprf-app.vue<span 
+            class="summary-section-totals"><span 
+            class="summary-section-total skipped">1</span></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:14px">should render correct contents<span 
+            class="summary-section-totals"></span>
+        </div>
+      
     </div>
   
-    <div class="suite passed">
-      <span class="description">MAP: map/pprf-map.vue</span>
-    
-      <div class="specSummary skipped">
-      <span class="description">should render correct contents</span>
-      </div>
-    
+    <div class="summary-section" onclick="toggleSection(this);">
+      
+        <div class="description section-starter" style="margin-left:0px">MAP: map/pprf-map.vue<span 
+            class="summary-section-totals"><span 
+            class="summary-section-total skipped">1</span></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:14px">should render correct contents<span 
+            class="summary-section-totals"></span>
+        </div>
+      
     </div>
   
-    <div class="suite passed">
-      <span class="description">HEADER: pprf-header.vue</span>
-    
-      <div class="specSummary skipped">
-      <span class="description">should render correct contents</span>
-      </div>
-    
+    <div class="summary-section" onclick="toggleSection(this);">
+      
+        <div class="description section-starter" style="margin-left:0px">PHILA::Button: phila/phila-button.vue<span 
+            class="summary-section-totals"><span 
+            class="summary-section-total passed">5</span><span 
+            class="summary-section-total skipped">3</span></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:14px">should render an child div with class &quot;valign&quot;<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:14px">should render an grandchild div with class &quot;button-label&quot;<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:14px">should render a button element when href prop IS NOT set<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:14px">should render an anchor element when when href prop IS set<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:14px">should render passed content in default slot<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:14px">METHODS:<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:28px"><span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:28px">onClick<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">should emit a &quot;click&quot; event on user click<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:42px">should NOT emit a &quot;click&quot; event if disabled prop is set<span 
+            class="summary-section-totals"></span>
+        </div>
+      
     </div>
   
-    <div class="suite passed">
-      <span class="description">SIDEBAR: pprf-sidebar.vue</span>
-    
-      <div class="specSummary skipped">
-      <span class="description">should render correct contents</span>
-      </div>
-    
+    <div class="summary-section" onclick="toggleSection(this);">
+      
+        <div class="description section-starter" style="margin-left:0px">PHILA::Text Field: phila/phila-text-field.vue<span 
+            class="summary-section-totals"><span 
+            class="summary-section-total passed">13</span><span 
+            class="summary-section-total skipped">2</span></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:14px">should render a label element<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:14px">should render an input element<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:14px">METHODS:<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:28px"><span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:28px"> onInput<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">exist<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">updates lazyValue and inputValue data with given string<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">updates isDirty to true on user input<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">triggers &quot;input&quot; event with given value<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:28px">onEnter<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">exist<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">should emit &quot;enter&quot; event<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:28px">focus<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">exist<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">should change focused data to true<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">should emit &quot;focus&quot; event<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:28px">blur<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">exist<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:42px">should change focused data to false<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:42px">should emit &quot;change&quot; event if on blur input element value has changed from initial value<span 
+            class="summary-section-totals"></span>
+        </div>
+      
     </div>
+  
+    <div class="summary-section" onclick="toggleSection(this);">
+      
+        <div class="description section-starter" style="margin-left:0px">HEADER: pprf-header.vue<span 
+            class="summary-section-totals"><span 
+            class="summary-section-total skipped">1</span></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:14px">should render correct contents<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+    </div>
+  
+    <div class="summary-section" onclick="toggleSection(this);">
+      
+        <div class="description section-starter" style="margin-left:0px">SIDEBAR: pprf-sidebar.vue<span 
+            class="summary-section-totals"><span 
+            class="summary-section-total skipped">1</span></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:14px">should render correct contents<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+    </div>
+  
   
   
 </div>
@@ -195,6 +352,4 @@ function unfold() {
 
 </body>
 </html>
-
-
 

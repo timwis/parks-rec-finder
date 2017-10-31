@@ -1,6 +1,6 @@
 <template>
   <component
-    class="phila-button"
+    :class="disabled ? 'button button--disabled' : 'button'"
     :is="href ? 'a' : 'button'"
     :href="href"
     :disabled="disabled"
@@ -12,6 +12,11 @@
 </template>
 
 <script>
+  /**
+   * [Phila Standards button](http://standards.phila.gov/guidelines/design-development/components/buttons/)
+   *
+   * Renders either a button or an anchor link
+   */
   export default {
     name: 'phila-button',
 
@@ -26,7 +31,18 @@
     },
 
     methods: {
+      /**
+       * Click handler
+       * @param  {object} e native event object
+       * @return {void}
+       *
+       * @public
+       * @since 0.0.0
+       */
       onClick (e) {
+        /**
+         * Enits on element click
+         */
         this.$emit('click', e)
       }
     }
@@ -34,14 +50,14 @@
 </script>
 
 <style lang="scss" >
-  .phila-button {
+  .button {
     padding: .2rem;
     margin: .5rem 0;
     border: none;
     outline: none;
     background: color(ben-franklin-blue);
   }
-  .phila-button[disabled] {
+  .button[disabled] {
     background: color(sidewalk);
     pointer-events:none;
     cursor: alia;
