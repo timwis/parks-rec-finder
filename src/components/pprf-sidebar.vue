@@ -10,7 +10,21 @@
             </header>
 
             <main class="pprf-sidebar-main">
+              <pprf-tabs>
+                  <pprf-tab
+                    name="Programs"
+                    :selected="true"
+                   >
+                    <h4>programs content</h4>
+                  </pprf-tab>
 
+                  <pprf-tab
+                    name="Locations"
+                  >
+                    <h4>locations content</h4>
+                  </pprf-tab>
+
+              </pprf-tabs>
             </main>
 
         </div>
@@ -18,6 +32,8 @@
 </template>
 
 <script>
+import pprfTabs from '@/components/pprf-tabs/pprf-tabs'
+import pprfTab from '@/components/pprf-tabs/pprf-tab'
 /**
  * APPLICATION SIDEBAR
  *
@@ -26,7 +42,11 @@
  * @since 0.0.0
  */
 export default {
-  name: 'PPRF-Sidebar'
+  name: 'PPRF-Sidebar',
+  components: {
+    pprfTabs,
+    pprfTab
+  }
 }
 </script>
 
@@ -41,6 +61,7 @@ export default {
   }
     .pprf-sidebar-inner{
         width: 100%;
+        height: 100%;
         background: color(ghost-gray);
     }
         .pprf-sidebar-header__title{
@@ -54,7 +75,7 @@ export default {
         }
 
       .pprf-sidebar-main{
-        height: 891px;
+        height: 100%;
         overflow:hidden;
       }
 
