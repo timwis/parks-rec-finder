@@ -1,5 +1,8 @@
 <template >
-    <div class="pprf-tab">
+    <div
+      v-show="isActive"
+      class="pprf-tab"
+    >
         <h2>tab</h2>
         <slot></slot>
     </div>
