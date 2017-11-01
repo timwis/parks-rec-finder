@@ -48,7 +48,6 @@ export default {
 
 
     .pprf-app__main {
-        height: 100%;
         display:flex;
         flex-direction: row;
         border: 1px solid color(black);

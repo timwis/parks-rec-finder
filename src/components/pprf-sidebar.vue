@@ -3,25 +3,33 @@
         <div class="pprf-sidebar-inner">
 
             <header class="pprf-sidebar-header">
-              <h2 class="pprf-sidebar-header__title text-nopad">Things to do</h2>
+              <h2 class="pprf-sidebar-header__title text-nopad">Things to go</h2>
               <p class="pprf-sidebar-header__desc">
                 Choose a category from the list below to find a program for you.
               </p>
             </header>
 
             <main class="pprf-sidebar-main">
+
               <pprf-tabs>
+
                   <pprf-tab
                     name="Programs"
                     :selected="true"
                    >
-                    <h4>programs content</h4>
+                    <div class="card card--program">
+                        <h3 id="test">test</h3>
+                    </div>
+                    <div class="card card--program"></div>
+                    <div class="card card--program"></div>
+                    <div class="card card--program"></div>
+                    <div class="card card--program"></div>
                   </pprf-tab>
 
                   <pprf-tab
                     name="Locations"
                   >
-                    <h4>locations content</h4>
+                    <h3>locations content</h3>
                   </pprf-tab>
 
               </pprf-tabs>
@@ -32,8 +40,7 @@
 </template>
 
 <script>
-import pprfTabs from '@/components/pprf-tabs/pprf-tabs'
-import pprfTab from '@/components/pprf-tabs/pprf-tab'
+import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 /**
  * APPLICATION SIDEBAR
  *
@@ -54,15 +61,13 @@ export default {
 
   .pprf-sidebar{
       flex: 1;
-      height: 100vh;
+      height: 100%;
       max-width: 451px;
       padding: 15px 20px 0 20px;
       color: color(dark-ben-franklin);
   }
     .pprf-sidebar-inner{
         width: 100%;
-        height: 100%;
-        background: color(ghost-gray);
     }
         .pprf-sidebar-header__title{
             font: {
@@ -75,8 +80,13 @@ export default {
         }
 
       .pprf-sidebar-main{
-        height: 100%;
+        height: 800px;
         overflow:hidden;
+        background: color(ghost-gray);
+      }
+      h3:focus{
+        background: $black;
+        color:color(flyers-orange);
       }
 
 

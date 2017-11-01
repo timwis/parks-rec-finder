@@ -10,7 +10,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 #HTMLReporter a:hover { text-decoration: underline; }
 #HTMLReporter p, #HTMLReporter h1, #HTMLReporter h2, #HTMLReporter h3, #HTMLReporter h4, #HTMLReporter h5, #HTMLReporter h6 { margin: 0; line-height: 14px; }
 #HTMLReporter .banner, #HTMLReporter .symbolSummary, #HTMLReporter .summary, #HTMLReporter .resultMessage, #HTMLReporter .specDetail .description, #HTMLReporter .alert .bar, #HTMLReporter .stackTrace { padding-left: 9px; padding-right: 9px; }
-#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }
+#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }#HTMLReporter .summary { padding: 0; }
 #HTMLReporter #jasmine_content { position: fixed; right: 100%; }
 #HTMLReporter .version { color: #aaaaaa; }
 #HTMLReporter .banner { margin-top: 14px; }
@@ -93,17 +93,20 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </style>
 </head>
 
-<body id="HTMLReporter" class="html-reporter">
-<h1>Tested in PhantomJS 2.1.1 (Mac OS X 0.0.0) on Tue Oct 31 2017</h1>
+<body id="HTMLReporter" class="html-reporter showDetails">
+<h1>Tested in PhantomJS 2.1.1 (Mac OS X 0.0.0) on Wed Nov 01 2017</h1>
 
 <div class="alert">
 
 
+<!-- <span class="failingAlert bar">Failed 1 specs</span> -->
+<span class="failingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
+  <a href="#" onclick="unfold();">Unfold</a></span>35 specs, 1 failed, 11 pending</span>
+<span class="resultsMenu bar">
+<a class="summaryMenuItem" onclick="showSummary();" href="#">Spec List<a>|<a 
+   class="detailsMenuItem" onclick="showFailures();" href="#">Failures</a>
+</span>
 
-  
-  <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
-  <a href="#" onclick="unfold();">Unfold</a></span>27 specs, 0 failed, 9 pending</span>
-  
 
 
 </div>
@@ -303,11 +306,92 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
       
     </div>
   
+    <div class="summary-section" onclick="toggleSection(this);">
+      
+        <div class="description section-starter" style="margin-left:0px">TABS: pprf-tabs/<span 
+            class="summary-section-totals"><span 
+            class="summary-section-total passed">5</span><span 
+            class="summary-section-total failed">1</span><span 
+            class="summary-section-total skipped">2</span></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:14px"><span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:14px">TABS: pprf-tabs/pprf-tabs<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:28px">should render a class of &quot;pprf-tabs<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:28px">should render an empty nav list<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:28px">should render a tab when chlid is present<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:28px">METHODS:<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary skipped" style="margin-left:42px"><span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:42px">onSelect<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:56px">should emit &quot;tabSelected&quot; event on click<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="description br" style="margin-left:14px">TAB: pprf-tabs/pprf-tab<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary passed" style="margin-left:28px">should render a &quot;.pprf-tab-panel&quot;<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+        <div class="specSummary failed" style="margin-left:28px">should NOT render if selected prop is false<span 
+            class="summary-section-totals"></span>
+        </div>
+      
+    </div>
+  
   
   
 </div>
 
 <div id="details">
+  
+  
+  <div class="specDetail failed">
+    <span class="description">TABS: pprf-tabs/ TAB: pprf-tabs/pprf-tab should NOT render if selected prop is false</span>
+    <div class="stackTrace">
+      <div class="resultMessage">expected true to equal false
+AssertionError@absolute/Library/WebServer/Documents/CityOfPhiladelphia/ppr-finder/node_modules/chai/chai.js?40e7aa72e9665366bfd82579520de4fb0754dfae:9320:24
+assert@absolute/Library/WebServer/Documents/CityOfPhiladelphia/ppr-finder/node_modules/chai/chai.js?40e7aa72e9665366bfd82579520de4fb0754dfae:239:31
+assertEqual@absolute/Library/WebServer/Documents/CityOfPhiladelphia/ppr-finder/node_modules/chai/chai.js?40e7aa72e9665366bfd82579520de4fb0754dfae:1383:18
+methodWrapper@absolute/Library/WebServer/Documents/CityOfPhiladelphia/ppr-finder/node_modules/chai/chai.js?40e7aa72e9665366bfd82579520de4fb0754dfae:7709:30
+_callee3$@base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:26470:74
+tryCatch@base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:15592:44
+invoke@base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:15826:30
+base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:15644:28
+step@base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:12148:30
+base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:12159:17
+run@base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:16552:29
+base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:16565:33
+flush@base/index.js?4dc737b62e21722b852028b5e99e057551dfc949:16900:11</div>
+    </div>
+  </div>
+  
   
 </div>
 
@@ -320,7 +404,7 @@ document.body.onkeypress = function (e) {
   switch (e.keyCode) {
     case 102: toggleFold(); break;
     case 49: showSummary(); break;
-    
+    case 50: showFailures(); break;
   }
 };
 

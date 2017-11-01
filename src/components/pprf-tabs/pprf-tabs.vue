@@ -1,9 +1,14 @@
 <template>
     <div class="pprf-tabs">
 
-        <ul class="pprf-tabs__nav">
-            <li v-for="tab in tabs"
+        <ul
+          class="pprf-tabs__nav"
+        >
+            <li
+                v-for="tab in tabs"
                 :class="['pprf-tabs__nav-item',{'active': tab.isActive}]"
+                :aria-selected="[tab.isActive ? true : false]"
+                role="presentation"
               >
                 <button
                     class="button pprf-tabs__nav-item-btn text-caps"
@@ -12,16 +17,17 @@
                     {{tab.name}}
                 </button>
             </li>
+
         </ul>
 
-        <div class="pprf-tabs-content scrollable">
+        <div class="pprf-tabs-panels scrollable">
             <slot></slot>
         </div>
     </div>
 </template>
 
 <script>
-import PhilaButton from '@/components/phila/phila-button'
+
 /**
  * Tabular user interface
  *
@@ -29,10 +35,6 @@ import PhilaButton from '@/components/phila/phila-button'
  */
 export default {
   name: 'PPRF-Tabs',
-
-  components: {
-    PhilaButton
-  },
 
   data () {
     return {
@@ -45,10 +47,21 @@ export default {
   },
 
   methods: {
+    /**
+     * Sets the "selected" prop of a tab
+     * @param  {object} selectedTab Vue instanace
+     * @return {void}
+     * @public
+     * @since 0.0.0
+     */
     selectTab (selectedTab) {
       this.tabs.forEach(tab => {
         tab.isActive = (tab.name === selectedTab.name)
       })
+      /**
+       * @event tabSelected
+       * @type {object}
+       */
       this.$emit('tabSelected', selectedTab)
     }
   }
@@ -82,10 +95,9 @@ export default {
         }
 
 
-    .pprf-tabs-content{
+    .pprf-tabs-panels{
         width:100%;
         display:block;
         margin-top:20px;
-        border: 1px solid $black;
     }
 </style>
