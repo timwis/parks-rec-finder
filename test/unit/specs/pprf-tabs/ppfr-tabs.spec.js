@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { mount, shallow } from 'avoriaz'
 import pprfTabs from '@/components/pprf-tabs/pprf-tabs'
 import pprfTab from '@/components/pprf-tabs/pprf-tab'
@@ -59,11 +60,20 @@ describe('TABS: pprf-tabs/', () => {
             expect(TabComponent.is('div')).to.equal(true)
         })
         it('should NOT render if selected prop is false', async () => {
-            TabComponent.setProps({selected: false})
+            TabComponent.setData({isActive: false})
             await TabComponent.vm.$nextTick()
-            expect(TabComponent.propsData().selected).to.equal(false)
             expect(TabComponent.data().isActive).to.equal(false)
+            expect(TabComponent.contains('.pprf-tab-panel')).to.equal(false)
         })
+        it('should render slot content', () => {
+            const TestHeader = Vue.component('test-header', {template: '<h1 id="testHeader">This is a test header</h1>'})
+            const TestHeaderComponent = mount(TestHeader)
+            expect(TestHeaderComponent.text()).to.equal('This is a test header')
+
+            const TabComponentWSlot = TabComponent = mount(pprfTab, {propsData: { name: 'Foo bar',  selected: true }, slots: { default: [TestHeaderComponent]}})
+            expect(TabComponentWSlot.contains('#testHeader')).to.equal(true)
+        })
+
         afterEach(() => {
           TabComponent.destroy()
         })
