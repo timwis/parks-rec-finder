@@ -97,7 +97,9 @@ export default {
 
     .pprf-tabs-panels{
         width:100%;
+        height: 737px;
         display:block;
         margin-top:20px;
+        padding-right: 10px;
     }
 </style>

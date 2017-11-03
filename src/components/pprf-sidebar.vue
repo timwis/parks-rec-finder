@@ -17,13 +17,14 @@
                     name="Programs"
                     :selected="true"
                    >
-                    <div class="card card--program">
-                        <h3 id="test">test</h3>
+                    <div
+                      v-for="program in programs"
+                      class="card card--program"
+                    >
+                        <h4>{{program.program_name}}</h4>
+                        <div v-html="program.program_description"></div>
                     </div>
-                    <div class="card card--program"></div>
-                    <div class="card card--program"></div>
-                    <div class="card card--program"></div>
-                    <div class="card card--program"></div>
+
                   </pprf-tab>
 
                   <pprf-tab
@@ -40,7 +41,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
+
 /**
  * APPLICATION SIDEBAR
  *
@@ -50,10 +53,16 @@ import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
  */
 export default {
   name: 'PPRF-Sidebar',
+
   components: {
     pprfTabs,
     pprfTab
-  }
+  },
+
+  computed: mapState({
+    programs: state => state.programs.entities
+  })
+
 }
 </script>
 

@@ -3,7 +3,6 @@
   <div id="pprf-app-container" >
 
     <pprf-header></pprf-header>
-
     <main class="pprf-app__main">
         <router-view name="map"></router-view>
         <router-view name="sidebar"></router-view>
@@ -15,6 +14,7 @@
 
 <script>
 import pprfHeader from '@/components/pprf-header'
+
 /**
  * MAIN APPLICATION COMPONENT.
  *
@@ -25,9 +25,11 @@ import pprfHeader from '@/components/pprf-header'
  */
 export default {
   name: 'PPRF-Finder',
+
   components: {
     pprfHeader
   }
+
 }
 </script>
 

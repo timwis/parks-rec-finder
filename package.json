@@ -20,11 +20,13 @@
     "normalize.css": "^7.0.0",
     "phila-standards": "^0.11.2",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "avoriaz": "^6.0.1",
+    "axios": "^0.17.0",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.1.1",

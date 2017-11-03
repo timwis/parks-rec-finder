@@ -1,18 +1,20 @@
 <template>
     <form
       class="pprf-search"
-      @submit.prevent=""
+      @submit.prevent="onSubmit"
     >
 
       <phila-text-field
         name="pprf-search-freetext"
         placeholder="SEARCH BY ACTIVITY TYPE OR LOCATION NAME"
         ref="freetextField"
+        @input="onFreetextInput"
       ></phila-text-field>
 
       <phila-text-field
         name="pprf-search-address"
         placeholder="ADDRESS OR ZIPCODE"
+        @input="onAddressInput"
         ref="addressField"
       ></phila-text-field>
 
@@ -40,11 +42,22 @@ export default {
     PhilaButton,
     Icon
   },
+
   data () {
     return {
-      isDisabled: true
+      isDisabled: true,
+
+      search: {
+        fields: {
+          freetext: null,
+          address: null,
+          zip: null
+        }
+      }
+
     }
   },
+
   mounted () {
     /**
      * Update isDisabled when user adds input to search fields
@@ -57,6 +70,29 @@ export default {
           this.isDisabled = !Object.values(this.$refs).some((ref) => { return ref.isDirty === true })
         }
       )
+  },
+
+  methods: {
+
+    onFreetextInput (freetextVal) {
+      this.search.fields.freetext = freetextVal
+    },
+
+    onAddressInput (addressVal) {
+      let isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(addressVal)
+      if (isValidZip) {
+        this.search.fields.zip = parseInt(addressVal)
+        this.search.fields.address = null
+      } else {
+        this.search.fields.address = addressVal
+        this.search.fields.zip = null
+      }
+    },
+
+    onSubmit (e) {
+      this.$store.dispatch('getPrograms')
+    }
+
   }
 }
 </script>
