@@ -4,9 +4,11 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  PPR_API: {
-    BASE: '"https://phl.carto.com/api/v2/"',
-    FACILITIES: '"sql=q?select%20*%20from%20ppr_programs%20limit%20100"',
-    PROGRAMS: '"sql?q=select%20*%20from%20ppr_programs%20limit%20100"'
+  CARTO_API: {
+    BASE: '"https://phl.carto.com/api/v2/"'
+  },
+  AIS_API:{
+    BASE: 'https://api.phila.gov/ais/v1/',
+    KEY: '6ba4de64d6ca99aa4db3b9194e37adbf'
   }
 })

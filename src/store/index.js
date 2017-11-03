@@ -11,9 +11,6 @@ import api from '@/sources/api'
 
 import * as types from './mutation-types'
 
-const PROGRAMS_ENDPOINT = process.env.PPR_API.PROGRAMS
-// const FACILITIES_ENDPOINT = process.env.PPR_API.FACILITIES
-
 Vue.use(Vuex)
 
 // const debug = process.env.NODE_ENV !== 'production'
@@ -53,10 +50,11 @@ export default new Vuex.Store({
       entities: []
     },
 
-    locations: {
+    facilities: {
       loading: false,
       error: null,
-      success: false
+      success: false,
+      entities: []
     }
   },
 
@@ -64,9 +62,24 @@ export default new Vuex.Store({
 
   actions: {
 
+    searchFacilities ({commit}, serachParams) {
+      commit(types.SUBMIT_SEARCH)
+      state.facilities.loading = true
+        api
+          .search(serachParams)
+          .then( searchResults => {
+            commit(types.RECEIVE_SEARCH_SUCCESS)
+            state.facilities.entities = searchResults.data.rows
+          })
+          .catch((err) => {
+            console.error(err)
+            commit(types.RECEIVE_SEARCH_SUCCESS)
+          })
+    },
+
     getPrograms ({commit}) {
       commit(types.FETCH_PROGRAMS)
-      api.get(PROGRAMS_ENDPOINT).then((res) => {
+      api.get('sql?q=select%20*%20from%20ppr_programs%20limit%20100').then((res) => {
         commit(types.FETCH_PROGRAMS_SUCCESS, res)
       })
     }
