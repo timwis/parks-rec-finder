@@ -64,37 +64,38 @@ export default new Vuex.Store({
 
     searchFacilities ({commit}, serachParams) {
       commit(types.SUBMIT_SEARCH)
-      state.facilities.loading = true
-        api
-          .search(serachParams)
-          .then( searchResults => {
-            commit(types.RECEIVE_SEARCH_SUCCESS)
-            state.facilities.entities = searchResults.data.rows
-          })
-          .catch((err) => {
-            console.error(err)
-            commit(types.RECEIVE_SEARCH_SUCCESS)
-          })
-    },
+      commit(types.FETCH_FACILITIES)
 
-    getPrograms ({commit}) {
-      commit(types.FETCH_PROGRAMS)
-      api.get('sql?q=select%20*%20from%20ppr_programs%20limit%20100').then((res) => {
-        commit(types.FETCH_PROGRAMS_SUCCESS, res)
-      })
+      api(serachParams)
+        .then(searchResults => {
+          commit(types.RECEIVE_SEARCH_SUCCESS)
+          commit(types.FETCH_FACILITIES_SUCCESS, searchResults)
+        })
+        .catch((err) => {
+          console.error(err)
+          commit(types.RECEIVE_SEARCH_SUCCESS)
+        })
     }
-
   },
 
   mutations: {
-
-    [types.FETCH_PROGRAMS] (state) {
-      state.programs.loading = true
+    [types.SUBMIT_SEARCH] (state) {
+      state.search.loading = true
+      state.search.success = false
     },
 
-    [types.FETCH_PROGRAMS_SUCCESS] (state, rawResutlsSet) {
-      state.programs.loading = false
-      state.programs.entities = rawResutlsSet.data.rows
+    [types.RECEIVE_SEARCH_SUCCESS] (state, searchResults) {
+      state.search.loading = false
+      state.search.success = true
+    },
+
+    [types.FETCH_FACILITIES] (state) {
+      state.facilities.loading = true
+    },
+
+    [types.FETCH_FACILITIES_SUCCESS] (state, rawResutlsSet) {
+      state.facilities.loading = false
+      state.facilities.entities = rawResutlsSet.data.rows
     }
   }
 })
