@@ -6,6 +6,7 @@ import axios from 'axios'
  */
 class AISAPI {
   constructor (httpClient) {
+    this.LOG_QUERIES = true
     this.http = httpClient.create({baseURL: process.env.AIS_API.BASE})
     this.API_KEY = process.env.AIS_API.KEY
     this._addKeyToGETRequests(this.API_KEY)
@@ -19,10 +20,11 @@ class AISAPI {
    * @since 0.0.0
    */
   _addKeyToGETRequests (apiKey) {
-    this.http.interceptors.request.use(function (config) {
+    this.http.interceptors.request.use((config) => {
       if (config.method === 'get') {
         config.url = `${config.url}?gatekeeperKey=${apiKey}`
       }
+      if (this.LOG_QUERIES) { console.log(`AIS: ${config.baseURL}${config.url}`) }
       return config
     }, function (error) {
       return Promise.reject(error)
@@ -51,7 +53,7 @@ class AISAPI {
    */
   getCoordsForAddress (rawAddressString) {
     return this.http
-            .get(`/search/${rawAddressString}`)
+            .get(`search/${rawAddressString}`)
             .then((res) => {
               let data = res.data
               if (this._locationExist(data)) {

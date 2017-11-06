@@ -3,12 +3,19 @@ import squel from 'squel'
 
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
+ * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>
  */
 class CartoAPI {
   constructor (httpClient, sqlQueryBuilder) {
+    this.LOG_QUERIES = true
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
     this.sqlQueryBuilder = sqlQueryBuilder
+    this.tables = {
+      facilities: 'ppr_facilities',
+      assets: 'ppr_assets',
+      programs: 'ppr_programs'
+    }
   }
 
   /**
@@ -19,6 +26,11 @@ class CartoAPI {
    * @since 0.0.0
    */
   runQuery (sqlString) {
+    // log queries
+    this.http.interceptors.request.use((config) => {
+      if (this.LOG_QUERIES) { console.log(`Carto: ${config.baseURL}${config.url}`) }
+      return config
+    })
     return this.http.get(`sql?q=${sqlString}`)
   }
 
@@ -28,7 +40,7 @@ class CartoAPI {
    * @return {string}             comma separated latitiude and longitude values
    */
   _stringifyCoordinates (coordinates = null) {
-    if (typeof coordinates === 'string' && coordinates.includes(',')) {
+    if (coordinates === null || (typeof coordinates === 'string' && coordinates.includes(','))) {
       return coordinates
     } else if (Array.isArray(coordinates) && (coordinates.length === 2)) {
       return coordinates.join(',')
@@ -38,7 +50,7 @@ class CartoAPI {
   }
 
   /**
-   * Given freetext and address values
+   * Given freetext and coordniates values
    * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables
    * @param  {object} serachParams - UI serach field key values paris
    * @param  {string} coords - comma separated latitude and longitude  of address search field value
@@ -48,29 +60,49 @@ class CartoAPI {
    */
   queryAddressBy (freetextValue, coords = null) {
     let coordinates = this._stringifyCoordinates(coords)
-
+    // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()
-                          .from('ppr_facilities')
+                          .from(this.tables.facilities)
                           .field('ppr_facilities.*')
-
+                          .join(this.tables.assets, null, `${this.tables.assets}.objectid = pprassets_object_id`)
+                          .field(`ST_Y(
+                                    ST_Centroid(${this.tables.assets}.the_geom)
+                                  ) as latitude`)
+                          .field(`ST_X(
+                                    ST_Centroid(${this.tables.assets}.the_geom)
+                                  ) as longitude`)
     if (coordinates) {
+      // get facilities within relative distance to given coordinates
       sqlQuery
         .field(`ST_Distance(
-                  ST_Centroid(ppr_assets.the_geom),
+                  ST_Centroid(${this.tables.assets}.the_geom),
                   ST_SetSRID(
                     ST_Point(${coordinates}),
                     4326
                   )
                 ) as distance`)
-        .join('ppr_assets', null, 'ppr_assets.objectid = ppr_assets_objectid')
         .order('distance')
     }
 
     if (freetextValue !== null && freetextValue !== '') {
-      sqlQuery.where(`ILIKE = '%${freetextValue}%'`)
+      // search facilites via user input text value
+      sqlQuery
+        .where(
+          squel.expr()
+                  .and(`facility_description ILIKE '%${freetextValue}%'`)
+                  .or(`facility_name ILIKE '%${freetextValue}%'`)
+                  .or(`long_name ILIKE '%${freetextValue}%'`)
+        )
     }
-    return sqlQuery.toString()
+
+    return encodeURIComponent(sqlQuery.toString())
+  }
+
+  getAll (contentType = null) {
+    if (contentType === null) { return }
+    let _query = this.sqlQueryBuilder.select().from(`ppr_${contentType}`).limit(100)
+    return this.runQuery(_query.toString())
   }
 }
 

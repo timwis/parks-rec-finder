@@ -24,8 +24,8 @@ const searchCarto = (searchParams, coords) => {
  */
 const search = (serachParams) => {
   let fields = serachParams.fields
-
-  if (fields.address !== null || fields.address !== '') {
+  console.log(fields.address !== null)
+  if (fields.address !== null && fields.address !== '') {
     return aisAPI.getCoordsForAddress(fields.address)
                  .then(searchCarto.bind({}, serachParams))
   } else {
