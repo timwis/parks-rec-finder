@@ -49,32 +49,19 @@ class CartoAPI {
     }
   }
 
-  /**
-   * Given freetext and coordniates values
-   * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables
-   * @param  {object} serachParams - UI serach field key values paris
-   * @param  {string} coords - comma separated latitude and longitude  of address search field value
-   * @return {string}              SQL query
-   *
-   * @since 0.0.0
-   */
-  queryAddressBy (freetextValue, coords = null) {
-    let coordinates = this._stringifyCoordinates(coords)
-    // get facilites and assets with latitude and longitude values
-    let sqlQuery = this.sqlQueryBuilder
-                          .select()
-                          .from(this.tables.facilities)
-                          .field('ppr_facilities.*')
-                          .join(this.tables.assets, null, `${this.tables.assets}.objectid = pprassets_object_id`)
-                          .field(`ST_Y(
-                                    ST_Centroid(${this.tables.assets}.the_geom)
-                                  ) as latitude`)
-                          .field(`ST_X(
-                                    ST_Centroid(${this.tables.assets}.the_geom)
-                                  ) as longitude`)
+  _addAssetsToQuery (sqlQueryObj, coordinates) {
+    sqlQueryObj
+      .join(this.tables.assets, null, `${this.tables.assets}.objectid = ${this.tables.facilities}.pprassets_object_id`)
+      .field(`ST_Y(
+                ST_Centroid(${this.tables.assets}.the_geom)
+              ) as latitude`)
+      .field(`ST_X(
+                ST_Centroid(${this.tables.assets}.the_geom)
+              ) as longitude`)
+
     if (coordinates) {
       // get facilities within relative distance to given coordinates
-      sqlQuery
+      sqlQueryObj
         .field(`ST_Distance(
                   ST_Centroid(${this.tables.assets}.the_geom),
                   ST_SetSRID(
@@ -84,16 +71,50 @@ class CartoAPI {
                 ) as distance`)
         .order('distance')
     }
+  }
+
+  // ILIKE constructor
+  // sqlQuery
+        // .where(
+        //   squel.expr()
+        //           .and(`program_name ILIKE '%${freetextValue}%'`)
+        //           .or(`program_description ILIKE '%${freetextValue}%'`)
+        // )
+  _buildFreetextWHERE (sqlQueryObj, fields = [], freetextValue) {
+    let sqlExpr = null
+    for (let i in fields) {
+      let ilikeStatement = `${fields[i]} ILIKE '%${freetextValue}%'`
+      if (i === '0') {
+        sqlExpr = squel.expr().and(ilikeStatement)
+      } else {
+        sqlExpr.or(ilikeStatement)
+      }
+    }
+    sqlQueryObj.where(sqlExpr)
+  }
+
+  /**
+   * Given freetext and coordniates values
+   * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables
+   * @param  {object} serachParams - UI serach field key values paris
+   * @param  {string} coords - comma separated latitude and longitude  of address search field value
+   * @return {string}              SQL query
+   *
+   * @since 0.0.0
+   */
+  queryProgramsBy (freetextValue, coords = null, contentType) {
+    // get facilites and assets with latitude and longitude values
+    let sqlQuery = this.sqlQueryBuilder
+                          .select()
+                          .from(this.tables.programs)
+                          .field(`${this.tables.programs}.*`)
+                          .join(this.tables.facilities, null, `${this.tables.facilities}.id = ${this.tables.programs}.facility->>0`)
+
+    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords))
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
-      sqlQuery
-        .where(
-          squel.expr()
-                  .and(`facility_description ILIKE '%${freetextValue}%'`)
-                  .or(`facility_name ILIKE '%${freetextValue}%'`)
-                  .or(`long_name ILIKE '%${freetextValue}%'`)
-        )
+      this._buildFreetextWHERE(sqlQuery, ['program_name', 'program_description'], freetextValue)
     }
 
     return encodeURIComponent(sqlQuery.toString())
