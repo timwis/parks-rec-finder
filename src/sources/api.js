@@ -1,28 +1,5 @@
-import axios from 'axios'
-/* eslint-disable no-unused-vars */
-import squel from 'squel'
-/* eslint-disable no-unused-vars */
 import {cartoAPI} from './CartoAPI'
-
-const AISAPI_KEY = process.env.AIS_API.KEY
-const AISAPI = axios.create({
-  baseURL: process.env.AIS_API.BASE
-})
-
-const runSQL = (sqlString) => cartoAPI.query(sqlString)
-
-const searchAIS = (rawAddressString) => {
-  return AISAPI
-          .get(`/search/${rawAddressString}?gatekeeperKey=${AISAPI_KEY}`)
-          .then((res) => {
-            let data = res.data
-            // check to make sure location exist and has valid geometry data
-            if (data.features.length > 0 && (data.features[0].geometry && data.features[0].geometry.type === 'Point')) {
-              return data.features[0].geometry.coordinates
-            }
-            return null
-          })
-}
+import {aisAPI} from './AISAPI'
 
 /**
  * Given freetext and coordinate serach values
@@ -42,8 +19,8 @@ const search = (serachParams) => {
   let fields = serachParams.fields
 
   if (fields.address !== null || fields.address !== '') {
-    return searchAIS(fields.address)
-              .then(searchCarto.bind({}, serachParams))
+    return aisAPI.getCoordsForAddress(fields.address)
+                 .then(searchCarto.bind({}, serachParams))
   } else {
     return searchCarto(serachParams, null)
   }

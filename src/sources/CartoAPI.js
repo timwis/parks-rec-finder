@@ -1,9 +1,12 @@
 import axios from 'axios'
 import squel from 'squel'
 
+/**
+ * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
+ */
 class CartoAPI {
   constructor (httpClient, sqlQueryBuilder) {
-    // set our api base
+    // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
     this.sqlQueryBuilder = sqlQueryBuilder
   }
@@ -12,11 +15,18 @@ class CartoAPI {
    * GET SQL query results from the Cart API
    * @param  {string} sqlString - SQL Query
    * @return {object}           Prmoise Object with raw results
+   *
+   * @since 0.0.0
    */
   runQuery (sqlString) {
     return this.http.get(`sql?q=${sqlString}`)
   }
 
+  /**
+   * Makes sure that coordinates passed to SQL queries are strings
+   * @param  {any} coordinates - any coordinates input value
+   * @return {string}             comma separated latitiude and longitude values
+   */
   _stringifyCoordinates (coordinates = null) {
     if (typeof coordinates === 'string' && coordinates.includes(',')) {
       return coordinates
@@ -29,10 +39,12 @@ class CartoAPI {
 
   /**
    * Given freetext and address values
-   * return a list of PPR Facilites sorted by relative distance
+   * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables
    * @param  {object} serachParams - UI serach field key values paris
    * @param  {string} coords - comma separated latitude and longitude  of address search field value
-   * @return {[type]}              [description]
+   * @return {string}              SQL query
+   *
+   * @since 0.0.0
    */
   queryAddressBy (freetextValue, coords = null) {
     let coordinates = this._stringifyCoordinates(coords)
