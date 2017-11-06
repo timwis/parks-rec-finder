@@ -7,14 +7,21 @@ import {aisAPI} from './AISAPI'
  * PPR Facilites sorted by relative distance to coordinates
  * @param  {object} searchParams - UI search fields key value pairs
  * @param  {string} coords  - comma separated latitude and longitude
- * @return {[type]}              [description]
+ * @return {object}              Promise resolving with query results
+ *
+ * @since 0.0.0
  */
 const searchCarto = (searchParams, coords) => {
   let addressSearchQuery = cartoAPI.queryAddressBy(searchParams.fields.freetext, coords)
-  console.log(addressSearchQuery)
   return cartoAPI.runQuery(addressSearchQuery)
 }
-
+/**
+ * Address search implemented using the AIS and Carto APIs
+ * @param  {object} searchParams - UI search fields key value pairs
+ * @return {object}              Promise resolving with query results
+ *
+ * @since 0.0.0
+ */
 const search = (serachParams) => {
   let fields = serachParams.fields
 
