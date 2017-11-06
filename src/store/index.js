@@ -62,18 +62,15 @@ export default new Vuex.Store({
 
   actions: {
 
-    searchFacilities ({commit}, serachParams) {
+    search ({commit}, serachParams) {
       commit(types.SUBMIT_SEARCH)
-      commit(types.FETCH_FACILITIES)
 
       api(serachParams)
         .then(searchResults => {
-          commit(types.RECEIVE_SEARCH_SUCCESS)
-          commit(types.FETCH_FACILITIES_SUCCESS, searchResults)
+          commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
         })
         .catch((err) => {
-          console.error(err)
-          commit(types.RECEIVE_SEARCH_SUCCESS)
+          commit(types.RECEIVE_SEARCH_FAILURE, err)
         })
     }
   },
@@ -84,18 +81,17 @@ export default new Vuex.Store({
       state.search.success = false
     },
 
-    [types.RECEIVE_SEARCH_SUCCESS] (state, searchResults) {
+    [types.RECEIVE_SEARCH_SUCCESS] (state, rawResutlsSet) {
       state.search.loading = false
       state.search.success = true
+      state.facilities.entities = rawResutlsSet[0].data.rows
+      state.programs.entities = rawResutlsSet[1].data.rows
     },
 
-    [types.FETCH_FACILITIES] (state) {
-      state.facilities.loading = true
-    },
-
-    [types.FETCH_FACILITIES_SUCCESS] (state, rawResutlsSet) {
-      state.facilities.loading = false
-      state.facilities.entities = rawResutlsSet.data.rows
+    [types.RECEIVE_SEARCH_FAILURE] (state, err) {
+      state.search.loading = false
+      state.search.success = false
+      state.search.error = err
     }
   }
 })

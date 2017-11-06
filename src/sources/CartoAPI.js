@@ -75,11 +75,11 @@ class CartoAPI {
 
   // ILIKE constructor
   // sqlQuery
-        // .where(
-        //   squel.expr()
-        //           .and(`program_name ILIKE '%${freetextValue}%'`)
-        //           .or(`program_description ILIKE '%${freetextValue}%'`)
-        // )
+  //  .where(
+  //    squel.expr()
+  //            .and(`program_name ILIKE '%${freetextValue}%'`)
+  //            .or(`program_description ILIKE '%${freetextValue}%'`)
+  //  )
   _buildFreetextWHERE (sqlQueryObj, fields = [], freetextValue) {
     let sqlExpr = null
     for (let i in fields) {
@@ -95,14 +95,14 @@ class CartoAPI {
 
   /**
    * Given freetext and coordniates values
-   * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables
+   * return a SQL query string to search the PPR_Programs tables
    * @param  {object} serachParams - UI serach field key values paris
    * @param  {string} coords - comma separated latitude and longitude  of address search field value
    * @return {string}              SQL query
    *
    * @since 0.0.0
    */
-  queryProgramsBy (freetextValue, coords = null, contentType) {
+  queryProgramsBy (freetextValue, coords = null) {
     // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()
@@ -120,10 +120,30 @@ class CartoAPI {
     return encodeURIComponent(sqlQuery.toString())
   }
 
-  getAll (contentType = null) {
-    if (contentType === null) { return }
-    let _query = this.sqlQueryBuilder.select().from(`ppr_${contentType}`).limit(100)
-    return this.runQuery(_query.toString())
+  /**
+   * Given freetext and coordniates values
+   * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables
+   * @param  {object} serachParams - UI serach field key values paris
+   * @param  {string} coords - comma separated latitude and longitude  of address search field value
+   * @return {string}              SQL query
+   *
+   * @since 0.0.0
+   */
+  queryFacilitiesBy (freetextValue, coords = null) {
+    // get facilites and assets with latitude and longitude values
+    let sqlQuery = this.sqlQueryBuilder
+                          .select()
+                          .from(this.tables.facilities)
+                          .field(`${this.tables.facilities}.*`)
+
+    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords))
+
+    if (freetextValue !== null && freetextValue !== '') {
+      // search facilites via user input text value
+      this._buildFreetextWHERE(sqlQuery, ['facility_description', 'facility_name', 'long_name'], freetextValue)
+    }
+
+    return encodeURIComponent(sqlQuery.toString())
   }
 }
 
