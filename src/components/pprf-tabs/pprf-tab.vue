@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+// import {mapState} from 'vuex'
 /**
  * Single Tab to be nested in pprf-tabs component
  *
@@ -49,14 +49,21 @@ export default {
   },
 
   data () {
-    return {}
+    return {
+      isActive: false
+    }
   },
 
-  computed: mapState({
-    isActive (state) {
-      return (this.name === state.route.name)
-    }
-  })
+  mounted () {
+    // bind to prop so we can mutate it
+    this.isActive = this.selected
+  }
+
+  // computed: mapState({
+  //   isActive (state) {
+  //     return (this.name === state.route.name)
+  //   }
+  // })
 
   // watch: {
   //   'isActive': {

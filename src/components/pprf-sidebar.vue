@@ -3,10 +3,12 @@
         <div class="pprf-sidebar-inner">
 
             <header class="pprf-sidebar-header">
-              <h2 class="pprf-sidebar-header__title text-nopad">Things to go</h2>
-              <p class="pprf-sidebar-header__desc">
-                Choose a category from the list below to find a program for you.
-              </p>
+              <h2 class="pprf-sidebar-header__title text-nopad">
+                <slot name="heading"></slot>
+              </h2>
+              <div class="pprf-sidebar-header__desc">
+                <slot name="description"></slot>
+              </div>
             </header>
 
             <main class="pprf-sidebar-main">
@@ -15,30 +17,18 @@
 
                   <pprf-tab
                     name="Programs"
-                    :count="programs.length"
+                    :count="programsCount"
                     :selected="true"
                    >
-                    <div
-                      v-for="program in programs"
-                      class="card card--program"
-                    >
-                        <h4>{{program.program_name}}</h4>
-                        <div v-html="program.program_description"></div>
-                    </div>
+                    <slot name="programs-tab-content"></slot>
 
                   </pprf-tab>
 
                   <pprf-tab
                     name="Locations"
-                    :count="facilities.length"
+                    :count="locationsCount"
                   >
-                    <div
-                      v-for="facility in facilities"
-                      class="card card--program"
-                    >
-                        <h4>{{facility.facility_name}}</h4>
-                        <div v-html="facility.facility_description"></div>
-                    </div>
+                    <slot name="locations-tab-content"></slot>
                   </pprf-tab>
 
 
@@ -50,7 +40,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 
 /**
@@ -68,11 +57,14 @@ export default {
     pprfTab
   },
 
-  computed: mapState({
-    programs: state => state.programs.entities,
-    facilities: state => state.facilities.entities
-  })
-
+  props: {
+    programsCount: {
+      type: Number
+    },
+    locationsCount: {
+      type: Number
+    }
+  }
 }
 </script>
 
@@ -102,10 +94,6 @@ export default {
         height: 800px;
         overflow:hidden;
         background: color(ghost-gray);
-      }
-      h3:focus{
-        background: $black;
-        color:color(flyers-orange);
       }
 
 

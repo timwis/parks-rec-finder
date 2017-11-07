@@ -1,0 +1,87 @@
+<template>
+  <div id="pprf-search-container" >
+
+    <pprf-header></pprf-header>
+
+    <main class="pprf-app__main">
+
+      <pprf-sidebar
+        :programs-count="programsCount"
+        :locations-count="locationsCount"
+      >
+        <span slot="heading">Search Results</span>
+
+        <p slot="description">
+          <small>
+            <i>
+              Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span>
+            </i>
+          </small>
+        </p>
+
+        <div slot="programs-tab-content">
+          <div
+            v-for="program in programs"
+            class="card card--program"
+          >
+            <h4>{{program.program_name}}</h4>
+          </div>
+        </div>
+
+        <div slot="locations-tab-content">
+          <div
+            v-for="facility in facilities"
+            class="card card--program"
+          >
+            <h4>{{facility.facility_name}}</h4>
+          </div>
+        </div>
+
+      </pprf-sidebar>
+
+      <pprf-map/>
+
+    </main>
+
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+
+import pprfHeader from '@/components/pprf-header'
+import pprfSidebar from '@/components/pprf-sidebar/'
+import pprfMap from '@/components/map/pprf-map'
+
+export default {
+
+  name: 'PPRF-Search-Container',
+
+  components: {
+    pprfHeader,
+    pprfMap,
+    pprfSidebar
+  },
+
+  data () {
+    return {}
+  },
+
+  computed: {
+    programsCount (state) {
+      return state.programs.length
+    },
+    locationsCount (state) {
+      return state.facilities.length
+    },
+    ...mapState({
+      search: state => state.search.fields,
+      programs: state => state.programs.entities,
+      facilities: state => state.facilities.entities
+    })
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

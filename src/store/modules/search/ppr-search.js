@@ -18,7 +18,8 @@ const getters = {}
 
 const actions = {
   submitSearch ({state, commit}, serachParams) {
-    commit(types.SUBMIT_SEARCH)
+    commit(types.SUBMIT_SEARCH, serachParams.fields, serachParams.filters)
+
     api(serachParams)
         .then(searchResults => {
           commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
@@ -32,9 +33,11 @@ const actions = {
 }
 
 const mutations = {
-  [types.SUBMIT_SEARCH] (state) {
+  [types.SUBMIT_SEARCH] (state, fields, filters) {
     state.loading = true
     state.success = false
+    state.fields = fields
+    state.filters = filters
   },
 
   [types.RECEIVE_SEARCH_SUCCESS] (state, rawResutlsSets) {
