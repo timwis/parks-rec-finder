@@ -116,7 +116,7 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['program_name', 'program_description'], freetextValue)
     }
-
+    console.log(sqlQuery.toString())
     return encodeURIComponent(sqlQuery.toString())
   }
 

@@ -36,7 +36,11 @@ export default {
     selected: {
       type: Boolean,
       default: false
+    },
+    count: {
+      type: Number
     }
+
   },
 
   data () {

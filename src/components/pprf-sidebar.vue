@@ -15,6 +15,7 @@
 
                   <pprf-tab
                     name="Programs"
+                    :count="programs.length"
                     :selected="true"
                    >
                     <div
@@ -29,8 +30,15 @@
 
                   <pprf-tab
                     name="Locations"
+                    :count="facilities.length"
                   >
-                    <h3>locations content</h3>
+                    <div
+                      v-for="facility in facilities"
+                      class="card card--program"
+                    >
+                        <h4>{{facility.facility_name}}</h4>
+                        <div v-html="facility.facility_description"></div>
+                    </div>
                   </pprf-tab>
 
               </pprf-tabs>
@@ -60,7 +68,8 @@ export default {
   },
 
   computed: mapState({
-    programs: state => state.programs.entities
+    programs: state => state.programs.entities,
+    facilities: state => state.facilities.entities
   })
 
 }

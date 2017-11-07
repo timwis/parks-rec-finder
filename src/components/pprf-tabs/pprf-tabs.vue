@@ -15,6 +15,7 @@
                     @click="selectTab(tab)"
                 >
                     {{tab.name}}
+                    <span v-show="tab.count"><small>({{tab.count}})</small></span>
                 </button>
             </li>
 
