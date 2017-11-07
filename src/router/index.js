@@ -9,7 +9,25 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
+      name: 'Home',
+      components: {
+        'map': pprfSidebar,
+        'sidebar': pprfFMap
+      }
+    },
+
+    {
+      path: '/programs',
+      name: 'Programs',
+      components: {
+        'map': pprfSidebar,
+        'sidebar': pprfFMap
+      }
+    },
+
+    {
+      path: '/locations',
+      name: 'Locations',
       components: {
         'map': pprfSidebar,
         'sidebar': pprfFMap

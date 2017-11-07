@@ -90,7 +90,7 @@ export default {
     },
 
     onSubmit (e) {
-      this.$store.dispatch('search', this.search)
+      this.$store.dispatch('submitSearch', this.search)
     }
 
   }
