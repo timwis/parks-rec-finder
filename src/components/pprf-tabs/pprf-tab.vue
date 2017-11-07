@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 /**
  * Single Tab to be nested in pprf-tabs component
  *
@@ -36,28 +37,34 @@ export default {
     selected: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Number of resource in tab
+     *
+     * @since 0.0.0
+     */
+    count: {
+      type: Number
     }
   },
 
   data () {
-    return {
-      isActive: false
-    }
+    return {}
   },
 
-  mounted () {
-    // bind to prop so we can mutate it
-    this.isActive = this.selected
-  },
-
-  watch: {
-    'isActive': {
-      handler (val) {
-        // @TODO: set focus on the first heading (h3 || h4) when tab is active
-      }
+  computed: mapState({
+    isActive (state) {
+      return (this.name === state.route.name)
     }
-  }
+  })
 
+  // watch: {
+  //   'isActive': {
+  //     handler (val) {
+  //       // @TODO: set focus on the first heading (h3 || h4) when tab is active
+  //     }
+  //   }
+  // }
 }
 </script>
 
