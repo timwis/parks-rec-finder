@@ -5,37 +5,53 @@
 
     <main class="pprf-app__main">
 
-      <pprf-sidebar
-        :programs-count="programsCount"
-        :locations-count="locationsCount"
-      >
-        <span slot="heading">Search Results</span>
+      <pprf-sidebar>
 
-        <p slot="description">
-          <small>
-            <i>
-              Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span>
-            </i>
-          </small>
-        </p>
+          <div class="pprf-sidebar-inner">
+            <header class="pprf-sidebar-header">
 
-        <div slot="programs-tab-content">
-          <div
-            v-for="program in programs"
-            class="card card--program"
-          >
-            <h4>{{program.program_name}}</h4>
+              <h2 class="pprf-sidebar-header__title text-nopad">Search Results</h2>
+              <div class="pprf-sidebar-header__desc">
+                <p v-show="(programs.length+facilities.length) > 0">
+                  <small>
+                    <i>Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span>
+                    </i>
+                  </small>
+                </p>
+              </div>
+            </header>
+
+            <main class="pprf-sidebar-main">
+              <pprf-tabs>
+                <pprf-tab
+                    name="Programs"
+                    :count="programsCount"
+                    :selected="true"
+                   >
+                      <div
+                        v-for="program in programs"
+                        class="card card--program"
+                      >
+                        <h4>{{program.program_name}}</h4>
+                      </div>
+
+                  </pprf-tab>
+
+                  <pprf-tab
+                    name="Locations"
+                    :count="locationsCount"
+                  >
+                    <div
+                      v-for="facility in facilities"
+                      class="card card--program"
+                    >
+                      <h4>{{facility.facility_name}}</h4>
+                    </div>
+                  </pprf-tab>
+
+              </pprf-tabs>
+            </main>
           </div>
-        </div>
-
-        <div slot="locations-tab-content">
-          <div
-            v-for="facility in facilities"
-            class="card card--program"
-          >
-            <h4>{{facility.facility_name}}</h4>
-          </div>
-        </div>
 
       </pprf-sidebar>
 
@@ -50,7 +66,8 @@
 import { mapState } from 'vuex'
 
 import pprfHeader from '@/components/pprf-header'
-import pprfSidebar from '@/components/pprf-sidebar/'
+import pprfSidebar from '@/components/pprf-sidebar'
+import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import pprfMap from '@/components/map/pprf-map'
 
 export default {
@@ -60,7 +77,9 @@ export default {
   components: {
     pprfHeader,
     pprfMap,
-    pprfSidebar
+    pprfSidebar,
+    pprfTabs,
+    pprfTab
   },
 
   data () {
