@@ -191,7 +191,7 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['program_name', 'program_description'], freetextValue)
     }
-    console.log(sqlQuery.toString())
+
     return encodeURIComponent(sqlQuery.toString())
   }
 
@@ -205,7 +205,6 @@ class CartoAPI {
    * @since 0.0.0
    */
   queryFacilitiesBy (freetextValue, coords = null, zipcode = null) {
-    debugger
     // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()

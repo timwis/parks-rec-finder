@@ -12,7 +12,6 @@ import {aisAPI} from './AISAPI'
  * @since 0.0.0
  */
 const searchCarto = (searchParams, coords) => {
-  debugger
   let facilitiesSearchQuery = cartoAPI.queryFacilitiesBy(searchParams.fields.freetext, coords, searchParams.fields.zip)
   let programsSearchQuery = cartoAPI.queryProgramsBy(searchParams.fields.freetext, coords, searchParams.fields.zip)
 
@@ -32,7 +31,6 @@ const search = (serachParams) => {
     return aisAPI.getCoordsForAddress(fields.address)
                  .then(searchCarto.bind({}, serachParams))
   } else {
-    debugger
     return searchCarto(serachParams, null)
   }
 }

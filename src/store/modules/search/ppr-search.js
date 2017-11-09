@@ -1,6 +1,10 @@
 import * as types from '../../mutation-types'
 import api from '@/sources/api'
 
+import { normalize } from 'normalizr'
+import {facilitySchema} from '@/store/modules/facilities/ppr-facility-schema'
+import {programSchema} from '@/store/modules/programs/ppr-program-schema'
+
 const state = {
   loading: false,
   error: null,
@@ -23,10 +27,18 @@ const actions = {
     api.search(serachParams)
         .then(searchResults => {
           commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
+
+          const normalizedFacilities = normalize(searchResults[0].data.rows, [facilitySchema])
+          const normalizedPrograms = normalize(searchResults[1].data.rows, [programSchema])
+
+          commit(types.UPDATE_ENTITIES, { entities: normalizedPrograms.entities })
+          commit(types.UPDATE_ENTITIES, { entities: normalizedFacilities.entities })
+
           commit(types.UPDATE_FACILITIES, searchResults[0], {root: true})
           commit(types.UPDATE_PROGRAMS, searchResults[1], {root: true})
         })
         .catch((err) => {
+          console.log(err)
           commit(types.RECEIVE_SEARCH_FAILURE, err)
         })
   }
