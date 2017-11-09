@@ -20,7 +20,7 @@ const actions = {
   submitSearch ({state, commit}, serachParams) {
     commit(types.SUBMIT_SEARCH, serachParams.fields, serachParams.filters)
 
-    api(serachParams)
+    api.search(serachParams)
         .then(searchResults => {
           commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
           commit(types.UPDATE_FACILITIES, searchResults[0], {root: true})

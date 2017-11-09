@@ -49,7 +49,8 @@ class CartoAPI {
     }
   }
 
-  _addAssetsToQuery (sqlQueryObj, coordinates) {
+  _addAssetsToQuery (sqlQueryObj, coordinates, zipcode) {
+    debugger
     sqlQueryObj
       .join(this.tables.assets, null, `${this.tables.assets}.objectid = ${this.tables.facilities}.pprassets_object_id`)
       .field(`ST_Y(
@@ -60,18 +61,42 @@ class CartoAPI {
               ) as longitude`)
 
     if (coordinates) {
-      // get facilities within relative distance to given coordinates
-      // returned in order of closest by miles
-      sqlQueryObj
-        .field(`ST_Distance(
-                  ST_Centroid(${this.tables.assets}.the_geom)::geography,
-                  ST_SetSRID(
-                    ST_Point(${coordinates}),
-                    4326
-                  )::geography
-                )  * 0.000621371 as distance`)
-        .order('distance')
+      this._addCoordinatesToQuery(sqlQueryObj, coordinates)
     }
+
+    if (zipcode) {
+      this._addZipcodeToQuery(sqlQueryObj, zipcode)
+    }
+  }
+
+  _addDistanceAsMiles (sqlQueryObj) {
+    // get entities within relative distance to given coordinates
+    // returned in order of closest by miles
+    sqlQueryObj
+      .field(`ST_Distance(
+                    ST_Centroid(ppr_assets.the_geom)::geography,
+                    ST_Centroid(zip_codes.the_geom)::geography
+                  ) * 0.000621371 as distance`)
+      .order('distance')
+  }
+
+  _addCoordinatesToQuery (sqlQueryObj, coordinates) {
+    sqlQueryObj
+      .field(`ST_Distance(
+                ST_Centroid(${this.tables.assets}.the_geom)::geography,
+                ST_SetSRID(
+                  ST_Point(${coordinates}),
+                  4326
+                )::geography
+              )  * 0.000621371 as distance`)
+      .order('distance')
+  }
+
+  _addZipcodeToQuery (sqlQueryObj, zipcode) {
+    this._addDistanceAsMiles(sqlQueryObj)
+    sqlQueryObj
+        .field(`ST_Intersects(zip_codes.the_geom, ppr_assets.the_geom) as within_zip_code`)
+        .left_join('zip_codes', null, `zip_codes.code = '${zipcode}'`)
   }
 
   // ILIKE constructor
@@ -103,7 +128,7 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  queryProgramsBy (freetextValue, coords = null) {
+  queryProgramsBy (freetextValue, coords = null, zipcode = null) {
     // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()
@@ -111,7 +136,7 @@ class CartoAPI {
                           .field(`${this.tables.programs}.*`)
                           .join(this.tables.facilities, null, `${this.tables.facilities}.id = ${this.tables.programs}.facility->>0`)
 
-    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords))
+    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords), zipcode)
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
@@ -130,14 +155,15 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  queryFacilitiesBy (freetextValue, coords = null) {
+  queryFacilitiesBy (freetextValue, coords = null, zipcode = null) {
+    debugger
     // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()
                           .from(this.tables.facilities)
                           .field(`${this.tables.facilities}.*`)
 
-    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords))
+    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords), zipcode)
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
