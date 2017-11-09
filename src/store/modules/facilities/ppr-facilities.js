@@ -12,8 +12,8 @@ const getters = {}
 const actions = {}
 
 const mutations = {
-  [types.UPDATE_FACILITIES] (state, rawResultsSet) {
-    state.entities = rawResultsSet.data.rows
+  [types.UPDATE_FACILITIES] (state, facilitiesIDs) {
+    state.entities = facilitiesIDs
   }
 }
 

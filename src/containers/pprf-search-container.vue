@@ -12,8 +12,8 @@
 
               <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
               <div class="pprf-sidebar-header__desc">
-                <p v-show="(programs.length+facilities.length) > 0">
-                    Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span> <span v-show="search.zip" >around {{search.zip}}</span>
+                <p v-show="(programsCount+facilitiesCount) > 0">
+                    Showing {{programsCount+facilitiesCount}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span> <span v-show="search.zip" >around {{search.zip}}</span>
                 </p>
               </div>
             </header>
@@ -39,7 +39,7 @@
 
                   <pprf-tab
                     name="Locations"
-                    :count="locationsCount"
+                    :count="facilitiesCount"
                   >
                     <div
                       v-for="facility in facilities"
@@ -88,16 +88,22 @@ export default {
   },
 
   computed: {
+    facilities () {
+      return this.$store.getters.facilityList
+    },
+    facilitiesCount (state) {
+      return this.$store.getters.facilityListCount
+    },
+
+    programs () {
+      return this.$store.getters.programList
+    },
     programsCount (state) {
-      return state.programs.length
+      return this.$store.getters.programListCount
     },
-    locationsCount (state) {
-      return state.facilities.length
-    },
+
     ...mapState({
-      search: state => state.search.fields,
-      programs: state => state.programs.entities,
-      facilities: state => state.facilities.entities
+      search: state => state.search.fields
     })
   }
 }
