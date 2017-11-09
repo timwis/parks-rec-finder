@@ -61,14 +61,15 @@ class CartoAPI {
 
     if (coordinates) {
       // get facilities within relative distance to given coordinates
+      // returned in order of closest by miles
       sqlQueryObj
         .field(`ST_Distance(
-                  ST_Centroid(${this.tables.assets}.the_geom),
+                  ST_Centroid(${this.tables.assets}.the_geom)::geography,
                   ST_SetSRID(
                     ST_Point(${coordinates}),
                     4326
-                  )
-                ) as distance`)
+                  )::geography
+                )  * 0.000621371 as distance`)
         .order('distance')
     }
   }

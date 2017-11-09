@@ -30,6 +30,8 @@
                         class="card card--program"
                       >
                         <h4>{{program.program_name}}</h4>
+                        <p><small>{{  Math.max( Math.round(program.distance * 10) / 10, 2.8 ).toFixed(2)
+ }} miles away</small></p>
                       </div>
 
                   </pprf-tab>
@@ -43,6 +45,8 @@
                       class="card card--program"
                     >
                       <h4>{{facility.facility_name}}</h4>
+                      <p><small>{{  Math.max( Math.round(facility.distance * 10) / 10, 2.8 ).toFixed(2)
+ }} miles away</small></p>
                     </div>
                   </pprf-tab>
 
