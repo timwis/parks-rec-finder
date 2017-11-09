@@ -89,14 +89,51 @@ export default {
         list-style:none;
     }
     .pprf-tabs__nav-item{
+        position:relative;
         padding: 5px 10px 0 5px;
-        &:first-child{padding-left:0px;}
+        font-family: $font-montserrat;
+        @innclude rem(font-size, 14);
+
+        &:first-child{
+          padding-left:0px;
+          .pprf-tabs__nav-item-btn{padding-left:0px;}
+
+          &:after{
+            content:'';
+            position: absolute;
+            display:block;
+            top:45%;
+            right:0;
+            width:1px;
+            height:25%;
+            background: color(dark-ben-franklin);
+          }
+
+        }
+
+
         &.active{
-            border-bottom: 2px solid color(ben-franklin-blue);
+            .pprf-tabs__nav-item-btn{
+              font-weight: 700;
+
+              &:before{
+                content:'';
+                display:block;
+                width: 80%;
+                height: 2px;
+                position:absolute;
+                left:0%;
+                bottom:0;
+                background: color(dark-ben-franklin);
+              }
+
+            }
         }
     }
         .pprf-tabs__nav-item-btn{
             background:none;
+            padding:5px 10px;
+            color: color(dark-ben-franklin);
         }
 
 

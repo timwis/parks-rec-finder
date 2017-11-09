@@ -25,6 +25,7 @@ export default {
       max-width: 451px;
       padding: 15px 20px 0 20px;
       color: color(dark-ben-franklin);
+      border-right: 1px solid color(ghost-gray);
   }
     .pprf-sidebar-inner{
         width: 100%;
@@ -42,7 +43,6 @@ export default {
       .pprf-sidebar-main{
         height: 800px;
         overflow:hidden;
-        background: color(ghost-gray);
       }
 
 

@@ -20,7 +20,6 @@
 
       <phila-button
         id="pprf-search-submit-btn"
-        :disabled="isDisabled"
         tabindex="3"
       >
         <icon name="search" label="Search for Programs and Loactions"></icon>
@@ -62,14 +61,14 @@ export default {
     /**
      * Update isDisabled when user adds input to search fields
      */
-    this.$watch(
-        () => {
-          return this.$refs.freetextField.isDirty + this.$refs.addressField.isDirty
-        },
-        (val) => {
-          this.isDisabled = !Object.values(this.$refs).some((ref) => { return ref.isDirty === true })
-        }
-      )
+    // this.$watch(
+    //     () => {
+    //       return this.$refs.freetextField.isDirty + this.$refs.addressField.isDirty
+    //     },
+    //     (val) => {
+    //       this.isDisabled = !Object.values(this.$refs).some((ref) => { return ref.isDirty === true })
+    //     }
+    //   )
   },
 
   methods: {
@@ -90,9 +89,18 @@ export default {
     },
 
     onSubmit (e) {
-      this.$store.dispatch('submitSearch', this.search)
-    }
+      // @TODO: investigate the connection between local state and Vuex via actions
+      let _fields = this.$data.search.fields
+      let newSearch = {
+        fields: {
+          freetext: _fields.freetext,
+          address: _fields.address,
+          zip: _fields.zip
+        }
+      }
 
+      this.$store.dispatch('submitSearch', newSearch)
+    }
   }
 }
 </script>

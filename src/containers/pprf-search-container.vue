@@ -10,13 +10,10 @@
           <div class="pprf-sidebar-inner">
             <header class="pprf-sidebar-header">
 
-              <h2 class="pprf-sidebar-header__title text-nopad">Search Results</h2>
+              <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
               <div class="pprf-sidebar-header__desc">
                 <p v-show="(programs.length+facilities.length) > 0">
-                  <small>
-                    <i>Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span>
-                    </i>
-                  </small>
+                    Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span>
                 </p>
               </div>
             </header>
