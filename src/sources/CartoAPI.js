@@ -4,6 +4,8 @@ import squel from 'squel'
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
  * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>
+ *
+ * @since 0.0.0
  */
 class CartoAPI {
   constructor (httpClient, sqlQueryBuilder) {
@@ -14,8 +16,10 @@ class CartoAPI {
     this.tables = {
       facilities: 'ppr_facilities',
       assets: 'ppr_assets',
-      programs: 'ppr_programs'
+      programs: 'ppr_programs',
+      zipcodes: 'zip_codes'
     }
+    this.METERS_TO_MILES_RATIO = 0.000621371
   }
 
   /**
@@ -38,6 +42,8 @@ class CartoAPI {
    * Makes sure that coordinates passed to SQL queries are strings
    * @param  {any} coordinates - any coordinates input value
    * @return {string}             comma separated latitiude and longitude values
+   *
+   * @since 0.0.0
    */
   _stringifyCoordinates (coordinates = null) {
     if (coordinates === null || (typeof coordinates === 'string' && coordinates.includes(','))) {
@@ -49,8 +55,19 @@ class CartoAPI {
     }
   }
 
-  _addAssetsToQuery (sqlQueryObj, coordinates, zipcode) {
-    debugger
+  /**
+   * Add in assets from the PPR Assets table
+   * in order to get the latitiude and longitude of the entity
+   * Will return assets based on given coordinates or zipcode
+   *
+   * @param {object} sqlQueryObj - passed by reference query object
+   * @param {string} coordinates - comma separated latitude and longitude values
+   * @param {number} zipcode
+   * @return void
+   *
+   * @since 0.0.0
+   */
+  _addPPRAssetsToQuery (sqlQueryObj, coordinates, zipcode) {
     sqlQueryObj
       .join(this.tables.assets, null, `${this.tables.assets}.objectid = ${this.tables.facilities}.pprassets_object_id`)
       .field(`ST_Y(
@@ -69,17 +86,31 @@ class CartoAPI {
     }
   }
 
+  /**
+   * get entities within relative distance to given coordinates
+   * returned in ascending order of miles
+   *
+   * @param {object} sqlQueryObj - passed by reference query object
+   *
+   * @since 0.0.0
+   */
   _addDistanceAsMiles (sqlQueryObj) {
-    // get entities within relative distance to given coordinates
-    // returned in order of closest by miles
     sqlQueryObj
       .field(`ST_Distance(
-                    ST_Centroid(ppr_assets.the_geom)::geography,
-                    ST_Centroid(zip_codes.the_geom)::geography
-                  ) * 0.000621371 as distance`)
+                    ST_Centroid(${this.tables.assets}.the_geom)::geography,
+                    ST_Centroid(${this.tables.zipcodes}.the_geom)::geography
+                  ) * ${this.METERS_TO_MILES_RATIO} as distance`)
       .order('distance')
   }
 
+  /**
+   * Given a set of coordinates get entites in ascening order of distance in miles
+   *
+   * @param {object} sqlQueryObj - passed by reference query object
+   * @param {string} coordinates - comma separated latitude and longitude values
+   *
+   * @since 0.0.0
+   */
   _addCoordinatesToQuery (sqlQueryObj, coordinates) {
     sqlQueryObj
       .field(`ST_Distance(
@@ -88,17 +119,35 @@ class CartoAPI {
                   ST_Point(${coordinates}),
                   4326
                 )::geography
-              )  * 0.000621371 as distance`)
+              )  * ${this.METERS_TO_MILES_RATIO} as distance`)
       .order('distance')
   }
 
+  /**
+   * Given a zipcode get entities in ascending order of
+   * distance from centroid of zipcode polygon in units of miles
+   *
+   * @param {[type]} sqlQueryObj [description]
+   * @param {[type]} zipcode     [description]
+   *
+   * @since 0.0.0
+   */
   _addZipcodeToQuery (sqlQueryObj, zipcode) {
     this._addDistanceAsMiles(sqlQueryObj)
     sqlQueryObj
-        .field(`ST_Intersects(zip_codes.the_geom, ppr_assets.the_geom) as within_zip_code`)
-        .left_join('zip_codes', null, `zip_codes.code = '${zipcode}'`)
+        .field(`ST_Intersects(${this.tables.zipcodes}.the_geom, ${this.tables.assets}.the_geom) as within_zip_code`)
+        .left_join(`${this.tables.zipcodes}`, null, `${this.tables.zipcodes}.code = '${zipcode}'`)
   }
 
+  /**
+   * Freetext search implementation using a basic SQL ILIKE
+   * @param  {object} sqlQueryObj   [description]
+   * @param  {Array}  fields        array of fields to search on
+   * @param  {string} freetextValue user input freetext search value
+   * @return {void}
+   *
+   * @since 0.0.0
+   */
   // ILIKE constructor
   // sqlQuery
   //  .where(
@@ -136,7 +185,7 @@ class CartoAPI {
                           .field(`${this.tables.programs}.*`)
                           .join(this.tables.facilities, null, `${this.tables.facilities}.id = ${this.tables.programs}.facility->>0`)
 
-    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords), zipcode)
+    this._addPPRAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords), zipcode)
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
@@ -163,7 +212,7 @@ class CartoAPI {
                           .from(this.tables.facilities)
                           .field(`${this.tables.facilities}.*`)
 
-    this._addAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords), zipcode)
+    this._addPPRAssetsToQuery(sqlQuery, this._stringifyCoordinates(coords), zipcode)
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
