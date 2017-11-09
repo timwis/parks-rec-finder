@@ -39,7 +39,13 @@ export default new Vuex.Store({
     }
   },
 
-  getters: {},
+  getters: {
+    facilityList: (state) => state.facilities.entities.map(facilityID => state.entities.facility[facilityID]),
+    facilityListCount: (state, getters) => getters.facilityList.length,
+
+    programList: (state) => state.programs.entities.map(programID => state.entities.program[programID]),
+    programListCount: (state, getters) => getters.programList.length
+  },
 
   actions: {},
 

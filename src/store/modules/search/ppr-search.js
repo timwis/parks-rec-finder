@@ -29,13 +29,12 @@ const actions = {
           commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
 
           const normalizedFacilities = normalize(searchResults[0].data.rows, [facilitySchema])
-          const normalizedPrograms = normalize(searchResults[1].data.rows, [programSchema])
-
-          commit(types.UPDATE_ENTITIES, { entities: normalizedPrograms.entities })
           commit(types.UPDATE_ENTITIES, { entities: normalizedFacilities.entities })
+          commit(types.UPDATE_FACILITIES, normalizedFacilities.result, {root: true})
 
-          commit(types.UPDATE_FACILITIES, searchResults[0], {root: true})
-          commit(types.UPDATE_PROGRAMS, searchResults[1], {root: true})
+          const normalizedPrograms = normalize(searchResults[1].data.rows, [programSchema])
+          commit(types.UPDATE_ENTITIES, { entities: normalizedPrograms.entities })
+          commit(types.UPDATE_PROGRAMS, normalizedPrograms.result, {root: true})
         })
         .catch((err) => {
           console.log(err)
