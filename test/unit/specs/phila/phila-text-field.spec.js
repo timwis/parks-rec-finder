@@ -2,7 +2,7 @@ import { mount } from 'avoriaz'
 import PhilaTextField from '@/components/phila/phila-text-field'
 
 describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
-  let PhilaTextFieldComponent = mount(PhilaTextField, { propsData: { type:'text' }})
+  let PhilaTextFieldComponent = mount(PhilaTextField, {propsData: {type: 'text'}})
   const searchVal = 'search text'
 
   it('should render a label element', () => {
@@ -11,7 +11,6 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
   it('should render an input element', () => {
     expect(PhilaTextFieldComponent.contains('input')).to.equal(true)
   })
-
 
   describe(`METHODS:`, () => {
     it('')
@@ -56,7 +55,7 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
       it('exist', () => {
         expect(typeof PhilaTextFieldComponent.methods().focus).to.equal('function')
       })
-      it('should change focused data to true', async () =>{
+      it('should change focused data to true', async () => {
         let input = PhilaTextFieldComponent.find('input')[0]
         expect(PhilaTextFieldComponent.vm.focused).to.equal(false)
         input.trigger('focus')
@@ -76,8 +75,8 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
       it('exist', () => {
         expect(typeof PhilaTextFieldComponent.methods().blur).to.equal('function')
       })
-      it('should change focused data to false', async () =>{
-        PhilaTextFieldComponent.setData({ focused: true})
+      it('should change focused data to false', async () => {
+        PhilaTextFieldComponent.setData({ focused: true })
         PhilaTextFieldComponent.vm.blur()
         await PhilaTextFieldComponent.vm.$nextTick()
         expect(PhilaTextFieldComponent.vm.focused).to.equal(false)
@@ -85,10 +84,9 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
       xit('should emit "change" event if on blur input element value has changed from initial value', async () => {
         // @TODO: figure out how to make this pass
         let value = 'asd'
-        PhilaTextFieldComponent = mount(PhilaTextField, { propsData: { type:'text', value }})
+        PhilaTextFieldComponent = mount(PhilaTextField, {propsData: {type: 'text', value}})
         const ChangeSpy = sinon.spy()
         PhilaTextFieldComponent.vm.$on('change', ChangeSpy)
-
 
         const input = PhilaTextFieldComponent.find('input')[0]
         input.trigger('focus')
@@ -102,7 +100,6 @@ describe('PHILA::Text Field: phila/phila-text-field.vue', () => {
         await PhilaTextFieldComponent.vm.$nextTick()
         // expect(PhilaTextFieldComponent.data().lazyValue).to.equal('fgh')
         ChangeSpy.should.have.been.called
-
       })
     })
   })

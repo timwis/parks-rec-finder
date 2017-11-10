@@ -1,9 +1,9 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 import { mount, shallow } from 'avoriaz'
-// import pprfTabs from '@/components/pprf-tabs/pprf-tabs'
-// import pprfTab from '@/components/pprf-tabs/pprf-tab'
+import pprfTabs from '@/components/pprf-tabs/pprf-tabs'
+import pprfTab from '@/components/pprf-tabs/pprf-tab'
 
-xdescribe('TABS: pprf-tabs/', () => {
+describe('TABS: pprf-tabs/', () => {
   xit('')
   describe('TABS: pprf-tabs/pprf-tabs', () => {
     let TabsComponent
