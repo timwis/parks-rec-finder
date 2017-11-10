@@ -1,7 +1,8 @@
 // import Vue from 'vue'
-// import PprfSidebar from '@/components/pprf-sidebar'
+// import pprfSidebar from '@/components/pprf-sidebar'
 
-xdescribe('SIDEBAR: pprf-sidebar.vue', () => {
+describe('SIDEBAR: pprf-sidebar.vue', () => {
   it('should render correct contents', () => {
+    expect(true).to.equal(true)
   })
 })
