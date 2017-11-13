@@ -12,9 +12,11 @@
     "test": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "styleguide": "vue-styleguidist server",
-    "styleguide:build": "vue-styleguidist build"
+    "styleguide:build": "vue-styleguidist build",
+    "jest-test": "jest"
   },
   "dependencies": {
+    "jest-html-reporter": "^0.5.3",
     "normalize.css": "^7.0.0",
     "phila-standards": "^0.11.2",
     "vue": "^2.5.2",
@@ -23,10 +25,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
-    "avoriaz": "^6.0.1",
     "axios": "^0.17.0",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
+    "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-istanbul": "^4.1.1",
     "babel-plugin-transform-runtime": "^6.22.0",
@@ -34,8 +36,6 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "browser-sync": "^2.18.13",
-    "chai": "^4.1.2",
-    "chai-webdriver": "^1.2.0",
     "chalk": "^2.0.1",
     "concurrently": "^3.5.0",
     "connect-history-api-fallback": "^1.3.0",
@@ -59,23 +59,8 @@
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.3",
     "inject-loader": "^3.0.0",
-    "karma": "^1.7.0",
-    "karma-browserstack-launcher": "^1.3.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-coverage": "^1.1.1",
-    "karma-firefox-launcher": "^1.0.1",
-    "karma-html-live-reporter": "^0.2.0",
-    "karma-ie-launcher": "^1.0.0",
-    "karma-mocha": "^1.3.0",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-phantomjs-shim": "^1.5.0",
-    "karma-safari-launcher": "^1.0.0",
-    "karma-sinon-chai": "^1.3.3",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-spec-reporter": "0.0.31",
-    "karma-super-dots-reporter": "^0.1.0",
-    "karma-webpack": "^2.0.5",
-    "mocha": "^4.0.1",
+    "jest": "^21.1.0",
+    "jest-serializer-vue": "^0.2.0",
     "mustache": "^2.3.0",
     "node-sass": "^4.5.3",
     "normalizr": "^3.2.4",
@@ -89,15 +74,16 @@
     "sass-resources-loader": "^1.3.1",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
-    "sinon": "^4.1.2",
-    "sinon-chai": "^2.14.0",
     "squel": "^5.12.0",
     "url-loader": "^0.5.8",
     "vue-awesome": "^2.3.3",
+    "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
+    "vue-server-renderer": "2.4.2",
     "vue-style-loader": "^3.0.1",
     "vue-styleguidist": "^1.2.11",
     "vue-template-compiler": "^2.5.2",
+    "vue-test-utils": "^1.0.0-beta.4",
     "vuex-router-sync": "^5.0.0",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
@@ -113,5 +99,28 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "./src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "./node_modules/babel-jest",
+      ".*\\.(vue)$": "./node_modules/vue-jest"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ],
+    "mapCoverage": true,
+    "testResultsProcessor": "./node_modules/jest-html-reporter"
+  },
+  "jest-html-reporter": {
+        "pageTitle": "Your test suite",
+        "outputPath": "./__tests__/test-report/index.html",
+        "includeFailureMsg": false
+    }
 }
