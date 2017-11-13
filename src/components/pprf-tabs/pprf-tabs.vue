@@ -22,7 +22,7 @@
         </ul>
 
         <div class="pprf-tabs-panels scrollable">
-            <slot></slot>
+          <slot></slot>
         </div>
     </div>
 </template>
