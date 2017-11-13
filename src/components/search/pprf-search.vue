@@ -23,7 +23,10 @@
         :disabled="isDisabled"
         tabindex="3"
       >
-        <icon name="search" label="Search for Programs and Loactions"></icon>
+        <font-awesome-icon
+          icon="search"
+          :size="[!isDisabled ? 'lg' : '']"
+        />
       </phila-button>
 
     </form>
@@ -32,15 +35,14 @@
 <script>
 import PhilaTextField from '@/components/phila/phila-text-field'
 import PhilaButton from '@/components/phila/phila-button'
-import 'vue-awesome/icons/search'
-import Icon from 'vue-awesome/components/Icon'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'PPRF-Search',
   components: {
     PhilaTextField,
     PhilaButton,
-    Icon
+    FontAwesomeIcon
   },
 
   data () {

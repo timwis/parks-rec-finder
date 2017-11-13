@@ -28,7 +28,6 @@
 </template>
 
 <script>
-// import router from '@/router'
 /**
  * Tabular user interface
  *

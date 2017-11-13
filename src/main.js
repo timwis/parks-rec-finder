@@ -7,6 +7,12 @@ import { sync } from 'vuex-router-sync'
 import store from './store'
 // import PPRFinder from './pprf-app'
 import router from './router'
+
+import fontawesome from '@fortawesome/fontawesome'
+import { faSearch } from '@fortawesome/fontawesome-free-solid'
+
+fontawesome.library.add(faSearch)
+
 sync(store, router) // done. Returns an unsync callback fn
 
 Vue.use(Vuex)
