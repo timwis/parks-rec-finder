@@ -9,13 +9,12 @@ describe('pprf-header.vue', () => {
     expect(true).toBe(true)
   })
 
-  xit('matches snapshot', () => {
+  it('matches snapshot', () => {
     const renderer = createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {
       if (err) throw new Error(err)
       expect(str).toMatchSnapshot()
     })
   })
-
 
 });

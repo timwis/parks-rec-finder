@@ -1,11 +1,11 @@
 <template>
     <header class="pprf-header">
-        <pprf-search></pprf-search>
+        <!-- <pprf-search></pprf-search> -->
     </header>
 </template>
 
 <script>
-import pprfSearch from '@/components/search/pprf-search'
+// import pprfSearch from '@/components/search/pprf-search'
 /**
  * HEADER BAR
  *
@@ -16,7 +16,7 @@ import pprfSearch from '@/components/search/pprf-search'
 export default {
   name: 'PPRF-Header',
   components: {
-    pprfSearch
+    // pprfSearch
   }
 }
 </script>
