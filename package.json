@@ -8,12 +8,12 @@
     "dev": "concurrently \"node build/dev-server.js\" \"npm run styleguide\"",
     "start": "npm run dev",
     "build": "node build/build.js",
-    "unit:report": "cross-env BABEL_ENV=test browser-sync start --config config/browser-sync-jest.config.js",
-    "test": "concurrently --kill-others \"npm run unit:report\" \"npm run jest-test\" ",
+    "unit:report": "browser-sync start --config config/browser-sync-jest.config.js",
+    "test": "cross-env NODE_ENV=test concurrently --kill-others \"npm run unit:report\" \"npm run jest-test\" ",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "styleguide": "vue-styleguidist server",
     "styleguide:build": "vue-styleguidist build",
-    "jest-test": "jest --watchAll -u"
+    "jest-test": "jest --watchAll"
   },
   "dependencies": {
     "jest-html-reporter": "^0.5.3",

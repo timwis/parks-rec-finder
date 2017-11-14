@@ -5,7 +5,6 @@ import pprfTabs from '@/components/pprf-tabs/pprf-tabs.vue'
 import pprfTab from '@/components/pprf-tabs/pprf-tab.vue'
 
 describe('TABS: pprf-tabs/', () => {
-  xit('')
   describe('TABS: pprf-tabs/pprf-tabs', () => {
     let TabsComponent
     let Tab1
