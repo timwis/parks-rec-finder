@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PHILA::Button: phila/phila-button.vue mathches snapshot 1`] = `<button class="button"><div class="valign"><div class="button-label valign-cell"></div></div></button>`;
