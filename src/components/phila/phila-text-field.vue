@@ -106,7 +106,7 @@
           this.initialValue = this.lazyValue
         } else if (this.initialValue !== this.lazyValue) {
           /*
-           * Emits if input element value has changed on blur (on-focused)
+           * Emits if input element value has changed on blur (un-focused)
            *
            * @event change
            * @type {string}
@@ -177,7 +177,7 @@
       focus (e) {
         this.focused = true
         // if (document.activeElement !== this.$refs.input) {
-        //   this.$refs.input.focus()
+        //   this.$refs.inut.focus()
         // }
         /**
          * Emits on input elemet focus with event object as payload

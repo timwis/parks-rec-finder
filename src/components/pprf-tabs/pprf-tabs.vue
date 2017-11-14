@@ -22,13 +22,12 @@
         </ul>
 
         <div class="pprf-tabs-panels scrollable">
-            <slot></slot>
+          <slot></slot>
         </div>
     </div>
 </template>
 
 <script>
-// import router from '@/router'
 /**
  * Tabular user interface
  *

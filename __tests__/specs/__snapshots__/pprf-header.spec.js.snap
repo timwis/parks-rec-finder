@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pprf-header.vue matches snapshot 1`] = `
+<header class="pprf-header">
+    <form class="pprf-search">
+        <div class="text-field pprf-search-freetext"><label id="pprf-search-freetext__label" for="pprf-search-freetext__input"><!----></label> <input type="text" id="pprf-search-freetext__input" name="pprf-search-freetext" placeholder="SEARCH BY ACTIVITY TYPE OR LOCATION NAME" tabindex="0"></div>
+        <div class="text-field pprf-search-address"><label id="pprf-search-address__label" for="pprf-search-address__input"><!----></label> <input type="text" id="pprf-search-address__input" name="pprf-search-address" placeholder="ADDRESS OR ZIPCODE" tabindex="0"></div> <button disabled="disabled"
+            id="pprf-search-submit-btn" tabindex="3" class="button button--disabled"><div class="valign"><div class="button-label valign-cell"></div></div></button></form>
+</header>
+`;
