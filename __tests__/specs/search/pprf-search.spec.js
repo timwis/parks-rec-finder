@@ -3,21 +3,28 @@ import { createRenderer } from 'vue-server-renderer'
 import pprfSearch from '@/components/search/pprf-search'
 
 import Vuex from 'vuex'
-// import search from '@/store/modules/search/ppr-search'
+import VueRouter from 'vue-router'
+import routes from '@/router/routes'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
+localVue.use(VueRouter)
+
+const router = new VueRouter({ routes })
+
 
 describe('search/pprf-search.vue', () => {
   let SearchComponent
 
   beforeEach(() => {
-    SearchComponent = mount(pprfSearch)
+    SearchComponent = mount(pprfSearch, {localVue, router })
   })
 
   it('sanity check', () =>{
     expect(true).toBe(true)
+    expect(SearchComponent.vm.$route).toBeInstanceOf(Object)
   })
+
   it('mathches snapshot', () => {
     const renderer = createRenderer()
     renderer.renderToString(SearchComponent.vm, (err, str) => {
@@ -79,7 +86,8 @@ describe('search/pprf-search.vue', () => {
 
     })
     it('calls store action "submitSearch" on form submission', () => {
-      const wrapper = mount(pprfSearch, {store, localVue})
+      const wrapper = mount(pprfSearch, {store, localVue, router})
+      wrapper.setMethods({_updateRouteParams: jest.fn()})
       wrapper.setData({
         search: {
           fields: {

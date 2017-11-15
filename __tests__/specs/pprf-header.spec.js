@@ -17,4 +17,4 @@ describe('pprf-header.vue', () => {
     })
   })
 
-});
+})

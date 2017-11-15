@@ -33,8 +33,7 @@
 </template>
 
 <script>
-import router from '@/router'
-import store from '@/store'
+
 import PhilaTextField from '@/components/phila/phila-text-field'
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
@@ -64,9 +63,9 @@ export default {
   },
 
   mounted () {
-    if (store.state.route.query) {
-      this._updateInputRefsValues(store.state.route.query)
-    }
+    // if (this.$store.state.route.query) {
+    //   this._updateInputRefsValues(this.$store.state.route.query)
+    // }
     /**
      * Update isDisabled when user adds input to search fields
      */
@@ -117,14 +116,14 @@ export default {
     },
 
     _updateRouteParams (queryParams = {freetext: null, address: null, zip: 0}) {
-      if (store.state.route.name !== 'Search') {
-        router.push({path: 'search', query: queryParams})
+      if (this.$store.state.route.name !== 'Search') {
+        this.$router.push({path: 'search', query: queryParams})
       } else {
-        router.replace({path: 'search', query: queryParams})
+        this.$router.replace({path: 'search', query: queryParams})
       }
     },
 
-    _updateInputRefsValues (fieldValues = store.state.route.query) {
+    _updateInputRefsValues (fieldValues = this.$store.state.route.query) {
       if (fieldValues.freetext) {
         this.isDisabled = false
         this.$refs.freetextField.inputValue = fieldValues.freetext
