@@ -25,7 +25,7 @@
       >
         <font-awesome-icon
           icon="search"
-          :size="[!isDisabled ? 'lg' : '']"
+          size="lg"
         />
       </phila-button>
 
@@ -33,12 +33,15 @@
 </template>
 
 <script>
+import router from '@/router'
+import store from '@/store'
 import PhilaTextField from '@/components/phila/phila-text-field'
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'PPRF-Search',
+
   components: {
     PhilaTextField,
     PhilaButton,
@@ -61,6 +64,9 @@ export default {
   },
 
   mounted () {
+    if (store.state.route.query) {
+      this._updateInputRefsValues(store.state.route.query)
+    }
     /**
      * Update isDisabled when user adds input to search fields
      */
@@ -81,8 +87,8 @@ export default {
     },
 
     onAddressInput (addressVal) {
-      let isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(addressVal)
-      if (isValidZip) {
+      // let isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(addressVal)
+      if (this._isValidZip(addressVal)) {
         this.search.fields.zip = parseInt(addressVal)
         this.search.fields.address = null
       } else {
@@ -92,8 +98,9 @@ export default {
     },
 
     onSubmit (e) {
+      this._updateRouteParams(this.$data.search.fields)
       // @TODO: investigate the connection between local state and Vuex via actions
-      let _fields = this.$data.search.fields
+      const _fields = this.$data.search.fields
       let newSearch = {
         fields: {
           freetext: _fields.freetext,
@@ -103,6 +110,30 @@ export default {
       }
 
       this.$store.dispatch('submitSearch', newSearch)
+    },
+
+    _isValidZip (zipcodeVal) {
+      return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
+    },
+
+    _updateRouteParams (queryParams = {freetext: null, address: null, zip: 0}) {
+      if (store.state.route.name !== 'Search') {
+        router.push({path: 'search', query: queryParams})
+      } else {
+        router.replace({path: 'search', query: queryParams})
+      }
+    },
+
+    _updateInputRefsValues (fieldValues = store.state.route.query) {
+      if (fieldValues.freetext) {
+        this.isDisabled = false
+        this.$refs.freetextField.inputValue = fieldValues.freetext
+      }
+
+      if (fieldValues.address || fieldValues.zip) {
+        this.isDisabled = false
+        this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
+      }
     }
   }
 }

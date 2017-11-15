@@ -13,7 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "styleguide": "vue-styleguidist server",
     "styleguide:build": "vue-styleguidist build",
-    "jest-test": "jest --watchAll"
+    "jest-test": "jest --watchAll -u"
   },
   "dependencies": {
     "jest-html-reporter": "^0.5.3",

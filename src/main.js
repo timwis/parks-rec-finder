@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 
 import { sync } from 'vuex-router-sync'
 import store from './store'
-// import PPRFinder from './pprf-app'
+import PPRFinder from './pprf-app'
 import router from './router'
 
 import fontawesome from '@fortawesome/fontawesome'
@@ -22,6 +22,8 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production'
 /* eslint-disable no-new */
 new Vue({
   el: '#PPR-Finder',
+  template: '<PPRFinder/>',
+  components: { PPRFinder },
   router,
   store
 })

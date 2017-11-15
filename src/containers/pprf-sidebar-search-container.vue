@@ -1,13 +1,7 @@
 <template>
-  <div id="pprf-search-container" >
+  <pprf-sidebar>
 
-    <pprf-header></pprf-header>
-
-    <main class="pprf-app__main">
-
-      <pprf-sidebar>
-
-          <div class="pprf-sidebar-inner">
+    <div class="pprf-sidebar-inner">
             <header class="pprf-sidebar-header">
 
               <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
@@ -54,32 +48,21 @@
             </main>
           </div>
 
-      </pprf-sidebar>
-
-      <pprf-map/>
-
-    </main>
-
-  </div>
+  </pprf-sidebar>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-
-import pprfHeader from '@/components/pprf-header'
+import store from '@/store/'
 import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
-import pprfMap from '@/components/map/pprf-map'
-// import store from '@/store/'
 import entitiesListData from '@/mixins/entities-list-data'
 
 export default {
 
-  name: 'PPRF-Search-Container',
+  name: 'PPRF-Sidebar-Search-Container',
 
   components: {
-    pprfHeader,
-    pprfMap,
     pprfSidebar,
     pprfTabs,
     pprfTab
@@ -87,25 +70,23 @@ export default {
 
   mixins: [entitiesListData],
 
-  // created () {
-  //   let _freetextParam = store.state.route.query.freetext
-  //   // @TODO map route.query to search fields
-  //   if (_freetextParam) {
-  //     this.queryParamsSearch({freetext: _freetextParam})
-  //   }
-  // },
+  created () {
+    if (this.routeParams) {
+      this.queryParamsSearch(this.routeParams)
+    }
+  },
 
-  // methods: {
-  //   queryParamsSearch (queryParams) {
-  //     // @TODO update the the input values
-  //     let search = {fields: {freetext: queryParams.freetext, zip: queryParams.zip || null, address: queryParams.zip || null}}
-  //     store.dispatch('submitSearch', search)
-  //   }
-  // },
+  methods: {
+    queryParamsSearch (queryParams) {
+      // @TODO update the the input values
+      store.dispatch('submitSearch', {fields: queryParams})
+    }
+  },
 
   computed: {
     ...mapState({
-      search: state => state.search.fields
+      search: state => state.search.fields,
+      routeParams: state => Object.assign({}, store.state.search.fields, store.state.route.query)
     })
   }
 }
