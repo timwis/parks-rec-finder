@@ -70,6 +70,8 @@ import pprfHeader from '@/components/pprf-header'
 import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import pprfMap from '@/components/map/pprf-map'
+// import store from '@/store/'
+import entitiesListData from '@/mixins/entities-list-data'
 
 export default {
 
@@ -83,25 +85,25 @@ export default {
     pprfTab
   },
 
-  data () {
-    return {}
-  },
+  mixins: [entitiesListData],
+
+  // created () {
+  //   let _freetextParam = store.state.route.query.freetext
+  //   // @TODO map route.query to search fields
+  //   if (_freetextParam) {
+  //     this.queryParamsSearch({freetext: _freetextParam})
+  //   }
+  // },
+
+  // methods: {
+  //   queryParamsSearch (queryParams) {
+  //     // @TODO update the the input values
+  //     let search = {fields: {freetext: queryParams.freetext, zip: queryParams.zip || null, address: queryParams.zip || null}}
+  //     store.dispatch('submitSearch', search)
+  //   }
+  // },
 
   computed: {
-    facilities () {
-      return this.$store.getters.facilityList
-    },
-    facilitiesCount (state) {
-      return this.$store.getters.facilityListCount
-    },
-
-    programs () {
-      return this.$store.getters.programList
-    },
-    programsCount (state) {
-      return this.$store.getters.programListCount
-    },
-
     ...mapState({
       search: state => state.search.fields
     })
