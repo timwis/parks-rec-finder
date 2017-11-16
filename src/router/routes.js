@@ -1,7 +1,6 @@
-// import pprfHeader from '@/components/pprf-header'
 import pprfMap from '@/components/map/pprf-map'
 import pprfSidebar from '@/components/pprf-sidebar'
-// import pprfSidebarSearchContainer from '@/containers/pprf-sidebar-search-container'
+import pprfSidebarSearchContainer from '@/containers/pprf-sidebar-search-container'
 
 const routes = [
   {
@@ -18,7 +17,7 @@ const routes = [
     name: 'Search',
     components: {
       'map': pprfMap,
-      // 'sidebar': pprfSidebarSearchContainer
+      'sidebar': pprfSidebarSearchContainer
     }
   }
 

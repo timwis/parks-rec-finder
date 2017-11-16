@@ -12,7 +12,6 @@ localVue.use(VueRouter)
 
 const router = new VueRouter({ routes })
 
-
 describe('search/pprf-search.vue', () => {
   let SearchComponent
 

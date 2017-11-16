@@ -10,7 +10,7 @@
 </template>
 
 <script>
-// import {mapState} from 'vuex'
+
 /**
  * Single Tab to be nested in pprf-tabs component
  *
@@ -59,19 +59,6 @@ export default {
     this.isActive = this.selected
   }
 
-  // computed: mapState({
-  //   isActive (state) {
-  //     return (this.name === state.route.name)
-  //   }
-  // })
-
-  // watch: {
-  //   'isActive': {
-  //     handler (val) {
-  //       // @TODO: set focus on the first heading (h3 || h4) when tab is active
-  //     }
-  //   }
-  // }
 }
 </script>
 

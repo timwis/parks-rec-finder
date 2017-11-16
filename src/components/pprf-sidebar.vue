@@ -8,7 +8,7 @@
 /**
  * APPLICATION SIDEBAR
  *
- * Contains Search Results Lists and Detail Items
+ * Layout wrapper component
  *
  * @since 0.0.0
  */

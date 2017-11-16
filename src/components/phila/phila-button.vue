@@ -21,9 +21,17 @@
     name: 'phila-button',
 
     props: {
+      /**
+       * link
+       * @type {String}
+       */
       href: {
         type: String
       },
+      /**
+       * Disabled state
+       * @type {boolean}
+       */
       disabled: {
         type: Boolean,
         default: false
