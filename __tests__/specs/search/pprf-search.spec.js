@@ -86,7 +86,7 @@ describe('search/pprf-search.vue', () => {
     })
     it('calls store action "submitSearch" on form submission', () => {
       const wrapper = mount(pprfSearch, {store, localVue, router})
-      wrapper.setMethods({_updateRouteParams: jest.fn()})
+      wrapper.setMethods({updateSearchRouteParams: jest.fn()})
       wrapper.setData({
         search: {
           fields: {

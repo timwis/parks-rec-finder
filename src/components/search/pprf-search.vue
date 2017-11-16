@@ -37,7 +37,12 @@
 import PhilaTextField from '@/components/phila/phila-text-field'
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-
+/**
+ * SEARCH BAR COMPONENT
+ * Form and inputs to search by freetext and/or address or zipcode
+ *
+ * @since 0.0.0
+ */
 export default {
   name: 'PPRF-Search',
 
@@ -63,9 +68,9 @@ export default {
   },
 
   mounted () {
-    // if (this.$store.state.route.query) {
-    //   this._updateInputRefsValues(this.$store.state.route.query)
-    // }
+    if (this.$store.state.route.query) {
+      this._updateInputRefsValues(this.$store.state.route.query)
+    }
     /**
      * Update isDisabled when user adds input to search fields
      */
@@ -80,13 +85,28 @@ export default {
   },
 
   methods: {
-
+    /**
+     * Sets local search field state
+     * @param  {string} freetextVal user input
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
     onFreetextInput (freetextVal) {
       this.search.fields.freetext = freetextVal
     },
-
+    /**
+     * Validates the address field input as either
+     * an address or a zipcode and sets the appropriate
+     * search field state accordingly
+     * @param  {sring | number} addressVal address address or zipcode value
+     * @return {viod}
+     *
+     * @public
+     * @since 0.0.0
+     */
     onAddressInput (addressVal) {
-      // let isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(addressVal)
       if (this._isValidZip(addressVal)) {
         this.search.fields.zip = parseInt(addressVal)
         this.search.fields.address = null
@@ -96,8 +116,19 @@ export default {
       }
     },
 
+    /**
+     * updates the url query parameters to match the search values
+     * to allow for deep linking of serach results.
+     * Dispatches the "submitSearch" event to the store.
+     *
+     * @param  {object} e submit event
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
     onSubmit (e) {
-      this._updateRouteParams(this.$data.search.fields)
+      this.updateSearchRouteParams(this.$data.search.fields)
       // @TODO: investigate the connection between local state and Vuex via actions
       const _fields = this.$data.search.fields
       let newSearch = {
@@ -111,11 +142,17 @@ export default {
       this.$store.dispatch('submitSearch', newSearch)
     },
 
-    _isValidZip (zipcodeVal) {
-      return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
-    },
-
-    _updateRouteParams (queryParams = {freetext: null, address: null, zip: 0}) {
+    /**
+     * give a route params oject to match that matches the
+     * local state search fields udpate the search route url to
+     * include those params in order to allow for deeplinking
+     * @param  {Object} queryParams query params  object matching the local state serch fields object
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
+    updateSearchRouteParams (queryParams = {freetext: null, address: null, zip: 0}) {
       if (this.$store.state.route.name !== 'Search') {
         this.$router.push({path: 'search', query: queryParams})
       } else {
@@ -123,6 +160,25 @@ export default {
       }
     },
 
+    /**
+     * regex test a for zipcode structure
+     * @param  {number}  zipcodeVal zipcode to validate
+     * @return {boolean}            true if is valid; false if not
+     *
+     * @since 0.0.0
+     */
+    _isValidZip (zipcodeVal) {
+      return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
+    },
+    /**
+     * if url query params are give update the input
+     * fields to reflect those values
+     * NOTE: does not update local state
+     * @param  {object} fieldValues query parameter object
+     * @return {void}
+     *
+     * @since 0.0.0
+     */
     _updateInputRefsValues (fieldValues = this.$store.state.route.query) {
       if (fieldValues.freetext) {
         this.isDisabled = false
