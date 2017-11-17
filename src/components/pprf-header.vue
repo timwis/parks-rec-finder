@@ -1,5 +1,6 @@
 <template>
     <header class="pprf-header">
+        <vue-progress-bar></vue-progress-bar>
         <pprf-search></pprf-search>
     </header>
 </template>
