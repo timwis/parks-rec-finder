@@ -7,6 +7,8 @@ import facilities from './modules/facilities/ppr-facilities'
 import programs from './modules/programs/ppr-programs'
 import search from './modules/search/ppr-search'
 import * as types from './mutation-types'
+import createLogger from 'vuex/dist/logger'
+
 // import createLogger from '../../../src/plugins/logger'
 
 Vue.use(Vuex)
@@ -64,5 +66,6 @@ export default new Vuex.Store({
     }
   },
 
-  strict: debug
+  strict: debug,
+  plugins: debug ? [createLogger()] : []
 })

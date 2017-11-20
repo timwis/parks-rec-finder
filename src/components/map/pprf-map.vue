@@ -1,6 +1,6 @@
 <template>
   <div class="pprf-map-container">
-    <div ref="map" id="map"></div>
+    <div id="map"></div>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
   },
 
   mounted () {
-    this.map = L.map(this.$el).setView(this.defaultLocation, 14)
+    this.map = L.map(this.$el, {preferCanvas: true}).setView(this.defaultLocation, 14)
 
     navigator.geolocation.getCurrentPosition(position => {
       // alert(`${position.coords.latitude}, ${position.coords.longitude}`)
@@ -59,6 +59,7 @@ export default {
   },
 
   watch: {
+    // @TODO figure out why this causes a browser lag
     facilities: function (locations) {
       this.$Progress.finish()
       if (this.markers.length) {
@@ -66,13 +67,14 @@ export default {
           this.map.removeLayer(this.markers[i])
         }
       }
-      this.markers = locations.map(_loc => new L.Marker.SVGMarker([_loc.latitude, _loc.longitude]))
-    },
-    markers: function (markersArr) {
-      for (let _markerIdx in markersArr) {
-        markersArr[_markerIdx].addTo(this.map)
+
+      let _markerOptions = {
+        color: '#3388ff'
       }
+
+      this.markers = locations.map(_loc => L.circleMarker([_loc.latitude, _loc.longitude], _markerOptions).addTo(this.map))
     }
+
   }
 }
 </script>

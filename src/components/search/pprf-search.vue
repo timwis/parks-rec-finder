@@ -138,7 +138,6 @@ export default {
           zip: _fields.zip
         }
       }
-      this.$Progress.start()
       this.$store.dispatch('submitSearch', newSearch)
     },
 

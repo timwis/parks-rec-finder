@@ -28,13 +28,14 @@ const actions = {
         .then(searchResults => {
           commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
 
-          const normalizedFacilities = normalize(searchResults[0].data.rows, [facilitySchema])
-          commit(types.UPDATE_ENTITIES, { entities: normalizedFacilities.entities })
-          commit(types.UPDATE_FACILITIES, normalizedFacilities.result, {root: true})
+          let normalizedFacilities = normalize(searchResults[0].data.rows, [facilitySchema])
+          let normalizedPrograms = normalize(searchResults[1].data.rows, [programSchema])
+          let normalizedResults = Object.assign({}, normalizedPrograms.entities, normalizedFacilities.entities)
 
-          const normalizedPrograms = normalize(searchResults[1].data.rows, [programSchema])
-          commit(types.UPDATE_ENTITIES, { entities: normalizedPrograms.entities })
+          commit(types.UPDATE_FACILITIES, normalizedFacilities.result, {root: true})
           commit(types.UPDATE_PROGRAMS, normalizedPrograms.result, {root: true})
+
+          commit(types.UPDATE_ENTITIES, { entities: normalizedResults })
         })
         .catch((err) => {
           console.log(err)
