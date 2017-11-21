@@ -1,7 +1,9 @@
 <template>
     <header class="pprf-header">
-        <vue-progress-bar></vue-progress-bar>
-        <pprf-search></pprf-search>
+        <pprf-search
+          @submit="onSearchSubmit"
+          :prefillValues="searchPrefill"
+        ></pprf-search>
     </header>
 </template>
 
@@ -16,9 +18,8 @@ import pprfSearch from '@/components/search/pprf-search'
  */
 export default {
   name: 'PPRF-Header',
-  components: {
-    pprfSearch
-  }
+  components: {pprfSearch},
+  props: ['onSearchSubmit', 'searchPrefill']
 }
 </script>
 

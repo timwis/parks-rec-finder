@@ -53,7 +53,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import store from '@/store/'
 import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import entitiesListData from '@/mixins/entities-list-data'
@@ -70,23 +69,9 @@ export default {
 
   mixins: [entitiesListData],
 
-  created () {
-    // if deeplinked and search params passed to url
-    if (!this.$store.state.route.from.name && this.routeParams) {
-      this.queryParamsSearch(this.routeParams)
-    }
-  },
-
-  methods: {
-    queryParamsSearch (queryParams) {
-      store.dispatch('submitSearch', {fields: queryParams})
-    }
-  },
-
   computed: {
     ...mapState({
-      search: state => state.search.fields,
-      routeParams: state => Object.assign({}, store.state.search.fields, store.state.route.query)
+      search: state => state.search.fields
     })
   }
 }

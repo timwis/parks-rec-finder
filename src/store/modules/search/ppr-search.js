@@ -36,13 +36,11 @@ const actions = {
 
           let markers = totalResultsSet.map(entity => new PPRFMarker(entity))
           let normailzedMarkers = normalize(markers, [markerSchema])
-          console.log(normailzedMarkers)
 
           let normalizedResults = Object.assign({}, normalizedPrograms.entities, normalizedFacilities.entities, normailzedMarkers.entities)
 
           commit(types.UPDATE_FACILITIES, normalizedFacilities.result, {root: true})
           commit(types.UPDATE_PROGRAMS, normalizedPrograms.result, {root: true})
-
           commit(types.UPDATE_ENTITIES, { entities: normalizedResults })
         })
         .catch((err) => {

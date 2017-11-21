@@ -75,9 +75,8 @@ export default new Vuex.Store({
           const oldObj = state.entities[type][entity] || {}
           // Merge the new data in the old object
           const newObj = Object.assign(oldObj, entities[type][entity])
-          state.entities[type][entity] = newObj
           // Make sure new entities are also reactive
-          // Vue.set(state.entities[type], entity, newObj)
+          Vue.set(state.entities[type], entity, newObj)
         }
       }
     }

@@ -45,7 +45,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
  */
 export default {
   name: 'PPRF-Search',
-
+  props: ['prefillValues'],
   components: {
     PhilaTextField,
     PhilaButton,
@@ -68,9 +68,6 @@ export default {
   },
 
   mounted () {
-    if (this.$store.state.route.query) {
-      this._updateInputRefsValues(this.$store.state.route.query)
-    }
     /**
      * Update isDisabled when user adds input to search fields
      */
@@ -128,8 +125,6 @@ export default {
      * @since 0.0.0
      */
     onSubmit (e) {
-      this.updateSearchRouteParams(this.$data.search.fields)
-      // @TODO: investigate the connection between local state and Vuex via actions
       const _fields = this.$data.search.fields
       let newSearch = {
         fields: {
@@ -138,25 +133,8 @@ export default {
           zip: _fields.zip
         }
       }
+      this.$emit('submit', newSearch.fields)
       this.$store.dispatch('submitSearch', newSearch)
-    },
-
-    /**
-     * give a route params oject to match that matches the
-     * local state search fields udpate the search route url to
-     * include those params in order to allow for deeplinking
-     * @param  {Object} queryParams query params  object matching the local state serch fields object
-     * @return {void}
-     *
-     * @public
-     * @since 0.0.0
-     */
-    updateSearchRouteParams (queryParams = {freetext: null, address: null, zip: 0}) {
-      if (this.$store.state.route.name !== 'Search') {
-        this.$router.push({path: 'search', query: queryParams})
-      } else {
-        this.$router.replace({path: 'search', query: queryParams})
-      }
     },
 
     /**
@@ -168,26 +146,6 @@ export default {
      */
     _isValidZip (zipcodeVal) {
       return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
-    },
-    /**
-     * if url query params are give update the input
-     * fields to reflect those values
-     * NOTE: does not update local state
-     * @param  {object} fieldValues query parameter object
-     * @return {void}
-     *
-     * @since 0.0.0
-     */
-    _updateInputRefsValues (fieldValues = this.$store.state.route.query) {
-      if (fieldValues.freetext) {
-        this.isDisabled = false
-        this.$refs.freetextField.inputValue = fieldValues.freetext
-      }
-
-      if (fieldValues.address || fieldValues.zip) {
-        this.isDisabled = false
-        this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
-      }
     }
   }
 }
