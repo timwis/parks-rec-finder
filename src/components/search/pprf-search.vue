@@ -138,7 +138,6 @@ export default {
           zip: _fields.zip
         }
       }
-
       this.$store.dispatch('submitSearch', newSearch)
     },
 

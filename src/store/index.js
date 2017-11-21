@@ -7,7 +7,7 @@ import facilities from './modules/facilities/ppr-facilities'
 import programs from './modules/programs/ppr-programs'
 import search from './modules/search/ppr-search'
 import * as types from './mutation-types'
-// import createLogger from '../../../src/plugins/logger'
+import createLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
 
@@ -26,17 +26,32 @@ const debug = process.env.NODE_ENV !== 'production'
 // })
 
 export default new Vuex.Store({
+  actions: {
+    setActiveTab ({commit, state}, entityType) {
+      let type = entityType.toLowerCase()
+      if (type === 'locations') { type = 'facilities' }
+      commit(types.SET_ACTIVE_TAB, type)
+      // if (state.entities.hasOwnProperty(type)) {
+      // } else {
+      //   console.error(`entity type "${type}"" not found in state.entities properties`)
+      // }
+    }
+  },
+
   modules: {
     search,
     facilities,
     programs
   },
+
   state: {
     entities: {
       program: {},
       facility: {},
-      activity_type: {}
-    }
+      activity_type: {},
+      marker: {}
+    },
+    activeTab: 'programs'
   },
 
   getters: {
@@ -44,12 +59,15 @@ export default new Vuex.Store({
     facilityListCount: (state, getters) => getters.facilityList.length,
 
     programList: (state) => state.programs.entities.map(programID => state.entities.program[programID]),
-    programListCount: (state, getters) => getters.programList.length
+    programListCount: (state, getters) => getters.programList.length,
+
+    markers: (state) => state[state.activeTab].entities.map(entityID => state.entities.marker[entityID])
   },
 
-  actions: {},
-
   mutations: {
+    [types.SET_ACTIVE_TAB] (state, entityType) {
+      state.activeTab = entityType
+    },
     [types.UPDATE_ENTITIES] (state, { entities }) {
       // Loop over all kinds of entities we received
       for (let type in entities) {
@@ -57,12 +75,14 @@ export default new Vuex.Store({
           const oldObj = state.entities[type][entity] || {}
           // Merge the new data in the old object
           const newObj = Object.assign(oldObj, entities[type][entity])
+          state.entities[type][entity] = newObj
           // Make sure new entities are also reactive
-          Vue.set(state.entities[type], entity, newObj)
+          // Vue.set(state.entities[type], entity, newObj)
         }
       }
     }
   },
 
-  strict: debug
+  strict: debug,
+  plugins: debug ? [createLogger()] : []
 })

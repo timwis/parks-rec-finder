@@ -71,14 +71,14 @@ export default {
   mixins: [entitiesListData],
 
   created () {
-    if (this.routeParams) {
+    // if deeplinked and search params passed to url
+    if (!this.$store.state.route.from.name && this.routeParams) {
       this.queryParamsSearch(this.routeParams)
     }
   },
 
   methods: {
     queryParamsSearch (queryParams) {
-      // @TODO update the the input values
       store.dispatch('submitSearch', {fields: queryParams})
     }
   },

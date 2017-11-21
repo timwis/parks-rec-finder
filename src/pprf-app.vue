@@ -15,7 +15,6 @@
 
 <script>
 import pprfHeader from '@/components/pprf-header'
-
 /**
  * MAIN APPLICATION COMPONENT.
  *
@@ -30,8 +29,10 @@ export default {
 }
 </script>
 
-<style src="./style/main.scss" lang="scss"></style>
+
 <style lang="scss" >
+  @import "~leaflet/dist/leaflet.css";
+
     #pprf-app-container {
       width: 100%;
       max-width: $max-app-width;

@@ -7,6 +7,10 @@ export default {
       return this.$store.getters.facilityListCount
     },
 
+    markers (state) {
+      return this.$store.getters.markers
+    },
+
     programs () {
       return this.$store.getters.programList
     },

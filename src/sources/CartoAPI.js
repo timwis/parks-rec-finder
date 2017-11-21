@@ -31,10 +31,10 @@ class CartoAPI {
    */
   runQuery (sqlString) {
     // log queries
-    this.http.interceptors.request.use((config) => {
-      if (this.LOG_QUERIES) { console.log(`Carto: ${config.baseURL}${config.url}`) }
-      return config
-    })
+    // this.http.interceptors.request.use((config) => {
+    //   if (this.LOG_QUERIES) { console.log(`Carto: ${config.baseURL}${config.url}`) }
+    //   return config
+    // })
     return this.http.get(`sql?q=${sqlString}`)
   }
 
@@ -191,7 +191,7 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['program_name', 'program_description'], freetextValue)
     }
-
+    if (this.LOG_QUERIES) { console.log(`CartoAPI:queryProgramsBy::${sqlQuery.toString()}`) }
     return encodeURIComponent(sqlQuery.toString())
   }
 
@@ -217,7 +217,7 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['facility_description', 'facility_name', 'long_name'], freetextValue)
     }
-
+    if (this.LOG_QUERIES) { console.log(`CartoAPI:queryFacilitiesBy::${sqlQuery.toString()}`) }
     return encodeURIComponent(sqlQuery.toString())
   }
 }

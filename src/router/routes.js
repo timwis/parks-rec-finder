@@ -1,4 +1,5 @@
-import pprfMap from '@/components/map/pprf-map'
+// import pprfMap from '@/components/map/pprf-map'
+import pprfLeafletMap from '@/components/map/pprf-leaflet-map'
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfSidebarSearchContainer from '@/containers/pprf-sidebar-search-container'
 
@@ -7,7 +8,7 @@ const routes = [
     path: '/',
     name: 'Home',
     components: {
-      'map': pprfMap,
+      'map': pprfLeafletMap,
       'sidebar': pprfSidebar
     }
   },
@@ -16,7 +17,7 @@ const routes = [
     path: '/search',
     name: 'Search',
     components: {
-      'map': pprfMap,
+      'map': pprfLeafletMap,
       'sidebar': pprfSidebarSearchContainer
     }
   }

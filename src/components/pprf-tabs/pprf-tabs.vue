@@ -67,6 +67,7 @@ export default {
        * @type {object}
        */
       this.$emit('tabSelected', selectedTab)
+      this.$store.dispatch('setActiveTab', selectedTab.name)
     }
   }
 }

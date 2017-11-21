@@ -4,7 +4,8 @@ const state = {
   loading: false,
   error: null,
   success: false,
-  entities: []
+  entities: [],
+  markers: []
 }
 
 const getters = {}

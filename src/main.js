@@ -7,15 +7,18 @@ import { sync } from 'vuex-router-sync'
 import store from './store'
 import PPRFinder from './pprf-app'
 import router from './router'
-
+import VueProgressBar from 'vue-progressbar'
 import fontawesome from '@fortawesome/fontawesome'
 import { faSearch } from '@fortawesome/fontawesome-free-solid'
-
 fontawesome.library.add(faSearch)
 
-sync(store, router) // done. Returns an unsync callback fn
-
+sync(store, router)
 Vue.use(Vuex)
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px'
+})
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
