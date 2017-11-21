@@ -8,11 +8,13 @@
       <v-circle-marker
         v-if="userLocation"
         :lat-lng="userLocation"
+        :options="{color: 'red', radius: 5, opacity: 1}"
       />
       <v-circle-marker
-          v-for="marker in markers"
-          :key="marker.id"
-          :lat-lng="[marker.lat, marker.lng]"
+         v-for="_marker in markers"
+          :key="_marker.id"
+          :lat-lng="[_marker.lat, _marker.lng]"
+          :options="{color: _marker.color}"
       ></v-circle-marker>
 
     </v-map>
@@ -20,9 +22,9 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import L from 'leaflet'
 import Vue2Leaflet from 'vue2-leaflet'
-import entitiesListData from '@/mixins/entities-list-data'
 
 export default {
 
@@ -36,7 +38,13 @@ export default {
     'v-circle-marker': Vue2Leaflet.CircleMarker
   },
 
-  mixins: [entitiesListData],
+  computed: {
+    ...mapState({
+      markers: state => state.entities.marker,
+      programs: state => state.entities.program,
+      facilities: state => state.entities.facility
+    })
+  },
 
   data () {
     return {

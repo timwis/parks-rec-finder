@@ -1,10 +1,5 @@
 import * as types from '../../mutation-types'
 import api from '@/sources/api'
-
-import { normalize } from 'normalizr'
-import {facilitySchema} from '@/store/modules/facilities/ppr-facility-schema'
-import {programSchema} from '@/store/modules/programs/ppr-program-schema'
-import {markerSchema} from '@/store/modules/markers/marker-schema'
 import PPRFMarker from '@/store/modules/markers/Marker'
 
 const state = {
@@ -29,19 +24,20 @@ const actions = {
     api.search(serachParams)
         .then(searchResults => {
           commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
-          const totalResultsSet = searchResults[0].data.rows.concat(searchResults[1].data.rows)
-
-          let normalizedFacilities = normalize(searchResults[0].data.rows, [facilitySchema])
-          let normalizedPrograms = normalize(searchResults[1].data.rows, [programSchema])
-
-          let markers = totalResultsSet.map(entity => new PPRFMarker(entity))
-          let normailzedMarkers = normalize(markers, [markerSchema])
-
-          let normalizedResults = Object.assign({}, normalizedPrograms.entities, normalizedFacilities.entities, normailzedMarkers.entities)
-
-          commit(types.UPDATE_FACILITIES, normalizedFacilities.result, {root: true})
-          commit(types.UPDATE_PROGRAMS, normalizedPrograms.result, {root: true})
-          commit(types.UPDATE_ENTITIES, { entities: normalizedResults })
+          let facility = searchResults[0].data.rows
+          let program = searchResults[1].data.rows
+          let markers = {
+            facility: searchResults[0].data.rows.map(entity => new PPRFMarker('program', entity)),
+            program: searchResults[1].data.rows.map(entity => new PPRFMarker('facility', entity))
+          }
+          let flatResults = {
+            facility,
+            facilityMarkers: markers.facility,
+            program,
+            programMarkers: markers.program,
+            marker: markers[state.activeTab]
+          }
+          commit(types.UPDATE_ENTITIES, { entities: flatResults })
         })
         .catch((err) => {
           console.log(err)

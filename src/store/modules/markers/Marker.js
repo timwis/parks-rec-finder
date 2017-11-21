@@ -1,5 +1,6 @@
 class PPRFMarker {
-  constructor (entity) {
+  constructor (entityType, entity) {
+    this.entityType = entityType
     this._setID(entity)
     this._setCoords(entity)
     this._setColor(entity)
