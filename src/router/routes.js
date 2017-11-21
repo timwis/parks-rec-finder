@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     name: 'Home',
     components: {
-      'map': pprfMap,
+      // 'map': pprfMap,
       'sidebar': pprfSidebar
     }
   },

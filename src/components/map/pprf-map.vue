@@ -24,7 +24,7 @@ export default {
     return {
       defaultLocation: [39.9523893, -75.1636291],
       map: {},
-      markers: []
+      markerCache: []
     }
   },
 
@@ -59,22 +59,18 @@ export default {
   },
 
   watch: {
-    // @TODO figure out why this causes a browser lag
-    facilities: function (locations) {
-      this.$Progress.finish()
-      if (this.markers.length) {
-        for (var i = 0; i < this.markers.length; i++) {
-          this.map.removeLayer(this.markers[i])
-        }
-      }
-
-      let _markerOptions = {
-        color: '#3388ff'
-      }
-
-      this.markers = locations.map(_loc => L.circleMarker([_loc.latitude, _loc.longitude], _markerOptions).addTo(this.map))
+    markers: function (markersList) {
+      this._clearMarkers()
+      this.markerCache = markersList.map(_marker => L.circleMarker([_marker.lat, _marker.lng], {color: _marker.color}).addTo(this.map))
     }
+  },
 
+  methods: {
+    _clearMarkers (markers) {
+      for (var i = 0; i < this.markerCache.length; i++) {
+        this.map.removeLayer(this.markerCache[i])
+      }
+    }
   }
 }
 </script>
