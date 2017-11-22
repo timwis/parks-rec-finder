@@ -57,6 +57,9 @@ export default {
   mounted () {
     // bind to prop so we can mutate it
     this.isActive = this.selected
+    if (this.isActive) {
+      this.$store.dispatch('setActiveTab', this.name)
+    }
   }
 
 }

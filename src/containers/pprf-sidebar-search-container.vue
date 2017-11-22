@@ -6,8 +6,8 @@
 
               <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
               <div class="pprf-sidebar-header__desc">
-                <p v-show="(programsCount+facilitiesCount) > 0">
-                    Showing {{programsCount+facilitiesCount}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span> <span v-show="search.zip" >around {{search.zip}}</span>
+                <p v-show="(programs.length+facilities.length) > 0">
+                    Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span> <span v-show="search.zip" >around {{search.zip}}</span>
                 </p>
               </div>
             </header>
@@ -16,7 +16,7 @@
               <pprf-tabs>
                 <pprf-tab
                     name="Programs"
-                    :count="programsCount"
+                    :count="programs.length"
                     :selected="true"
                    >
                       <div
@@ -33,7 +33,7 @@
 
                   <pprf-tab
                     name="Locations"
-                    :count="facilitiesCount"
+                    :count="facilities.length"
                   >
                     <div
                       v-for="facility in facilities"
@@ -55,7 +55,6 @@
 import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
-import entitiesListData from '@/mixins/entities-list-data'
 
 export default {
 
@@ -67,11 +66,11 @@ export default {
     pprfTab
   },
 
-  mixins: [entitiesListData],
-
   computed: {
     ...mapState({
-      search: state => state.search.fields
+      search: state => state.search.fields,
+      programs: state => state.entities.program,
+      facilities: state => state.entities.facility
     })
   }
 }
