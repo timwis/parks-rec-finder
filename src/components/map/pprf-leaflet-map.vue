@@ -5,15 +5,17 @@
       <v-tilelayer :url="basemap" ></v-tilelayer>
       <v-tilelayer :url="streets" ></v-tilelayer>
 
-      <v-circle-marker
+      <v-svg-marker
         v-if="userLocation"
-        :lat-lng="userLocation"
+        :latLng="userLocation"
+        :options="userPinOptions"
       />
-      <v-circle-marker
+      <v-svg-marker
           v-for="marker in markers"
           :key="marker.id"
-          :lat-lng="[marker.lat, marker.lng]"
-      ></v-circle-marker>
+          :latLng="[marker.lat, marker.lng]"
+          :options='{iconOptions:{color: marker.color, fillOpacity: 1, iconSize: [20, 28]}}'
+      />
 
     </v-map>
  </div>
@@ -44,7 +46,13 @@ export default {
       center: [39.9523893, -75.1636291],
       basemap: process.env.ESRI.tiledLayers.basemap,
       streets: process.env.ESRI.tiledLayers.streets,
-      userLocation: null
+      userLocation: null,
+      userPinOptions: {
+        iconOptions: {
+          fillOpacity: 1,
+          color: 'rgb(204,48,0)'
+        }
+      }
     }
   },
 
@@ -52,6 +60,21 @@ export default {
     navigator.geolocation.getCurrentPosition(position => {
       this.userLocation = L.latLng(position.coords.latitude, position.coords.longitude)
     })
+  },
+
+  updated () {
+    this.fitToMarkerBounds()
+  },
+
+  methods: {
+    fitToMarkerBounds () {
+      if (this.markers.length) {
+        let markersLatLng = this.markers.map(marker => L.latLng(marker.lat, marker.lng))
+        /* eslint-disable new-cap */
+        let {_southWest, _northEast} = L.latLngBounds(markersLatLng)
+        this.$refs.leafletMap.fitBounds([[_southWest.lat, _southWest.lng], [_northEast.lat, _northEast.lng]])
+      }
+    }
   }
 }
 </script>

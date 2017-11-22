@@ -58,10 +58,6 @@ export default {
       this.tabs.forEach(tab => {
         tab.isActive = (tab.name === selectedTab.name)
       })
-      // let routeNames = router.options.routes.map(routeObj => routeObj.name)
-      // if (routeNames.includes(selectedTab.name)) {
-      //   router.push({name: selectedTab.name})
-      // }
       /**
        * @event tabSelected
        * @type {object}
