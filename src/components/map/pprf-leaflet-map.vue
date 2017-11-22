@@ -24,7 +24,7 @@
 <script>
 import L from 'leaflet'
 import Vue2Leaflet from 'vue2-leaflet'
-import entitiesListData from '@/mixins/entities-list-data'
+import {mapState} from 'vuex'
 
 export default {
 
@@ -37,8 +37,6 @@ export default {
     'v-svg-marker': Vue2Leaflet.SVGMarker,
     'v-circle-marker': Vue2Leaflet.CircleMarker
   },
-
-  mixins: [entitiesListData],
 
   data () {
     return {
@@ -54,6 +52,12 @@ export default {
         }
       }
     }
+  },
+
+  computed: {
+    ...mapState({
+      markers: state => state.entities.marker
+    })
   },
 
   mounted () {

@@ -7,7 +7,6 @@
 <script>
 import L from 'leaflet'
 import {tiledMapLayer} from 'esri-leaflet'
-import entitiesListData from '@/mixins/entities-list-data'
 /* eslint-disable no-new */
 import '@/vendor/svg-icon.js'
 /**
@@ -17,8 +16,6 @@ import '@/vendor/svg-icon.js'
  */
 export default {
   name: 'PPRF-Map',
-
-  mixins: [entitiesListData],
 
   data () {
     return {
