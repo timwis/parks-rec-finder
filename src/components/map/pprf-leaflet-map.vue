@@ -9,13 +9,18 @@
         v-if="userLocation"
         :latLng="userLocation"
         :options="userPinOptions"
-      />
+      >
+        <v-popup content="You are here" />
+      </v-svg-marker>
+
       <v-svg-marker
           v-for="marker in markers"
           :key="marker.id"
           :latLng="[marker.lat, marker.lng]"
-          :options='{iconOptions:{color: marker.color, fillOpacity: 1, iconSize: [20, 28]}}'
-      />
+          :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity}}"
+      >
+        <v-popup :content="marker.content()" />
+      </v-svg-marker>
 
     </v-map>
  </div>
@@ -33,7 +38,7 @@ export default {
   components: {
     'v-map': Vue2Leaflet.Map,
     'v-tilelayer': Vue2Leaflet.EsriTileLayer,
-    'v-marker': Vue2Leaflet.Marker,
+    'v-popup': Vue2Leaflet.Popup,
     'v-svg-marker': Vue2Leaflet.SVGMarker,
     'v-circle-marker': Vue2Leaflet.CircleMarker
   },
@@ -56,7 +61,10 @@ export default {
 
   computed: {
     ...mapState({
-      markers: state => state.entities.marker
+      markers: state => {
+        console.log('mapState markers')
+        return state.activeMarkers
+      }
     })
   },
 
