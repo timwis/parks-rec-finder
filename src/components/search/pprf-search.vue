@@ -68,6 +68,11 @@ export default {
   },
 
   mounted () {
+    const searchRouteParams = this.$store.state.route.query.hasOwnProperty('freetext') ? this.$store.state.route.query : null
+
+    if (searchRouteParams) {
+      this._updateInputRefsValues(searchRouteParams)
+    }
     /**
      * Update isDisabled when user adds input to search fields
      */
@@ -146,6 +151,25 @@ export default {
      */
     _isValidZip (zipcodeVal) {
       return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
+    },
+    /**
+      * if url query params are give update the input
+      * fields to reflect those values
+      * NOTE: does not update local state
+      * @param  {object} fieldValues query parameter object
+      * @return {void}
+      *
+      * @since 0.0.0
+      */
+    _updateInputRefsValues (fieldValues = this.$store.state.route.query) {
+      if (fieldValues.freetext) {
+        this.isDisabled = false
+        this.$refs.freetextField.inputValue = fieldValues.freetext
+      }
+      if (fieldValues.address || fieldValues.zip) {
+        this.isDisabled = false
+        this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
+      }
     }
   }
 }

@@ -72,7 +72,7 @@ export default {
 
   methods: {
     fitToMarkerBounds () {
-      if (this.markers.length) {
+      if (this.markers && this.markers.length) {
         let markersLatLng = this.markers.map(marker => L.latLng(marker.lat, marker.lng))
         /* eslint-disable new-cap */
         let {_southWest, _northEast} = L.latLngBounds(markersLatLng)

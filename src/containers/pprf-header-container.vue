@@ -1,7 +1,6 @@
 <template>
     <pprf-header
       :onSearchSubmit="updateSearchRouteParams"
-      :searchPrefill="searchInput"
     >
     </pprf-header>
 </template>
@@ -32,10 +31,6 @@ export default {
   mounted () {
     const searchRouteParams = this.$store.state.route.query.hasOwnProperty('freetext') ? this.$store.state.route.query : null
 
-    if (searchRouteParams) {
-      this.updateSearchInputVals(searchRouteParams)
-    }
-
     if (!this.$store.state.route.from.name && searchRouteParams) {
       this.$store.dispatch('submitSearch', {fields: searchRouteParams})
     }
@@ -57,21 +52,6 @@ export default {
         this.$router.push({path: 'search', query: queryParams})
       } else {
         this.$router.replace({path: 'search', query: queryParams})
-      }
-    },
-    /**
-     * if url query params are give update the input
-     * fields to reflect those values
-     * NOTE: does not update local state
-     * @param  {object} fieldValues query parameter object
-     * @return {void}
-     *
-     * @since 0.0.0
-     */
-    updateSearchInputVals (fieldValues = this.$store.state.route.query) {
-      this.searchInput.fields = Object.assign({}, this.searchInput.fields, fieldValues)
-      if (Object.values(this.searchInput.fields).some(val => val)) {
-        this.searchInput.disabled = false
       }
     }
   }
