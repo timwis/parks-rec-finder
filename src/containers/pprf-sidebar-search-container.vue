@@ -25,6 +25,12 @@
                         class="card card--program"
                       >
                         <h4>{{program.program_name}}</h4>
+                        <h5>age: ( {{program.age_low}} - {{program.age_high}})</h5>
+                        <h5>fee: {{program.fee}}</h5>
+                        <h5>gender:</h5>
+                        <ul>
+                          <li v-for="gender in program.gender">{{gender}}</li>
+                        </ul>
                         <p v-show="(program.distance && program.within_zip_code === undefined)"><small>{{  program.distance }} miles away</small></p>
                         <p v-show="program.within_zip_code === true"> within {{search.zip}}</p>
                         <p v-show="program.within_zip_code === false" :title="'apprx. '+program.distance +' miles away'"> nearby {{search.zip}}</p>

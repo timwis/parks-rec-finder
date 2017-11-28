@@ -8,7 +8,7 @@
       <font-awesome-icon :icon="icon" />
     </header>
     <form
-      :class="[{'pprf-filter-bar-form__open':open}, 'pprf-filter-bar-form', 'pprf-filter-bar-form__open']"
+      :class="[{'pprf-filter-bar-form__open':open}, 'pprf-filter-bar-form']"
       @submit.prevent="onSubmit"
       ref="searchFilterForm"
     >
@@ -43,12 +43,12 @@
       </fieldset>
 
 
-       <fieldset class="pprf-filter-bar-form--fieldset">
+      <fieldset class="pprf-filter-bar-form--fieldset">
 
         <legend>Age Range {{age_range.low}} - {{age_range.high}}</legend>
 
         <div
-          class="field field__inline field-age"
+          class="field field-age"
           v-for="ageGroup in ageGroups"
         >
           <input
@@ -62,6 +62,29 @@
         </div>
 
       </fieldset>
+
+
+      <fieldset class="pprf-filter-bar-form--fieldset">
+
+        <legend>Gender</legend>
+
+        <div
+          class="field"
+          v-for="gender in genders"
+        >
+          <input
+            :id="'gender__'+gender.name.toLowerCase()"
+            type="radio"
+            :name="'filter-gender--'+gender.name.toLowerCase()"
+            v-model="filters.gender"
+            :value="gender.value"
+            @change="onInput"
+          >
+          <label class="field-label field-label__inline" :for="'gender__'+gender.name.toLowerCase()">{{gender.name}}</label>
+        </div>
+
+      </fieldset>
+
 
 
 
@@ -115,10 +138,25 @@ export default {
           range: [99]
         }
       ],
+
+      genders: [
+        {
+          name: 'All Genders',
+          value: 'M/F'
+        },
+        {
+          name: 'Male',
+          value: 'M'
+        },
+        {
+          name: 'female',
+          value: 'F'
+        }
+      ],
       ages: [],
       filters: {
         fee: null,
-        gender: [],
+        gender: null,
         time_of_week: {mon: null, tues: null, wed: null, thurs: null, frid: null, sat: null, sun: null},
         program_dates: {
           start: null,
@@ -149,6 +187,7 @@ export default {
     onSubmit () {
       const _filters = {filters: Object.assign({}, this.filters, {age_range: this.age_range})}
       this.$store.dispatch('submitSearch', _filters)
+      this.open = false
     },
     updateAgeRange (rangeArr) {
       rangeArr.split(',').forEach(age => {
@@ -185,14 +224,12 @@ export default {
 
 .pprf-filter-bar-form{
   width: 100%;
-  position: absolute;
+  display:none;
   background: color(ghost-gray);
-  top: 40;
-  left: 0;
-  overflow:hidden;
 }
 
 .pprf-filter-bar-form__open{
+  display: block;
   height: 100vh;
 }
 

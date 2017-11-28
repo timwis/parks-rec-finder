@@ -140,7 +140,7 @@ export default {
           zip: _fields.zip
         }
       }
-      this.updateSearchRouteParams()
+      this.updateSearchRouteParams(this.$data.search.fields)
       // this.$emit('submit', newSearch.fields)
       this.$store.dispatch('submitSearch', newSearch)
     },

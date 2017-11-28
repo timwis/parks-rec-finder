@@ -15,7 +15,7 @@ export default {
     const searchRouteParams = this.$store.state.route.query.hasOwnProperty('freetext') ? this.$store.state.route.query : null
 
     if (!this.$store.state.route.from.name && searchRouteParams) {
-      // this.$store.dispatch('submitSearch', {fields: searchRouteParams})
+      this.$store.dispatch('submitSearch', {fields: searchRouteParams})
     }
   }
 }

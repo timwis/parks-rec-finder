@@ -172,7 +172,7 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  queryProgramsBy (freetextValue, coords = null, zipcode = null) {
+  queryProgramsBy (freetextValue, coords = null, zipcode = null, filters) {
     // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()
@@ -186,8 +186,55 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['program_name', 'program_description'], freetextValue)
     }
+
+    if (filters) {
+      this._addFilters(sqlQuery, filters)
+      // for (let _filter in filters) {
+      //   console.log(`${_filter}: ${filters[_filter]}`)
+      //   // FEE
+      //   if (_filter === 'fee' && _filter[_filter] != null) {
+      //     let _feeCompartor = filters[_filter] ? '!=' : '='
+      //     sqlQuery.where(`${_filter} ${_feeCompartor} '0.00'`)
+      //   }
+      //   // AGE RANGE
+      //   if (_filter === 'age_range') {
+      //     let {high, low} = filters[_filter]
+      //     sqlQuery.where(`age_low >= ${low}`)
+      //     sqlQuery.where(`age_high <= ${high}`)
+      //   }
+      // }
+    }
+
     if (this.LOG_QUERIES) { console.log(`CartoAPI:queryProgramsBy::${sqlQuery.toString()}`) }
     return encodeURIComponent(sqlQuery.toString())
+  }
+
+  _addFilters (sqlQueryObj, filters) {
+    for (let filterKey in filters) {
+      if (filterKey === 'fee' && filters[filterKey] != null) {
+        let _feeCompartor = filters[filterKey] ? '!=' : '='
+        sqlQueryObj.where(`${filterKey} ${_feeCompartor} '0.00'`)
+      }
+
+      if (filterKey === 'age_range' && filters[filterKey] != null) {
+        let {high, low} = filters[filterKey]
+        sqlQueryObj.where(`age_low >= ${low}`)
+        sqlQueryObj.where(`age_high <= ${high}`)
+      }
+
+      if (filterKey === 'gender' && filters[filterKey] != null) {
+        sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
+      }
+    }
+  }
+
+  _hasNull (target) {
+    for (var member in target) {
+      if (target[member] == null) {
+        return true
+      }
+    }
+    return false
   }
 
   /**
@@ -212,7 +259,7 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['facility_description', 'facility_name', 'long_name'], freetextValue)
     }
-    if (this.LOG_QUERIES) { console.log(`CartoAPI:queryFacilitiesBy::${sqlQuery.toString()}`) }
+    // if (this.LOG_QUERIES) { console.log(`CartoAPI:queryFacilitiesBy::${sqlQuery.toString()}`) }
     return encodeURIComponent(sqlQuery.toString())
   }
 }
