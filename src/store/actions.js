@@ -15,10 +15,14 @@ const actions = {
     // }
   },
 
-  submitSearch ({commit, state}, serachParams) {
-    commit(types.SUBMIT_SEARCH, serachParams.fields, serachParams.filters)
+  updateSearchInput ({commit, state}, serachParams) {
+    commit(types.UPDATE_SEARCH_INPUT, serachParams)
+  },
 
-    api.search(serachParams)
+  submitSearch ({commit, state}, serachParams) {
+    commit(types.SUBMIT_SEARCH, Object.assign({}, state.search, serachParams))
+
+    api.search(state.search)
       .then(searchResults => {
         commit(types.RECEIVE_SEARCH_SUCCESS, searchResults)
         let facility = searchResults[0].data.rows

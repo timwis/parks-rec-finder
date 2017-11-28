@@ -14,6 +14,7 @@
 
             <main class="pprf-sidebar-main">
               <pprf-tabs>
+                <pprf-filter-bar slot="beforePanes" />
                 <pprf-tab
                     name="Programs"
                     :count="programs.length"
@@ -54,6 +55,7 @@
 <script>
 import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
+import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 
 export default {
@@ -63,7 +65,8 @@ export default {
   components: {
     pprfSidebar,
     pprfTabs,
-    pprfTab
+    pprfTab,
+    pprfFilterBar
   },
 
   computed: {

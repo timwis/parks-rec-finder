@@ -97,6 +97,7 @@ export default {
      */
     onFreetextInput (freetextVal) {
       this.search.fields.freetext = freetextVal
+      this.$store.dispatch('updateSearchInput', this.search)
     },
     /**
      * Validates the address field input as either
@@ -116,6 +117,7 @@ export default {
         this.search.fields.address = addressVal
         this.search.fields.zip = null
       }
+      this.$store.dispatch('updateSearchInput', this.search)
     },
 
     /**
@@ -138,7 +140,7 @@ export default {
           zip: _fields.zip
         }
       }
-      this.$emit('submit', newSearch.fields)
+      // this.$emit('submit', newSearch.fields)
       this.$store.dispatch('submitSearch', newSearch)
     },
 
@@ -170,6 +172,7 @@ export default {
         this.isDisabled = false
         this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
       }
+      this.$store.dispatch('updateSearchInput', fieldValues)
     }
   }
 }
