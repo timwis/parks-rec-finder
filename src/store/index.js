@@ -25,13 +25,21 @@ export default new Vuex.Store({
       loading: false,
       error: null,
       success: false,
-
       fields: {
         freetext: '',
         address: '',
         zip: 0
       },
-      filters: {}
+      filters: {
+        fee: null,
+        gender: null,
+        age_range: {low: null, high: null},
+        time_of_week: {mon: null, tues: null, wed: null, thurs: null, frid: null, sat: null, sun: null},
+        program_dates: {
+          start: null,
+          end: null
+        }
+      }
     }
   },
 

@@ -189,20 +189,6 @@ class CartoAPI {
 
     if (filters) {
       this._addFilters(sqlQuery, filters)
-      // for (let _filter in filters) {
-      //   console.log(`${_filter}: ${filters[_filter]}`)
-      //   // FEE
-      //   if (_filter === 'fee' && _filter[_filter] != null) {
-      //     let _feeCompartor = filters[_filter] ? '!=' : '='
-      //     sqlQuery.where(`${_filter} ${_feeCompartor} '0.00'`)
-      //   }
-      //   // AGE RANGE
-      //   if (_filter === 'age_range') {
-      //     let {high, low} = filters[_filter]
-      //     sqlQuery.where(`age_low >= ${low}`)
-      //     sqlQuery.where(`age_high <= ${high}`)
-      //   }
-      // }
     }
 
     if (this.LOG_QUERIES) { console.log(`CartoAPI:queryProgramsBy::${sqlQuery.toString()}`) }
@@ -216,7 +202,7 @@ class CartoAPI {
         sqlQueryObj.where(`${filterKey} ${_feeCompartor} '0.00'`)
       }
 
-      if (filterKey === 'age_range' && filters[filterKey] != null) {
+      if (filterKey === 'age_range' && (filters[filterKey].low > 0 && filters[filterKey].high > 0)) {
         let {high, low} = filters[filterKey]
         sqlQueryObj.where(`age_low >= ${low}`)
         sqlQueryObj.where(`age_high <= ${high}`)
@@ -226,15 +212,6 @@ class CartoAPI {
         sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
       }
     }
-  }
-
-  _hasNull (target) {
-    for (var member in target) {
-      if (target[member] == null) {
-        return true
-      }
-    }
-    return false
   }
 
   /**

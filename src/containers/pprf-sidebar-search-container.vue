@@ -7,14 +7,30 @@
               <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
               <div class="pprf-sidebar-header__desc">
                 <p v-show="(programs.length+facilities.length) > 0">
-                    Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span> <span v-show="search.zip" >around {{search.zip}}</span>
+                    Showing {{programs.length+facilities.length}} results
+                    <span v-show="search.fields.freetext">for <b>{{search.fields.freetext}}</b></span>
+                    <span v-show="search.fields.address"> near {{search.fields.address}}</span>
+                    <span v-show="search.fields.zip" >around {{search.fields.zip}}</span> <br>
+
+                      <small v-show="this.activeTab == 'program'">
+                        <span v-show="search.filters.fee"> that have a <i><b>Fee</b></i></span>
+                        <span v-show="search.filters.fee === false"> that are <i><b>Free</b></i></span>
+                        <i><b v-show="search.filters.age_range.high > 0"> Ages {{search.filters.age_range.low}} - {{search.filters.age_range.high}} </b></i>
+                        <span v-show="search.filters.gender"> for <i><b>{{search.filters.gender == 'M/F' ? 'All Gender' : (search.filters.gender == "M" ? "Male" : "Female")}}s</b></i></span>
+                      </small>
+
                 </p>
               </div>
             </header>
 
             <main class="pprf-sidebar-main">
               <pprf-tabs>
-                <pprf-filter-bar slot="beforePanes" />
+
+                <pprf-filter-bar
+                  slot="beforePanes"
+                  v-show="this.activeTab == 'program'"
+                />
+
                 <pprf-tab
                     name="Programs"
                     :count="programs.length"
@@ -77,9 +93,10 @@ export default {
 
   computed: {
     ...mapState({
-      search: state => state.search.fields,
+      search: state => state.search,
       programs: state => state.entities.program,
-      facilities: state => state.entities.facility
+      facilities: state => state.entities.facility,
+      activeTab: state => state.activeTab
     })
   }
 }

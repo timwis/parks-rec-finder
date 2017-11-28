@@ -45,7 +45,7 @@
 
       <fieldset class="pprf-filter-bar-form--fieldset">
 
-        <legend>Age Range {{age_range.low}} - {{age_range.high}}</legend>
+        <legend>Age Range</legend>
 
         <div
           class="field field-age"
@@ -56,6 +56,7 @@
             type="checkbox"
             :name="'age__'+ageGroup.name.split(' ')[0].toLowerCase()"
             :value="ageGroup.range"
+            ref="filter-age"
             @change="updateAgeRange($event.target.value)"
           >
           <label class="field-label field-label__inline" :name="'age__'+ageGroup.name.split(' ')[0].toLowerCase()">{{ageGroup.name}}</label>
@@ -86,12 +87,9 @@
       </fieldset>
 
 
-
-
-
       <footer class="pprf-filter-bar-footer">
 
-        <phila-button @click="open = false">
+        <phila-button @click.prevent="clearFilters">
           Cancel
         </phila-button>
 
@@ -107,7 +105,12 @@
 <script>
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-
+/**
+ * Filter Bar
+ * Search filter container to add filtes to the global serach state
+ *
+ * @since 0.0.0
+ */
 export default {
   name: 'PPRF-Filter-Bar',
 
@@ -116,6 +119,7 @@ export default {
   data () {
     return {
       open: false,
+
       ageGroups: [
         {
           name: 'Tot 2-5 (or younger)',
@@ -153,7 +157,9 @@ export default {
           value: 'F'
         }
       ],
+
       ages: [],
+
       filters: {
         fee: null,
         gender: null,
@@ -198,6 +204,20 @@ export default {
           this.ages.push(Number(age))
         }
       })
+      this.onInput()
+    },
+    clearFilters () {
+      this.$refs['filter-age'].forEach(el => { el.checked = false })
+      this.filters = {
+        fee: null,
+        gender: null,
+        time_of_week: {mon: null, tues: null, wed: null, thurs: null, frid: null, sat: null, sun: null},
+        program_dates: {
+          start: null,
+          end: null
+        }
+      }
+      this.ages = []
       this.onInput()
     }
   }
