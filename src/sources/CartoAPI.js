@@ -30,11 +30,6 @@ class CartoAPI {
    * @since 0.0.0
    */
   runQuery (sqlString) {
-    // log queries
-    // this.http.interceptors.request.use((config) => {
-    //   if (this.LOG_QUERIES) { console.log(`Carto: ${config.baseURL}${config.url}`) }
-    //   return config
-    // })
     return this.http.get(`sql?q=${sqlString}`)
   }
 

@@ -1,8 +1,6 @@
 <template>
     <header class="pprf-header">
-        <pprf-search
-          @submit="onSearchSubmit"
-        ></pprf-search>
+        <pprf-search></pprf-search>
     </header>
 </template>
 
@@ -17,8 +15,7 @@ import pprfSearch from '@/components/search/pprf-search'
  */
 export default {
   name: 'PPRF-Header',
-  components: {pprfSearch},
-  props: ['onSearchSubmit']
+  components: {pprfSearch}
 }
 </script>
 

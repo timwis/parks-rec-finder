@@ -109,7 +109,6 @@ export default {
             height:25%;
             background: color(dark-ben-franklin);
           }
-
         }
 
 

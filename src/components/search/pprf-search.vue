@@ -140,6 +140,7 @@ export default {
           zip: _fields.zip
         }
       }
+      this.updateSearchRouteParams()
       // this.$emit('submit', newSearch.fields)
       this.$store.dispatch('submitSearch', newSearch)
     },
@@ -173,6 +174,24 @@ export default {
         this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
       }
       this.$store.dispatch('updateSearchInput', fieldValues)
+    },
+
+    /**
+     * give a route params oject to match that matches the
+     * local state search fields udpate the search route url to
+     * include those params in order to allow for deeplinking
+     * @param  {Object} queryParams query params  object matching the local state serch fields object
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
+    updateSearchRouteParams (queryParams = {freetext: null, address: null, zip: null}) {
+      if (this.$store.state.route.name !== 'Search') {
+        this.$router.push({path: 'search', query: queryParams})
+      } else {
+        this.$router.replace({path: 'search', query: queryParams})
+      }
     }
   }
 }
