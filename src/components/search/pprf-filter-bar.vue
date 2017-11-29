@@ -105,6 +105,7 @@
 <script>
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import _ from 'underscore'
 /**
  * Filter Bar
  * Search filter container to add filtes to the global serach state
@@ -153,7 +154,7 @@ export default {
           value: 'M'
         },
         {
-          name: 'female',
+          name: 'Female',
           value: 'F'
         }
       ],
@@ -162,21 +163,20 @@ export default {
 
       filters: {
         fee: null,
-        gender: null,
-        time_of_week: {mon: null, tues: null, wed: null, thurs: null, frid: null, sat: null, sun: null},
-        program_dates: {
-          start: null,
-          end: null
-        }
+        gender: null
       }
     }
   },
 
+  mounted () {
+    this._updateFiltersFromRoute()
+  },
+
   computed: {
-    age_range () {
+    ageRange () {
       return {
-        low: Math.min.apply(Math, this.ages),
-        high: Math.max.apply(Math, this.ages)
+        low: this.ages.length ? Math.min.apply(Math, this.ages) : null,
+        high: this.ages.length ? Math.max.apply(Math, this.ages) : null
       }
     },
 
@@ -186,15 +186,39 @@ export default {
   },
 
   methods: {
+    /**
+     * On filter value update reflect change in loccal and global state
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
     onInput () {
-      const _filters = {filters: Object.assign({}, this.filters, {age_range: this.age_range})}
+      const _filters = {filters: Object.assign({}, this.filters, {ageRange: this.ageRange})}
       this.$store.dispatch('updateSearchInput', _filters)
     },
+    /**
+     * On Form Submission submit search with filter values
+     *
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
     onSubmit () {
-      const _filters = {filters: Object.assign({}, this.filters, {age_range: this.age_range})}
+      const _filters = {filters: Object.assign({}, this.filters, {ageRange: this.ageRange})}
+      this._updateRouteFromFilters()
       this.$store.dispatch('submitSearch', _filters)
       this.open = false
     },
+    /**
+     * Update the computed age range given
+     * @param  {array} rangeArr array of age values to add to global array
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
     updateAgeRange (rangeArr) {
       rangeArr.split(',').forEach(age => {
         let _index = this.ages.indexOf(Number(age))
@@ -206,18 +230,77 @@ export default {
       })
       this.onInput()
     },
+    /**
+     * Reset all filter values to null
+     *
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
     clearFilters () {
+      this.ages = []
       this.$refs['filter-age'].forEach(el => { el.checked = false })
       this.filters = {
         fee: null,
-        gender: null,
-        time_of_week: {mon: null, tues: null, wed: null, thurs: null, frid: null, sat: null, sun: null},
-        program_dates: {
-          start: null,
-          end: null
-        }
+        gender: null
       }
-      this.ages = []
+      this.onInput()
+      this._updateRouteFromFilters()
+      this.$store.dispatch('submitSearch')
+      this.open = false
+    },
+
+    /**
+     * Update url params from user selected fiter values
+     * @return {void}
+     *
+     * @since 0.0.0
+     * @TODO: move to a more glocal location (i.e utility functions)
+     */
+    _updateRouteFromFilters () {
+      let ages = this.ages.length ? `${this.ageRange.low}-${this.ageRange.high}` : null
+      let _query = Object.assign({}, this.$store.state.route.query, this.filters, {ages})
+      this.$router.replace({path: 'search', query: _.omit(_query, val => _.isNull(val))})
+    },
+
+    /**
+     * Update the local and global state with filter values
+     * from url parametes
+     *
+     * @return {void}
+     * @since 0.0.0
+     */
+    _updateFiltersFromRoute () {
+      let queryParams = Object.keys(this.$store.state.route.query)
+      let filterKeys = Object.keys(this.filters)
+      filterKeys.push('ages')
+      // check to see if any filters are in url params
+      let paramKeys = _.intersection(queryParams, filterKeys)
+
+      if (paramKeys.length > 0) {
+        // update filters with url parma values
+        paramKeys.forEach(key => {
+          switch (key) {
+            case 'ages':
+              let agesFromParams = this.$store.state.route.query[key].split('-')
+              this.ages = agesFromParams
+              this.$refs['filter-age'].forEach(filterEl => {
+                if (_.intersection(filterEl.value.split(','), agesFromParams).length > 0) {
+                  filterEl.checked = true
+                }
+              })
+              break
+            case 'fee':
+              this.filters[key] = (this.$store.state.route.query[key] === 'true')
+              break
+            default:
+              this.filters[key] = this.$store.state.route.query[key]
+              break
+          }
+        })
+      }
+      // update state with filter values
       this.onInput()
     }
   }

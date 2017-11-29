@@ -15,7 +15,7 @@
                       <small v-show="this.activeTab == 'program'">
                         <span v-show="search.filters.fee"> that have a <i><b>Fee</b></i></span>
                         <span v-show="search.filters.fee === false"> that are <i><b>Free</b></i></span>
-                        <i><b v-show="search.filters.age_range.high > 0"> Ages {{search.filters.age_range.low}} - {{search.filters.age_range.high}} </b></i>
+                        <i><b v-show="search.filters.ageRange.high > 0"> Ages {{search.filters.ageRange.low}} - {{search.filters.ageRange.high}} </b></i>
                         <span v-show="search.filters.gender"> for <i><b>{{search.filters.gender == 'M/F' ? 'All Gender' : (search.filters.gender == "M" ? "Male" : "Female")}}s</b></i></span>
                       </small>
 

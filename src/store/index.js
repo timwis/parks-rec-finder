@@ -33,12 +33,7 @@ export default new Vuex.Store({
       filters: {
         fee: null,
         gender: null,
-        age_range: {low: null, high: null},
-        time_of_week: {mon: null, tues: null, wed: null, thurs: null, frid: null, sat: null, sun: null},
-        program_dates: {
-          start: null,
-          end: null
-        }
+        ageRange: {low: null, high: null}
       }
     }
   },
