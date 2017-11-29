@@ -202,7 +202,7 @@ class CartoAPI {
         sqlQueryObj.where(`${filterKey} ${_feeCompartor} '0.00'`)
       }
 
-      if (filterKey === 'age_range' && (filters[filterKey].low > 0 && filters[filterKey].high > 0)) {
+      if (filterKey === 'ageRange' && (filters[filterKey].low > 0 && filters[filterKey].high > 0)) {
         let {high, low} = filters[filterKey]
         sqlQueryObj.where(`age_low >= ${low}`)
         sqlQueryObj.where(`age_high <= ${high}`)

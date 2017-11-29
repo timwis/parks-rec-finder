@@ -21,6 +21,7 @@ const actions = {
 
   submitSearch ({commit, state}, serachParams) {
     let searchTerms = Object.assign({}, {fields: state.search.fields}, {filters: state.search.filters}, serachParams)
+    debugger
     commit(types.SUBMIT_SEARCH, searchTerms)
 
     api.search(searchTerms)

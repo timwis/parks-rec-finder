@@ -69,10 +69,14 @@ export default {
   },
 
   mounted () {
-    let searchRouteParams = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
-    if (searchRouteParams.length > 0) {
+    let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
+
+    if (!this.$store.state.route.from.name && searchFieldsFromRoute.length > 0) {
+      let fields = _.pick(this.$store.state.route.query, searchFieldsFromRoute)
       this._updateInputRefsValues(this.$store.state.route.query)
+      this.$store.dispatch('updateSearchInput', {fields})
     }
+
     /**
      * Update isDisabled when user adds input to search fields
      */

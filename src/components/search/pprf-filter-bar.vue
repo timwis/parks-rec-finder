@@ -169,7 +169,15 @@ export default {
   },
 
   mounted () {
-    this._updateFiltersFromRoute()
+    let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.$store.state.search.fields))
+    let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
+    let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), filterDefs)
+    let searchParamsFromRoute = [...searchFieldsFromRoute, ...searchFiltersFromRoute]
+
+    if (!this.$store.state.route.from.name && searchParamsFromRoute.length > 0) {
+      this._updateFiltersFromRoute()
+      this.$store.dispatch('submitSearch')
+    }
   },
 
   computed: {
@@ -206,9 +214,9 @@ export default {
      * @since 0.0.0
      */
     onSubmit () {
-      const _filters = {filters: Object.assign({}, this.filters, {ageRange: this.ageRange})}
+      const filters = Object.assign({}, this.filters, {ageRange: this.ageRange})
       this._updateRouteFromFilters()
-      this.$store.dispatch('submitSearch', _filters)
+      this.$store.dispatch('submitSearch', {filters})
       this.open = false
     },
     /**
