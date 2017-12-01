@@ -37,6 +37,7 @@
 import PhilaTextField from '@/components/phila/phila-text-field'
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import _ from 'underscore'
 /**
  * SEARCH BAR COMPONENT
  * Form and inputs to search by freetext and/or address or zipcode
@@ -68,11 +69,14 @@ export default {
   },
 
   mounted () {
-    const searchRouteParams = this.$store.state.route.query.hasOwnProperty('freetext') ? this.$store.state.route.query : null
+    let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
 
-    if (searchRouteParams) {
-      this._updateInputRefsValues(searchRouteParams)
+    if (!this.$store.state.route.from.name && searchFieldsFromRoute.length > 0) {
+      let fields = _.pick(this.$store.state.route.query, searchFieldsFromRoute)
+      this._updateInputRefsValues(this.$store.state.route.query)
+      this.$store.dispatch('updateSearchInput', {fields})
     }
+
     /**
      * Update isDisabled when user adds input to search fields
      */
@@ -97,6 +101,7 @@ export default {
      */
     onFreetextInput (freetextVal) {
       this.search.fields.freetext = freetextVal
+      // this.$store.dispatch('updateSearchInput', this.search)
     },
     /**
      * Validates the address field input as either
@@ -116,6 +121,7 @@ export default {
         this.search.fields.address = addressVal
         this.search.fields.zip = null
       }
+      // this.$store.dispatch('updateSearchInput', this.search)
     },
 
     /**
@@ -130,7 +136,7 @@ export default {
      * @since 0.0.0
      */
     onSubmit (e) {
-      const _fields = this.$data.search.fields
+      const _fields = this.search.fields
       let newSearch = {
         fields: {
           freetext: _fields.freetext,
@@ -138,6 +144,7 @@ export default {
           zip: _fields.zip
         }
       }
+      this.updateSearchRouteParams(this.search.fields)
       this.$emit('submit', newSearch.fields)
       this.$store.dispatch('submitSearch', newSearch)
     },
@@ -169,6 +176,30 @@ export default {
       if (fieldValues.address || fieldValues.zip) {
         this.isDisabled = false
         this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
+      }
+      this.$store.dispatch('updateSearchInput', fieldValues)
+    },
+
+    /**
+     * give a route params oject to match that matches the
+     * local state search fields udpate the search route url to
+     * include those params in order to allow for deeplinking
+     * @param  {Object} queryParams query params  bject matching the local state serch fields object
+     * @return {void}
+     *
+     * @public
+     * @since 0.0.0
+     */
+    updateSearchRouteParams (queryParams) {
+      // merge with current search params
+      let query = Object.assign({}, this.$store.state.route.query, queryParams)
+      // only submit submit valid params
+      query = _.omit(query, val => _.isNull(val))
+
+      if (this.$store.state.route.name !== 'Search') {
+        this.$router.push({path: 'search', query})
+      } else {
+        this.$router.replace({path: 'search', query})
       }
     }
   }

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import squel from 'squel'
+import _ from 'underscore'
 
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
@@ -30,11 +31,6 @@ class CartoAPI {
    * @since 0.0.0
    */
   runQuery (sqlString) {
-    // log queries
-    // this.http.interceptors.request.use((config) => {
-    //   if (this.LOG_QUERIES) { console.log(`Carto: ${config.baseURL}${config.url}`) }
-    //   return config
-    // })
     return this.http.get(`sql?q=${sqlString}`)
   }
 
@@ -177,7 +173,7 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  queryProgramsBy (freetextValue, coords = null, zipcode = null) {
+  queryProgramsBy (freetextValue, coords = null, zipcode = null, filters) {
     // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()
@@ -191,8 +187,33 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['program_name', 'program_description'], freetextValue)
     }
+
+    if (filters) {
+      this._addFilters(sqlQuery, filters)
+    }
+
     if (this.LOG_QUERIES) { console.log(`CartoAPI:queryProgramsBy::${sqlQuery.toString()}`) }
     return encodeURIComponent(sqlQuery.toString())
+  }
+
+  _addFilters (sqlQueryObj, filters) {
+    filters = _.omit(filters, val => _.isNull(val))
+    for (let filterKey in filters) {
+      if (filterKey === 'fee') {
+        let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
+        sqlQueryObj.where(`${filterKey} ${_feeCompartor} '0.00'`)
+      }
+
+      if (filterKey === 'ageRange' && (filters[filterKey].low > 0 && filters[filterKey].high > 0)) {
+        let {high, low} = filters[filterKey]
+        sqlQueryObj.where(`age_low >= ${low}`)
+        sqlQueryObj.where(`age_high <= ${high}`)
+      }
+
+      if (filterKey === 'gender') {
+        sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
+      }
+    }
   }
 
   /**
@@ -217,7 +238,7 @@ class CartoAPI {
       // search facilites via user input text value
       this._buildFreetextWHERE(sqlQuery, ['facility_description', 'facility_name', 'long_name'], freetextValue)
     }
-    if (this.LOG_QUERIES) { console.log(`CartoAPI:queryFacilitiesBy::${sqlQuery.toString()}`) }
+    // if (this.LOG_QUERIES) { console.log(`CartoAPI:queryFacilitiesBy::${sqlQuery.toString()}`) }
     return encodeURIComponent(sqlQuery.toString())
   }
 }

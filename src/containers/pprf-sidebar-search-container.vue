@@ -6,14 +6,23 @@
 
               <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
               <div class="pprf-sidebar-header__desc">
-                <p v-show="(programs.length+facilities.length) > 0">
-                    Showing {{programs.length+facilities.length}} results <span v-show="search.freetext">for <b>{{search.freetext}}</b></span> <span v-show="search.address"> near {{search.address}}</span> <span v-show="search.zip" >around {{search.zip}}</span>
+                <p>
+                    Showing {{resultsCount}} results
+                    <span v-show="search.fields.freetext">for <b>{{search.fields.freetext}}</b></span>
+                    <span v-show="search.fields.address"> near {{search.fields.address}}</span>
+                    <span v-show="search.fields.zip" >around {{search.fields.zip}}</span>
                 </p>
               </div>
             </header>
 
             <main class="pprf-sidebar-main">
               <pprf-tabs>
+
+                <pprf-filter-bar
+                  slot="beforePanes"
+                  v-show="this.activeTab == 'program'"
+                />
+
                 <pprf-tab
                     name="Programs"
                     :count="programs.length"
@@ -24,6 +33,12 @@
                         class="card card--program"
                       >
                         <h4>{{program.program_name}}</h4>
+                        <h5>age: ( {{program.age_low}} - {{program.age_high}})</h5>
+                        <h5>fee: {{program.fee}}</h5>
+                        <h5>gender:</h5>
+                        <ul>
+                          <li v-for="gender in program.gender">{{gender}}</li>
+                        </ul>
                         <p v-show="(program.distance && program.within_zip_code === undefined)"><small>{{  program.distance }} miles away</small></p>
                         <p v-show="program.within_zip_code === true"> within {{search.zip}}</p>
                         <p v-show="program.within_zip_code === false" :title="'apprx. '+program.distance +' miles away'"> nearby {{search.zip}}</p>
@@ -54,6 +69,7 @@
 <script>
 import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
+import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 
 export default {
@@ -63,15 +79,21 @@ export default {
   components: {
     pprfSidebar,
     pprfTabs,
-    pprfTab
+    pprfTab,
+    pprfFilterBar
   },
 
   computed: {
     ...mapState({
-      search: state => state.search.fields,
+      search: state => state.search,
       programs: state => state.entities.program,
-      facilities: state => state.entities.facility
-    })
+      facilities: state => state.entities.facility,
+      activeTab: state => state.activeTab
+    }),
+
+    resultsCount () {
+      return isNaN(this.programs.length + this.facilities.length) ? 0 : (this.programs.length + this.facilities.length)
+    }
   }
 }
 </script>

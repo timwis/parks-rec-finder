@@ -16,6 +16,7 @@ TABLE OF CONTENTS:
 1. INPUTS
 2. TEXTAREA
 3. SELECT
+4. FIELDSET
 
 ******************************************************************/
 @import '_vars';
@@ -169,3 +170,43 @@ select {
   background-position: 97.5% center;
 }
 
+/* =======================================================================
+  4. FIELDSET
+
+  @since 0.0.0
+========================================================================== */
+fieldset{
+  border:none;
+  font-family: $font-montserrat;
+  color: color(dark-ben-franklin);
+  margin: 0;
+  padding: 1;
+  line-height: 1;
+}
+
+.field,
+.field-label{
+  position: relative;
+  padding:0;
+  margin:0;
+}
+
+.field__inline{
+  display: inline-block;
+}
+
+.field__inline + .field__inline{
+  width: 50%;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.field-label__inline{
+  display: inline-block;
+  @include rem(font-size, 1.2)
+}
+
+legend{
+  display: block;
+  padding:.5rem 0;
+}

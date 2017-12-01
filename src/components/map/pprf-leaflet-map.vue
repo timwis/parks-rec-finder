@@ -18,6 +18,7 @@
           :key="marker.id"
           :latLng="[marker.lat, marker.lng]"
           :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity}}"
+          @l-click="onMarkerClick(marker.id)"
       >
         <v-popup :content="marker.content()" />
       </v-svg-marker>
@@ -79,6 +80,7 @@ export default {
   },
 
   methods: {
+
     fitToMarkerBounds () {
       if (this.markers && this.markers.length) {
         let markersLatLng = this.markers.map(marker => L.latLng(marker.lat, marker.lng))

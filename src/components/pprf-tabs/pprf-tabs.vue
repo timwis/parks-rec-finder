@@ -21,9 +21,13 @@
 
         </ul>
 
+        <slot name="beforePanes"/>
+
         <div class="pprf-tabs-panels scrollable">
           <slot></slot>
         </div>
+
+        <slot name="afterPanes"/>
     </div>
 </template>
 
@@ -42,8 +46,9 @@ export default {
     }
   },
 
-  created () {
-    this.tabs = this.$children
+  mounted () {
+    // only add tabs that are tab panel components
+    this.tabs = this.$children.filter(child => { return child._vnode.data.staticClass === 'pprf-tab-panel' })
   },
 
   methods: {
@@ -104,7 +109,6 @@ export default {
             height:25%;
             background: color(dark-ben-franklin);
           }
-
         }
 
 

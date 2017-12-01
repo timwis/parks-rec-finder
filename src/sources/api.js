@@ -13,7 +13,7 @@ import {aisAPI} from './AISAPI'
  */
 const searchCarto = (searchParams, coords) => {
   let facilitiesSearchQuery = cartoAPI.queryFacilitiesBy(searchParams.fields.freetext, coords, searchParams.fields.zip)
-  let programsSearchQuery = cartoAPI.queryProgramsBy(searchParams.fields.freetext, coords, searchParams.fields.zip)
+  let programsSearchQuery = cartoAPI.queryProgramsBy(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
   return Promise.all([cartoAPI.runQuery(facilitiesSearchQuery), cartoAPI.runQuery(programsSearchQuery)])
 }
 /**
@@ -26,7 +26,7 @@ const searchCarto = (searchParams, coords) => {
 const search = (serachParams) => {
   let fields = serachParams.fields
 
-  if (fields.address !== null && fields.address !== '') {
+  if (fields.address && fields.address !== null && fields.address !== '') {
     return aisAPI.getCoordsForAddress(fields.address)
                  .then(searchCarto.bind({}, serachParams))
   } else {

@@ -25,13 +25,16 @@ export default new Vuex.Store({
       loading: false,
       error: null,
       success: false,
-
       fields: {
         freetext: '',
         address: '',
         zip: 0
       },
-      filters: {}
+      filters: {
+        fee: null,
+        gender: null,
+        ageRange: {low: null, high: null}
+      }
     }
   },
 
