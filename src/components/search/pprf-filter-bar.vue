@@ -2,10 +2,22 @@
   <section class="pprf-filter-bar">
     <header
       class="pprf-filter-bar-header"
-      @click="open = !open"
     >
-      <h4 class="text-nopad">Filters</h4>
-      <font-awesome-icon :icon="icon" />
+      <div @click="open = !open">
+        <h4 class="text-nopad">Filters</h4>
+        <font-awesome-icon :icon="icon" />
+      </div>
+
+      <div v-show="!open" class="pprf-filter-bar-tags-bar">
+        <h5 class="screen-reader-text">Applied Search Filters:</h5>
+        <ul class="pprf-filter-bar-tags">
+         <li v-for="(value, key) in tags" >
+            <button class="pprf-filter-bar-filter-tag">{{value}} <font-awesome-icon icon="times" size="xs" class="pprf-filter-bar-filter-tag__remove" @click="removeFilter(key)" />
+            </button>
+          </li>
+        </ul>
+      </div>
+
     </header>
     <form
       :class="[{'pprf-filter-bar-form__open':open}, 'pprf-filter-bar-form']"
@@ -22,7 +34,7 @@
             type="radio"
             name="fee"
             v-model="filters.fee"
-            :value="false"
+            value="Free"
             @change="onInput"
           >
           <label class="field-label field-label__inline" for="fee">Free</label>
@@ -34,7 +46,7 @@
             type="radio"
             name="fee"
             v-model="filters.fee"
-            :value="true"
+            value="Fee"
             @change="onInput"
           >
           <label class="field-label field-label__inline" for="fee">Fee</label>
@@ -140,7 +152,7 @@ export default {
         },
         {
           name: 'Senior (55+)',
-          range: [99]
+          range: [55, 99]
         }
       ],
 
@@ -173,7 +185,7 @@ export default {
     let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
     let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), filterDefs)
     let searchParamsFromRoute = [...searchFieldsFromRoute, ...searchFiltersFromRoute]
-
+    // submit search if deep linked from url
     if (!this.$store.state.route.from.name && searchParamsFromRoute.length > 0) {
       this._updateFiltersFromRoute()
       this.$store.dispatch('submitSearch')
@@ -181,11 +193,20 @@ export default {
   },
 
   computed: {
+    filtersList () {
+      return Object.assign({}, this.filters, {ageRange: this.ageRange})
+    },
+
     ageRange () {
       return {
         low: this.ages.length ? Math.min.apply(Math, this.ages) : null,
         high: this.ages.length ? Math.max.apply(Math, this.ages) : null
       }
+    },
+
+    tags () {
+      let filters = Object.assign({}, this.filters, {ages: this.ages.length ? `Ages ${this.ageRange.low} - ${this.ageRange.high}` : null})
+      return _.omit(filters, val => _.isNull(val))
     },
 
     icon () {
@@ -202,7 +223,8 @@ export default {
      * @since 0.0.0
      */
     onInput () {
-      const _filters = {filters: Object.assign({}, this.filters, {ageRange: this.ageRange})}
+      // const _filters = {filters: Object.assign({}, this.filters, {ageRange: this.ageRange})}
+      const _filters = {filters: this.filtersList}
       this.$store.dispatch('updateSearchInput', _filters)
     },
     /**
@@ -214,7 +236,7 @@ export default {
      * @since 0.0.0
      */
     onSubmit () {
-      const filters = Object.assign({}, this.filters, {ageRange: this.ageRange})
+      const filters = this.filtersList
       this._updateRouteFromFilters()
       this.$store.dispatch('submitSearch', {filters})
       this.open = false
@@ -259,6 +281,17 @@ export default {
       this.open = false
     },
 
+    removeFilter (filterKey) {
+      switch (filterKey) {
+        case 'ages':
+          this.ages = []
+          this.$refs['filter-age'].forEach(el => { el.checked = false })
+          break
+        default:
+          this.filters[filterKey] = null
+      }
+      this.onSubmit()
+    },
     /**
      * Update url params from user selected fiter values
      * @return {void}
@@ -299,9 +332,9 @@ export default {
                 }
               })
               break
-            case 'fee':
-              this.filters[key] = (this.$store.state.route.query[key] === 'true')
-              break
+            // case 'fee':
+            //   this.filters[key] = this.$store.state.route.query[key]
+            //   break
             default:
               this.filters[key] = this.$store.state.route.query[key]
               break
@@ -318,7 +351,6 @@ export default {
 <style lang="scss" scoped>
 .pprf-filter-bar{
   width: 100%;
-  height: 40px;
   color: $black;
   display: block;
   position:relative;
@@ -326,12 +358,47 @@ export default {
 }
 
 .pprf-filter-bar-header{
-  h4{display:inline;}
+  h4{display:inline; marign-bottom:0; padding-bottom:0;}
   .svg-inline--fa{
-    margin:2%;
+    margin:2% 2% 0 2%;
     float:right;
   }
 }
+
+.pprf-filter-bar-tags-bar{
+  width: 100%;
+  display:flex;
+}
+
+.pprf-filter-bar-tags{
+  display: flex;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+.pprf-filter-bar-filter-tag{
+  display: flex;
+  border: none;
+  border-radius: 10px;
+  padding-top: 2px;
+  background: lighten(color(sidewalk), 5%);
+  margin:0px 5px 5px 5px;
+  @include rem(font-size, 1.25);
+}
+
+  .svg-inline--fa.pprf-filter-bar-filter-tag__remove{
+    margin:3px 0px 3px 8px;
+    opacity: 0.5;
+    transition: all 0.5s ease;
+    &:hover{
+      opacity: 1;
+      cursor: pointer;
+      cursor: hand;
+    }
+  }
+
+
 
 .pprf-filter-bar-form{
   width: 100%;

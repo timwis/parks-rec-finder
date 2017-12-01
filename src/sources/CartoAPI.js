@@ -1,5 +1,6 @@
 import axios from 'axios'
 import squel from 'squel'
+import _ from 'underscore'
 
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
@@ -196,9 +197,10 @@ class CartoAPI {
   }
 
   _addFilters (sqlQueryObj, filters) {
+    filters = _.omit(filters, val => _.isNull(val))
     for (let filterKey in filters) {
-      if (filterKey === 'fee' && filters[filterKey] != null) {
-        let _feeCompartor = filters[filterKey] ? '!=' : '='
+      if (filterKey === 'fee') {
+        let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
         sqlQueryObj.where(`${filterKey} ${_feeCompartor} '0.00'`)
       }
 
@@ -208,7 +210,7 @@ class CartoAPI {
         sqlQueryObj.where(`age_high <= ${high}`)
       }
 
-      if (filterKey === 'gender' && filters[filterKey] != null) {
+      if (filterKey === 'gender') {
         sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
       }
     }

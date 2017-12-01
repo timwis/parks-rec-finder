@@ -6,19 +6,11 @@
 
               <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
               <div class="pprf-sidebar-header__desc">
-                <p v-show="(programs.length+facilities.length) > 0">
-                    Showing {{programs.length+facilities.length}} results
+                <p>
+                    Showing {{resultsCount}} results
                     <span v-show="search.fields.freetext">for <b>{{search.fields.freetext}}</b></span>
                     <span v-show="search.fields.address"> near {{search.fields.address}}</span>
-                    <span v-show="search.fields.zip" >around {{search.fields.zip}}</span> <br>
-
-                      <small v-show="this.activeTab == 'program'">
-                        <span v-show="search.filters.fee"> that have a <i><b>Fee</b></i></span>
-                        <span v-show="search.filters.fee === false"> that are <i><b>Free</b></i></span>
-                        <i><b v-show="search.filters.ageRange.high > 0"> Ages {{search.filters.ageRange.low}} - {{search.filters.ageRange.high}} </b></i>
-                        <span v-show="search.filters.gender"> for <i><b>{{search.filters.gender == 'M/F' ? 'All Gender' : (search.filters.gender == "M" ? "Male" : "Female")}}s</b></i></span>
-                      </small>
-
+                    <span v-show="search.fields.zip" >around {{search.fields.zip}}</span>
                 </p>
               </div>
             </header>
@@ -97,7 +89,11 @@ export default {
       programs: state => state.entities.program,
       facilities: state => state.entities.facility,
       activeTab: state => state.activeTab
-    })
+    }),
+
+    resultsCount () {
+      return isNaN(this.programs.length + this.facilities.length) ? 0 : (this.programs.length + this.facilities.length)
+    }
   }
 }
 </script>
