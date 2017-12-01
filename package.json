@@ -13,7 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "styleguide": "vue-styleguidist server",
     "styleguide:build": "vue-styleguidist build",
-    "jest-test": "cross-env AIS_API={} CARTO_API={} jest --watchAll"
+    "jest-test": "cross-env AIS_API={} CARTO_API={} jest --watchAll --notify"
   },
   "dependencies": {
     "jest-html-reporter": "^0.5.3",

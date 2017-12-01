@@ -1,10 +1,10 @@
-import { mount } from 'vue-test-utils'
+import { shallow } from 'vue-test-utils'
 import { createRenderer } from 'vue-server-renderer'
 
 import pprfHeader from '@/components/pprf-header.vue'
 
 describe('pprf-header.vue', () => {
-  const wrapper = mount(pprfHeader)
+  const wrapper = shallow(pprfHeader)
   it('sanity check', () => {
     expect(true).toBe(true)
   })
