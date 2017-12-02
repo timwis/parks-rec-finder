@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 import actions from './actions'
 import mutations from './mutations'
 // import * as getters from './getters'
-
 import createLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
@@ -14,10 +13,10 @@ const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
   state: {
     entities: {
-      program: {},
-      facility: {},
-      activity_type: {},
-      marker: {}
+      program: [],
+      facility: [],
+      activity_type: [],
+      marker: []
     },
     activeMarkers: [],
     activeTab: 'program',

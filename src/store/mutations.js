@@ -14,6 +14,10 @@ const mutations = {
     state.activeMarkers = state.entities.marker[entityType]
   },
 
+  [types.RESET_MARKERS] (state) {
+    state.activeMarkers = []
+  },
+
   [types.UPDATE_SEARCH_INPUT] (state, {fields, filters}) {
     let _filters = filters || state.search.filters
     let updatedSearch = {

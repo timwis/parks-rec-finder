@@ -69,13 +69,13 @@ export default {
   },
 
   mounted () {
-    // let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
+    let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
 
-    // if (!this.$store.state.route.from.name && searchFieldsFromRoute.length > 0) {
-    //   let fields = _.pick(this.$store.state.route.query, searchFieldsFromRoute)
-    //   this._updateInputRefsValues(this.$store.state.route.query)
-    //   this.$store.dispatch('updateSearchInput', {fields})
-    // }
+    if (searchFieldsFromRoute.length > 0) {
+      let fields = _.pick(this.$store.state.route.query, searchFieldsFromRoute)
+      this._updateInputRefsValues(this.$store.state.route.query)
+      this.$store.dispatch('updateSearchInput', {fields})
+    }
 
     /**
      * Update isDisabled when user adds input to search fields
@@ -197,9 +197,9 @@ export default {
       query = _.omit(query, val => _.isNull(val))
 
       if (this.$store.state.route.name !== 'Search') {
-        this.$router.push({path: 'search', query})
+        this.$router.push({path: '/search', query})
       } else {
-        this.$router.replace({path: 'search', query})
+        this.$router.replace({path: '/search', query})
       }
     }
   }

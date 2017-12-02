@@ -10,6 +10,7 @@ import router from './router'
 import VueProgressBar from 'vue-progressbar'
 import fontawesome from '@fortawesome/fontawesome'
 import { faSearch, faPlus, faMinus, faTimes } from '@fortawesome/fontawesome-free-solid'
+
 fontawesome.library.add(faSearch, faPlus, faMinus, faTimes)
 
 sync(store, router)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import squel from 'squel'
 import _ from 'underscore'
-
+import {ActivityTypes} from '@/store/mock-data/activity-type'
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
  * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>
@@ -18,6 +18,7 @@ class CartoAPI {
       facilities: 'ppr_facilities',
       assets: 'ppr_assets',
       programs: 'ppr_programs',
+      activityTypes: 'ppr_activity_types',
       zipcodes: 'zip_codes'
     }
     this.METERS_TO_MILES_RATIO = 0.000621371
@@ -194,6 +195,19 @@ class CartoAPI {
 
     if (this.LOG_QUERIES) { console.log(`CartoAPI:queryProgramsBy::${sqlQuery.toString()}`) }
     return encodeURIComponent(sqlQuery.toString())
+  }
+
+  getEntityTaxonomyTermsFor (entityType) {
+    // let sqlQuery = this.sqlQueryBuilder
+    //                       .select()
+    //                       .from(this.tables[entityType])
+    //                       .field(`${this.tables[entityType]}.*`)
+    // return encodeURIComponent(sqlQuery.toString())
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({data: {rows: ActivityTypes}})
+      }, 1000)
+    })
   }
 
   _addFilters (sqlQueryObj, filters) {

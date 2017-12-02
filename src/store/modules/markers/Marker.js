@@ -12,12 +12,6 @@ class PPRFMarker {
     this.opacity = 1
     this.size = [20, 28]
 
-    if (entity.hasOwnProperty('within_zip_code')) {
-      this.inZip = entity.within_zip_code
-      // this.opacity = entity.within_zip_code ? 1 : 0.25
-      this.size = entity.within_zip_code ? [20, 28] : [10, 14]
-    }
-
     switch (entityType) {
       case 'program':
         this.color = '#2176d2'
@@ -30,6 +24,12 @@ class PPRFMarker {
         this.address = entity.address
         this.assetID = entity.pprassets_object_id
         break
+    }
+
+    if (entity.hasOwnProperty('within_zip_code')) {
+      // this.opacity = entity.within_zip_code ? 1 : 0
+      // this.color = entity.within_zip_code ? this.color : '#25cef7'
+      this.size = entity.within_zip_code ? [20, 28] : [10, 14]
     }
   }
 

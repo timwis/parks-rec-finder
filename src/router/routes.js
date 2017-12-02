@@ -1,15 +1,21 @@
 import pprfLeafletMap from '@/components/map/pprf-leaflet-map'
-import pprfSidebar from '@/components/pprf-sidebar'
+// import pprfSidebar from '@/components/pprf-sidebar'
 import pprfSidebarSearchContainer from '@/containers/pprf-sidebar-search-container'
+import pprfSidebarEntityTaxoContainer from '@/containers/pprf-sidebar-entity-taxo-container'
 
 const routes = [
   {
-    path: '/',
+    path: '/', redirect: 'categories/programs'
+  },
+
+  {
+    path: '/categories/:entityType',
     name: 'Home',
     components: {
       'map': pprfLeafletMap,
-      'sidebar': pprfSidebar
-    }
+      'sidebar': pprfSidebarEntityTaxoContainer
+    },
+    props: { default: true, sidebar: true }
   },
 
   {

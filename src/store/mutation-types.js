@@ -22,6 +22,7 @@ export const UPDATE_FACILITIES = 'facilities/UPDATE_FACILITIES'
 
 // MARKER
 export const UPDATE_MARKERS = 'UPDATE_MARKERS'
+export const RESET_MARKERS = 'RESET_MARKERS'
 
 // TABS
 export const SET_ACTIVE_TAB = 'SET_ACTIVE_TAB'

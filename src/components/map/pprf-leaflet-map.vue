@@ -17,7 +17,7 @@
           v-for="marker in markers"
           :key="marker.id"
           :latLng="[marker.lat, marker.lng]"
-          :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity}}"
+          :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity, circleFillOpacity: marker.opacity, circleOpacity: marker.opacity}}"
           @l-click="onMarkerClick(marker.id)"
       >
         <v-popup :content="marker.content()" />
@@ -62,10 +62,7 @@ export default {
 
   computed: {
     ...mapState({
-      markers: state => {
-        console.log('mapState markers')
-        return state.activeMarkers
-      }
+      markers: state => state.activeMarkers
     })
   },
 
@@ -77,6 +74,12 @@ export default {
 
   updated () {
     this.fitToMarkerBounds()
+  },
+
+  watch: {
+    '$route.query'  () {
+      this.$store.dispatch('resetMarkers')
+    }
   },
 
   methods: {

@@ -16,6 +16,19 @@ const searchCarto = (searchParams, coords) => {
   let programsSearchQuery = cartoAPI.queryProgramsBy(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
   return Promise.all([cartoAPI.runQuery(facilitiesSearchQuery), cartoAPI.runQuery(programsSearchQuery)])
 }
+
+const getTermsFor = (entityType) => {
+  switch (entityType) {
+    case 'program':
+      entityType = 'Activity'
+      break
+    case 'location':
+      entityType = 'Facility'
+      break
+  }
+  return cartoAPI.getEntityTaxonomyTermsFor()
+}
+
 /**
  * Address search implemented using the AIS and Carto APIs
  * @param  {object} searchParams - UI search fields key value pairs
@@ -37,6 +50,9 @@ const search = (serachParams) => {
 class API {
   search (searchParams) {
     return search(searchParams)
+  }
+  getTerms (entityType) {
+    return getTermsFor(entityType)
   }
 }
 

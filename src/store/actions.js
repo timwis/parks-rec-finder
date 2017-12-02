@@ -15,8 +15,23 @@ const actions = {
     // }
   },
 
+  resetMarkers ({commit}) {
+    commit(types.RESET_MARKERS)
+  },
+
   updateSearchInput ({commit, state}, serachParams) {
     commit(types.UPDATE_SEARCH_INPUT, serachParams)
+  },
+
+  updateEntities ({commit}, entityTypeObj) {
+    commit(types.UPDATE_ENTITIES, {entities: {[entityTypeObj.type]: entityTypeObj.data.rows}})
+  },
+
+  getTerms ({commit, state}, entityType) {
+    api.getTerms(entityType).then(results => {
+      // console.log(results.data.rows)
+      commit(types.UPDATE_ENTITIES, {entities: {activity_type: results.data.rows}})
+    })
   },
 
   submitSearch ({commit, state}, serachParams) {
