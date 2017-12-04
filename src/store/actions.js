@@ -19,6 +19,10 @@ const actions = {
     commit(types.RESET_MARKERS)
   },
 
+  updateMarkers ({commit}, entityType) {
+    commit(types.UPDATE_MARKERS, entityType)
+  },
+
   updateSearchInput ({commit, state}, serachParams) {
     commit(types.UPDATE_SEARCH_INPUT, serachParams)
   },
@@ -27,7 +31,15 @@ const actions = {
     commit(types.UPDATE_ENTITIES, {entities: {[entityTypeObj.type]: entityTypeObj.data.rows}})
   },
 
+  updateEntitiesFromTaxonomy ({commit}, entityTypeObj) {
+    /* eslint-disable no-unused-vars */
+    let marker = {[entityTypeObj.type]: entityTypeObj.data.rows.map(entity => new PPRFMarker(entityTypeObj.type, entity))}
+    commit(types.UPDATE_ENTITIES, {entities: {marker, [entityTypeObj.type]: entityTypeObj.data.rows}})
+    commit(types.UPDATE_MARKERS, { entityType: entityTypeObj.type })
+  },
+
   getTerms ({commit, state}, entityType) {
+    debugger
     api.getTerms(entityType).then(results => {
       // console.log(results.data.rows)
       commit(types.UPDATE_ENTITIES, {entities: {activity_type: results.data.rows}})

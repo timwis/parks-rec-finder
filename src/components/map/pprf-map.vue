@@ -8,7 +8,7 @@
 import L from 'leaflet'
 import {tiledMapLayer} from 'esri-leaflet'
 /* eslint-disable no-new */
-import '@/vendor/svg-icon.js'
+// import '@/vendor/svg-icon.js'
 /**
  * MAPPING IMPLEMENTATION CONTAINER
  *

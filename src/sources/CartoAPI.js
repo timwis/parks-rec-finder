@@ -202,10 +202,20 @@ class CartoAPI {
     let taxonomy = `${entityTaxonomy}Type`
     let taxonomyTable = this.tables[taxonomy]
 
+    // let sqlQuery = this.sqlQueryBuilder
+    //                       .select()
+    //                       .from(taxonomyTable)
+    //                       .field(`${taxonomyTable}.*`)
+
+    // MOCK QUERY
     let sqlQuery = this.sqlQueryBuilder
                           .select()
                           .from(taxonomyTable)
-                          .field(`${taxonomyTable}.*`)
+                          .field(`category`)
+                          .distinct()
+                          .order('category')
+
+    console.log(sqlQuery.toString())
     return encodeURIComponent(sqlQuery.toString())
     // return new Promise((resolve, reject) => {
     //   setTimeout(() => {
@@ -224,10 +234,12 @@ class CartoAPI {
     let sqlQuery = this.sqlQueryBuilder
                           .select()
                           .from(`${this.tables.programs}`, 'program')
-                          // .field(`program.*`)
+                          .field(`program.*`)
                           .field(`category`)
+                          .join(this.tables.facilities, null, `${this.tables.facilities}.id = program.facility->>0`)
                           .left_join(squel.select('id').from(`${this.tables.ActivityType}`), 'types', `program.activity_type->>0 = types.id`)
                           .where(`category = '${taxonomyTerm}'`)
+    this._addPPRAssetsToQuery(sqlQuery, null, null)
 
     if (this.LOG_QUERIES) { console.log(`CartoAPI:getEntityTaxonomyTerms::${sqlQuery.toString()}`) }
 

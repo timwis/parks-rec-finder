@@ -3,37 +3,26 @@
     <div class="pprf-sidebar-inner">
 
       <header class="pprf-sidebar-header">
-        <h2 v-show="entityType === 'programs'" class="pprf-sidebar-header__title text-nopad">Things to do</h2>
-        <h2 v-show="entityType === 'locations'" class="pprf-sidebar-header__title text-nopad">Places to go</h2>
-        <div class="pprf-sidebar-header__desc">
-          <p>Chose a category from the list below to find a program for you.</p>
-        </div>
+        <h2  class="pprf-sidebar-header__title text-nopad">{{taxoName}} <small>{{programs.length}}</small></h2>
       </header>
 
       <main class="pprf-sidebar-main">
-         <pprf-tabs
-          @tabSelected="updateRoute"
-         >
-          <pprf-tab
-            name="Programs"
-            :selected="entityType === 'programs'"
-          >
-            <ul class="pprf-taxonomy-terms-list">
-              <li
-                v-for="term in activityTypes"
-                class="pprf-taxonomy-terms-card">
-                <h3>{{term.activity_type_name}}</h3>
-              </li>
-            </ul>
-          </pprf-tab>
-
-          <pprf-tab
-            name="Locations"
-            :selected="entityType === 'locations'"
-          >
-          </pprf-tab>
-
-        </pprf-tabs>
+        <!-- <pprf-filter-bar slot="beforePanes" /> -->
+         <ul class="pprf-entity-taxo--single-list scrollable">
+           <li
+              v-for="program in programs"
+              class="card card--program"
+            >
+              <h4>{{program.program_name}}</h4>
+              <h5>category: {{program.category}}</h5>
+              <h5>age: ( {{program.age_low}} - {{program.age_high}})</h5>
+              <h5>fee: {{program.fee}}</h5>
+              <h5>gender:</h5>
+              <ul>
+                <li v-for="gender in program.gender">{{gender}}</li>
+              </ul>
+            </li>
+         </ul>
       </main>
     </div>
   </pprf-sidebar>
@@ -42,55 +31,68 @@
 <script>
 import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
-import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import api from '@/sources/api'
-// import {EventBus} from '@/event-bus'
-// import store from '@/store'
+import pprfFilterBar from '@/components/search/pprf-filter-bar'
+import store from '@/store'
+import _ from 'underscore'
 
 export default {
   name: 'PPRF-Sidebar-Entity-Taxo-Container',
 
-  props: ['entityType'],
+  props: ['entityType', 'entityTerm'],
 
   components: {
     pprfSidebar,
-    pprfTabs,
-    pprfTab
+    pprfFilterBar
   },
 
   beforeRouteEnter (to, from, next) {
-    // if (!store.state.entities.activity_type.length) {
-    debugger
-    api.getTaxonomyTerms(to.params).then(results => {
-      console.log(results.data)
-    })
-    api.getTaxonomyFor(to.params.entityType).then(results => {
-      next(vm => {
-        vm.$store.dispatch('updateEntities', {type: 'activity_type', data: results.data})
+    let entitiesInState = _.where(store.state.entities.program, {category: to.params.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1)).join(' ')})
+
+    if (!entitiesInState.length) {
+      api.getTaxonomyTerms(to.params).then(results => {
+        next(vm => {
+          console.log(results)
+          vm.$store.dispatch('updateEntitiesFromTaxonomy', {type: 'program', data: results.data})
+        })
       })
-    })
-    // } else {
-      // next()
-    // }
+    } else {
+      console.log('entitiesInState')
+      next(vm => {
+        vm.$store.dispatch('updateMarkers', {entityType: 'program'})
+      })
+    }
   },
 
   computed: {
+
     ...mapState({
       search: state => state.search,
       programs: state => state.entities.program,
       activityTypes: state => state.entities.activity_type,
       facilities: state => state.entities.facility,
       activeTab: state => state.activeTab
-    })
-  },
+    }),
 
-  methods: {
-    updateRoute (tab) {
-      this.$router.push({path: `/categories/${tab.name.toLowerCase()}`})
+    taxoName () {
+      let taxonomyTerm = this.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
+      if (taxonomyTerm.indexOf('Environmental') > -1) {
+        taxonomyTerm = taxonomyTerm.join('/')
+      } else {
+        taxonomyTerm = taxonomyTerm.join(' ')
+      }
+      return taxonomyTerm
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.pprf-entity-taxo--single-list{
+  width: 100%;
+  height: 737px;
+  display: block;
+  margin-top: 20px;
+  padding-right: 10px;
+}
 </style>

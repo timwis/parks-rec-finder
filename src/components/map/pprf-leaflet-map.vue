@@ -18,7 +18,6 @@
           :key="marker.id"
           :latLng="[marker.lat, marker.lng]"
           :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity, circleFillOpacity: marker.opacity, circleOpacity: marker.opacity}}"
-          @l-click="onMarkerClick(marker.id)"
       >
         <v-popup :content="marker.content()" />
       </v-svg-marker>
