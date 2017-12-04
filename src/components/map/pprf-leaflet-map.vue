@@ -100,6 +100,6 @@ export default {
   .pprf-map-container{
     flex:1;
     width: 100%;
-    height:$max-app-height;
+    height:calc(1024px - 65px);
   }
 </style>

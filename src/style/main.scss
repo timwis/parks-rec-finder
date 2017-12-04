@@ -87,7 +87,28 @@ body {
   min-height: 100px;
   display: block;
   margin:5px 0;
-  background: color(ghost-gray);
-  border-radius: 3px;
-  padding: 10px;
+  position: relative;
+  // background: color(ghost-gray);
+  // border-radius: 3px;
+  // padding: 10px;
 }
+
+ .card__info-name {
+    font: $font-montserrat;
+    font-weight: 700;
+    @include rem(font-size, 1.8);
+    @include rem(line-height , 2)
+  }
+
+  .card__info-meta {
+    // height: 20px;
+    // width: 100%;
+    // border: 2px solid red;
+    // position: absolute;
+    // bottom: 0;
+    // left:0;
+
+    font-family: $font-open-sans;
+    color: color(medium-gray);
+    p{margin:0; padding:0;}
+  }

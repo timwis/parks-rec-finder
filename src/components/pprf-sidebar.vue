@@ -21,7 +21,7 @@ export default {
 
   .pprf-sidebar{
       flex: 1;
-      height: 100%;
+      height: calc(1024px - 65px);
       max-width: 451px;
       padding: 15px 20px 0 20px;
       color: color(dark-ben-franklin);
@@ -29,7 +29,13 @@ export default {
   }
     .pprf-sidebar-inner{
         width: 100%;
+        height:100%;
+        display:flex;
+        flex-flow:column;
+        overflow: auto;
+
     }
+        .pprf-sidebar-header{}
         .pprf-sidebar-header__title{
             font: {
                 family: $font-montserrat;
@@ -41,9 +47,10 @@ export default {
         }
 
       .pprf-sidebar-main{
-        height: 800px;
-        overflow:hidden;
+        flex:1;
       }
+
+
 
 
 </style>

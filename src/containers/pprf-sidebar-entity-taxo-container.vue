@@ -6,22 +6,18 @@
         <h2  class="pprf-sidebar-header__title text-nopad">{{taxoName}} <small>{{programs.length}}</small></h2>
       </header>
 
-      <main class="pprf-sidebar-main">
+      <main class="pprf-sidebar-main scrollable">
         <!-- <pprf-filter-bar slot="beforePanes" /> -->
-         <ul class="pprf-entity-taxo--single-list scrollable">
-           <li
+         <ul class="pprf-entity-taxo--single-list">
+            <pprf-program-card
               v-for="program in programs"
               class="card card--program"
-            >
-              <h4>{{program.program_name}}</h4>
-              <h5>category: {{program.category}}</h5>
-              <h5>age: ( {{program.age_low}} - {{program.age_high}})</h5>
-              <h5>fee: {{program.fee}}</h5>
-              <h5>gender:</h5>
-              <ul>
-                <li v-for="gender in program.gender">{{gender}}</li>
-              </ul>
-            </li>
+              :key="program.id"
+              :name="program.program_name"
+              :ages="{high: program.age_high, low: program.age_low}"
+              :gender="program.gender[0]"
+              :fee="program.fee"
+            />
          </ul>
       </main>
     </div>
@@ -33,6 +29,7 @@ import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import api from '@/sources/api'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
+import pprfProgramCard from '@/components/pprf-program-card'
 import store from '@/store'
 import _ from 'underscore'
 
@@ -43,7 +40,8 @@ export default {
 
   components: {
     pprfSidebar,
-    pprfFilterBar
+    pprfFilterBar,
+    pprfProgramCard
   },
 
   beforeRouteEnter (to, from, next) {
@@ -90,9 +88,10 @@ export default {
 <style lang="scss" scoped>
 .pprf-entity-taxo--single-list{
   width: 100%;
-  height: 737px;
   display: block;
   margin-top: 20px;
+  padding-left:0;
   padding-right: 10px;
+  li{margin:0; padding:0;}
 }
 </style>
