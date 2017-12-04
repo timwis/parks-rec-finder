@@ -5,11 +5,11 @@ import pprfSidebarEntityTaxoContainer from '@/containers/pprf-sidebar-entity-tax
 
 const routes = [
   {
-    path: '/', redirect: 'categories/programs'
+    path: '/', redirect: '/categories/programs'
   },
 
   {
-    path: '/categories/:entityType',
+    path: '/categories/:entityType/:entityTerm?',
     name: 'Home',
     components: {
       'map': pprfLeafletMap,

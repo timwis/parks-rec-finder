@@ -17,16 +17,17 @@ const searchCarto = (searchParams, coords) => {
   return Promise.all([cartoAPI.runQuery(facilitiesSearchQuery), cartoAPI.runQuery(programsSearchQuery)])
 }
 
-const getTermsFor = (entityType) => {
+const getTaxonomy = (entityType) => {
   switch (entityType) {
-    case 'program':
+    case 'programs':
       entityType = 'Activity'
       break
-    case 'location':
-      entityType = 'Facility'
+    case 'locations':
+      entityType = 'Location'
       break
   }
-  return cartoAPI.getEntityTaxonomyTermsFor()
+  let taxonomyTermsQueryString = cartoAPI.getEntityTaxonomy(entityType)
+  return cartoAPI.runQuery(taxonomyTermsQueryString)
 }
 
 /**
@@ -39,7 +40,7 @@ const getTermsFor = (entityType) => {
 const search = (serachParams) => {
   let fields = serachParams.fields
 
-  if (fields.address && fields.address !== null && fields.address !== '') {
+  if (fields && fields.address && fields.address !== null && fields.address !== '') {
     return aisAPI.getCoordsForAddress(fields.address)
                  .then(searchCarto.bind({}, serachParams))
   } else {
@@ -51,8 +52,11 @@ class API {
   search (searchParams) {
     return search(searchParams)
   }
-  getTerms (entityType) {
-    return getTermsFor(entityType)
+  getTaxonomyFor (entityType) {
+    return getTaxonomy(entityType)
+  }
+  getTaxonomyTerms (entity) {
+    return cartoAPI.runQuery(cartoAPI.getEntityTaxonomyTerms(entity))
   }
 }
 

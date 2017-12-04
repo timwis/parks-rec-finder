@@ -22,7 +22,7 @@
               <li
                 v-for="term in activityTypes"
                 class="pprf-taxonomy-terms-card">
-                {{term.ActivityTypeName}}
+                <h3>{{term.activity_type_name}}</h3>
               </li>
             </ul>
           </pprf-tab>
@@ -45,7 +45,8 @@ import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import api from '@/sources/api'
 // import {EventBus} from '@/event-bus'
-import store from '@/store'
+// import store from '@/store'
+
 export default {
   name: 'PPRF-Sidebar-Entity-Taxo-Container',
 
@@ -58,16 +59,19 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    console.log(store)
-    if (!store.state.entities.activity_type.length) {
-      api.getTerms().then(results => {
-        next(vm => {
-          vm.$store.dispatch('updateEntities', {type: 'activity_type', data: results.data})
-        })
+    // if (!store.state.entities.activity_type.length) {
+    debugger
+    api.getTaxonomyTerms(to.params).then(results => {
+      console.log(results.data)
+    })
+    api.getTaxonomyFor(to.params.entityType).then(results => {
+      next(vm => {
+        vm.$store.dispatch('updateEntities', {type: 'activity_type', data: results.data})
       })
-    } else {
-      next()
-    }
+    })
+    // } else {
+      // next()
+    // }
   },
 
   computed: {

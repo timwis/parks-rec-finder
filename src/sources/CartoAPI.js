@@ -1,7 +1,7 @@
 import axios from 'axios'
 import squel from 'squel'
 import _ from 'underscore'
-import {ActivityTypes} from '@/store/mock-data/activity-type'
+// import {ActivityTypes} from '@/store/mock-data/activity-type'
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
  * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>
@@ -13,12 +13,13 @@ class CartoAPI {
     this.LOG_QUERIES = true
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
-    this.sqlQueryBuilder = sqlQueryBuilder
+    this.sqlQueryBuilder = sqlQueryBuilder.useFlavour('postgres')
     this.tables = {
       facilities: 'ppr_facilities',
+      LocationType: 'ppr_location_types',
       assets: 'ppr_assets',
       programs: 'ppr_programs',
-      activityTypes: 'ppr_activity_types',
+      ActivityType: 'ppr_activity_types',
       zipcodes: 'zip_codes'
     }
     this.METERS_TO_MILES_RATIO = 0.000621371
@@ -174,7 +175,7 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  queryProgramsBy (freetextValue, coords = null, zipcode = null, filters) {
+  queryProgramsBy (freetextValue, coords = null, zipcode = null, filters = null) {
     // get facilites and assets with latitude and longitude values
     let sqlQuery = this.sqlQueryBuilder
                           .select()
@@ -197,17 +198,41 @@ class CartoAPI {
     return encodeURIComponent(sqlQuery.toString())
   }
 
-  getEntityTaxonomyTermsFor (entityType) {
-    // let sqlQuery = this.sqlQueryBuilder
-    //                       .select()
-    //                       .from(this.tables[entityType])
-    //                       .field(`${this.tables[entityType]}.*`)
-    // return encodeURIComponent(sqlQuery.toString())
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({data: {rows: ActivityTypes}})
-      }, 1000)
-    })
+  getEntityTaxonomy (entityTaxonomy) {
+    let taxonomy = `${entityTaxonomy}Type`
+    let taxonomyTable = this.tables[taxonomy]
+
+    let sqlQuery = this.sqlQueryBuilder
+                          .select()
+                          .from(taxonomyTable)
+                          .field(`${taxonomyTable}.*`)
+    return encodeURIComponent(sqlQuery.toString())
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve({data: {rows: ActivityTypes}})
+    //   }, 1000)
+    // })
+  }
+
+  getEntityTaxonomyTerms (entity) {
+    let taxonomyTerm = entity.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
+    if (taxonomyTerm.indexOf('Environmental') > -1) {
+      taxonomyTerm = taxonomyTerm.join('/')
+    } else {
+      taxonomyTerm = taxonomyTerm.join(' ')
+    }
+    let sqlQuery = this.sqlQueryBuilder
+                          .select()
+                          .from(`${this.tables.programs}`, 'program')
+                          // .field(`program.*`)
+                          .field(`category`)
+                          .left_join(squel.select('id').from(`${this.tables.ActivityType}`), 'types', `program.activity_type->>0 = types.id`)
+                          .where(`category = '${taxonomyTerm}'`)
+
+    if (this.LOG_QUERIES) { console.log(`CartoAPI:getEntityTaxonomyTerms::${sqlQuery.toString()}`) }
+
+    // "SELECT category FROM ppr_programs as programs LEFT JOIN ppr_activity_types as types ON programs.activity_type->>0 = types.id WHERE category = 'Athletic'"
+    return encodeURIComponent(sqlQuery.toString())
   }
 
   _addFilters (sqlQueryObj, filters) {
