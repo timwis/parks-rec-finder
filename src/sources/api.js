@@ -12,9 +12,9 @@ import {aisAPI} from './AISAPI'
  * @since 0.0.0
  */
 const searchCarto = (searchParams, coords) => {
-  let facilitiesSearchQuery = cartoAPI.queryFacilitiesBy(searchParams.fields.freetext, coords, searchParams.fields.zip)
-  let programsSearchQuery = cartoAPI.queryProgramsBy(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
-  return Promise.all([cartoAPI.runQuery(facilitiesSearchQuery), cartoAPI.runQuery(programsSearchQuery)])
+  let facilitiesSearchQuery = cartoAPI.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
+  let programsSearchQuery = cartoAPI.getPrograms(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
+  return Promise.all([facilitiesSearchQuery, programsSearchQuery])
 }
 
 const getTaxonomy = (entityType) => {
@@ -40,7 +40,7 @@ const getTaxonomy = (entityType) => {
 const search = (serachParams) => {
   let fields = serachParams.fields
 
-  if (fields && fields.address && fields.address !== null && fields.address !== '') {
+  if (fields && (fields.address && fields.address !== null && fields.address !== '')) {
     return aisAPI.getCoordsForAddress(fields.address)
                  .then(searchCarto.bind({}, serachParams))
   } else {
