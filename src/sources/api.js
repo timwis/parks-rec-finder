@@ -26,8 +26,7 @@ const getTaxonomy = (entityType) => {
       entityType = 'Location'
       break
   }
-  let taxonomyTermsQueryString = cartoAPI.getEntityTaxonomy(entityType)
-  return cartoAPI.runQuery(taxonomyTermsQueryString)
+  return cartoAPI.getEntityTaxonomy(entityType)
 }
 
 /**
@@ -56,7 +55,11 @@ class API {
     return getTaxonomy(entityType)
   }
   getTaxonomyTerms (entity) {
-    return cartoAPI.runQuery(cartoAPI.getEntityTaxonomyTerms(entity))
+    debugger
+    if (entity.entityType === 'locations') {
+      entity.entityType = 'facilities'
+    }
+    return cartoAPI.getEntityTaxonomyTerms(entity)
   }
 }
 

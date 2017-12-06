@@ -49,13 +49,13 @@ export default {
 
     if (!entitiesInState.length) {
       api.getTaxonomyTerms(to.params).then(results => {
+        debugger
         next(vm => {
           console.log(results)
           vm.$store.dispatch('updateEntitiesFromTaxonomy', {type: 'program', data: results.data})
         })
       })
     } else {
-      console.log('entitiesInState')
       next(vm => {
         vm.$store.dispatch('updateMarkers', {entityType: 'program'})
       })

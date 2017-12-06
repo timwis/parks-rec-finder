@@ -1,12 +1,10 @@
 import axios from 'axios'
-import squel from 'squel'
-// import _ from 'underscore'
-// import SQLQueryBuilder from './SQLQueryBuilder'
-// import tables from './CartoDBTables'
 import {isValidZipcode} from '@/utilities/utils'
 import {
   selectPrograms,
   selectFacilities,
+  selectCategoriesFor,
+  selectCategoryEntitiesFor,
   orderByMilesFromZipcode,
   addDistanceFieldFromCoordinates,
   addWithinZipCodeField,
@@ -21,11 +19,10 @@ import {
  * @since 0.0.0
  */
 class CartoAPI {
-  constructor (httpClient, SQLQueryBuilder) {
+  constructor (httpClient) {
     this.LOG_QUERIES = true
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
-    this.sqlQueryBuilder = SQLQueryBuilder.useFlavour('postgres')
     this._programs = selectPrograms()
     this._facilities = selectFacilities()
   }
@@ -33,6 +30,7 @@ class CartoAPI {
   set programs (programs) {
     this._programs = programs
   }
+  // stringify sql query
   get programs () {
     return this._programs.toString()
   }
@@ -40,6 +38,7 @@ class CartoAPI {
   set facilities (programs) {
     this._facilities = programs
   }
+  // stringify sql query
   get facilities () {
     return this._facilities.toString()
   }
@@ -71,12 +70,11 @@ class CartoAPI {
     this._programs = selectPrograms()
     // get facilites and assets with latitude and longitude values
     if (coords && !zipcode) {
-      debugger
       addDistanceFieldFromCoordinates(this._programs, coords)
+      orderByMilesFromZipcode(this._facilities)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      debugger
       addWithinZipCodeField(this._programs, zipcode)
     }
 
@@ -120,31 +118,24 @@ class CartoAPI {
     return this.runQuery(this.facilities)
   }
 
-  getEntityTaxonomy (entityTaxonomy) {
-    let taxonomy = `${entityTaxonomy}Type`
-    let taxonomyTable = this.tables[taxonomy]
-
-    // let sqlQuery = this.sqlQueryBuilder
-    //                       .select()
-    //                       .from(taxonomyTable)
-    //                       .field(`${taxonomyTable}.*`)
-
-    // MOCK QUERY
-    let sqlQuery = this.sqlQueryBuilder
-                          .select()
-                          .from(taxonomyTable)
-                          .field(`category`)
-                          .distinct()
-                          .order('category')
-
-    return encodeURIComponent(sqlQuery.toString())
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     resolve({data: {rows: ActivityTypes}})
-    //   }, 1000)
-    // })
+  /**
+   * given an entity type get a list of entity categories
+   * @param  {string} entityType name of entity
+   * @return {void}
+   *
+   * @since 0.0.0
+   */
+  getEntityTaxonomy (entityType) {
+    return this.runQuery(selectCategoriesFor(entityType).toString())
   }
 
+  /**
+   * given an entity object retrieve all entites with given taxonomyTerm
+   * @param  {object} entity {entityType: String, taxonomyTerm: String}
+   * @return {void}
+   *
+   * @since 0.0.0
+   */
   getEntityTaxonomyTerms (entity) {
     let taxonomyTerm = entity.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
     if (taxonomyTerm.indexOf('Environmental') > -1) {
@@ -152,21 +143,9 @@ class CartoAPI {
     } else {
       taxonomyTerm = taxonomyTerm.join(' ')
     }
-    let sqlQuery = this.sqlQueryBuilder
-                          .select()
-                          .from(`${this.tables.programs}`, 'program')
-                          .field(`program.*`)
-                          .field(`category`)
-                          .join(this.tables.facilities, null, `${this.tables.facilities}.id = program.facility->>0`)
-                          .left_join(squel.select('id').from(`${this.tables.ActivityType}`), 'types', `program.activity_type->>0 = types.id`)
-                          .where(`category = '${taxonomyTerm}'`)
-    this._addPPRAssetsToQuery(sqlQuery, null, null)
 
-    if (this.LOG_QUERIES) { console.log(`CartoAPI:getEntityTaxonomyTerms::${sqlQuery.toString()}`) }
-
-    // "SELECT category FROM ppr_programs as programs LEFT JOIN ppr_activity_types as types ON programs.activity_type->>0 = types.id WHERE category = 'Athletic'"
-    return encodeURIComponent(sqlQuery.toString())
+    return this.runQuery(selectCategoryEntitiesFor(entity.entityType, taxonomyTerm))
   }
 }
 
-export let cartoAPI = new CartoAPI(axios, squel)
+export let cartoAPI = new CartoAPI(axios)
