@@ -195,12 +195,12 @@ export default {
       let query = Object.assign({}, this.$store.state.route.query, queryParams)
       // only submit submit valid params
       query = _.omit(query, val => _.isNull(val))
-
-      if (this.$store.state.route.name !== 'Search') {
-        this.$router.push({path: '/search', query})
-      } else {
-        this.$router.replace({path: '/search', query})
-      }
+      this.$router.push({path: '/search', query})
+      // if (this.$store.state.route.name !== 'Search') {
+      //   this.$router.push({path: '/search', query})
+      // } else {
+      //   this.$router.replace({path: '/search', query})
+      // }
     }
   }
 }

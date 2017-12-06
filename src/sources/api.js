@@ -48,11 +48,12 @@ class API {
     return cartoAPI.getEntityTaxonomy(entityType)
   }
 
-  getTaxonomyTerms (entity) {
+  getTaxonomyTerms (entity, filters) {
     if (entity.entityType === 'locations') {
       entity.entityType = 'facilities'
     }
-    return cartoAPI.getEntityTaxonomyTerms(entity)
+
+    return cartoAPI.getEntityTaxonomyTerms(entity, filters)
   }
 }
 

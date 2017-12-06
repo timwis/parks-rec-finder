@@ -20,6 +20,7 @@
 
                 <pprf-filter-bar
                   slot="beforePanes"
+                  @applyFilters="filterEntities"
                   v-show="this.activeTab == 'program'"
                 />
 
@@ -88,6 +89,12 @@ export default {
     pprfTab,
     pprfFilterBar,
     pprfProgramCard
+  },
+
+  methods: {
+    filterEntities (filters) {
+      this.$store.dispatch('submitSearch', filters)
+    }
   },
 
   computed: {

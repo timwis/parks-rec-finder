@@ -181,6 +181,7 @@ export default {
   },
 
   mounted () {
+    // @TODO: move this search from route else where, maybe beforeRouteEnter in router search route??
     let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.$store.state.search.fields))
     let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
     let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), filterDefs)
@@ -223,9 +224,7 @@ export default {
      * @since 0.0.0
      */
     onInput () {
-      // const _filters = {filters: Object.assign({}, this.filters, {ageRange: this.ageRange})}
-      const _filters = {filters: this.filtersList}
-      this.$store.dispatch('updateSearchInput', _filters)
+      this.$store.dispatch('updateSearchInput', {filters: this.filtersList})
     },
     /**
      * On Form Submission submit search with filter values
@@ -236,9 +235,8 @@ export default {
      * @since 0.0.0
      */
     onSubmit () {
-      const filters = this.filtersList
       this._updateRouteFromFilters()
-      this.$store.dispatch('submitSearch', {filters})
+      this.$emit('applyFilters', {filters: this.filtersList})
       this.open = false
     },
     /**
@@ -275,9 +273,10 @@ export default {
         fee: null,
         gender: null
       }
-      this.onInput()
       this._updateRouteFromFilters()
-      this.$store.dispatch('submitSearch')
+      this.onInput()
+      this.onSubmit()
+      this.$emit('clearFilters')
       this.open = false
     },
 
@@ -290,6 +289,7 @@ export default {
         default:
           this.filters[filterKey] = null
       }
+      this.onInput()
       this.onSubmit()
     },
     /**
@@ -302,7 +302,7 @@ export default {
     _updateRouteFromFilters () {
       let ages = this.ages.length ? `${this.ageRange.low}-${this.ageRange.high}` : null
       let _query = Object.assign({}, this.$store.state.route.query, this.filters, {ages})
-      this.$router.replace({path: 'search', query: _.omit(_query, val => _.isNull(val))})
+      this.$router.replace({query: _.omit(_query, val => _.isNull(val))})
     },
 
     /**

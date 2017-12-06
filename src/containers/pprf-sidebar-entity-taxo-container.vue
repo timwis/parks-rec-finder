@@ -4,10 +4,13 @@
 
       <header class="pprf-sidebar-header">
         <h2  class="pprf-sidebar-header__title text-nopad">{{taxoName}} <small>{{programs.length}}</small></h2>
+        <pprf-filter-bar
+          slot="beforePanes"
+          @applyFilters="filterEntities"
+        />
       </header>
 
       <main class="pprf-sidebar-main scrollable">
-        <!-- <pprf-filter-bar slot="beforePanes" /> -->
          <ul class="pprf-entity-taxo--single-list">
             <pprf-program-card
               v-for="program in programs"
@@ -49,9 +52,9 @@ export default {
 
     if (!entitiesInState.length) {
       api.getTaxonomyTerms(to.params).then(results => {
-        debugger
         next(vm => {
           console.log(results)
+          // @TODO: add facility type to dispatch
           vm.$store.dispatch('updateEntitiesFromTaxonomy', {type: 'program', data: results.data})
         })
       })
@@ -59,6 +62,16 @@ export default {
       next(vm => {
         vm.$store.dispatch('updateMarkers', {entityType: 'program'})
       })
+    }
+  },
+
+  methods: {
+    filterEntities () {
+      api.getTaxonomyTerms(this.$store.state.route.params, this.search.filters)
+          .then(results => {
+            // @TODO: add facility type to dispatch
+            this.$store.dispatch('updateEntitiesFromTaxonomy', {type: 'program', data: results.data})
+          })
     }
   },
 

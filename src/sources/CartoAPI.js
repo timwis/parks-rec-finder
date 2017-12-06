@@ -136,12 +136,19 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  getEntityTaxonomyTerms (entity) {
+  getEntityTaxonomyTerms (entity, filters) {
     let taxonomyTerm = entity.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
     if (taxonomyTerm.indexOf('Environmental') > -1) {
       taxonomyTerm = taxonomyTerm.join('/')
     } else {
       taxonomyTerm = taxonomyTerm.join(' ')
+    }
+
+    let categoryEntityQuery = selectCategoryEntitiesFor(entity.entityType, taxonomyTerm)
+
+    if (filters) {
+      addFilters(categoryEntityQuery, filters)
+      return this.runQuery(categoryEntityQuery)
     }
 
     return this.runQuery(selectCategoryEntitiesFor(entity.entityType, taxonomyTerm))

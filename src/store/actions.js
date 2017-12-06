@@ -39,7 +39,6 @@ const actions = {
   },
 
   getTerms ({commit, state}, entityType) {
-    debugger
     api.getTerms(entityType).then(results => {
       // console.log(results.data.rows)
       commit(types.UPDATE_ENTITIES, {entities: {activity_type: results.data.rows}})
@@ -48,6 +47,7 @@ const actions = {
 
   submitSearch ({commit, state}, serachParams) {
     let searchTerms = Object.assign({}, {fields: state.search.fields}, {filters: state.search.filters}, serachParams)
+
     commit(types.SUBMIT_SEARCH, searchTerms)
 
     api.search(searchTerms)
