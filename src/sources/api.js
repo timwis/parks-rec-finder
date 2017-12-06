@@ -17,45 +17,38 @@ const searchCarto = (searchParams, coords) => {
   return Promise.all([facilitiesSearchQuery, programsSearchQuery])
 }
 
-const getTaxonomy = (entityType) => {
-  switch (entityType) {
-    case 'programs':
-      entityType = 'Activity'
-      break
-    case 'locations':
-      entityType = 'Location'
-      break
-  }
-  return cartoAPI.getEntityTaxonomy(entityType)
-}
-
-/**
+class API {
+  /**
  * Address search implemented using the AIS and Carto APIs
  * @param  {object} searchParams - UI search fields key value pairs
  * @return {object}              Promise resolving with query results
  *
  * @since 0.0.0
  */
-const search = (serachParams) => {
-  let fields = serachParams.fields
+  search (serachParams) {
+    let {fields} = serachParams
 
-  if (fields && (fields.address && fields.address !== null && fields.address !== '')) {
-    return aisAPI.getCoordsForAddress(fields.address)
-                 .then(searchCarto.bind({}, serachParams))
-  } else {
-    return searchCarto(serachParams, null)
+    if (fields && (fields.address && fields.address !== null && fields.address !== '')) {
+      return aisAPI.getCoordsForAddress(fields.address)
+                   .then(searchCarto.bind({}, serachParams))
+    } else {
+      return searchCarto(serachParams, null)
+    }
   }
-}
 
-class API {
-  search (searchParams) {
-    return search(searchParams)
-  }
   getTaxonomyFor (entityType) {
-    return getTaxonomy(entityType)
+    switch (entityType) {
+      case 'programs':
+        entityType = 'Activity'
+        break
+      case 'locations':
+        entityType = 'Location'
+        break
+    }
+    return cartoAPI.getEntityTaxonomy(entityType)
   }
+
   getTaxonomyTerms (entity) {
-    debugger
     if (entity.entityType === 'locations') {
       entity.entityType = 'facilities'
     }
