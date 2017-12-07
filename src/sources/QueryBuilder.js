@@ -25,6 +25,7 @@ export function selectPrograms () {
 
   return joinPPRAssetsWith(programsQuery)
 }
+
 /**
  * get all ppr_facilites records from DB
  * joined on ppr_assets to include lat, lng info
@@ -128,7 +129,7 @@ export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
   */
 export function joinPPRAssetsWith (sqlQueryObj) {
   return sqlQueryObj
-          .join(tables.assets, null, `${tables.assets}.objectid = ${tables.facilities}.pprassets_object_id`)
+          .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
           .field(`ST_Y(
             ST_Centroid(${tables.assets}.the_geom)
             ) as latitude`)

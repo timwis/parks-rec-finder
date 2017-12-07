@@ -90,6 +90,10 @@ class CartoAPI {
     return this.runQuery(this.programs)
   }
 
+  getProgramByProgramID (programID) {
+    return this.runQuery(selectPrograms().where(`program_id = ${programID}::text`))
+  }
+
   /**
    * Given freetext and coordniates values
    * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables

@@ -55,6 +55,10 @@ class API {
 
     return cartoAPI.getEntityTaxonomyTerms(entity, filters)
   }
+
+  getProgramByProgramID (programID) {
+    return cartoAPI.getProgramByProgramID(programID)
+  }
 }
 
 export default new API()

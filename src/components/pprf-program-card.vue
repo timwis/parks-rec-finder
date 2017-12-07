@@ -1,7 +1,10 @@
 <template>
   <div class="card card--program">
     <div class="card__info">
-      <h3 v-if="name" class="card__info-name text-nopad">{{name}}</h3>
+      <router-link :to="'/program/'+programID">
+        <h3 v-if="name" class="card__info-name text-nopad">{{name}}</h3>
+      </router-link>
+
       <div class="card__info-meta">
         <small><p v-if="ages">Ages {{ages.low}}-{{ages.high}}</p></small>
         <small><p v-if="gender">Gender: {{gender}}</p></small>
@@ -27,6 +30,9 @@ export default {
       type: String
     },
     fee: {
+      type: String
+    },
+    programID: {
       type: String
     }
   }

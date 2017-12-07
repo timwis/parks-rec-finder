@@ -1,5 +1,5 @@
 const tables = {
-  assets: 'ppr_assets',
+  assets: 'ppr_website_locatorpoints',
 
   facilities: 'ppr_facilities',
   LocationType: 'ppr_location_types',

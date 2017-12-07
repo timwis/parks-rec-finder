@@ -3,6 +3,7 @@ import pprfLeafletMap from '@/components/map/pprf-leaflet-map'
 import pprfSidebarSearchContainer from '@/containers/pprf-sidebar-search-container'
 import pprfSidebarEntityTaxoTermsContainer from '@/containers/pprf-sidebar-entity-taxo-terms-container'
 import pprfSidebarEntityTaxoContainer from '@/containers/pprf-sidebar-entity-taxo-container'
+import pprfSidebarProgramDetailContainer from '@/containers/pprf-sidebar-program-detail-container'
 
 const routes = [
   {
@@ -15,6 +16,15 @@ const routes = [
       'map': pprfLeafletMap,
       'sidebar': pprfSidebarSearchContainer
     }
+  },
+  {
+    path: '/program/:program_id',
+    name: 'Program Detail',
+    components: {
+      'map': pprfLeafletMap,
+      'sidebar': pprfSidebarProgramDetailContainer
+    },
+    props: { default: true, sidebar: true }
   },
   {
     path: '/:entityType/:entityTerm+',

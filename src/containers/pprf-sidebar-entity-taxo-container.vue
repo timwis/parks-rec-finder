@@ -20,6 +20,7 @@
               :ages="{high: program.age_high, low: program.age_low}"
               :gender="program.gender[0]"
               :fee="program.fee"
+              :programID="program.program_id"
             />
          </ul>
       </main>
