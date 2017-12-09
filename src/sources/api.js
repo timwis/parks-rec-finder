@@ -49,6 +49,10 @@ class API {
   getProgramByID (programID) {
     return cartoAPI.getProgramByID(programID)
   }
+
+  getFacilityByID (facilityID) {
+    return cartoAPI.getFacilityByID(facilityID)
+  }
 }
 
 export default new API()

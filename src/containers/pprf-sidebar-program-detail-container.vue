@@ -35,13 +35,13 @@
           </section>
 
           <!-- only to be added once data is cleaned -->
-          <section
+          <!-- <section
             v-if="program.program_description"
             class="program__content-section"
           >
             <h4 class="program__content-section__heading">About The Program</h4>
             <div v-html="program.program_description"></div>
-          </section>
+          </section> -->
 
           <section
             v-if="program.days"

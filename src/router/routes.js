@@ -6,6 +6,7 @@ import pprfSidebarCategoriesContainer from '@/containers/pprf-sidebar-categories
 import pprfSidebaCategoryEntitiesContainer from '@/containers/pprf-sidebar-category-entities-container'
 
 import pprfSidebarProgramDetailContainer from '@/containers/pprf-sidebar-program-detail-container'
+import pprfSidebarLocationDetailContainer from '@/containers/pprf-sidebar-location-detail-container'
 
 const routes = [
   {
@@ -29,15 +30,15 @@ const routes = [
     props: { default: true, sidebar: true }
   },
 
-  // {
-  //   path: '/location/:facility_id',
-  //   name: 'Location Detail',
-  //   components: {
-  //     'map': pprfLeafletMap,
-  //     'sidebar': pprfSidebarProgramDetailContainer
-  //   },
-  //   props: { default: true, sidebar: true }
-  // },
+  {
+    path: '/location/:facility_id',
+    name: 'Location Detail',
+    components: {
+      'map': pprfLeafletMap,
+      'sidebar': pprfSidebarLocationDetailContainer
+    },
+    props: { default: true, sidebar: true }
+  },
 
   {
     path: '/:entityType/:entityTerm+',

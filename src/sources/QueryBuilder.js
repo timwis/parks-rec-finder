@@ -63,6 +63,16 @@ export function selectFacilities () {
   return joinPPRAssetsWith(locationsQuery)
 }
 
+export function selectFacility (facilityID) {
+  let facilityQuery = selectFacilities()
+                          .field('address')
+                          .field(`ARRAY(SELECT ${tables.programs}.program_name FROM ${tables.programs} WHERE ${tables.programs}.facility->>0 = ${tables.facilities}.id)`,
+                            'programs')
+                          .where(`${tables.facilities}.id = '${facilityID}'`)
+                          // @TOOO: return programs column as an array of json objects [{name: String, id: String}]
+  return facilityQuery
+}
+
 /**
  * given an entityType that maps to a table table
  * get a distinct list of categories from the associated taxonomy terms table

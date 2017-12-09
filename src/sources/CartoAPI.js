@@ -4,6 +4,7 @@ import {
   selectPrograms,
   selectProgram,
   selectFacilities,
+  selectFacility,
   selectTaxonomy,
   selectCategoryEntitiesFor,
   orderByMilesFromZipcode,
@@ -123,6 +124,12 @@ class CartoAPI {
     }
 
     return this.runQuery(this.facilities)
+  }
+
+  getFacilityByID (facilityID) {
+    return this.runQuery(
+      selectFacility(facilityID)
+    )
   }
 
   /**
