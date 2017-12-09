@@ -46,8 +46,8 @@ class API {
     return cartoAPI.getTaxonomyTermEntities(entity, filters)
   }
 
-  getProgramByProgramID (programID) {
-    return cartoAPI.getProgramByProgramID(programID)
+  getProgramByID (programID) {
+    return cartoAPI.getProgramByID(programID)
   }
 }
 

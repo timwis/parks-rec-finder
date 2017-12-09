@@ -14,7 +14,7 @@
          <ul class="pprf-entity-taxo--single-list">
             <pprf-program-card
               v-for="program in programs"
-              v-if="program"
+              v-if="entityType=== 'programs' && programs"
               class="card card--program"
               :key="program.id"
               :name="program.program_name"
@@ -25,7 +25,7 @@
             />
 
             <li
-              v-if="facilities"
+              v-if="entityType == 'locations' && facilities"
               v-for="location in facilities"
             >
               {{location.facility_name}}
@@ -59,7 +59,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    api.getTaxonomyTermEntities({entityType: to.params.entityType, entityTerm: to.params.entityTerm}, null).then(results => {
+    api.getTaxonomyTermEntities(to.params, to.query).then(results => {
       next(vm => {
         let entity = to.params.entityType === 'locations' ? 'facility' : 'program'
         vm.$store.dispatch('updateEntities',
@@ -73,16 +73,10 @@ export default {
 
   methods: {
     filterEntities () {
-      api.getTaxonomyTermEntities({entityType: this.$store.state.route.params, entityTerm: this.entityTerm}, this.search.filters)
+      api.getTaxonomyTermEntities(this.$store.state.route.params, this.search.filters)
           .then(results => {
             let entity = this.entityType === 'locations' ? 'facility' : 'program'
-
-            this.$store.dispatch('updateEntities', {
-              entities: {
-                [entity]: results.data.rows
-              },
-              refreshCache: true
-            })
+            this.$store.dispatch('updateEntities', { [entity]: results.data.rows })
           })
     }
   },

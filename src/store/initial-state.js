@@ -13,6 +13,7 @@ const state = {
   },
   // activeMarkers: [],
   activeTab: 'program',
+  programRegistrationText: 'To sign up or learn more, use the information listed here!',
   search: {
     loading: false,
     error: null,

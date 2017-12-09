@@ -22,9 +22,27 @@ export function selectPrograms () {
                         .from(tables.programs)
                         .field(`${tables.programs}.*`)
                         .field(`${tables.programs}.gender->>0`, 'gender')
-                        .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
+                        // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
+                        .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
 
   return joinPPRAssetsWith(programsQuery)
+}
+
+export function selectProgram (programID) {
+  let programQuery = selectPrograms()
+                        .field('address')
+                        .field('facility_name')
+                        // .field('time_from', 'state_time')
+                        // .field('time_to', 'end_time')
+                        // .field('frequency')
+                        .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
+                        .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
+                        .field(`${tables.facilities}.id`, 'location_id')
+                        .where(`${tables.programs}.program_id = ${programID}::text`)
+                        .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+                        .field('days')
+                        // @TODO: join on days tables
+  return programQuery
 }
 
 /**

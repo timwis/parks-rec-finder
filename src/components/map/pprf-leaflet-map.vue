@@ -95,7 +95,6 @@ export default {
   methods: {
     fitToMarkerBounds () {
       let _markers = this.markers
-      debugger
       if (_markers && _markers.length) {
         let markersLatLng = _markers.map(marker => L.latLng(marker.lat, marker.lng))
         /* eslint-disable new-cap */

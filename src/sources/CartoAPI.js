@@ -2,6 +2,7 @@ import axios from 'axios'
 import {isValidZipcode} from '@/utilities/utils'
 import {
   selectPrograms,
+  selectProgram,
   selectFacilities,
   selectTaxonomy,
   selectCategoryEntitiesFor,
@@ -90,8 +91,10 @@ class CartoAPI {
     return this.runQuery(this.programs)
   }
 
-  getProgramByProgramID (programID) {
-    return this.runQuery(selectPrograms().where(`program_id = ${programID}::text`))
+  getProgramByID (programID) {
+    return this.runQuery(
+      selectProgram(programID)
+    )
   }
 
   /**

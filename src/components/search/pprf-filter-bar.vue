@@ -186,13 +186,13 @@ export default {
     let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
     let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), filterDefs)
     let searchParamsFromRoute = [...searchFieldsFromRoute, ...searchFiltersFromRoute]
-    // submit search if deep linked from url
-    if (!this.$store.state.route.from.name && searchParamsFromRoute.length > 0) {
-      this.$store.dispatch('submitSearch')
-    }
 
     if (searchFiltersFromRoute.length > 0) {
       this._updateFiltersFromRoute()
+    }
+    // submit search if deep linked from url
+    if (!this.$store.state.route.from.name && searchParamsFromRoute.length > 0 && this.$store.state.route.name === 'Search') {
+      this.$store.dispatch('submitSearch')
     }
   },
 

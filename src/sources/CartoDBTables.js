@@ -5,6 +5,7 @@ const tables = {
   locationCategories: 'ppr_location_types',
 
   programs: 'ppr_programs',
+  programSchedules: 'ppr_program_schedules',
   programCategories: 'ppr_activity_categories',
   programCategoryTerms: 'ppr_activity_types',
 
