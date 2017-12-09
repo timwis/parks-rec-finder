@@ -28,7 +28,7 @@ export default {
     let programsInState = _.where(store.state.entities.program, {program_id: to.params.program_id})
 
     if (programsInState.length > 0) {
-      store.dispatch('updateEntities', {type: 'program', data: {rows: [programsInState[0]]}})
+      store.dispatch('updateEntities', {entities: {program: programsInState[0]}})
       next()
     } else {
       api.getProgramByProgramID(to.params.program_id)

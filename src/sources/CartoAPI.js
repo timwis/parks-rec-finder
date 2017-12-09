@@ -3,7 +3,7 @@ import {isValidZipcode} from '@/utilities/utils'
 import {
   selectPrograms,
   selectFacilities,
-  selectCategoriesFor,
+  selectTaxonomy,
   selectCategoryEntitiesFor,
   orderByMilesFromZipcode,
   addDistanceFieldFromCoordinates,
@@ -129,8 +129,8 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  getEntityTaxonomy (entityType) {
-    return this.runQuery(selectCategoriesFor(entityType).toString())
+  getEntityTaxonomy (taxonomyParams) {
+    return this.runQuery(selectTaxonomy(taxonomyParams).toString())
   }
 
   /**
@@ -140,7 +140,7 @@ class CartoAPI {
    *
    * @since 0.0.0
    */
-  getEntityTaxonomyTerms (entity, filters) {
+  getTaxonomyTermEntities (entity, filters) {
     let taxonomyTerm = entity.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
     if (taxonomyTerm.indexOf('Environmental') > -1) {
       taxonomyTerm = taxonomyTerm.join('/')

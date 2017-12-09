@@ -3,7 +3,7 @@
     <div class="pprf-sidebar-inner">
 
       <header class="pprf-sidebar-header">
-        <h2  class="pprf-sidebar-header__title text-nopad">{{taxoName}} <small>{{programs.length}}</small></h2>
+        <h2  class="pprf-sidebar-header__title text-nopad">{{taxoName}} <small>{{resultsCount}}</small></h2>
         <pprf-filter-bar
           slot="beforePanes"
           @applyFilters="filterEntities"
@@ -14,14 +14,23 @@
          <ul class="pprf-entity-taxo--single-list">
             <pprf-program-card
               v-for="program in programs"
+              v-if="program"
               class="card card--program"
               :key="program.id"
               :name="program.program_name"
               :ages="{high: program.age_high, low: program.age_low}"
-              :gender="program.gender[0]"
+              :gender="program.gender"
               :fee="program.fee"
               :programID="program.program_id"
             />
+
+            <li
+              v-if="facilities"
+              v-for="location in facilities"
+            >
+              {{location.facility_name}}
+            </li>
+
          </ul>
       </main>
     </div>
@@ -34,11 +43,12 @@ import pprfSidebar from '@/components/pprf-sidebar'
 import api from '@/sources/api'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
-import store from '@/store'
-import _ from 'underscore'
+
+// import store from '@/store'
+// import updateStateFromCache from '@/mixins/update-state-from-cache'
 
 export default {
-  name: 'PPRF-Sidebar-Entity-Taxo-Container',
+  name: 'PPRF-Sidebar-Category-Entities-Container',
 
   props: ['entityType', 'entityTerm'],
 
@@ -49,29 +59,30 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    let entitiesInState = _.where(store.state.entities.program, {category: to.params.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1)).join(' ')})
-
-    if (!entitiesInState.length) {
-      api.getTaxonomyTerms(to.params).then(results => {
-        next(vm => {
-          console.log(results)
-          // @TODO: add facility type to dispatch
-          vm.$store.dispatch('updateEntitiesFromTaxonomy', {type: 'program', data: results.data})
-        })
-      })
-    } else {
+    api.getTaxonomyTermEntities({entityType: to.params.entityType, entityTerm: to.params.entityTerm}, null).then(results => {
       next(vm => {
-        vm.$store.dispatch('updateMarkers', {entityType: 'program'})
+        let entity = to.params.entityType === 'locations' ? 'facility' : 'program'
+        vm.$store.dispatch('updateEntities',
+          {
+            [entity]: results.data.rows
+          }
+        )
       })
-    }
+    })
   },
 
   methods: {
     filterEntities () {
-      api.getTaxonomyTerms(this.$store.state.route.params, this.search.filters)
+      api.getTaxonomyTermEntities({entityType: this.$store.state.route.params, entityTerm: this.entityTerm}, this.search.filters)
           .then(results => {
-            // @TODO: add facility type to dispatch
-            this.$store.dispatch('updateEntitiesFromTaxonomy', {type: 'program', data: results.data})
+            let entity = this.entityType === 'locations' ? 'facility' : 'program'
+
+            this.$store.dispatch('updateEntities', {
+              entities: {
+                [entity]: results.data.rows
+              },
+              refreshCache: true
+            })
           })
     }
   },
@@ -81,11 +92,16 @@ export default {
     ...mapState({
       search: state => state.search,
       programs: state => state.entities.program,
-      activityTypes: state => state.entities.activity_type,
       facilities: state => state.entities.facility,
       activeTab: state => state.activeTab
     }),
-
+    resultsCount () {
+      if (this.entityType === 'locations') {
+        return this.facilities.length
+      } else if (this.entityType === 'programs') {
+        return this.programs.length
+      }
+    },
     taxoName () {
       let taxonomyTerm = this.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
       if (taxonomyTerm.indexOf('Environmental') > -1) {

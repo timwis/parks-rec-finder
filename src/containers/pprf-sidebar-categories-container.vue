@@ -16,21 +16,32 @@
          >
           <pprf-tab
             name="Programs"
+            :count="programCategories.length"
             :selected="entityType === 'programs'"
           >
             <ul class="pprf-taxonomy-terms-list">
               <li
-                v-for="term in activityTypes"
+                v-for="term in programCategories"
                 class="pprf-taxonomy-terms-card">
-                <router-link :to="slugifyURL(term.category)">{{term.category}}</router-link >
+                <router-link :to="slugifyURL(term.activity_category_name)">
+                  {{term.activity_category_name}}
+                </router-link>
               </li>
             </ul>
           </pprf-tab>
 
           <pprf-tab
             name="Locations"
+            :count="facilityCategories.length"
             :selected="entityType === 'locations'"
           >
+            <ul>
+              <li v-for="term in facilityCategories" >
+                <router-link :to="slugifyURL(term.location_type_name)">
+                  {{term.location_type_name}}
+                </router-link>
+              </li>
+            </ul>
           </pprf-tab>
 
         </pprf-tabs>
@@ -45,10 +56,11 @@ import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import api from '@/sources/api'
 // import {EventBus} from '@/event-bus'
-import store from '@/store'
+// import store from '@/store'
+// import updateStateFromCache from '@/mixins/update-state-from-cache'
 
 export default {
-  name: 'PPRF-Sidebar-Entity-Taxo-Terms-Container',
+  name: 'PPRF-Sidebar-Categories-Container',
 
   props: ['entityType'],
 
@@ -59,23 +71,24 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    if (!store.state.entities.activity_type.length) {
-      api.getTaxonomyFor(to.params.entityType).then(results => {
-        next(vm => {
-          vm.$store.dispatch('updateEntities', {type: 'activity_type', data: results.data})
-        })
+    // let entityName = to.params.entityType.replace('s', '')
+    api.getTaxonomyTerms({taxonomy: 'category'}).then(results => {
+      next(vm => {
+        vm.$store.dispatch('updateCategories',
+          {
+            program: results[0].data.rows,
+            facility: results[1].data.rows
+          }
+        )
+        // vm.$store.dispatch('updateSearchInput', store.state.search)
       })
-    } else {
-      next()
-    }
+    })
   },
 
   computed: {
     ...mapState({
-      search: state => state.search,
-      programs: state => state.entities.program,
-      activityTypes: state => state.entities.activity_type,
-      facilities: state => state.entities.facility,
+      programCategories: state => state.entities.category.program,
+      facilityCategories: state => state.entities.category.facility,
       activeTab: state => state.activeTab
     })
   },

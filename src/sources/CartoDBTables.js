@@ -2,12 +2,11 @@ const tables = {
   assets: 'ppr_website_locatorpoints',
 
   facilities: 'ppr_facilities',
-  LocationType: 'ppr_location_types',
-  LocationCategories: 'ppr_location_Categories',
+  locationCategories: 'ppr_location_types',
 
   programs: 'ppr_programs',
-  ActivityType: 'ppr_activity_types',
-  ActivityCategories: 'ppr_activity_categories',
+  programCategories: 'ppr_activity_categories',
+  programCategoryTerms: 'ppr_activity_types',
 
   zipcodes: 'zip_codes'
 }

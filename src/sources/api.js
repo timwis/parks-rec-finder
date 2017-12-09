@@ -36,24 +36,14 @@ class API {
     }
   }
 
-  getTaxonomyFor (entityType) {
-    switch (entityType) {
-      case 'programs':
-        entityType = 'Activity'
-        break
-      case 'locations':
-        entityType = 'Location'
-        break
-    }
-    return cartoAPI.getEntityTaxonomy(entityType)
+  getTaxonomyTerms ({taxonomy}) {
+    let programsTaxonomyTerms = cartoAPI.getEntityTaxonomy({entityType: 'programs', taxonomy})
+    let locationsTaxonomyTerms = cartoAPI.getEntityTaxonomy({entityType: 'locations', taxonomy})
+    return Promise.all([programsTaxonomyTerms, locationsTaxonomyTerms])
   }
 
-  getTaxonomyTerms (entity, filters) {
-    if (entity.entityType === 'locations') {
-      entity.entityType = 'facilities'
-    }
-
-    return cartoAPI.getEntityTaxonomyTerms(entity, filters)
+  getTaxonomyTermEntities (entity, filters) {
+    return cartoAPI.getTaxonomyTermEntities(entity, filters)
   }
 
   getProgramByProgramID (programID) {

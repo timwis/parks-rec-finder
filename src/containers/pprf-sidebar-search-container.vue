@@ -30,26 +30,16 @@
                     :selected="true"
                    >
                       <pprf-program-card
+                        v-if="program"
                         v-for="program in programs"
                         class="card card--program"
                         :key="program.id"
                         :name="program.program_name"
                         :ages="{high: program.age_high, low: program.age_low}"
-                        :gender="program.gender[0]"
+                        :gender="program.gender"
                         :fee="program.fee"
                         :programID="program.program_id"
-                      >
-                        <!-- <h4>{{program.program_name}}</h4>
-                        <h5>age: ( {{program.age_low}} - {{program.age_high}})</h5>
-                        <h5>fee: {{program.fee}}</h5>
-                        <h5>gender:</h5>
-                        <ul>
-                          <li v-for="gender in program.gender">{{gender}}</li>
-                        </ul>
-                        <p v-show="(program.distance && program.within_zip_code === undefined)"><small>{{  program.distance }} miles away</small></p>
-                        <p v-show="program.within_zip_code === true"> within {{search.zip}}</p>
-                        <p v-show="program.within_zip_code === false" :title="'apprx. '+program.distance +' miles away'"> nearby {{search.zip}}</p> -->
-                      </pprf-program-card>
+                      />
 
                   </pprf-tab>
 
@@ -75,6 +65,7 @@
 
 <script>
 import { mapState } from 'vuex'
+
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'

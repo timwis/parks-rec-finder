@@ -29,7 +29,7 @@
 <script>
 import L from 'leaflet'
 import Vue2Leaflet from 'vue2-leaflet'
-import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
 
@@ -60,9 +60,19 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      markers: state => state.activeMarkers
-    })
+    ...mapGetters({getMarkers: 'markers'}),
+    markers () {
+      return this.getMarkers(this.activeEntity)
+    },
+    activeEntity () {
+      let entityTypeParam = this.$store.state.route.params.entityType
+      if (entityTypeParam) {
+        return entityTypeParam === 'locations'
+        ? 'facility'
+        : 'program'
+      }
+      return this.$store.state.activeTab
+    }
   },
 
   mounted () {
@@ -75,17 +85,19 @@ export default {
     this.fitToMarkerBounds()
   },
 
-  watch: {
-    '$route.query'  () {
-      this.$store.dispatch('resetMarkers')
-    }
-  },
+  // @TODO: clear pins on route change
+  // watch: {
+  //   '$route.query'  () {
+  //     this.markers = []
+  //   }
+  // },
 
   methods: {
-
     fitToMarkerBounds () {
-      if (this.markers && this.markers.length) {
-        let markersLatLng = this.markers.map(marker => L.latLng(marker.lat, marker.lng))
+      let _markers = this.markers
+      debugger
+      if (_markers && _markers.length) {
+        let markersLatLng = _markers.map(marker => L.latLng(marker.lat, marker.lng))
         /* eslint-disable new-cap */
         let {_southWest, _northEast} = L.latLngBounds(markersLatLng)
         this.$refs.leafletMap.fitBounds([[_southWest.lat, _southWest.lng], [_northEast.lat, _northEast.lng]])

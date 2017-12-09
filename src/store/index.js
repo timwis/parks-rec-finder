@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import state from '@/store/initial-state'
+import PPRFMarker from '@/store/modules/markers/Marker'
 import actions from './actions'
 import mutations from './mutations'
 // import * as getters from './getters'
@@ -11,34 +12,19 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
-  state: {
-    entities: {
-      program: [],
-      facility: [],
-      activity_type: [],
-      marker: []
-    },
-    activeMarkers: [],
-    activeTab: 'program',
-    search: {
-      loading: false,
-      error: null,
-      success: false,
-      fields: {
-        freetext: '',
-        address: '',
-        zip: 0
-      },
-      filters: {
-        fee: null,
-        gender: null,
-        ageRange: {low: null, high: null}
+  state,
+  actions,
+  mutations,
+
+  getters: {
+    markers: (state) => (entityType) => {
+      if (entityType === 'program' || entityType === 'facility') {
+        return state.entities[entityType].map(entity => new PPRFMarker(entityType, entity))
+      } else {
+        return []
       }
     }
   },
-
-  actions,
-  mutations,
 
   strict: debug,
   plugins: debug ? [createLogger()] : []

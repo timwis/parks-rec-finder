@@ -188,8 +188,11 @@ export default {
     let searchParamsFromRoute = [...searchFieldsFromRoute, ...searchFiltersFromRoute]
     // submit search if deep linked from url
     if (!this.$store.state.route.from.name && searchParamsFromRoute.length > 0) {
-      this._updateFiltersFromRoute()
       this.$store.dispatch('submitSearch')
+    }
+
+    if (searchFiltersFromRoute.length > 0) {
+      this._updateFiltersFromRoute()
     }
   },
 

@@ -21,6 +21,7 @@ export function selectPrograms () {
                         .select()
                         .from(tables.programs)
                         .field(`${tables.programs}.*`)
+                        .field(`${tables.programs}.gender->>0`, 'gender')
                         .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
 
   return joinPPRAssetsWith(programsQuery)
@@ -54,24 +55,37 @@ export function selectFacilities () {
  * @since 0.0.0
  *
  */
-export function selectCategoriesFor (entityType) {
-  let taxonomy = `${entityType}Type`
-  if (Object.keys(tables).includes(taxonomy)) {
-    let taxonomyTable = tables[taxonomy]
-    return postgresSQL
-          .select()
-          .from(taxonomyTable)
-          .field(`category`)
-          .distinct()
-          .order('category')
-  } else {
-    console.error(`QueryBuilder:selectCategoriesFor - No table exist in CartoDBTables.js for "${taxonomy}"`)
+export function selectTaxonomy ({entityType, taxonomy}) {
+  if (taxonomy === 'category') { taxonomy = 'Categories' }
+
+  let taxonomyTable
+  let entityName
+  let taxonomyQuery = postgresSQL.select()
+
+  switch (entityType) {
+    case 'programs':
+      entityName = 'program'
+      taxonomyTable = tables[`${entityName + taxonomy}`]
+
+      taxonomyQuery
+        .from(taxonomyTable, entityName)
+        .field(`${entityName}.*`)
+        .order('activity_category_name')
+      break
+
+    case 'locations':
+      entityName = 'location'
+      taxonomyTable = tables[`${entityName + taxonomy}`]
+
+      taxonomyQuery
+        .from(taxonomyTable, entityName)
+        .field(`${entityName}.*`)
+        .where(`publish = 'true'`)
+        .order('location_type_name')
+      break
   }
-  // return new Promise((resolve, reject) => {
-  //   setTimeout(() => {
-  //     resolve({data: {rows: ActivityTypes}})
-  //   }, 1000)
-  // })
+
+  return taxonomyQuery
 }
 
 /**
@@ -86,32 +100,31 @@ export function selectCategoriesFor (entityType) {
  * @since 0.0.0
  */
 export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
-  // let categoryEntitiesQuery = postgresSQL
-  //                 .select()
-  //                 .from(`${tables.programs}`, 'program')
-  //                 .field(`program.*`)
-  //                 .field(`category`)
-  //                 .join(tables.facilities, null, `${tables.facilities}.id = program.facility->>0`)
-  //                 .left_join(squel.select('id').from(`${tables.ActivityType}`), 'types', `program.activity_type->>0 = types.id`)
-  //                 .where(`category = '${taxonomyTerm}'`)
-
-  let entityTypeRef = entityType.replace('s', '')
   let categoryEntitiesQuery = postgresSQL
-                              .select()
-                              .from(`${tables[entityType]}`, entityTypeRef)
-                              .field(`${entityTypeRef}.*`)
-                              .field(`category`)
 
   if (entityType === 'programs') {
-    categoryEntitiesQuery
-      .join(tables.facilities, null, `${tables.facilities}.id = ${entityTypeRef}.facility->>0`)
-      .left_join(squel.select('id').from(`${tables.ActivityType}`), 'types', `${entityTypeRef}.activity_type->>0 = types.id`)
-  } else {
-    categoryEntitiesQuery
-    .left_join(squel.select().from(`${tables.LocationType}`), 'types', `${entityTypeRef}.facility_type = types.location_type_name`)
+    categoryEntitiesQuery = postgresSQL
+                              .select()
+                              .from(tables.programs, 'program')
+                              .field(`program.*`)
+                              .field(`program.gender->>0`, 'gender')
+                              .field(`category`)
+                              .join(tables.facilities, null, `${tables.facilities}.id = program.facility->>0`)
+                              .join(`${tables.programCategoryTerms}`, 'activity', `program.activity_type->>0 = activity.id`)
+                              .join(tables.programCategories, 'category', `activity.category = category.activity_category_name`)
+                              .where(`category = '${taxonomyTerm}'`)
+  } else if (entityType === 'locations') {
+    categoryEntitiesQuery = postgresSQL
+                              .select()
+                              .from(tables.facilities)
+                              .field(`${tables.facilities}.*`)
+                              .join(`${tables.locationCategories}`, 'type', `type.location_type_name = ${tables.facilities}.facility_type`)
+                              .where(`${tables.facilities}.facility_type = '${taxonomyTerm}'`)
+                              // @TODO: replace joining on location type and accociated where with
+                              // below two lines when category column is added to ppr_facilities table
+                              // .field(`category`)
+                              // .where(`category = '${taxonomyTerm}'`)
   }
-  categoryEntitiesQuery.where(`category = '${taxonomyTerm}'`)
-
   return joinPPRAssetsWith(categoryEntitiesQuery)
 }
 
