@@ -219,7 +219,7 @@ export default {
   transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
   overflow: hidden;
   &:hover{
-    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    box-shadow: $box-shadow;
   }
 }
 

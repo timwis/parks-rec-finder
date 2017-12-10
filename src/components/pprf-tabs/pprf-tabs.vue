@@ -76,7 +76,9 @@ export default {
 
 <style lang="scss" scoped>
 .pprf-tabs{
-    width: 100%;
+  width: 100%;
+  position: relative;
+  display: block;
 }
     .pprf-tabs__nav{
         width:100%;
@@ -152,7 +154,7 @@ export default {
               transform: translateX(-50%);
               bottom:0;
               background: color(dark-ben-franklin);
-              transition: all .5s ease;
+              transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
             }
 
         }

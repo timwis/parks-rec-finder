@@ -38,6 +38,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import {deSlugify} from '@/utilities/utils'
 import pprfSidebar from '@/components/pprf-sidebar'
 import api from '@/sources/api'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
@@ -95,14 +96,8 @@ export default {
         return this.programs.length
       }
     },
-    taxoName () {
-      let taxonomyTerm = this.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
-      if (taxonomyTerm.indexOf('Environmental') > -1) {
-        taxonomyTerm = taxonomyTerm.join('/')
-      } else {
-        taxonomyTerm = taxonomyTerm.join(' ')
-      }
-      return taxonomyTerm
+    taxoName (taxonomyTerm) {
+      return deSlugify(this.entityTerm)
     }
   }
 }

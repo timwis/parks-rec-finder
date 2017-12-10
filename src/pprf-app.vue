@@ -43,7 +43,7 @@ export default {
       margin: 0 auto;
       padding:0;
       box-sizing: border-box;
-
+      overflow: hidden;
       //border: 3px solid red;
     }
 

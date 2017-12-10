@@ -32,7 +32,7 @@ export default {
   props: {
     modifierClass: {
       type: String,
-      default: false
+      default: null
     }
   }
 }
@@ -47,6 +47,7 @@ export default {
       padding: 15px 20px 0 20px;
       color: color(dark-ben-franklin);
       border-right: 1px solid color(ghost-gray);
+      overflow: hidden;
   }
   .pprf-sidebar--nopad {
     padding:0;
@@ -56,7 +57,7 @@ export default {
         height:100%;
         display:flex;
         flex-flow:column;
-        overflow: auto;
+        //overflow: auto;
 
     }
         .pprf-sidebar__header{}
@@ -71,8 +72,9 @@ export default {
           min-height: 50px;
         }
 
-      .pprf-sidebar-main{
+      .pprf-sidebar__main{
         flex:1;
+        overflow: auto;
       }
 
 

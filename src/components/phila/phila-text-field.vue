@@ -76,7 +76,7 @@
       },
       icon: {
         type: String,
-        default: false
+        default: null
       }
     },
 

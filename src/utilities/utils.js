@@ -25,3 +25,11 @@ export function stringifyCoordinates (coordinates = null) {
 export function isValidZipcode (zipcodeVal) {
   return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
 }
+
+export function deSlugify (slug) {
+  return slug
+          .replace('-and-', '-&-')
+          .split('-')
+          .map(slugPart => slugPart.charAt(0).toUpperCase() + slugPart.slice(1))
+          .join(' ')
+}

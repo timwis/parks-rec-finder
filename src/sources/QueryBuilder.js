@@ -28,6 +28,18 @@ export function selectPrograms () {
   return joinPPRAssetsWith(programsQuery)
 }
 
+export function joinProgramsOnCategories (sqlQueryObj) {
+  sqlQueryObj
+    .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
+    .join(`${tables.programCategoryTerms}`, 'activityType', `${tables.programs}.activity_type->>0 = activityType.id`)
+    .join(tables.programCategories, 'category', `activityType.category = category.activity_category_name`)
+    // @TODO: replace JOINs  with below two lines when "category" column is added to ppr_programs table
+    // .field(`category`)
+    // .where(`category = '${taxonomyTerm}'`)
+
+  return sqlQueryObj
+}
+
 export function selectProgram (programID) {
   let programQuery = selectPrograms()
                         .field('address')
@@ -66,10 +78,11 @@ export function selectFacilities () {
 export function selectFacility (facilityID) {
   let facilityQuery = selectFacilities()
                           .field('address')
+                          // @TOOO: return programs column as an array of json objects [{name: String, id: String}]
                           .field(`ARRAY(SELECT ${tables.programs}.program_name FROM ${tables.programs} WHERE ${tables.programs}.facility->>0 = ${tables.facilities}.id)`,
                             'programs')
                           .where(`${tables.facilities}.id = '${facilityID}'`)
-                          // @TOOO: return programs column as an array of json objects [{name: String, id: String}]
+
   return facilityQuery
 }
 
@@ -92,22 +105,40 @@ export function selectTaxonomy ({entityType, taxonomy}) {
 
   switch (entityType) {
     case 'programs':
-      entityName = 'program'
-      taxonomyTable = tables[`${entityName + taxonomy}`]
+      entityName = 'program' + taxonomy
+      taxonomyTable = tables[`${entityName}`]
+      // get programs per category
+      let subSelectProgramsQuery = postgresSQL
+                                      .select()
+                                      .field(`count(${tables.programs}.id)`)
+                                      .from(tables.programs)
+      joinProgramsOnCategories(subSelectProgramsQuery)
 
       taxonomyQuery
         .from(taxonomyTable, entityName)
         .field(`${entityName}.*`)
+        // @TODO replace subSelect with "WHERE program.category = ppr_activity_categories.activity_category_name"
+        // once the schmea is in place
+        .field(
+            subSelectProgramsQuery.where(`category = ${entityName}.activity_category_name`)
+          , 'count')
         .order('activity_category_name')
       break
 
     case 'locations':
-      entityName = 'location'
-      taxonomyTable = tables[`${entityName + taxonomy}`]
+      entityName = 'location' + taxonomy
+      taxonomyTable = tables[`${entityName}`]
 
       taxonomyQuery
         .from(taxonomyTable, entityName)
         .field(`${entityName}.*`)
+        .field(
+          postgresSQL
+            .select()
+            .field('count(id)')
+            .from(tables.facilities)
+            .where(`${tables.facilities}.facility_type = ${entityName}.location_type_name`)
+          , 'count')
         .where(`publish = 'true'`)
         .order('location_type_name')
       break
@@ -133,14 +164,12 @@ export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
   if (entityType === 'programs') {
     categoryEntitiesQuery = postgresSQL
                               .select()
-                              .from(tables.programs, 'program')
-                              .field(`program.*`)
-                              .field(`program.gender->>0`, 'gender')
+                              .from(tables.programs)
+                              .field(`${tables.programs}.*`)
+                              .field(`${tables.programs}.gender->>0`, 'gender')
                               .field(`category`)
-                              .join(tables.facilities, null, `${tables.facilities}.id = program.facility->>0`)
-                              .join(`${tables.programCategoryTerms}`, 'activity', `program.activity_type->>0 = activity.id`)
-                              .join(tables.programCategories, 'category', `activity.category = category.activity_category_name`)
-                              .where(`category = '${taxonomyTerm}'`)
+    joinProgramsOnCategories(categoryEntitiesQuery)
+    categoryEntitiesQuery.where(`category = '${taxonomyTerm}'`)
   } else if (entityType === 'locations') {
     categoryEntitiesQuery = postgresSQL
                               .select()
@@ -148,10 +177,6 @@ export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
                               .field(`${tables.facilities}.*`)
                               .join(`${tables.locationCategories}`, 'type', `type.location_type_name = ${tables.facilities}.facility_type`)
                               .where(`${tables.facilities}.facility_type = '${taxonomyTerm}'`)
-                              // @TODO: replace joining on location type and accociated where with
-                              // below two lines when category column is added to ppr_facilities table
-                              // .field(`category`)
-                              // .where(`category = '${taxonomyTerm}'`)
   }
   return joinPPRAssetsWith(categoryEntitiesQuery)
 }

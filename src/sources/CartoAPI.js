@@ -1,5 +1,8 @@
 import axios from 'axios'
-import {isValidZipcode} from '@/utilities/utils'
+import {
+  isValidZipcode,
+  deSlugify
+} from '@/utilities/utils'
 import {
   selectPrograms,
   selectProgram,
@@ -151,13 +154,7 @@ class CartoAPI {
    * @since 0.0.0
    */
   getTaxonomyTermEntities (entity, filters) {
-    let taxonomyTerm = entity.entityTerm.split('-').map(termPart => termPart.charAt(0).toUpperCase() + termPart.slice(1))
-    if (taxonomyTerm.indexOf('Environmental') > -1) {
-      taxonomyTerm = taxonomyTerm.join('/')
-    } else {
-      taxonomyTerm = taxonomyTerm.join(' ')
-    }
-
+    let taxonomyTerm = deSlugify(entity.entityTerm)
     let categoryEntityQuery = selectCategoryEntitiesFor(entity.entityType, taxonomyTerm)
 
     if (filters) {

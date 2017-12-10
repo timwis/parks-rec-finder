@@ -28,28 +28,34 @@
          >
           <pprf-tab
             name="Programs"
+            :count="totalResultsCountFor(programCategories)"
             :selected="entityType === 'programs'"
           >
-            <ul class="pprf-taxonomy-terms-list">
-              <li
-                v-for="term in programCategories"
-                class="pprf-taxonomy-terms-card">
-                <router-link :to="slugifyURL(term.activity_category_name)">
-                  {{term.activity_category_name}}
-                </router-link>
+            <ul class="category-list">
+              <li v-for="term in programCategories">
+                <pprf-category-card
+                  :count="term.count"
+                  :name="term.activity_category_name"
+                  :description="term.activity_category_description"
+                >
+                </pprf-category-card>
               </li>
             </ul>
           </pprf-tab>
 
           <pprf-tab
             name="Locations"
+            :count="totalResultsCountFor(facilityCategories)"
             :selected="entityType === 'locations'"
           >
-            <ul>
+            <ul class="category-list">
               <li v-for="term in facilityCategories" >
-                <router-link :to="slugifyURL(term.location_type_name)">
-                  {{term.location_type_name}}
-                </router-link>
+                <pprf-category-card
+                  :count="term.count"
+                  :name="term.location_type_name"
+                  :description="term.location_type_description"
+                >
+                </pprf-category-card>
               </li>
             </ul>
           </pprf-tab>
@@ -67,6 +73,8 @@ import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import api from '@/sources/api'
+import pprfCategoryCard from '@/components/pprf-category-card'
+import _ from 'underscore'
 // import {EventBus} from '@/event-bus'
 // import store from '@/store'
 // import updateStateFromCache from '@/mixins/update-state-from-cache'
@@ -79,7 +87,8 @@ export default {
   components: {
     pprfSidebar,
     pprfTabs,
-    pprfTab
+    pprfTab,
+    pprfCategoryCard
   },
 
   beforeRouteEnter (to, from, next) {
@@ -113,10 +122,18 @@ export default {
     slugifyURL (entityTerm) {
       let termSlug = entityTerm.split(' ').map(termPart => termPart.charAt(0).toLowerCase() + termPart.slice(1)).join('-')
       return `/${this.entityType}/${termSlug}`
+    },
+    totalResultsCountFor (categories) {
+      return _.reduce(_.pluck(categories, 'count'), function (memo, num) { return memo + num }, 0)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.category-list{
+  list-style: none;
+  margin:0;
+  padding:0;
+}
 </style>
