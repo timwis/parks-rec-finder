@@ -1,14 +1,13 @@
 <template>
   <pprf-sidebar>
-    <div class="pprf-sidebar-inner">
 
-      <header class="pprf-sidebar-header">
+      <div slot="sidebar-header">
         <h2  class="pprf-sidebar-header__title text-nopad">{{taxoName}} <small>{{resultsCount}}</small></h2>
         <pprf-filter-bar
           slot="beforePanes"
           @applyFilters="filterEntities"
         />
-      </header>
+      </div>
 
       <main class="pprf-sidebar-main scrollable">
          <ul class="pprf-entity-taxo--single-list">
@@ -33,7 +32,7 @@
 
          </ul>
       </main>
-    </div>
+
   </pprf-sidebar>
 </template>
 

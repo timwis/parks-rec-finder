@@ -1,22 +1,20 @@
 <template>
   <pprf-sidebar>
 
-    <div class="pprf-sidebar-inner">
-            <header class="pprf-sidebar-header">
+      <div slot="sidebar-header">
+          <h2 class="pprf-sidebar__title text-nopad">Search results</h2>
+          <div class="pprf-sidebar__desc">
+            <p>
+                Showing {{resultsCount}} results
+                <span v-show="search.fields.freetext">for <b>{{search.fields.freetext}}</b></span>
+                <span v-show="search.fields.address"> near {{search.fields.address}}</span>
+                <span v-show="search.fields.zip" >around {{search.fields.zip}}</span>
+            </p>
+          </div>
+      </div>
 
-              <h2 class="pprf-sidebar-header__title text-nopad">Search results</h2>
-              <div class="pprf-sidebar-header__desc">
-                <p>
-                    Showing {{resultsCount}} results
-                    <span v-show="search.fields.freetext">for <b>{{search.fields.freetext}}</b></span>
-                    <span v-show="search.fields.address"> near {{search.fields.address}}</span>
-                    <span v-show="search.fields.zip" >around {{search.fields.zip}}</span>
-                </p>
-              </div>
-            </header>
-
-            <main class="pprf-sidebar-main">
-              <pprf-tabs>
+        <div slot="sidebar-main">
+          <pprf-tabs>
 
                 <pprf-filter-bar
                   slot="beforePanes"
@@ -57,8 +55,7 @@
                   </pprf-tab>
 
               </pprf-tabs>
-            </main>
-          </div>
+        </div>
 
   </pprf-sidebar>
 </template>

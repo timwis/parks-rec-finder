@@ -1,22 +1,33 @@
 <template>
   <pprf-sidebar>
-    <div class="pprf-sidebar-inner">
 
-      <header class="pprf-sidebar-header">
-        <h2 v-show="entityType === 'programs'" class="pprf-sidebar-header__title text-nopad">Things to do</h2>
-        <h2 v-show="entityType === 'locations'" class="pprf-sidebar-header__title text-nopad">Places to go</h2>
-        <div class="pprf-sidebar-header__desc">
-          <p>Chose a category from the list below to find a program for you.</p>
+      <div slot="sidebar-header">
+        <div  v-if="entityType === 'programs'">
+
+          <h2 class="pprf-sidebar__title text-nopad">Things to do</h2>
+          <div class="pprf-sidebar__desc">
+            <p>Chose a category from the list below to find a program for you.</p>
+          </div>
+
         </div>
-      </header>
 
-      <main class="pprf-sidebar-main">
+        <div v-if="entityType === 'locations'">
+          <h2  class="pprf-sidebar__title text-nopad">Places to go</h2>
+          <div class="pprf-sidebar__desc">
+            <p>Choose a category from the list below to explore our locations.</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div slot="sidebar-main">
+
          <pprf-tabs
           @tabSelected="updateRoute"
          >
           <pprf-tab
             name="Programs"
-            :count="programCategories.length"
             :selected="entityType === 'programs'"
           >
             <ul class="pprf-taxonomy-terms-list">
@@ -32,7 +43,6 @@
 
           <pprf-tab
             name="Locations"
-            :count="facilityCategories.length"
             :selected="entityType === 'locations'"
           >
             <ul>
@@ -43,10 +53,12 @@
               </li>
             </ul>
           </pprf-tab>
-
         </pprf-tabs>
-      </main>
-    </div>
+
+      </div>
+
+
+
   </pprf-sidebar>
 </template>
 

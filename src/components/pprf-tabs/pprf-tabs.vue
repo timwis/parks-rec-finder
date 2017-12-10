@@ -11,7 +11,7 @@
                 role="presentation"
               >
                 <button
-                    class="button pprf-tabs__nav-item-btn text-caps"
+                    :class="['pprf-btn', 'pprf-tabs__nav-item-btn', 'text-caps', {'pprf-tabs__nav-item-btn--w-count': tab.count}]"
                     @click="selectTab(tab)"
                 >
                     {{tab.name}}
@@ -89,6 +89,7 @@ export default {
 
         list-style:none;
     }
+
     .pprf-tabs__nav-item{
         position:relative;
         padding: 5px 10px 0 5px;
@@ -97,7 +98,10 @@ export default {
 
         &:first-child{
           padding-left:0px;
-          .pprf-tabs__nav-item-btn{padding-left:0px;}
+          .pprf-tabs__nav-item-btn{
+            padding-left:0px;
+            &:before{width: 81%; left:0; transform: none;}
+          }
 
           &:after{
             content:'';
@@ -105,7 +109,7 @@ export default {
             display:block;
             top:45%;
             right:0;
-            width:1px;
+            width:2px;
             height:25%;
             background: color(dark-ben-franklin);
           }
@@ -117,24 +121,42 @@ export default {
               font-weight: 700;
 
               &:before{
-                content:'';
-                display:block;
-                width: 80%;
+                width: 75%;
                 height: 2px;
-                position:absolute;
-                left:0%;
-                bottom:0;
-                background: color(dark-ben-franklin);
               }
-
             }
+            .pprf-tabs__nav-item-btn--w-count::before{
+                width: 80%;
+            }
+
         }
     }
         .pprf-tabs__nav-item-btn{
             background:none;
             padding:5px 10px;
             color: color(dark-ben-franklin);
+
+            &:active,
+            &:focus{
+              border: none;
+              outline: none;
+            }
+
+            &:before{
+              content:'';
+              display:block;
+              width: 0%;
+              height: 0px;
+              position:absolute;
+              left:50%;
+              transform: translateX(-50%);
+              bottom:0;
+              background: color(dark-ben-franklin);
+              transition: all .5s ease;
+            }
+
         }
+
 
 
     .pprf-tabs__panels{

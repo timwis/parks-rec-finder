@@ -1,13 +1,19 @@
 <template>
-    <pprf-sidebar>
-        <header
+    <pprf-sidebar
+      modifier-class="nopad"
+    >
+        <div
+          slot="sidebar-header"
           v-if="facility"
           class="pprf-sidebar-header program__header text-center"
         >
             <h3 class="text-center">{{facility.long_name}}</h3>
-        </header>
+        </div>
 
-        <main class="pprf-sidebar-main program--content">
+        <div
+          slot="sidebar-main"
+          class="program--content"
+        >
 
           <section
             v-if="facility && facility.address"
@@ -48,7 +54,7 @@
             <p>{{facility.facility_description}}</p>
           </section>
 
-        </main>
+        </div>
 
     </pprf-sidebar>
 </template>

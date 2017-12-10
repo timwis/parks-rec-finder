@@ -1,8 +1,11 @@
 <template>
-    <pprf-sidebar>
-        <header
+    <pprf-sidebar
+      modifier-class="nopad"
+    >
+        <div
+          slot="sidebar-header"
           v-if="program"
-          class="pprf-sidebar-header program__header text-center"
+          class="program__header text-center"
         >
             <h3 class="text-center">{{program.program_name}}</h3>
             <div class="card__info-meta">
@@ -11,9 +14,12 @@
               <small><p>Cost: ${{program.fee}}</p></small>
             </div>
             <p><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
-        </header>
+        </div>
 
-        <main class="pprf-sidebar-main program--content">
+        <div
+          slot="sidebar-main"
+          class="program--content"
+        >
 
           <section class="program__content-section">
             <h4 class="program__content-section__heading">Location</h4>
@@ -60,7 +66,7 @@
           </section>
 
 
-        </main>
+        </div>
 
     </pprf-sidebar>
 </template>
