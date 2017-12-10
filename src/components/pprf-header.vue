@@ -25,7 +25,7 @@ export default {
     position:relative;
 
     width: 100%;
-    height: 63px;
+    height: $header-height;
 
     padding:10px;
 

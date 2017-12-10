@@ -5,6 +5,7 @@ TABLE OF CONTENTS;
 1. GLOBAL
 2. LAYOUT
 3. CARDS
+4. BUTTONS
 
 ******************************************************************/
 @import '_vars';
@@ -49,25 +50,25 @@ body {
 
   @since 0.0.0
 ========================================================================== */
- #pprf-app-container {
-      width: 100%;
-      max-width: $max-app-width;
-      height: 1024px;
+ // #pprf-app-container {
+ //      width: 100%;
+ //      max-width: $max-app-width;
+ //      height: 1024px;
 
-      display:block;
-      position:relative;
+ //      display:block;
+ //      position:relative;
 
-      margin: 0 auto;
-      padding:0;
-      box-sizing: border-box;
-    }
+ //      margin: 0 auto;
+ //      padding:0;
+ //      box-sizing: border-box;
+ //    }
 
 
-    .pprf-app__main {
-        display:flex;
-        flex-direction: row;
-        border: 1px solid color(black);
-    }
+ //    .pprf-app__main {
+ //        display:flex;
+ //        flex-direction: row;
+ //        border: 1px solid color(black);
+ //    }
 
 .scrollable{
   // height: 100%;
@@ -112,3 +113,12 @@ body {
     color: color(medium-gray);
     p{margin:0; padding:0;}
   }
+
+/* =======================================================================
+  5. BUTTONS
+
+  @since 0.0.0
+========================================================================== */
+.pprf-btn{
+  border-radius: 0;
+}

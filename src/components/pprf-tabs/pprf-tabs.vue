@@ -23,7 +23,7 @@
 
         <slot name="beforePanes"/>
 
-        <div class="pprf-tabs-panels scrollable">
+        <div class="pprf-tabs__panels scrollable">
           <slot></slot>
         </div>
 
@@ -137,9 +137,8 @@ export default {
         }
 
 
-    .pprf-tabs-panels{
+    .pprf-tabs__panels{
         width:100%;
-        height: 737px;
         display:block;
         margin-top:20px;
         padding-right: 10px;

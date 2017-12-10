@@ -9,9 +9,9 @@ import PPRFinder from './pprf-app'
 import router from './router'
 import VueProgressBar from 'vue-progressbar'
 import fontawesome from '@fortawesome/fontawesome'
-import { faSearch, faPlus, faMinus, faTimes } from '@fortawesome/fontawesome-free-solid'
+import { faSearch, faPlus, faMinus, faTimes, faMapMarker } from '@fortawesome/fontawesome-free-solid'
 
-fontawesome.library.add(faSearch, faPlus, faMinus, faTimes)
+fontawesome.library.add(faSearch, faPlus, faMinus, faTimes, faMapMarker)
 
 sync(store, router)
 Vue.use(Vuex)

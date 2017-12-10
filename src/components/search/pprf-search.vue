@@ -1,25 +1,27 @@
 <template>
     <form
-      class="pprf-search"
+      class="pprf-search form"
       @submit.prevent="onSubmit"
     >
 
       <phila-text-field
-        name="pprf-search-freetext"
+        name="freetext"
         placeholder="SEARCH BY ACTIVITY TYPE OR LOCATION NAME"
         ref="freetextField"
         @input="onFreetextInput"
       ></phila-text-field>
 
       <phila-text-field
-        name="pprf-search-address"
+        name="address"
         placeholder="ADDRESS OR ZIPCODE"
+        icon="map-marker"
         @input="onAddressInput"
         ref="addressField"
       ></phila-text-field>
 
       <phila-button
-        id="pprf-search-submit-btn"
+        id="pprf-search__submit"
+        class="input input__submit pprf-btn"
         :disabled="isDisabled"
         tabindex="3"
       >
@@ -212,23 +214,33 @@ export default {
   flex-direction: row;
   max-width: 998px;
   margin: auto;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  overflow: hidden;
+  &:hover{
+    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+  }
 }
 
-  .pprf-search-freetext{
+  .field--freetext{
     max-width: 650px;
     display:block;
     flex: 3;
     border-right: 1px solid $black;
   }
 
-  .pprf-search-address{
+  .field--address{
     max-width: 358px;
     display:block;
     flex: 2;
   }
 
-  #pprf-search-submit-btn{
+  #pprf-search__submit{
     min-width: 40px;
-    .fa-icon{ color:$white;}
+
+    .fa-search{
+      color:$white;
+    }
   }
 </style>

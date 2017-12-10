@@ -1,11 +1,15 @@
 <template>
-  <div :class="'text-field ' + name">
+  <div :class="['field', 'field--'+name, {'field--w-icon': icon}]">
     <label :id="name+'__label'" :for="name+'__input'">{{ label }}<span v-if="required" aria-hidden="true"> *</span></label>
+    <font-awesome-icon
+      v-if="icon"
+      :icon="icon"
+      />
     <input
       :type="type"
       :id="name+'__input'"
       :name="name"
-      :class="{ 'input-error': hasError }"
+      :class="['form__input','form__input--'+name,{ 'input-error': hasError }]"
       :value="lazyValue"
       :disabled="disabled"
       :placeholder="placeholder"
@@ -25,6 +29,7 @@
 
 <script>
   import Input from './mixins/input'
+  import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
   // import PhilaFormErrorMessage from './phila-form-error-message.vue'
 
   /**
@@ -34,6 +39,8 @@
     name: 'phila-text-field',
 
     mixins: [Input],
+
+    components: {FontAwesomeIcon},
 
     inheritAttrs: false,
 
@@ -66,6 +73,10 @@
       },
       errorMessage: {
         type: String
+      },
+      icon: {
+        type: String,
+        default: false
       }
     },
 
@@ -192,7 +203,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
   [type='text'], [type='password'], [type='date'], [type='datetime'], [type='datetime-local'], [type='month'], [type='week'], [type='email'], [type='number'], [type='search'], [type='tel'], [type='time'], [type='url'], [type='color'], textarea {
     margin: 0;
@@ -215,5 +226,18 @@
     display:block;
     margin: 0;
     margin-top: 10px;
+  }
+  .field .svg-inline--fa{
+    position: absolute;
+    top:50%;
+    left:5%;
+    transform: translateY(-50%);
+    path{fill: color(dark-gray) }
+  }
+
+  .field--w-icon{
+    input{
+      padding-left: 12%;
+    }
   }
 </style>

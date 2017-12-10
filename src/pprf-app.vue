@@ -1,6 +1,6 @@
 <template>
 
-  <div id="pprf-app-container" >
+  <div id="pprf-app__container" >
 
     <pprf-header-container></pprf-header-container>
 
@@ -30,27 +30,29 @@ export default {
 </script>
 
 
-<style lang="scss" >
+<style lang="scss" scoped>
   @import "~leaflet/dist/leaflet.css";
 
-    #pprf-app-container {
+    #pprf-app__container {
       width: 100%;
       max-width: $max-app-width;
-      height: 1024px;
-
+      height: $max-app-height;
       display:block;
       position:relative;
 
       margin: 0 auto;
       padding:0;
       box-sizing: border-box;
+
+      //border: 3px solid red;
     }
 
 
     .pprf-app__main {
         display:flex;
+        height: 91.5vh;
+        //border: 3px solid green;
         flex-direction: row;
-        border: 1px solid color(black);
     }
 
 </style>

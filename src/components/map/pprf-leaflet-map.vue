@@ -1,5 +1,5 @@
 <template>
- <div class="pprf-map-container">
+ <div class="pprf-map__container">
     <v-map ref="leafletMap" id="PPRF-Leaflet-Map" :zoom="zoom" :center="center">
 
       <v-tilelayer :url="basemap" ></v-tilelayer>
@@ -108,9 +108,10 @@ export default {
 
 <style lang="scss" scoped>
 
-  .pprf-map-container{
+  .pprf-map__container{
     flex:1;
     width: 100%;
-    height:calc(1024px - 65px);
+    display: block;
+    //height:calc(1024px - 65px);
   }
 </style>

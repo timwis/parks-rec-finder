@@ -21,7 +21,7 @@ export default {
 
   .pprf-sidebar{
       flex: 1;
-      height: calc(1024px - 65px);
+      //height: calc(1024px - 65px);
       max-width: 451px;
       padding: 15px 20px 0 20px;
       color: color(dark-ben-franklin);
