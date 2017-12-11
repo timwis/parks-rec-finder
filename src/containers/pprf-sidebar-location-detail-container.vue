@@ -2,21 +2,23 @@
     <pprf-sidebar
       modifier-class="nopad"
     >
+
         <div
           slot="sidebar-header"
           v-if="facility"
           class="pprf-sidebar-header program__header text-center"
         >
-            <h3 class="text-center">{{facility.long_name}}</h3>
+          <h3 class="text-center">{{facility.long_name}}</h3>
         </div>
 
         <div
+          v-if="facility"
           slot="sidebar-main"
           class="program--content"
         >
 
           <section
-            v-if="facility && facility.address"
+            v-if="facility.address"
             class="program__content-section"
           >
             <h4 class="program__content-section__heading">Location</h4>

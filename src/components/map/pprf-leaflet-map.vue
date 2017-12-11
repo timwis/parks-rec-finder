@@ -112,6 +112,6 @@ export default {
     flex:1;
     width: 100%;
     display: block;
-    //height:calc(1024px - 65px);
+    height:calc(#{$max-app-height} - #{$header-height});
   }
 </style>

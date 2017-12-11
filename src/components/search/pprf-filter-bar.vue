@@ -1,7 +1,7 @@
 <template>
   <section class="pprf-filter-bar">
     <header
-      class="pprf-filter-bar-header"
+      class="pprf-filter-bar__header"
     >
       <div @click="open = !open">
         <h4 class="text-nopad">Filters</h4>
@@ -358,9 +358,12 @@ export default {
   display: block;
   position:relative;
   background: lighten(color(light-ben-franklin), 10%);
+  border-top: 1px solid $white;
 }
-
-.pprf-filter-bar-header{
+.pprf-sidebar--nopad {
+  .pprf-filter-bar__header {padding: 0 20px;}
+}
+.pprf-filter-bar__header{
   h4{display:inline; marign-bottom:0; padding-bottom:0;}
   .svg-inline--fa{
     margin:2% 2% 0 2%;

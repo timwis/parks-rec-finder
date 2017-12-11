@@ -37,6 +37,7 @@
                         :gender="program.gender"
                         :fee="program.fee"
                         :programID="program.program_id"
+                        :location="{ address: program.facility_address, name: program.facility_name, id: program.facility_id }"
                       />
 
                   </pprf-tab>
@@ -47,10 +48,13 @@
                   >
                     <div
                       v-for="facility in facilities"
-                      class="card card--program"
                     >
-                      <h4>{{facility.facility_name}}</h4>
-                      <p v-show="facility.distance"><small>{{ facility.distance }} miles away</small></p>
+                      <pprf-location-card
+                        :name="facility.facility_name"
+                        :address="facility.address"
+                        :facilityID="facility.id"
+                        :distance="facility.distance"
+                      />
                     </div>
                   </pprf-tab>
 
@@ -66,6 +70,7 @@ import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
+import pprfLocationCard from '@/components/pprf-location-card'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 
 export default {
@@ -77,7 +82,8 @@ export default {
     pprfTabs,
     pprfTab,
     pprfFilterBar,
-    pprfProgramCard
+    pprfProgramCard,
+    pprfLocationCard
   },
 
   methods: {

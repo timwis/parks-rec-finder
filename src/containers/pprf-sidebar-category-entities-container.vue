@@ -1,37 +1,54 @@
 <template>
-  <pprf-sidebar>
-
-      <div slot="sidebar-header">
-        <h2  class="pprf-sidebar-header__title text-nopad">{{taxoName}} <small>{{resultsCount}}</small></h2>
+  <pprf-sidebar
+    class="pprf-sidebar--category pprf-sidebar--nopad"
+  >
+      <div
+        slot="sidebar-header"
+        class="pprf-sidebar__header--category"
+      >
+        <h2 class="pprf-sidebar__title pprf-sidebar__title--category text-nopad">{{taxoName}}</h2>
+        <pprf-results-count-badge
+          :count="resultsCount"
+          icon="map-marker-alt"
+          class="category-results-badge"
+        />
         <pprf-filter-bar
           slot="beforePanes"
           @applyFilters="filterEntities"
         />
       </div>
 
-      <main class="pprf-sidebar-main scrollable">
-         <ul class="pprf-entity-taxo--single-list">
-            <pprf-program-card
+         <ul
+          slot="sidebar-main"
+          class="category-list">
+            <li
               v-for="program in programs"
-              v-if="entityType=== 'programs' && programs"
-              class="card card--program"
               :key="program.id"
-              :name="program.program_name"
-              :ages="{high: program.age_high, low: program.age_low}"
-              :gender="program.gender"
-              :fee="program.fee"
-              :programID="program.program_id"
-            />
+              v-if="entityType=== 'programs' && programs"
+            >
+               <pprf-program-card
+                class="card card--program"
+                :name="program.program_name"
+                :ages="{high: program.age_high, low: program.age_low}"
+                :gender="program.gender"
+                :fee="program.fee"
+                :programID="program.program_id"
+              />
+            </li>
+
 
             <li
               v-if="entityType == 'locations' && facilities"
               v-for="location in facilities"
             >
-              {{location.facility_name}}
+              <pprf-location-card
+                :name="location.facility_name"
+                :address="location.address"
+                :facility-id="location.id"
+              />
             </li>
 
          </ul>
-      </main>
 
   </pprf-sidebar>
 </template>
@@ -43,9 +60,8 @@ import pprfSidebar from '@/components/pprf-sidebar'
 import api from '@/sources/api'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
-
-// import store from '@/store'
-// import updateStateFromCache from '@/mixins/update-state-from-cache'
+import pprfLocationCard from '@/components/pprf-location-card'
+import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
 
 export default {
   name: 'PPRF-Sidebar-Category-Entities-Container',
@@ -55,7 +71,9 @@ export default {
   components: {
     pprfSidebar,
     pprfFilterBar,
-    pprfProgramCard
+    pprfProgramCard,
+    pprfLocationCard,
+    pprfResultsCountBadge
   },
 
   beforeRouteEnter (to, from, next) {
@@ -104,12 +122,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pprf-entity-taxo--single-list{
-  width: 100%;
-  display: block;
-  margin-top: 20px;
-  padding-left:0;
-  padding-right: 10px;
-  li{margin:0; padding:0;}
-}
+  .category-list{
+    width: 100%;
+    display: block;
+    margin-top: 20px;
+    padding-left:0;
+    padding-right: 10px;
+    list-style: none;
+    li{margin:0; padding:0;}
+  }
+
 </style>

@@ -6,7 +6,7 @@
       <pprf-results-count-badge
         type="prgoram"
         :count="count"
-        icon="map-marker"
+        icon="map-marker-alt"
       />
       <p v-if="description" class="pprf-category-card__desc">
         {{description}}

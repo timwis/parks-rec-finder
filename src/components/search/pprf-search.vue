@@ -14,7 +14,7 @@
       <phila-text-field
         name="address"
         placeholder="ADDRESS OR ZIPCODE"
-        icon="map-marker"
+        icon="map-marker-alt"
         @input="onAddressInput"
         ref="addressField"
       ></phila-text-field>
@@ -27,7 +27,6 @@
       >
         <font-awesome-icon
           icon="search"
-          size="lg"
         />
       </phila-button>
 

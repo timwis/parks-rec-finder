@@ -24,6 +24,9 @@ export function selectPrograms () {
                         .field(`${tables.programs}.gender->>0`, 'gender')
                         // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
                         .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
+                        .field('address', 'facility_address')
+                        .field('facility_name')
+                        .field(`facility->>0`, 'facility_id')
 
   return joinPPRAssetsWith(programsQuery)
 }

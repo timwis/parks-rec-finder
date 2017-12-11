@@ -113,6 +113,19 @@ body {
     color: color(medium-gray);
     p{margin:0; padding:0;}
   }
+  .card.card--nested{
+    display: block;
+    border-bottom:none !important;
+    padding:0;
+    margin-left:15px;
+    .card__icon{display:none;}
+    .card__info{display: block;}
+    .card__info-name{ @include rem(font-size, 1.2); }
+    .card__info-meta *{
+      @include rem(font-size, 1.2);
+      @include rem(line-height, 1.75);
+    }
+  }
 
 /* =======================================================================
   5. BUTTONS
@@ -122,4 +135,5 @@ body {
 .pprf-btn{
   border-radius: 0;
   border:none;
+  background: none;
 }

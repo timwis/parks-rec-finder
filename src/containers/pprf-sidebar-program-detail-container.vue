@@ -7,6 +7,8 @@
           v-if="program"
           class="program__header text-center"
         >
+        <div>
+        </div>
             <h3 class="text-center">{{program.program_name}}</h3>
             <div class="card__info-meta">
               <small><p>Ages {{program.age_low}}-{{program.age_high}}</p></small>
@@ -81,9 +83,7 @@ export default {
 
   props: ['program_id'],
 
-  components: {
-    pprfSidebar
-  },
+  components: { pprfSidebar },
 
   beforeRouteEnter (to, from, next) {
     api.getProgramByID(to.params.program_id)
