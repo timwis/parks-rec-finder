@@ -17,7 +17,7 @@ export const UPDATE_FACILITY_CATEGORIES = 'facilities/UPDATE_FACILITY_CATEGORIES
 
 // MARKER
 export const UPDATE_MARKERS = 'markers/UPDATE_MARKERS'
-export const UPDATE_ACTIVE_MARKERS = 'markers/UPDATE_ACTIVE_MARKERS'
+export const SET_MAP_MARKERS = 'markers/SET_MAP_MARKERS'
 export const RESET_MARKERS = 'markers/RESET_MARKERS'
 
 // TABS

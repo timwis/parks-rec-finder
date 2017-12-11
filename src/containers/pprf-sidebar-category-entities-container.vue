@@ -85,6 +85,7 @@ export default {
             [entity]: results.data.rows
           }
         )
+        vm.$store.dispatch('setMapMarkers', {entityType: entity})
       })
     })
   },

@@ -23,10 +23,11 @@
           v-if="program"
         >
           <pprf-detail-content-section
+            v-if="program.address"
             heading="Location"
             icon="map-marker-alt"
           >
-            <address>
+            <address >
               <p class="text-nopad">
                   <b>{{program.facility_name}}</b>|
                       {{program.address.street}}
@@ -40,6 +41,7 @@
 
 
           <pprf-detail-content-section
+            v-if="program.start_date"
             heading="Program Schedule"
             icon="calendar-alt"
           >
@@ -104,6 +106,7 @@ export default {
         .then(results => {
           next(vm => {
             vm.$store.dispatch('updateEntities', { program: results.data.rows })
+            vm.$store.dispatch('setMapMarkers', { entityType: 'program' })
           })
         })
   },

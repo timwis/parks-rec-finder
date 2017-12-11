@@ -23,15 +23,15 @@ const mutations = {
   },
 
   // markers
-  // [types.UPDATE_MARKERS] (state, markers) {
-  //   state.entities.marker = Object.assign({}, state.entities.marker, markers)
-  // },
-  // [types.UPDATE_ACTIVE_MARKERS] (state, {entityType}) {
-  //   state.activeMarkers = state.entities.marker[entityType]
-  // },
-  // [types.RESET_MARKERS] (state) {
-  //   state.activeMarkers = []
-  // },
+  [types.UPDATE_MARKERS] (state, markers) {
+    state.entities.marker = Object.assign({}, state.entities.marker, markers)
+  },
+  [types.SET_MAP_MARKERS] (state, {entityType}) {
+    state.mapMarkers = state.entities.marker[entityType]
+  },
+  [types.RESET_MARKERS] (state) {
+    state.mapMarkers = []
+  },
 
   // search
   [types.UPDATE_SEARCH_INPUT] (state, {fields, filters}) {

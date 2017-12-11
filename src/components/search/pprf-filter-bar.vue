@@ -305,7 +305,8 @@ export default {
     _updateRouteFromFilters () {
       let ages = this.ages.length ? `${this.ageRange.low}-${this.ageRange.high}` : null
       let _query = Object.assign({}, this.$store.state.route.query, this.filters, {ages})
-      this.$router.replace({query: _.omit(_query, val => _.isNull(val))})
+      let query = _.omit(_query, val => _.isNull(val))
+      this.$router.replace({query})
     },
 
     /**

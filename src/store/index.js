@@ -17,7 +17,7 @@ export default new Vuex.Store({
   mutations,
 
   getters: {
-    markers: (state) => (entityType) => {
+    getMarkersFor: (state) => (entityType) => {
       if (entityType === 'program' || entityType === 'facility') {
         return state.entities[entityType].map(entity => new PPRFMarker(entityType, entity))
       } else {

@@ -36,7 +36,7 @@ export default {
       } else if (_.has(previousRoute.params, 'entityType')) {
         return previousRoute.params.entityType
       } else if (previousRoute.name === 'Search') {
-        return `Search results for ${previousRoute.parmas.freetext}`
+        return `Search results for ${previousRoute.query.freetext}`
       } else {
         return 'Back'
       }

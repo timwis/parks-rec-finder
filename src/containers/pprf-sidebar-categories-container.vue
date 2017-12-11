@@ -43,6 +43,7 @@
             </ul>
           </pprf-tab>
 
+
           <pprf-tab
             name="Locations"
             :count="totalResultsCountFor(facilityCategories)"
@@ -62,8 +63,6 @@
         </pprf-tabs>
 
       </div>
-
-
 
   </pprf-sidebar>
 </template>

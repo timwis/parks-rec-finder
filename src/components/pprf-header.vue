@@ -1,7 +1,7 @@
 <template>
-    <header class="pprf-header">
-        <pprf-search></pprf-search>
-    </header>
+  <header class="pprf-header">
+    <pprf-search></pprf-search>
+  </header>
 </template>
 
 <script>
@@ -21,15 +21,15 @@ export default {
 
 <style lang="scss" scoped>
 .pprf-header{
-    display:block;
-    position:relative;
+  display:block;
+  position:relative;
 
-    width: 100%;
-    height: $header-height;
+  width: 100%;
+  height: $header-height;
 
-    padding:10px;
+  padding:10px;
 
-    background: color(dark-ben-franklin);
+  background: color(dark-ben-franklin);
 
 }
 </style>

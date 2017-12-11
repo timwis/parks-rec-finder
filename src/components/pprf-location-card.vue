@@ -12,7 +12,7 @@
         <router-link :to="'/location/'+facilityID">{{name}}</router-link>
       </h3>
 
-        <address class="card__info-meta">
+        <address v-if="address" class="card__info-meta">
           <p>{{address.street}} &nbsp; {{address.city}}, {{address.zip}}</p>
        </address>
     </div>

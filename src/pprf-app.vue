@@ -15,6 +15,7 @@
 
 <script>
 import pprfHeaderContainer from '@/containers/pprf-header-container'
+
 /**
  * MAIN APPLICATION COMPONENT.
  *

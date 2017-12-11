@@ -25,7 +25,7 @@ import {
  */
 class CartoAPI {
   constructor (httpClient) {
-    this.LOG_QUERIES = true
+    this.LOG_QUERIES = false
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
     this._programs = selectPrograms()

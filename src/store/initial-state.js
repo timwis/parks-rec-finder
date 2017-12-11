@@ -5,13 +5,13 @@ const state = {
     category: {
       program: [],
       facility: []
+    },
+    marker: {
+      program: [],
+      facility: []
     }
-    // marker: {
-    //   program: [],
-    //   facility: []
-    // }
   },
-  // activeMarkers: [],
+  mapMarkers: [],
   activeTab: 'program',
   search: {
     loading: false,

@@ -29,7 +29,7 @@
 <script>
 import L from 'leaflet'
 import Vue2Leaflet from 'vue2-leaflet'
-import {mapGetters} from 'vuex'
+import {mapState} from 'vuex'
 
 export default {
 
@@ -41,6 +41,15 @@ export default {
     'v-popup': Vue2Leaflet.Popup,
     'v-svg-marker': Vue2Leaflet.SVGMarker,
     'v-circle-marker': Vue2Leaflet.CircleMarker
+  },
+
+  beforeRouteUpdate (to, from, next) {
+    this.$store.dispatch('resetMarkers')
+    next()
+  },
+
+  updated () {
+    this.fitToMarkerBounds()
   },
 
   data () {
@@ -60,10 +69,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters({getMarkers: 'markers'}),
-    markers () {
-      return this.getMarkers(this.activeEntity)
-    },
+    ...mapState({
+      markers: state => state.mapMarkers,
+      zipcodeSearched: state => state.search.fields.zip
+    }),
+    // markers () {
+    //   return this.getMarkers(this.activeEntity)
+    // },
     activeEntity () {
       let entityTypeParam = this.$store.state.route.params.entityType
       if (entityTypeParam) {
@@ -81,20 +93,13 @@ export default {
     })
   },
 
-  updated () {
-    this.fitToMarkerBounds()
-  },
-
-  // @TODO: clear pins on route change
-  // watch: {
-  //   '$route.query'  () {
-  //     this.markers = []
-  //   }
-  // },
-
   methods: {
     fitToMarkerBounds () {
       let _markers = this.markers
+      // @TODO: don't add zipcode zoom until polygons are added
+      // if (this.zipcodeSearched) {
+      //   _markers = this.markers.filter(marker => marker.within_zip_code)
+      // }
       if (_markers && _markers.length) {
         let markersLatLng = _markers.map(marker => L.latLng(marker.lat, marker.lng))
         /* eslint-disable new-cap */
