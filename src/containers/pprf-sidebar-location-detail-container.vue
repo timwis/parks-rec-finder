@@ -18,7 +18,7 @@
         <div
           v-if="facility"
           slot="sidebar-main"
-          class="program--content"
+          class="program--content scrollable"
         >
           <pprf-detail-content-section
             heading="Location"

@@ -13,8 +13,10 @@
           </div>
       </div>
 
-        <div slot="sidebar-main">
-          <pprf-tabs>
+
+          <pprf-tabs
+            slot="sidebar-main"
+          >
 
                 <pprf-filter-bar
                   slot="beforePanes"
@@ -59,7 +61,6 @@
                   </pprf-tab>
 
               </pprf-tabs>
-        </div>
 
   </pprf-sidebar>
 </template>

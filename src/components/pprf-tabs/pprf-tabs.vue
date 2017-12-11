@@ -77,8 +77,10 @@ export default {
 <style lang="scss" scoped>
 .pprf-tabs{
   width: 100%;
+  height: 100%;
   position: relative;
-  display: block;
+  display: flex;
+  flex-flow: column;
 }
     .pprf-tabs__nav{
         width:100%;
@@ -88,7 +90,6 @@ export default {
         align-items: baseline;
         margin:0;
         padding:0;
-
         list-style:none;
     }
 
@@ -96,7 +97,7 @@ export default {
         position:relative;
         padding: 5px 10px 0 5px;
         font-family: $font-montserrat;
-        @innclude rem(font-size, 14);
+        @include rem(font-size, 1.4);
 
         &:first-child{
           padding-left:0px;
@@ -163,7 +164,12 @@ export default {
 
     .pprf-tabs__panels{
         width:100%;
-        display:block;
+        height: 100%;
+        max-height: 100%;
+        position: absolute;
+        z-index:1;
+        top:60px;
+        flex:1;
         margin-top:20px;
         padding-right: 10px;
     }

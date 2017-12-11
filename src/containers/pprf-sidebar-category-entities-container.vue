@@ -18,9 +18,11 @@
         />
       </div>
 
-         <ul
-          slot="sidebar-main"
-          class="category-list">
+      <div
+        slot="sidebar-main"
+        class="scrollable"
+      >
+        <ul class="category-list">
             <li
               v-for="program in programs"
               :key="program.id"
@@ -49,6 +51,8 @@
             </li>
 
          </ul>
+      </div>
+
 
   </pprf-sidebar>
 </template>

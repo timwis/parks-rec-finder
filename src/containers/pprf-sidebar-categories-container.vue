@@ -21,9 +21,10 @@
       </div>
 
 
-      <div slot="sidebar-main">
+
 
          <pprf-tabs
+          slot="sidebar-main"
           @tabSelected="updateRoute"
          >
           <pprf-tab
@@ -62,8 +63,6 @@
           </pprf-tab>
         </pprf-tabs>
 
-      </div>
-
   </pprf-sidebar>
 </template>
 
@@ -74,6 +73,7 @@ import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import api from '@/sources/api'
 import pprfCategoryCard from '@/components/pprf-category-card'
 import _ from 'underscore'
+import slugify from 'slugify'
 // import {EventBus} from '@/event-bus'
 // import store from '@/store'
 // import updateStateFromCache from '@/mixins/update-state-from-cache'
@@ -117,9 +117,10 @@ export default {
     },
 
     slugifyURL (entityTerm) {
-      let termSlug = entityTerm.split(' ').map(termPart => termPart.charAt(0).toLowerCase() + termPart.slice(1)).join('-')
-      return `/${this.entityType}/${termSlug}`
+      // let termSlug = entityTerm.split(' ').map(termPart => termPart.charAt(0).toLowerCase() + termPart.slice(1)).join('-')
+      return `/${this.entityType}/${slugify(entityTerm)}`
     },
+
     totalResultsCountFor (categories) {
       return _.reduce(_.pluck(categories, 'count'), function (memo, num) { return memo + num }, 0)
     }

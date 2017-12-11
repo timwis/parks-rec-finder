@@ -19,7 +19,7 @@
 
         <div
           slot="sidebar-main"
-          class="program--content"
+          class="program--content scrollable"
           v-if="program"
         >
           <pprf-detail-content-section

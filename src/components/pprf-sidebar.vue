@@ -81,7 +81,9 @@ export default {
 
       .pprf-sidebar__main{
         flex:1;
-        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        //overflow: auto;
       }
 
 /* =======================================================================
