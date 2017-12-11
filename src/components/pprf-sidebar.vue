@@ -56,7 +56,7 @@ export default {
     padding:0;
     .pprf-back-btn{margin-left: 15px;}
     .pprf-sidebar__main{
-      padding: 0 15px;
+      padding: 0 20px;
     }
   }
     .pprf-sidebar__inner{
@@ -98,6 +98,7 @@ Category Sidebar
   }
   .pprf-sidebar__title--category {
     padding: 0px 0px 20px 20px;
+    margin:0;
     color: $black;
     display:inline-block;
   }

@@ -1,14 +1,18 @@
 <template>
     <pprf-sidebar
-      modifier-class="nopad"
+      class="pprf-sidebar--nopad"
     >
-
         <div
           slot="sidebar-header"
           v-if="facility"
-          class="pprf-sidebar-header program__header text-center"
+          class="pprf-sidebar-header entity-detail__header--location text-center"
         >
-          <h3 class="text-center">{{facility.long_name}}</h3>
+          <font-awesome-icon
+            size="3x"
+            icon="map-marker-alt"
+            class="entity-detail__header-icon"
+          />
+          <h3 class="pprf-sidebar__title pprf-sidebar__title--detail text-center">{{facility.long_name}}</h3>
         </div>
 
         <div
@@ -16,27 +20,33 @@
           slot="sidebar-main"
           class="program--content"
         >
-
-          <section
-            v-if="facility.address"
-            class="program__content-section"
+          <pprf-detail-content-section
+            heading="Location"
+            icon="map-marker-alt"
           >
-            <h4 class="program__content-section__heading">Location</h4>
-            <address>
+             <address>
               {{facility.address.street}}
               {{facility.address.city}},
               {{facility.address.zip}}
             </address>
-            <!-- <router-link :to="'/location/'+program.location_id">View this location</router-link> -->
-          </section>
+            <a :href="gmapsLink(facility.latitude, facility.longitude)" target="_blank">Get Directions <font-awesome-icon icon="external-link-alt" size="xs" /></a>
+          </pprf-detail-content-section>
 
-          <section
+          <pprf-detail-content-section
             v-if="facility.contact_phone"
-            class="program__content-section"
+            heading="Contact"
+            icon="phone"
           >
-            <h4 class="program__content-section__heading">Contact</h4>
             <a :href="'tel:'+facility.contact_phone">{{facility.contact_phone}}</a>
-          </section>
+          </pprf-detail-content-section>
+
+          <pprf-detail-content-section
+            v-if="facility.facility_description"
+            class="program__content-section"
+            heading="About this location"
+           >
+            <p>{{facility.facility_description}}</p>
+          </pprf-detail-content-section>
 
           <section
             v-if="facility.programs.length"
@@ -48,14 +58,6 @@
             </ul>
           </section>
 
-          <section
-            v-if="facility.facility_description"
-            class="program__content-section"
-          >
-            <h4 class="program__content-section__heading">About This Location</h4>
-            <p>{{facility.facility_description}}</p>
-          </section>
-
         </div>
 
     </pprf-sidebar>
@@ -64,6 +66,8 @@
 <script>
 import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import pprfDetailContentSection from '@/components/pprf-detail-content-section'
 import api from '@/sources/api'
 
 export default {
@@ -72,7 +76,9 @@ export default {
   props: ['facility_id'],
 
   components: {
-    pprfSidebar
+    pprfSidebar,
+    FontAwesomeIcon,
+    pprfDetailContentSection
   },
 
   beforeRouteEnter (to, from, next) {
@@ -88,24 +94,40 @@ export default {
     ...mapState({
       facility: state => state.entities.facility[0]
     })
+  },
+  methods: {
+    gmapsLink (lat, lng) {
+      return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.entity-detail__header--location{
+  background: color(pride-purple);
+}
+.entity-detail__header-icon{
+  color: $white;
+  margin-top:20px;
+}
+.pprf-sidebar__title--detail{
+  color: $white;
+  @include rem(font-size, 2.4);
+  padding: 20px 0;
+  margin:0;
+}
+
+.entity-detail__reg-status {
+  width: 100%;
+  background: $white;
+  color: color(dark-gray);
+  padding: 10px 0;
+}
 
 .card__info-meta{
   display: flex;
   justify-content: center;
   small {margin-right: 5%;}
-}
-.program__content-section{
-  width: 100%;
-  display:block;
-  margin-bottom:50px;
-}
-.program__content-section__heading{
-  margin:0;
-  padding:0;
 }
 </style>

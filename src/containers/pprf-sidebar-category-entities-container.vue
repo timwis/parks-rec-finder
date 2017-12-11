@@ -6,7 +6,7 @@
         slot="sidebar-header"
         class="pprf-sidebar__header--category"
       >
-        <h2 class="pprf-sidebar__title pprf-sidebar__title--category text-nopad">{{taxoName}}</h2>
+        <h2 class="pprf-sidebar__title pprf-sidebar__title--category">{{taxoName}}</h2>
         <pprf-results-count-badge
           :count="resultsCount"
           icon="map-marker-alt"

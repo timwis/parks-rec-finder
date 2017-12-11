@@ -5,21 +5,22 @@
         <div
           slot="sidebar-header"
           v-if="program"
-          class="program-detail__header text-center"
+          class="entity-detail__header entity-detail__header--program text-center"
         >
-            <h3 class="text-center pprf-sidebar__title pprf-sidebar__title--detail">{{program.program_name}}</h3>
-            <div class="card__info-meta program-detail__header-meta">
+            <h3 class="pprf-sidebar__title pprf-sidebar__title--detail">{{program.program_name}}</h3>
+            <div class="entity-detail__header-meta">
               <small><p>Ages {{program.age_low}}-{{program.age_high}}</p></small>
               <small><p>Gender: {{program.gender}}</p></small>
               <small><p>Cost: ${{program.fee}}</p></small>
             </div>
-            <p class="program-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
+            <p class="entity-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
         </div>
 
 
         <div
           slot="sidebar-main"
           class="program--content"
+          v-if="program"
         >
           <pprf-detail-content-section
             heading="Location"
@@ -89,7 +90,7 @@ import pprfDetailContentSection from '@/components/pprf-detail-content-section'
 import api from '@/sources/api'
 
 export default {
-  name: 'PPRF-Sidebar-Program-Detail-Container',
+  name: 'PPRF-Sidebar-entity-detail-Container',
 
   props: ['program_id'],
 
@@ -116,10 +117,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.program-detail__header{
+.entity-detail__header--program{
   background: color(ben-franklin-blue);
 }
-.program-detail__header-meta{color: $white;}
+.entity-detail__header-meta{color: $white;}
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
@@ -127,17 +128,18 @@ export default {
   margin:0;
 }
 
-.program-detail__reg-status {
+.entity-detail__reg-status {
   width: 100%;
   background: $white;
   color: color(dark-gray);
   padding: 10px 0;
 }
 
-.card__info-meta{
+.entity-detail__header-meta{
   display: flex;
   justify-content: center;
   small {margin-right: 5%;}
+  p{margin:0; padding:0;}
 }
 
 </style>
