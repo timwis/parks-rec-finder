@@ -1,38 +1,54 @@
 <template>
     <pprf-sidebar
-      modifier-class="nopad"
+      class="pprf-sidebar--nopad"
     >
         <div
           slot="sidebar-header"
           v-if="program"
-          class="program__header text-center"
+          class="program-detail__header text-center"
         >
-        <div>
-        </div>
-            <h3 class="text-center">{{program.program_name}}</h3>
-            <div class="card__info-meta">
+            <h3 class="text-center pprf-sidebar__title pprf-sidebar__title--detail">{{program.program_name}}</h3>
+            <div class="card__info-meta program-detail__header-meta">
               <small><p>Ages {{program.age_low}}-{{program.age_high}}</p></small>
               <small><p>Gender: {{program.gender}}</p></small>
               <small><p>Cost: ${{program.fee}}</p></small>
             </div>
-            <p><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
+            <p class="program-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
         </div>
+
 
         <div
           slot="sidebar-main"
           class="program--content"
         >
-
-          <section class="program__content-section">
-            <h4 class="program__content-section__heading">Location</h4>
-            <p><b>{{program.facility_name}}</b>| </p>
+          <pprf-detail-content-section
+            heading="Location"
+            icon="map-marker-alt"
+          >
             <address>
-              {{program.address.street}}
-              {{program.address.city}},
-              {{program.address.zip}}
+              <p class="text-nopad">
+                  <b>{{program.facility_name}}</b>|
+                      {{program.address.street}}
+                      {{program.address.city}},
+                      {{program.address.zip}}
+              </p>
             </address>
+
             <router-link :to="'/location/'+program.location_id">View this location</router-link>
-          </section>
+          </pprf-detail-content-section>
+
+
+          <pprf-detail-content-section
+            heading="Program Schedule"
+            icon="calendar-alt"
+          >
+            <p><b>XXXXdays and XXXXdays</b></p>
+            <p>Start Date: {{program.start_date}}</p>
+            <p>End Date: {{program.end_date}}</p>
+            <p>Frequency: XXXXXXX</p>
+
+          </pprf-detail-content-section>
+
 
            <section
             v-if="program.contact"
@@ -51,21 +67,14 @@
             <div v-html="program.program_description"></div>
           </section> -->
 
-          <section
-            v-if="program.days"
-            class="program__content-section"
-          >
-            <h4 class="program__content-section__heading">Program Schedule</h4>
-            <p><b>XXXXdays and XXXXdays</b></p>
-            <p>Start Date: {{program.start_date}}</p>
-            <p>End Date: {{program.end_date}}</p>
-            <p>Frequency: XXXXXXX</p>
-          </section>
 
-          <section>
-            <h4 class="program__content-section__heading">Registration Information</h4>
-            {{registrationText}}
-          </section>
+          <pprf-detail-content-section
+            heading="Registraion Information"
+            icon="info-circle"
+          >
+            <p>To sign up or learn more, use the information listed here!</p>
+          </pprf-detail-content-section>
+
 
 
         </div>
@@ -76,6 +85,7 @@
 <script>
 import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
+import pprfDetailContentSection from '@/components/pprf-detail-content-section'
 import api from '@/sources/api'
 
 export default {
@@ -83,7 +93,10 @@ export default {
 
   props: ['program_id'],
 
-  components: { pprfSidebar },
+  components: {
+    pprfSidebar,
+    pprfDetailContentSection
+  },
 
   beforeRouteEnter (to, from, next) {
     api.getProgramByID(to.params.program_id)
@@ -96,27 +109,35 @@ export default {
 
   computed: {
     ...mapState({
-      program: state => state.entities.program[0],
-      registrationText: state => state.programRegistrationText
+      program: state => state.entities.program[0]
     })
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.program-detail__header{
+  background: color(ben-franklin-blue);
+}
+.program-detail__header-meta{color: $white;}
+.pprf-sidebar__title--detail{
+  color: $white;
+  @include rem(font-size, 2.4);
+  padding: 20px 0;
+  margin:0;
+}
+
+.program-detail__reg-status {
+  width: 100%;
+  background: $white;
+  color: color(dark-gray);
+  padding: 10px 0;
+}
 
 .card__info-meta{
   display: flex;
   justify-content: center;
   small {margin-right: 5%;}
 }
-.program__content-section{
-  width: 100%;
-  display:block;
-  margin-bottom:50px;
-}
-.program__content-section__heading{
-  margin:0;
-  padding:0;
-}
+
 </style>
