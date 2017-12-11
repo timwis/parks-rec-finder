@@ -86,6 +86,7 @@ export default {
         .then(results => {
           next(vm => {
             vm.$store.dispatch('updateEntities', { facility: results.data.rows })
+            vm.$store.dispatch('setMapMarkers', { entityType: 'location' })
           })
         })
   },

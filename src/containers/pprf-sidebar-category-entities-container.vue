@@ -44,7 +44,7 @@
               <pprf-location-card
                 :name="location.facility_name"
                 :address="location.address"
-                :facility-id="location.id"
+                :facilityID="location.id"
               />
             </li>
 

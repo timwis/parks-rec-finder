@@ -91,7 +91,6 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    // let entityName = to.params.entityType.replace('s', '')
     api.getTaxonomyTerms({taxonomy: 'category'}).then(results => {
       next(vm => {
         vm.$store.dispatch('updateCategories',
@@ -100,7 +99,6 @@ export default {
             facility: results[1].data.rows
           }
         )
-        // vm.$store.dispatch('updateSearchInput', store.state.search)
       })
     })
   },
