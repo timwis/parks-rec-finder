@@ -358,6 +358,7 @@ export default {
   color: $black;
   display: block;
   position:relative;
+  z-index:5;
   background: lighten(color(light-ben-franklin), 10%);
   border-top: 1px solid $white;
 }

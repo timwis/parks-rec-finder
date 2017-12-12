@@ -17,6 +17,8 @@ import {
   addFilters
 } from './QueryBuilder'
 
+const LOG_QUERIES = process.env.NODE_ENV === 'development'
+debugger
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
  * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>
@@ -25,7 +27,7 @@ import {
  */
 class CartoAPI {
   constructor (httpClient) {
-    this.LOG_QUERIES = true
+    this.LOG_QUERIES = LOG_QUERIES
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
     this._programs = selectPrograms()
