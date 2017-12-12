@@ -18,7 +18,7 @@ import {
 } from './QueryBuilder'
 
 const LOG_QUERIES = process.env.NODE_ENV === 'development'
-debugger
+
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
  * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>

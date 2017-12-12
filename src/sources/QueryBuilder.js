@@ -119,7 +119,10 @@ export function selectTaxonomy ({entityType, taxonomy}) {
 
       taxonomyQuery
         .from(taxonomyTable, entityName)
-        .field(`${entityName}.*`)
+        .field(`${entityName}.activity_category_name`)
+        .field(`${entityName}.activity_category_description`)
+        .field(`${entityName}.activity_category_photo`)
+        .field(`${entityName}.id`)
         // @TODO replace subSelect with "WHERE program.category = ppr_activity_categories.activity_category_name"
         // once the schmea is in place
         .field(
@@ -134,7 +137,10 @@ export function selectTaxonomy ({entityType, taxonomy}) {
 
       taxonomyQuery
         .from(taxonomyTable, entityName)
-        .field(`${entityName}.*`)
+        .field(`${entityName}.location_type_name`)
+        .field(`${entityName}.location_type_description`)
+        .field(`${entityName}.location_type_photo`)
+        .field(`${entityName}.id`)
         .field(
           postgresSQL
             .select()
