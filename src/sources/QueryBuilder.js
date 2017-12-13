@@ -7,6 +7,7 @@ import {
 
 let postgresSQL = squel.useFlavour('postgres')
 const METERS_TO_MILES_RATIO = 0.000621371
+
 /**
  * get all ppr_programs records from DB
  * joined on ppr_facilities and ppr_assets tables
@@ -27,20 +28,22 @@ export function selectPrograms () {
                         .field('address', 'facility_address')
                         .field('facility_name')
                         .field(`facility->>0`, 'facility_id')
+                        .where(`publish = 'true'`)
 
   return joinPPRAssetsWith(programsQuery)
 }
 
-export function joinProgramsOnCategories (sqlQueryObj) {
-  sqlQueryObj
+export function joinProgramsOnCategories (programsQueryObj) {
+  programsQueryObj
     .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
     .join(`${tables.programCategoryTerms}`, 'activityType', `${tables.programs}.activity_type->>0 = activityType.id`)
     .join(tables.programCategories, 'category', `activityType.category = category.activity_category_name`)
-    // @TODO: replace JOINs  with below two lines when "category" column is added to ppr_programs table
+    // @TODO: replace JOINs with below two lines when "category" column is added to ppr_programs table
+    // and update all function calls
     // .field(`category`)
     // .where(`category = '${taxonomyTerm}'`)
 
-  return sqlQueryObj
+  return programsQueryObj
 }
 
 export function selectProgram (programID) {
@@ -90,6 +93,31 @@ export function selectFacility (facilityID) {
 }
 
 /**
+ * Get a count of all programs in a category
+ * that are associated with a facility
+ * associated facility must have a `website_locator_points_link_id`
+ *
+ * @param  {string} catTerm category term to fetch programs for
+ * @return {object} squel.js query builder object
+ *
+ * @since 0.0.0
+ */
+export function selectProgramsCountPerCategoryTerm (catTerm) {
+  // get programs per category
+  let subSelectProgramsQuery = postgresSQL
+                                .select()
+                                .field(`count(*)`)
+                                .from(tables.programs)
+  // @TODO replace joinProgramsOnCategories with "WHERE program.category = ppr_activity_categories.activity_category_name"
+  // once the schmea is in place
+  joinProgramsOnCategories(subSelectProgramsQuery)
+  subSelectProgramsQuery
+    .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
+    .where(`category = ${catTerm}.activity_category_name`)
+  return subSelectProgramsQuery
+}
+
+/**
  * given an entityType that maps to a table table
  * get a distinct list of categories from the associated taxonomy terms table
  *
@@ -110,12 +138,6 @@ export function selectTaxonomy ({entityType, taxonomy}) {
     case 'programs':
       entityName = 'program' + taxonomy
       taxonomyTable = tables[`${entityName}`]
-      // get programs per category
-      let subSelectProgramsQuery = postgresSQL
-                                      .select()
-                                      .field(`count(${tables.programs}.id)`)
-                                      .from(tables.programs)
-      joinProgramsOnCategories(subSelectProgramsQuery)
 
       taxonomyQuery
         .from(taxonomyTable, entityName)
@@ -123,11 +145,7 @@ export function selectTaxonomy ({entityType, taxonomy}) {
         .field(`${entityName}.activity_category_description`)
         .field(`${entityName}.activity_category_photo`)
         .field(`${entityName}.id`)
-        // @TODO replace subSelect with "WHERE program.category = ppr_activity_categories.activity_category_name"
-        // once the schmea is in place
-        .field(
-            subSelectProgramsQuery.where(`category = ${entityName}.activity_category_name`)
-          , 'count')
+        .field(selectProgramsCountPerCategoryTerm(entityName), 'count')
         .order('activity_category_name')
       break
 
@@ -148,7 +166,6 @@ export function selectTaxonomy ({entityType, taxonomy}) {
             .from(tables.facilities)
             .where(`${tables.facilities}.facility_type = ${entityName}.location_type_name`)
           , 'count')
-        .where(`publish = 'true'`)
         .order('location_type_name')
       break
   }
@@ -169,23 +186,39 @@ export function selectTaxonomy ({entityType, taxonomy}) {
  */
 export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
   let categoryEntitiesQuery = postgresSQL
-
   if (entityType === 'programs') {
     categoryEntitiesQuery = postgresSQL
                               .select()
                               .from(tables.programs)
-                              .field(`${tables.programs}.*`)
+                              // .field(`${tables.programs}.*`)
+                              .field(`${tables.programs}.id`)
+                              .field(`${tables.programs}.facility`)
+                              .field(`${tables.programs}.program_id`)
+                              .field(`${tables.programs}.program_name_full`)
+                              .field(`${tables.programs}.activity_type`)
+                              .field(`${tables.programs}.program_name`)
+                              .field(`${tables.programs}.program_description`)
+                              .field(`${tables.programs}.age_low`)
+                              .field(`${tables.programs}.age_high`)
+                              .field(`${tables.programs}.fee`)
+                              .field(`${tables.programs}.publish`)
+                              .field(`${tables.programs}.is_active`)
                               .field(`${tables.programs}.gender->>0`, 'gender')
                               .field(`category`)
+
     joinProgramsOnCategories(categoryEntitiesQuery)
-    categoryEntitiesQuery.where(`category = '${taxonomyTerm}'`)
+    if (taxonomyTerm) {
+      categoryEntitiesQuery.where(`category = '${taxonomyTerm}'`)
+    }
   } else if (entityType === 'locations') {
     categoryEntitiesQuery = postgresSQL
                               .select()
                               .from(tables.facilities)
                               .field(`${tables.facilities}.*`)
                               .join(`${tables.locationCategories}`, 'type', `type.location_type_name = ${tables.facilities}.facility_type`)
-                              .where(`${tables.facilities}.facility_type = '${taxonomyTerm}'`)
+    if (taxonomyTerm) {
+      categoryEntitiesQuery.where(`${tables.facilities}.facility_type = '${taxonomyTerm}'`)
+    }
   }
   return joinPPRAssetsWith(categoryEntitiesQuery)
 }
