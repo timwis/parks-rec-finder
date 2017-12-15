@@ -51,7 +51,9 @@ class API {
   }
 
   getFacilityByID (facilityID) {
-    return cartoAPI.getFacilityByID(facilityID)
+    let facilityQuery = cartoAPI.getFacilityByID(facilityID)
+    let facilityProgramsQuery = cartoAPI.getProgramsByFacilityID(facilityID)
+    return Promise.all([facilityQuery, facilityProgramsQuery])
   }
 }
 

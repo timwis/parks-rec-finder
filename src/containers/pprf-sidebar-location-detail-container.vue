@@ -54,7 +54,11 @@
           >
             <h4 class="program__content-section__heading">Programs</h4>
             <ul>
-              <li v-for="programName in facility.programs">{{programName}}</li>
+              <li v-for="program in facilityPrograms">
+                <router-link :to="'/program/'+program.program_id">
+                  {{program.program_name}}
+                </router-link>
+              </li>
             </ul>
           </section>
 
@@ -85,7 +89,7 @@ export default {
     api.getFacilityByID(to.params.facility_id)
         .then(results => {
           next(vm => {
-            vm.$store.dispatch('updateEntities', { facility: results.data.rows })
+            vm.$store.dispatch('updateEntities', { facility: results[0].data.rows, program: results[1].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'location' })
           })
         })
@@ -93,7 +97,8 @@ export default {
 
   computed: {
     ...mapState({
-      facility: state => state.entities.facility[0]
+      facility: state => state.entities.facility[0],
+      facilityPrograms: state => state.entities.program
     })
   },
   methods: {

@@ -6,6 +6,7 @@ import {
 import {
   selectPrograms,
   selectProgram,
+  selectProgramsByFacilityID,
   selectFacilities,
   selectFacility,
   selectTaxonomy,
@@ -101,6 +102,10 @@ class CartoAPI {
     return this.runQuery(
       selectProgram(programID)
     )
+  }
+
+  getProgramsByFacilityID (facilityID) {
+    return this.runQuery(selectProgramsByFacilityID(facilityID))
   }
 
   /**

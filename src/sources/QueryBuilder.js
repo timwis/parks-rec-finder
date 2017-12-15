@@ -63,6 +63,10 @@ export function selectProgram (programID) {
   return programQuery
 }
 
+export function selectProgramsByFacilityID (facilityID) {
+  return selectPrograms().where(`ppr_programs.facility->>0 = '${facilityID}'`)
+}
+
 /**
  * get all ppr_facilites records from DB
  * joined on ppr_assets to include lat, lng info
