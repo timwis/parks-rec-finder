@@ -272,25 +272,7 @@ export default {
       this.$emit('applyFilters', {filters: this.filtersList})
       this.open = false
     },
-    /**
-     * Update the computed age range given
-     * @param  {array} rangeArr array of age values to add to global array
-     * @return {void}
-     *
-     * @public
-     * @since 0.0.0
-     */
-    // updateAgeRange (rangeArr) {
-    //   rangeArr.split(',').forEach(age => {
-    //     let _index = this.ages.indexOf(Number(age))
-    //     if (_index > -1) {
-    //       this.ages.splice(_index, 1)
-    //     } else {
-    //       this.ages.push(Number(age))
-    //     }
-    //   })
-    //   this.onInput()
-    // },
+
     /**
      * Reset all filter values to null
      *
@@ -300,8 +282,7 @@ export default {
      * @since 0.0.0
      */
     clearFilters () {
-      this.ages = []
-      this.$refs['filter-age'].forEach(el => { el.checked = false })
+      this.ageArr = []
       this.filters = {
         fee: null,
         gender: null
@@ -317,7 +298,6 @@ export default {
       switch (filterKey) {
         case 'ages':
           this.ageArr = []
-          this.$refs['filter-age'].forEach(el => { el.checked = false })
           break
         default:
           this.filters[filterKey] = null
@@ -358,13 +338,16 @@ export default {
         paramKeys.forEach(key => {
           switch (key) {
             case 'ages':
+              // get the array of age values from query params
               let agesFromParams = this.$store.state.route.query[key].split('-').map(st => parseInt(st))
-              // @TODO upate all checkboxes that fall wihin range from query params
-              // the below will only update on min and max
+              // loop through our age range checkboxes
               for (var i = 0; i < this.$refs['filter-age'].length; i++) {
                 let $ref = this.$refs['filter-age'][i]
-                if (_.intersection($ref.value, agesFromParams).length > 0) {
+                // check to see if there values fall within the range of values from the query params
+                if (_.intersection($ref.value, _.range(agesFromParams[0], agesFromParams[1])).length > 0) {
+                  // update local state
                   this.ageArr.push(this.ageGroups[i].range)
+                  // hack to show the boxes as checked
                   $ref.$el.children[1].children[0].innerHTML = 'check_box'
                 }
               }
@@ -384,7 +367,6 @@ export default {
   },
   watch: {
     '$route.query': function (val) {
-      console.log(val)
       let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
       let searchFiltersFromRoute = _.intersection(Object.keys(val), filterDefs)
       if (searchFiltersFromRoute.length) {
