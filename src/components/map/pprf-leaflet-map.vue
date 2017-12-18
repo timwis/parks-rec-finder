@@ -15,6 +15,7 @@
 
       <v-svg-marker
           v-for="marker in markers"
+          @l-click="onMarkerClick(marker)"
           :key="marker.id"
           :latLng="[marker.lat, marker.lng]"
           :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity, circleFillOpacity: marker.opacity, circleOpacity: marker.opacity}}"
@@ -30,6 +31,7 @@
 import L from 'leaflet'
 import Vue2Leaflet from 'vue2-leaflet'
 import {mapState} from 'vuex'
+import {EventBus} from '@/event-bus'
 
 export default {
 
@@ -73,9 +75,6 @@ export default {
       markers: state => state.mapMarkers,
       zipcodeSearched: state => state.search.fields.zip
     }),
-    // markers () {
-    //   return this.getMarkers(this.activeEntity)
-    // },
     activeEntity () {
       let entityTypeParam = this.$store.state.route.params.entityType
       if (entityTypeParam) {
@@ -106,6 +105,9 @@ export default {
         let {_southWest, _northEast} = L.latLngBounds(markersLatLng)
         this.$refs.leafletMap.fitBounds([[_southWest.lat, _southWest.lng], [_northEast.lat, _northEast.lng]])
       }
+    },
+    onMarkerClick (marker) {
+      EventBus.$emit('map:markerClick', marker)
     }
   }
 }

@@ -26,10 +26,11 @@
             <li
               v-for="program in programs"
               :key="program.id"
-              v-if="entityType=== 'programs' && programs"
+              v-if="entityType === 'programs' && programs"
             >
                <pprf-program-card
-                class="card card--program"
+                :selected="activeCardID === program.program_id"
+                :id="'program--'+program.program_id"
                 :name="program.program_name"
                 :ages="{high: program.age_high, low: program.age_low}"
                 :gender="program.gender"
@@ -66,6 +67,7 @@ import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
 import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
+import {EventBus} from '@/event-bus'
 
 export default {
   name: 'PPRF-Sidebar-Category-Entities-Container',
@@ -78,6 +80,25 @@ export default {
     pprfProgramCard,
     pprfLocationCard,
     pprfResultsCountBadge
+  },
+
+  data () {
+    return {
+      scrollOptions: {
+        container: '.scrollable',
+        easing: 'ease-in',
+        onDone: function () {},
+        x: false,
+        y: true
+      },
+      activeCardID: null
+    }
+  },
+
+  mounted () {
+    EventBus.$on('map:markerClick', ({type, id}) => {
+      this.selectCard(type, id)
+    })
   },
 
   beforeRouteEnter (to, from, next) {
@@ -101,6 +122,10 @@ export default {
             let entity = this.entityType === 'locations' ? 'facility' : 'program'
             this.$store.dispatch('updateEntities', { [entity]: results.data.rows })
           })
+    },
+    selectCard (type, id) {
+      this.activeCardID = id
+      this.$scrollTo(`#${type}--${id}`, 1000, this.scrollOptions)
     }
   },
 
@@ -135,6 +160,11 @@ export default {
     padding-right: 10px;
     list-style: none;
     li{margin:0; padding:0;}
+  }
+
+  .card--program--selected{
+    border-radius: $border-radius;
+    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
   }
 
 </style>

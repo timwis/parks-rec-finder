@@ -49,7 +49,7 @@
           </pprf-detail-content-section>
 
           <section
-            v-if="facility.programs.length"
+            v-if="facilityPrograms.length"
             class="program__content-section"
           >
             <h4 class="program__content-section__heading">Programs</h4>
@@ -90,7 +90,7 @@ export default {
         .then(results => {
           next(vm => {
             vm.$store.dispatch('updateEntities', { facility: results[0].data.rows, program: results[1].data.rows })
-            vm.$store.dispatch('setMapMarkers', { entityType: 'location' })
+            vm.$store.dispatch('setMapMarkers', { entityType: 'facility' })
           })
         })
   },

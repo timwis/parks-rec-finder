@@ -10,11 +10,13 @@ import router from './router'
 import VueProgressBar from 'vue-progressbar'
 import fontawesome from '@fortawesome/fontawesome'
 import * as freeSolid from '@fortawesome/fontawesome-free-solid'
+import VueScrollTo from 'vue-scrollto'
 
 fontawesome.library.add(freeSolid)
 
 sync(store, router)
 Vue.use(Vuex)
+Vue.use(VueScrollTo)
 Vue.use(VueProgressBar, {
   color: 'rgb(143, 255, 199)',
   failedColor: 'red',

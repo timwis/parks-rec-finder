@@ -5,7 +5,6 @@ class PPRFMarker {
   }
 
   build (entityType, entity) {
-    this.id = entity.id || entity.ID
     this.lat = entity.latitude
     this.lng = entity.longitude
 
@@ -14,11 +13,15 @@ class PPRFMarker {
 
     switch (entityType) {
       case 'program':
+        this.type = 'program'
+        this.id = entity.program_id
         this.color = '#2176d2'
         this.name = entity.program_name
         break
 
       case 'facility':
+        this.type = 'facility'
+        this.id = entity.facility_id
         this.color = '#9400c6'
         this.name = entity.long_name
         this.address = entity.address
