@@ -32,7 +32,6 @@
                       <pprf-program-card
                         v-if="program"
                         v-for="program in programs"
-                        class="card card--program"
                         :key="program.id"
                         :name="program.program_name"
                         :ages="{high: program.age_high, low: program.age_low}"
@@ -89,7 +88,7 @@ export default {
 
   methods: {
     filterEntities (filters) {
-      this.$store.dispatch('submitSearch', filters)
+      // this.$store.dispatch('submitSearch', filters)
     }
   },
 

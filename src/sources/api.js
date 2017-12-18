@@ -30,7 +30,6 @@ class API {
  */
   search (serachParams) {
     let {fields} = serachParams
-
     if (fields && (fields.address && fields.address !== null && fields.address !== '')) {
       return aisAPI.getCoordsForAddress(fields.address)
                    .then(searchCarto.bind({}, serachParams))

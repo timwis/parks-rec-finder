@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .card--program{
+  .card.card--program{
     display: flex;
     padding: 10px;
     border-bottom: 1px solid color(dark-gray);

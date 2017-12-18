@@ -39,6 +39,7 @@ import PhilaTextField from '@/components/phila/phila-text-field'
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import _ from 'underscore'
+
 /**
  * SEARCH BAR COMPONENT
  * Form and inputs to search by freetext and/or address or zipcode
@@ -76,6 +77,11 @@ export default {
       let fields = _.pick(this.$store.state.route.query, searchFieldsFromRoute)
       this._updateInputRefsValues(this.$store.state.route.query)
       this.$store.dispatch('updateSearchInput', {fields})
+    }
+
+    // search if deep linked to Seach page
+    if (this.$store.state.route.from && !this.$store.state.route.from.name) {
+      this.$store.dispatch('submitSearch')
     }
 
     /**
@@ -147,7 +153,7 @@ export default {
       }
       this.updateSearchRouteParams(this.search.fields)
       this.$emit('submit', newSearch.fields)
-      this.$store.dispatch('submitSearch', newSearch)
+      // this.$store.dispatch('submitSearch', newSearch)
     },
 
     /**
@@ -182,9 +188,9 @@ export default {
     },
 
     /**
-     * give a route params oject to match that matches the
-     * local state search fields udpate the search route url to
-     * include those params in order to allow for deeplinking
+     * give a route params oject to match that matches the local state search fields
+     * udpate the search route url to include those params in order to allow for deeplinking
+     *
      * @param  {Object} queryParams query params  bject matching the local state serch fields object
      * @return {void}
      *
@@ -197,11 +203,21 @@ export default {
       // only submit submit valid params
       query = _.omit(query, val => _.isNull(val))
       this.$router.push({path: '/search', query})
-      // if (this.$store.state.route.name !== 'Search') {
-      //   this.$router.push({path: '/search', query})
-      // } else {
-      //   this.$router.replace({path: '/search', query})
-      // }
+    }
+  },
+  watch: {
+    // update search on route change
+    '$route.query': function (val) {
+      let searchFieldsFromRoute = _.intersection(Object.keys(val), Object.keys(this.$store.state.search.fields))
+      let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
+      let searchFiltersFromRoute = _.intersection(Object.keys(val), filterDefs)
+
+      if ([...searchFieldsFromRoute, ...searchFiltersFromRoute].length && this.$store.state.route.name === 'Search') {
+        let fields = _.pick(val, searchFieldsFromRoute)
+        let filters = _.pick(val, searchFiltersFromRoute)
+        this.$store.dispatch('updateSearchInput', {fields, filters})
+        this.$store.dispatch('submitSearch', {fields, filters})
+      }
     }
   }
 }

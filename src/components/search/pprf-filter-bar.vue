@@ -118,6 +118,7 @@
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import _ from 'underscore'
+
 /**
  * Filter Bar
  * Search filter container to add filtes to the global serach state
@@ -181,18 +182,11 @@ export default {
   },
 
   mounted () {
-    // @TODO: move this search from route else where, maybe beforeRouteEnter in router search route??
-    let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.$store.state.search.fields))
     let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
     let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), filterDefs)
-    let searchParamsFromRoute = [...searchFieldsFromRoute, ...searchFiltersFromRoute]
 
     if (searchFiltersFromRoute.length > 0) {
       this._updateFiltersFromRoute()
-    }
-    // submit search if deep linked from url
-    if (!this.$store.state.route.from.name && searchParamsFromRoute.length > 0 && this.$store.state.route.name === 'Search') {
-      this.$store.dispatch('submitSearch')
     }
   },
 
@@ -347,6 +341,16 @@ export default {
       }
       // update state with filter values
       this.onInput()
+    }
+  },
+  watch: {
+    '$route.query': function (val) {
+      console.log(val)
+      let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
+      let searchFiltersFromRoute = _.intersection(Object.keys(val), filterDefs)
+      if (searchFiltersFromRoute.length) {
+        this._updateFiltersFromRoute()
+      }
     }
   }
 }
