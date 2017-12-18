@@ -1,12 +1,12 @@
 <template>
-  <button
-    v-if="lastState"
+<router-link
+    v-if="$routerHistory.hasHistory()"
     class="pprf-btn pprf-back-btn text-caps"
-    @click.prevent="goBack"
-  >
-   <font-awesome-icon icon="chevron-left" />
-    {{btnTxt}}
-</button>
+    :to="{ path: $routerHistory.previous().path }">
+    <font-awesome-icon icon="chevron-left" />
+    <span>{{btnTxt}}</span>
+</router-link>
+
 </template>
 
 <script>
@@ -46,4 +46,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pprf-back-btn{
+  text-decoration: none;
+  font-family: $font-montserrat;
+  color: color(dark-ben-franklin);
+  padding: 0 0 0 5px;
+
+  span{
+    display: inline-block;
+    transform: translateY(1px);
+  }
+  .svg-inline--fa{
+    margin-right: 5px;
+    transition: all 0.25s ease;
+  }
+  &:hover{
+    .svg-inline--fa{ transform: translateX(-3px);}
+  }
+}
 </style>

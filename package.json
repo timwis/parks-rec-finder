@@ -89,6 +89,7 @@
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
     "vue-progressbar": "^0.7.3",
+    "vue-router-back-button": "0.0.1",
     "vue-scrollto": "^2.8.0",
     "vue-server-renderer": "2.5.3",
     "vue-style-loader": "^3.0.1",
