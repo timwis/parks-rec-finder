@@ -184,6 +184,11 @@ fieldset{
   line-height: 1;
 }
 
+.input-group:focus{
+  border:none;
+  outline:none;
+}
+
 .field,
 .field-label{
   position: relative;
@@ -193,6 +198,22 @@ fieldset{
 
 .field__inline{
   display: inline-block;
+  .input-group__input{
+    display: inline-block;
+    float:left;
+
+    .icon--selection-control{
+      @include rem(font-size, 1.5)
+      color: color(dark-ben-franklin);
+      margin: 0 10px 0 0;
+    }
+  }
+  label{
+    display: inline-block;
+    // float:left;
+    @include rem(font-size, 1.4)
+    color: color(dark-ben-franklin)
+  }
 }
 
 .field__inline + .field__inline{

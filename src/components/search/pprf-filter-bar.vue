@@ -28,7 +28,25 @@
 
         <legend>Fee</legend>
 
-        <div class="field field__inline field-fee--free">
+        <v-radio-group
+          v-model="filters.fee"
+          :mandatory="false"
+        >
+          <v-radio
+            class="field field__inline field-fee--free"
+            label="Free"
+            value="Free"
+            @change="onInput"
+          ></v-radio>
+          <v-radio
+            class="field field__inline field-fee--fee"
+            label="Fee"
+            value="Fee"
+            @change="onInput"
+          ></v-radio>
+        </v-radio-group>
+
+        <!-- <div class="field field__inline field-fee--free">
           <input
             id="filter-fee__free"
             type="radio"
@@ -50,7 +68,7 @@
             @change="onInput"
           >
           <label class="field-label field-label__inline" for="fee">Fee</label>
-        </div>
+        </div> -->
 
       </fieldset>
 
@@ -61,17 +79,25 @@
 
         <div
           class="field field-age"
-          v-for="ageGroup in ageGroups"
+          v-for="(ageGroup, idx) in ageGroups"
         >
-          <input
+          <v-checkbox
+            :label="ageGroup.name"
+            :value="ageGroup.range"
+            v-model="ageArr"
+            ref="filter-age"
+            light
+          >
+          </v-checkbox>
+          <!-- <input
             id="age"
             type="checkbox"
             :name="'age__'+ageGroup.name.split(' ')[0].toLowerCase()"
             :value="ageGroup.range"
             ref="filter-age"
             @change="updateAgeRange($event.target.value)"
-          >
-          <label class="field-label field-label__inline" :name="'age__'+ageGroup.name.split(' ')[0].toLowerCase()">{{ageGroup.name}}</label>
+          > -->
+          <!-- <label class="field-label field-label__inline" :name="'age__'+ageGroup.name.split(' ')[0].toLowerCase()">{{ageGroup.name}}</label> -->
         </div>
 
       </fieldset>
@@ -91,6 +117,7 @@
             :name="'filter-gender--'+gender.name.toLowerCase()"
             v-model="filters.gender"
             :value="gender.value"
+            :true-value="gender.value"
             @change="onInput"
           >
           <label class="field-label field-label__inline" :for="'gender__'+gender.name.toLowerCase()">{{gender.name}}</label>
@@ -132,7 +159,7 @@ export default {
 
   data () {
     return {
-      open: false,
+      open: true,
 
       ageGroups: [
         {
@@ -172,7 +199,7 @@ export default {
         }
       ],
 
-      ages: [],
+      ageArr: [],
 
       filters: {
         fee: null,
@@ -202,8 +229,17 @@ export default {
       }
     },
 
+    ages: {
+      set: function (newVal) {
+        this.ageArr.push(newVal)
+      },
+      get: function () {
+        return _.flatten(this.ageArr)
+      }
+    },
+
     tags () {
-      let filters = Object.assign({}, this.filters, {ages: this.ages.length ? `Ages ${this.ageRange.low} - ${this.ageRange.high}` : null})
+      let filters = Object.assign({}, this.filters, {ages: this.ageArr.length ? `Ages ${this.ageRange.low} - ${this.ageRange.high}` : null})
       return _.omit(filters, val => _.isNull(val))
     },
 
@@ -244,17 +280,17 @@ export default {
      * @public
      * @since 0.0.0
      */
-    updateAgeRange (rangeArr) {
-      rangeArr.split(',').forEach(age => {
-        let _index = this.ages.indexOf(Number(age))
-        if (_index > -1) {
-          this.ages.splice(_index, 1)
-        } else {
-          this.ages.push(Number(age))
-        }
-      })
-      this.onInput()
-    },
+    // updateAgeRange (rangeArr) {
+    //   rangeArr.split(',').forEach(age => {
+    //     let _index = this.ages.indexOf(Number(age))
+    //     if (_index > -1) {
+    //       this.ages.splice(_index, 1)
+    //     } else {
+    //       this.ages.push(Number(age))
+    //     }
+    //   })
+    //   this.onInput()
+    // },
     /**
      * Reset all filter values to null
      *
@@ -280,7 +316,7 @@ export default {
     removeFilter (filterKey) {
       switch (filterKey) {
         case 'ages':
-          this.ages = []
+          this.ageArr = []
           this.$refs['filter-age'].forEach(el => { el.checked = false })
           break
         default:
@@ -322,13 +358,16 @@ export default {
         paramKeys.forEach(key => {
           switch (key) {
             case 'ages':
-              let agesFromParams = this.$store.state.route.query[key].split('-')
-              this.ages = agesFromParams
-              this.$refs['filter-age'].forEach(filterEl => {
-                if (_.intersection(filterEl.value.split(','), agesFromParams).length > 0) {
-                  filterEl.checked = true
+              let agesFromParams = this.$store.state.route.query[key].split('-').map(st => parseInt(st))
+              // @TODO upate all checkboxes that fall wihin range from query params
+              // the below will only update on min and max
+              for (var i = 0; i < this.$refs['filter-age'].length; i++) {
+                let $ref = this.$refs['filter-age'][i]
+                if (_.intersection($ref.value, agesFromParams).length > 0) {
+                  this.ageArr.push(this.ageGroups[i].range)
+                  $ref.$el.children[1].children[0].innerHTML = 'check_box'
                 }
-              })
+              }
               break
             // case 'fee':
             //   this.filters[key] = this.$store.state.route.query[key]

@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Vuetify from 'vuetify'
 
 import { sync } from 'vuex-router-sync'
 import store from './store'
@@ -16,6 +17,7 @@ fontawesome.library.add(freeSolid)
 
 sync(store, router)
 Vue.use(Vuex)
+Vue.use(Vuetify)
 Vue.use(VueScrollTo)
 Vue.use(VueProgressBar, {
   color: 'rgb(143, 255, 199)',
