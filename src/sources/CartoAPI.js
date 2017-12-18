@@ -7,6 +7,7 @@ import {
   selectPrograms,
   selectProgram,
   selectProgramsByFacilityID,
+  selectDaysByProgram,
   selectFacilities,
   selectFacility,
   selectTaxonomy,
@@ -101,6 +102,12 @@ class CartoAPI {
   getProgramByID (programID) {
     return this.runQuery(
       selectProgram(programID)
+    )
+  }
+
+  getProgramDays (programID) {
+    return this.runQuery(
+      selectDaysByProgram(programID)
     )
   }
 

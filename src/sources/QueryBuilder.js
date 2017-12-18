@@ -57,10 +57,18 @@ export function selectProgram (programID) {
                         .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                         .field(`${tables.facilities}.id`, 'location_id')
                         .where(`${tables.programs}.program_id = ${programID}::text`)
-                        .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+                        .join(tables.programSchedules, null, `${tables.programSchedules}.program_id::text = ${tables.programs}.program_id`)
                         .field('days')
                         // @TODO: join on days tables
   return programQuery
+}
+
+export function selectDaysByProgram (programID) {
+  return postgresSQL
+    .select()
+    .from(`(SELECT program_id, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
+    .join(tables.days, 'b', 'b.id = a._daysID')
+    .where(`program_id = ${programID}`)
 }
 
 export function selectProgramsByFacilityID (facilityID) {

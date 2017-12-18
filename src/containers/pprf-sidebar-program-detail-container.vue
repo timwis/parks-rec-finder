@@ -45,10 +45,12 @@
             heading="Program Schedule"
             icon="calendar-alt"
           >
-            <p><b>XXXXdays and XXXXdays</b></p>
+            <p>
+              <b v-for="(value, key, index) in days">{{value}} </b>
+            </p>
             <p>Start Date: {{program.start_date}}</p>
             <p>End Date: {{program.end_date}}</p>
-            <p>Frequency: XXXXXXX</p>
+            <!-- <p>Frequency: XXXXXXX</p> -->
 
           </pprf-detail-content-section>
 
@@ -105,7 +107,9 @@ export default {
     api.getProgramByID(to.params.program_id)
         .then(results => {
           next(vm => {
-            vm.$store.dispatch('updateEntities', { program: results.data.rows })
+            results[0].data.rows[0].days = results[1].data.rows
+            console.log(results[0].data.rows)
+            vm.$store.dispatch('updateEntities', { program: results[0].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'program' })
           })
         })
@@ -114,7 +118,23 @@ export default {
   computed: {
     ...mapState({
       program: state => state.entities.program[0]
-    })
+    }),
+    days () {
+      let _days = this.program.days.map((day, idx, array) => {
+        let _day = day.days_name + 's'
+
+        if (array.length > 2 & idx < array.length - 1) {
+          _day = _day + ' ,'
+        }
+        return _day
+      })
+
+      if (this.program.days.length > 1) {
+        _days.splice(_days.length - 1, 0, ' and ')
+      }
+
+      return _days
+    }
   }
 }
 </script>
