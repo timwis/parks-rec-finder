@@ -216,7 +216,7 @@ export default {
         let fields = _.pick(val, searchFieldsFromRoute)
         let filters = _.pick(val, searchFiltersFromRoute)
         this.$store.dispatch('updateSearchInput', {fields, filters})
-        this.$store.dispatch('submitSearch', {fields, filters})
+        this.$store.dispatch('submitSearch')
       }
     }
   }
