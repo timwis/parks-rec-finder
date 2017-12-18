@@ -21,10 +21,13 @@
 
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 export default {
 
   name: 'PPRF-Location-Card',
-  components: {FontAwesomeIcon},
+  components: {
+    FontAwesomeIcon
+  },
   props: {
     name: {
       type: String

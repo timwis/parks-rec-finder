@@ -48,11 +48,14 @@
             <p>{{facility.facility_description}}</p>
           </pprf-detail-content-section>
 
+
           <section
             v-if="facilityPrograms.length"
             class="program__content-section"
           >
-            <h4 class="program__content-section__heading">Programs</h4>
+          <pprf-collapsable-content
+            :title="facilityPrograms.length+ ' Programs offered here'"
+           >
             <ul>
               <li v-for="program in facilityPrograms">
                 <router-link :to="'/program/'+program.program_id">
@@ -60,6 +63,7 @@
                 </router-link>
               </li>
             </ul>
+          </pprf-collapsable-content >
           </section>
 
         </div>
@@ -72,6 +76,7 @@ import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import pprfDetailContentSection from '@/components/pprf-detail-content-section'
+import pprfCollapsableContent from '@/components/pprf-collapsable-content'
 import api from '@/sources/api'
 
 export default {
@@ -82,7 +87,8 @@ export default {
   components: {
     pprfSidebar,
     FontAwesomeIcon,
-    pprfDetailContentSection
+    pprfDetailContentSection,
+    pprfCollapsableContent
   },
 
   beforeRouteEnter (to, from, next) {
