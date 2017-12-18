@@ -1,7 +1,9 @@
 <template>
   <router-link
     :to="slugifyURL(name)"
-    class="pprf-category-card">
+    class="pprf-category-card"
+    :style="'background-image: url('+photoURL+')'"
+  >
       <h4 class="pprf-category-card__name text-nopad">{{name}}</h4>
       <pprf-results-count-badge
         type="prgoram"
@@ -32,6 +34,10 @@ export default {
     description: {
       type: String,
       default: null
+    },
+    photoURL: {
+      type: String,
+      default: null
     }
   },
   methods: {
@@ -56,6 +62,8 @@ export default {
   margin-bottom: 20px;
 
   background: color(sidewalk);
+  background-size: 100%;
+
   border-radius: $border-radius;
   overflow: hidden;
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="card card--program">
+  <div :class="['card', 'card--program', {'card--program--selected': selected}]">
     <div class="card__info">
 
       <h3 v-if="name" class="card__info-name text-nopad">
@@ -55,7 +55,15 @@ export default {
     },
     location: {
       type: Object
+    },
+    selected: {
+      type: Boolean,
+      default: false
     }
+  },
+  mounted () {
+    // bind to prop so we can mutate it
+    this.isActive = this.selected
   }
 }
 </script>

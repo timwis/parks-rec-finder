@@ -1,5 +1,8 @@
 import {cartoAPI} from './CartoAPI'
 import {aisAPI} from './AISAPI'
+/* eslint-disable no-unused-vars */
+import {flickrAPI} from './FlickrAPI'
+import _ from 'underscore'
 
 /**
  * Given freetext and coordinate serach values
@@ -36,9 +39,25 @@ class API {
     }
   }
 
+  _mapFlickPhotosToResults (resultsSet, photoProp) {
+    let categories = resultsSet.data.rows
+    // @TODO switch to use actual values
+    let photoRequests = categories.map(category => flickrAPI.getSizes('37737634971'))
+    return Promise.all(photoRequests).then(photoResults => {
+      // @TODO map to use more than one size for responsive images on the front-end
+      let photos = photoResults.map(resutlsData => resutlsData.data.sizes.size[5].source)
+      categories.forEach((category, idx) => { category[photoProp] = photos[idx] })
+      return categories
+    })
+  }
+
   getTaxonomyTerms ({taxonomy}) {
-    let programsTaxonomyTerms = cartoAPI.getEntityTaxonomy({entityType: 'programs', taxonomy})
-    let locationsTaxonomyTerms = cartoAPI.getEntityTaxonomy({entityType: 'locations', taxonomy})
+    let programsTaxonomyTerms = cartoAPI
+                                  .getEntityTaxonomy({entityType: 'programs', taxonomy})
+                                  .then(categoryResults => this._mapFlickPhotosToResults(categoryResults, 'activity_category_photo'))
+    let locationsTaxonomyTerms = cartoAPI
+                                  .getEntityTaxonomy({entityType: 'locations', taxonomy})
+                                  .then(categoryResults => this._mapFlickPhotosToResults(categoryResults, 'location_type_photo'))
     return Promise.all([programsTaxonomyTerms, locationsTaxonomyTerms])
   }
 

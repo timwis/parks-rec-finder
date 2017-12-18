@@ -38,6 +38,7 @@
                   :count="term.count"
                   :name="term.activity_category_name"
                   :description="term.activity_category_description"
+                  :photoURL="term.activity_category_photo"
                 >
                 </pprf-category-card>
               </li>
@@ -56,6 +57,7 @@
                   :count="term.count"
                   :name="term.location_type_name"
                   :description="term.location_type_description"
+                  :photoURL="term.location_type_photo"
                 >
                 </pprf-category-card>
               </li>
@@ -95,8 +97,8 @@ export default {
       next(vm => {
         vm.$store.dispatch('updateCategories',
           {
-            program: results[0].data.rows,
-            facility: results[1].data.rows
+            program: results[0],
+            facility: results[1]
           }
         )
       })
