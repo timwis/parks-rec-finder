@@ -22,10 +22,12 @@ const state = {
       address: '',
       zip: 0
     },
+    // fitlers must start as null
     filters: {
       fee: null,
       gender: null,
-      ageRange: {low: null, high: null}
+      ageRange: {low: null, high: null},
+      days: null
     }
   }
 }

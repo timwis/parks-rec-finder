@@ -179,8 +179,8 @@ fieldset{
   border:none;
   font-family: $font-montserrat;
   color: color(dark-ben-franklin);
-  margin: 0;
-  padding: 1;
+  margin: 0 0 10px 0;
+  padding: 0px 20px;
   line-height: 1;
 }
 
@@ -196,8 +196,10 @@ fieldset{
   margin:0;
 }
 
-.field__inline{
+.field--inline{
+  width: 48%;
   display: inline-block;
+  padding-bottom: 10px;
   .input-group__input{
     display: inline-block;
     float:left;
@@ -216,18 +218,8 @@ fieldset{
   }
 }
 
-.field__inline + .field__inline{
-  width: 50%;
-  display: inline-block;
-  margin-left: 10px;
-}
-
-.field-label__inline{
-  display: inline-block;
-  @include rem(font-size, 1.2)
-}
 
 legend{
   display: block;
-  padding:.5rem 0;
+  padding:1.5rem 0;
 }
