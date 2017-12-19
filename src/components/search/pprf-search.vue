@@ -42,13 +42,15 @@ import _ from 'underscore'
 
 /**
  * SEARCH BAR COMPONENT
- * Form and inputs to search by freetext and/or address or zipcode
+ *
+ * Contains input fields for performing freetext, address, and zipcode searches.
+ *
+ * Connects to state to manage the state.search object and dispatch search events
  *
  * @since 0.0.0
  */
 export default {
   name: 'PPRF-Search',
-  props: ['prefillValues'],
   components: {
     PhilaTextField,
     PhilaButton,
@@ -69,7 +71,12 @@ export default {
 
     }
   },
-
+  /**
+   * manages searching from deeplinks and updating state with query param values
+   *
+   * @public
+   * @since 0.0.0
+   */
   mounted () {
     let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
 
@@ -115,14 +122,13 @@ export default {
      */
     onFreetextInput (freetextVal) {
       this.search.fields.freetext = freetextVal
-      // this.$store.dispatch('updateSearchInput', this.search)
     },
     /**
      * Validates the address field input as either
      * an address or a zipcode and sets the appropriate
      * search field state accordingly
      * @param  {sring | number} addressVal address address or zipcode value
-     * @return {viod}
+     * @return {void}
      *
      * @public
      * @since 0.0.0
@@ -135,7 +141,6 @@ export default {
         this.search.fields.address = addressVal !== '' ? addressVal : null
         this.search.fields.zip = null
       }
-      // this.$store.dispatch('updateSearchInput', this.search)
     },
 
     /**
@@ -159,8 +164,15 @@ export default {
         }
       }
       this.updateSearchRouteParams(this.search.fields)
+      /**
+       * Submit event w/ new search fields values
+       *
+       * @event submit
+       * @type {object} search fields
+       *
+       * @since 0.0.0
+       */
       this.$emit('submit', newSearch.fields)
-      // this.$store.dispatch('submitSearch', newSearch)
     },
 
     /**
@@ -174,8 +186,9 @@ export default {
       return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
     },
     /**
-      * if url query params are give update the input
+      * if url query params are given update the input
       * fields to reflect those values
+      *
       * NOTE: does not update local state
       * @param  {object} fieldValues query parameter object
       * @return {void}
@@ -191,11 +204,18 @@ export default {
         this.isDisabled = false
         this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
       }
+      /**
+       * Vuex event to update search values in state
+       *
+       * @event dispatch - updateSearchInput
+       * @type {object}
+       * with query param values
+       */
       this.$store.dispatch('updateSearchInput', fieldValues)
     },
 
     /**
-     * give a route params oject to match that matches the local state search fields
+     * given a route's query params object to match that matches the local state search fields
      * udpate the search route url to include those params in order to allow for deeplinking
      *
      * @param  {Object} queryParams query params  bject matching the local state serch fields object
@@ -212,8 +232,18 @@ export default {
       this.$router.push({path: '/search', query})
     }
   },
+
   watch: {
-    // update search on route change
+    /**
+     * On route query param change update the search state
+     * if in the Search route update the search input and re-submit search.
+     * This is helpful when navigating backwards through browser history with the back buton
+     *
+     * @param  {object} val new route query parameters
+     * @return {void}
+     *
+     * @since 0.0.0
+     */
     '$route.query': function (val) {
       let searchFieldsFromRoute = _.intersection(Object.keys(val), Object.keys(this.$store.state.search.fields))
       let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
