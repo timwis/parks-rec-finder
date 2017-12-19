@@ -40,11 +40,10 @@ class API {
 
   _mapFlickPhotosToResults (resultsSet, photoProp) {
     let categories = resultsSet.data.rows
-    // @TODO switch to use actual values
-    let photoRequests = categories.map(category => flickrAPI.getSizes('37737634971'))
+    let photoRequests = categories.map(category => flickrAPI.getSizes(category[photoProp]))
     return Promise.all(photoRequests).then(photoResults => {
       // @TODO map to use more than one size for responsive images on the front-end
-      let photos = photoResults.map(resutlsData => resutlsData.data.sizes.size[5].source)
+      let photos = photoResults.map(resutlsData => resutlsData.data.sizes ? resutlsData.data.sizes.size[5].source : '')
       categories.forEach((category, idx) => { category[photoProp] = photos[idx] })
       return categories
     })
