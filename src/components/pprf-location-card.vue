@@ -1,7 +1,6 @@
 <template>
   <div :class="['card', 'card--location', {'card--nested': nested}]">
       <font-awesome-icon
-        v-if="!nested"
         icon="map-marker-alt"
         size="3x"
         class="card__icon card--location__icon"

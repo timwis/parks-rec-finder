@@ -48,6 +48,7 @@ export default {
 
 .pprf-collapse-content--header{
   background: lighten(color(light-ben-franklin), 10%);
+  padding-left: 10px;
   h4{display:inline; marign-bottom:0; padding-bottom:0;}
   .svg-inline--fa{
     margin:2% 2% 0 2%;

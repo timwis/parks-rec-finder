@@ -2,11 +2,9 @@
   <div :class="['card', 'card--program', {'card--program--selected': selected, 'card--nested-parent': location}]">
     <div class="card__info">
 
-
         <router-link class="card__info-name text-nopad" v-if="name"  :to="'/program/'+programID">
           <h3 class="text-nopad">{{name}}</h3>
         </router-link>
-
 
       <div class="card__info-meta">
         <small><p v-if="ages">

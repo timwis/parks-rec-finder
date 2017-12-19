@@ -132,7 +132,7 @@ export default {
         this.search.fields.zip = parseInt(addressVal)
         this.search.fields.address = null
       } else {
-        this.search.fields.address = addressVal
+        this.search.fields.address = addressVal !== '' ? addressVal : null
         this.search.fields.zip = null
       }
       // this.$store.dispatch('updateSearchInput', this.search)
@@ -237,6 +237,7 @@ export default {
   max-width: 998px;
   margin: auto;
   border-radius: 2px;
+  background: color(ben-franklin-blue);
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
   transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
   overflow: hidden;

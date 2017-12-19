@@ -56,7 +56,7 @@ export default {
     padding:0;
     .pprf-back-btn{margin-left: 15px;}
     .pprf-sidebar__main{
-      padding: 0 20px;
+      padding: 20px;
     }
   }
     .pprf-sidebar__inner{
@@ -64,8 +64,7 @@ export default {
         height:100%;
         display:flex;
         flex-flow:column;
-        //overflow: auto;
-
+        overflow: auto;
     }
         .pprf-sidebar__header{}
         .pprf-sidebar__title{

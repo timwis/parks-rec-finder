@@ -57,7 +57,10 @@
             :title="facilityPrograms.length+ ' Programs offered here'"
            >
             <ul>
-              <li v-for="program in facilityPrograms">
+              <li
+                v-for="program in facilityPrograms"
+                :key="program.id"
+              >
                 <router-link :to="'/program/'+program.program_id">
                   {{program.program_name}}
                 </router-link>
@@ -142,4 +145,6 @@ export default {
   justify-content: center;
   small {margin-right: 5%;}
 }
+
+
 </style>

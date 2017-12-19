@@ -59,9 +59,7 @@ export function selectProgram (programID) {
                         .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                         .field(`${tables.facilities}.id`, 'location_id')
                         .where(`${tables.programs}.program_id = ${programID}::text`)
-                        .join(tables.programSchedules, null, `${tables.programSchedules}.program_id::text = ${tables.programs}.program_id`)
-                        .field('days')
-                        // @TODO: join on days tables
+
   return programQuery
 }
 

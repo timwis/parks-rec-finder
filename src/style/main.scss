@@ -134,16 +134,16 @@ a{
     .card__info-meta__label{display: none;}
   }
   .card.card--nested{
-    display: block;
+    display: flex;
     border-bottom:none !important;
     padding:0;
     margin-left:15px;
-    .card__icon{display:none;}
+    .card__icon{height: 15px;}
     .card__info{display: block;}
     .card__info-name{
       @include rem(font-size, 1.2);
       @include rem(line-height, 1.5);
-      padding-bottom: 10px;
+      // padding-bottom: 10px;
       flex-grow: none;
     }
     .card__info-meta *{

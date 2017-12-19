@@ -11,7 +11,7 @@
             <div class="entity-detail__header-meta">
               <small><p>Ages {{program.age_low}}-{{program.age_high}}</p></small>
               <small><p>Gender: {{program.gender}}</p></small>
-              <small><p>Cost: ${{program.fee}}</p></small>
+              <small><p>Cost: {{program.fee != "Free" ? '$'+program.fee : program.fee }}</p></small>
             </div>
             <p class="entity-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
         </div>
@@ -45,11 +45,11 @@
             heading="Program Schedule"
             icon="calendar-alt"
           >
-            <p>
+            <p class="text-nopad">
               <b v-for="(value, key, index) in days">{{value}} </b>
             </p>
-            <p>Start Date: {{program.start_date}}</p>
-            <p>End Date: {{program.end_date}}</p>
+            <p class="text-nopad" >Start Date: {{program.start_date}}</p>
+            <p class="text-nopad" >End Date: {{program.end_date}}</p>
             <!-- <p>Frequency: XXXXXXX</p> -->
 
           </pprf-detail-content-section>
@@ -143,6 +143,7 @@ export default {
 .entity-detail__header--program{
   background: color(ben-franklin-blue);
 }
+.program--content{padding-top: 20px;}
 .entity-detail__header-meta{color: $white;}
 .pprf-sidebar__title--detail{
   color: $white;

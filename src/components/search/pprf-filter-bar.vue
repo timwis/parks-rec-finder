@@ -12,7 +12,16 @@
         <h5 class="screen-reader-text">Applied Search Filters:</h5>
         <ul class="pprf-filter-bar-tags">
          <li v-for="(value, key) in tags" >
-            <button class="pprf-filter-bar-filter-tag">{{value}} <font-awesome-icon icon="times" size="xs" class="pprf-filter-bar-filter-tag__remove" @click="removeFilter(key)" />
+            <button
+              class="pprf-filter-bar-filter-tag"
+              @click="removeFilter(key)"
+            >
+              {{value}}
+              <font-awesome-icon
+                icon="times"
+                size="xs"
+                class="pprf-filter-bar-filter-tag__remove"
+              />
             </button>
           </li>
         </ul>
@@ -198,7 +207,6 @@ export default {
     }
 
     api.getDays().then(results => {
-      debugger
       this.days = results.data.rows
     })
   },
@@ -412,17 +420,26 @@ export default {
   border: none;
   border-radius: 10px;
   padding-top: 2px;
-  background: lighten(color(sidewalk), 5%);
+  align-items: center;
+  font-weight: 700;
+  //background: lighten(color(sidewalk), 5%);
+  color: color(ben-franklin-blue);
+  border: 1px solid color(ben-franklin-blue);
   margin:0px 5px 5px 5px;
   @include rem(font-size, 1.25);
+  &:hover{
+    cursor: hand;
+    cursor: pointer;
+    .svg-inline--fa.pprf-filter-bar-filter-tag__remove{opacity: 1;}
+  }
 }
 
   .svg-inline--fa.pprf-filter-bar-filter-tag__remove{
     margin:3px 0px 3px 8px;
     opacity: 0.5;
     transition: all 0.5s ease;
+    color: color(love-park-red);
     &:hover{
-      opacity: 1;
       cursor: pointer;
       cursor: hand;
     }
