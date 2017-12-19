@@ -67,6 +67,12 @@ class CartoAPI {
     return this.http.get(`sql?q=${encodeURIComponent(sqlString)}`)
   }
 
+  /**
+   * get all results from the ppr_days table
+   * @return {object} Promise
+   *
+   * @since 0.0.0
+   */
   getDays () {
     return this.runQuery(selectDays())
   }
@@ -104,18 +110,39 @@ class CartoAPI {
     return this.runQuery(this.programs)
   }
 
+  /**
+   * get a program entity by id
+   * @param  {string} programID program.program_id
+   *
+   * @return {object}           Promise
+   *
+   * @since 0.0.0
+   */
   getProgramByID (programID) {
     return this.runQuery(
       selectProgram(programID)
     )
   }
 
+  /**
+   * given a program_id get all associated
+   * schedule days for that program
+   * @param  {string} programID program.program_id
+   * @return {object}           Promise
+   */
   getProgramDays (programID) {
     return this.runQuery(
       selectDaysByProgram(programID)
     )
   }
-
+  /**
+   * Given a `facility_id` get all programs associated
+   * with that faciity
+   * @param  {string} facilityID facility.facility_id
+   * @return {object}            Promise
+   *
+   * @since 0.0.0
+   */
   getProgramsByFacilityID (facilityID) {
     return this.runQuery(selectProgramsByFacilityID(facilityID))
   }
@@ -125,7 +152,7 @@ class CartoAPI {
    * return a SQL query string to serach the PPR_Facilites and PPR_Assets tables
    * @param  {object} serachParams - UI serach field key values paris
    * @param  {string} coords - comma separated latitude and longitude  of address search field value
-   * @return {string}              SQL query
+   * @return {object}              Promise
    *
    * @since 0.0.0
    */
@@ -148,6 +175,13 @@ class CartoAPI {
     return this.runQuery(this.facilities)
   }
 
+  /**
+   * Get facility by facility_id
+   * @param  {string} facilityID facility_id, not the id column
+   * @return {object}            Promise
+   *
+   * @since 0.0.0
+   */
   getFacilityByID (facilityID) {
     return this.runQuery(
       selectFacility(facilityID)

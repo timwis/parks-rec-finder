@@ -5,21 +5,11 @@ import {flickrAPI} from './FlickrAPI'
 import _ from 'underscore'
 
 /**
- * Given freetext and coordinate serach values
- * query the Carto API to return a list of
- * PPR Facilites sorted by relative distance to coordinates
- * @param  {object} searchParams - UI search fields key value pairs
- * @param  {string} coords  - comma separated latitude and longitude
- * @return {object}              Promise resolving with query results
+ * Primary application api that interacts with the front-end.
+ * This is used as a convenience aggregate api to pull from mul
  *
  * @since 0.0.0
  */
-const searchCarto = (searchParams, coords) => {
-  let facilitiesSearchQuery = cartoAPI.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
-  let programsSearchQuery = cartoAPI.getPrograms(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
-  return Promise.all([facilitiesSearchQuery, programsSearchQuery])
-}
-
 class API {
   /**
  * Address search implemented using the AIS and Carto APIs
@@ -32,12 +22,39 @@ class API {
     let {fields} = serachParams
     if (fields && (fields.address && fields.address !== null && fields.address !== '')) {
       return aisAPI.getCoordsForAddress(fields.address)
-                   .then(searchCarto.bind({}, serachParams))
+                   .then(this._searchCarto.bind({}, serachParams))
     } else {
-      return searchCarto(serachParams, null)
+      return this._searchCarto(serachParams, null)
     }
   }
 
+/**
+ * Given freetext and coordinate serach values
+ * query the Carto DB to return a list of
+ * PPR Facilites and Program entities
+ * @param  {object} searchParams - UI search fields key value pairs
+ * @param  {string} coords  - comma separated latitude and longitude
+ *
+ * @return {object}              Promise resolving with query results
+ *
+ * @since 0.0.0
+ */
+  _searchCarto (searchParams, coords) {
+    let facilitiesSearchQuery = cartoAPI.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
+    let programsSearchQuery = cartoAPI.getPrograms(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
+    return Promise.all([facilitiesSearchQuery, programsSearchQuery])
+  }
+
+  /**
+   * Given the reusltsSet and a flickr photo id property
+   * return a new results set with the phtotos populated from the flickr api
+   * @param  {array} resultsSet ppr category objects array from the Carto API
+   * @param  {string} photoProp  property on category object to populate photo url to
+   *
+   * @return {object}  Promise, resolving when phpoto requests are returned
+   *
+   * @since 0.0.0
+   */
   _mapFlickPhotosToResults (resultsSet, photoProp) {
     let categories = resultsSet.data.rows
     let photoRequests = categories.map(category => flickrAPI.getSizes(category[photoProp]))
@@ -49,10 +66,25 @@ class API {
     })
   }
 
+  /**
+   * fetch photos from the ppr_days table
+   * @return {object} Promise resolving with resutls from ppr_days query
+   *
+   * @since 0.0.0
+   */
   getDays () {
     return cartoAPI.getDays()
   }
 
+  /**
+   * Given a taxonomy name get a list of of programs and locations
+   * taxonomy terms populated with flickr photos
+   * @param  {string} options.taxonomy name of taxonomy
+   *
+   * @return {object}    Promise, resolving with data from programs and locations category terms
+   *
+   * @since 0.0.0
+   */
   getTaxonomyTerms ({taxonomy}) {
     let programsTaxonomyTerms = cartoAPI
                                   .getEntityTaxonomy({entityType: 'programs', taxonomy})
@@ -63,16 +95,47 @@ class API {
     return Promise.all([programsTaxonomyTerms, locationsTaxonomyTerms])
   }
 
+  /**
+   * Given an entity type, taxonomy term, and it's associated set of filters
+   * return a list of all the entities with that taxonomy term
+   * @param  {object} entity  {
+   *                          entityType: {string},
+   *                          entityTerm: {string} taxonomy term
+   *                          }
+   * @param  {object} filters key value set of filters
+   *
+   * @return {object}         Promise, resolves with array of entities
+   *
+   * @since 0.0.0
+   */
   getTaxonomyTermEntities (entity, filters) {
     return cartoAPI.getTaxonomyTermEntities(entity, filters)
   }
 
+  /**
+   * Given a program entity id return the program entity
+   * and it's associated program schedule
+   * @param  {string} programID program entity_id
+   *
+   * @return {object}           Promise, resolves with program entity list and assoicated program schedule data
+   *
+   * @since 0.0.0
+   */
   getProgramByID (programID) {
     let programQuery = cartoAPI.getProgramByID(programID)
     let daysQuery = cartoAPI.getProgramDays(programID)
     return Promise.all([programQuery, daysQuery])
   }
 
+  /**
+   * Given a facility id get a facility entity
+   * and all the programs at that facility
+   * @param  {string} facilityID faciity entity id
+   *
+   * @return {object}            Promise
+   *
+   * @since 0.0.0
+   */
   getFacilityByID (facilityID) {
     let facilityQuery = cartoAPI.getFacilityByID(facilityID)
     let facilityProgramsQuery = cartoAPI.getProgramsByFacilityID(facilityID)
