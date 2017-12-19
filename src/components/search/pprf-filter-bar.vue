@@ -1,5 +1,5 @@
 <template>
-  <section class="pprf-filter-bar">
+  <section :class="['pprf-filter-bar', {'pprf-filter-bar--open': open}]">
     <header
       class="pprf-filter-bar__header"
     >
@@ -107,11 +107,11 @@
 
       <footer class="pprf-filter-bar-footer">
 
-        <phila-button @click.prevent="clearFilters">
+        <phila-button class="pprf-filters--cancel" @click.prevent="clearFilters">
           Cancel
         </phila-button>
 
-        <phila-button>
+        <phila-button class="pprf-filters--apply">
           Apply Filters
         </phila-button>
 
@@ -139,7 +139,7 @@ export default {
 
   data () {
     return {
-      open: true,
+      open: false,
       days: [],
       ageGroups: [
         {
@@ -451,10 +451,14 @@ export default {
   .button{
     padding:10px;
     margin: 0 10px;
+    font-weight: 700;
+    font-family: $font-montserrat;
+    color: $white;
+  }
+  .pprf-filters--cancel{
+    background: $black;
   }
 }
 
-.pprf-filter-bar-form--fieldset{
 
-}
 </style>

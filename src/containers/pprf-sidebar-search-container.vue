@@ -1,5 +1,7 @@
 <template>
-  <pprf-sidebar>
+  <pprf-sidebar
+    class="pprf-sidebar--nopad pprf-sidebar--search"
+  >
 
       <div slot="sidebar-header">
           <h2 class="pprf-sidebar__title text-nopad">Search results</h2>
@@ -107,5 +109,22 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+.pprf-sidebar.pprf-sidebar--nopad.pprf-sidebar--search{
+  padding:0 ;
+    .pprf-back-btn{margin-left:0;}
+    .pprf-sidebar__header,
+    .pprf-tabs__nav,
+    .pprf-tabs__panels{
+      padding: 0 20px !important;
+    }
+    .pprf-sidebar__main{
+      padding:0 !important;
+    }
+    .pprf-filter-bar{margin-top: 10px;}
+    .pprf-filter-bar--open{
+      margin-top: 50px !important;
+    }
+  }
+
 </style>
