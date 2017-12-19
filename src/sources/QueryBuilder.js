@@ -13,7 +13,7 @@ const METERS_TO_MILES_RATIO = 0.000621371
  * joined on ppr_facilities and ppr_assets tables
  * to include the facility and lat, lng info
  *
- * @return {object} squel.js query builder object
+ * @return {object} programs query populated with facility, schedule, and assets data
  *
  * @since 0.0.0
  */
@@ -35,6 +35,15 @@ export function selectPrograms () {
   return joinPPRAssetsWith(programsQuery)
 }
 
+/**
+ * Add the program category to the results set by
+ * joining facility, activity type, and activity categories columns to the given query
+ * @param  {object} programsQueryObj squel.js query builder object
+ *
+ * @return {object}                  query builder object with joined tables
+ *
+ * @since 0.0.0
+ */
 export function joinProgramsOnCategories (programsQueryObj) {
   programsQueryObj
     .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
@@ -47,7 +56,14 @@ export function joinProgramsOnCategories (programsQueryObj) {
 
   return programsQueryObj
 }
-
+/**
+ * get a single program by program_id
+ * @param  {string} programID program_id
+ *
+ * @return {object}           program query builder object
+ *
+ * @since 0.0.0
+ */
 export function selectProgram (programID) {
   let programQuery = selectPrograms()
                         .field('address')
@@ -63,12 +79,26 @@ export function selectProgram (programID) {
   return programQuery
 }
 
+/**
+ * get all results from the ppr_days table
+ * @return {object} query builder object
+ *
+ * @since 0.0.0
+ */
 export function selectDays () {
   return postgresSQL
           .select()
           .from(tables.days)
 }
-
+/**
+ * given a program_id get all schedule days for that program
+ * from the ppr_days table
+ * @param  {string} programID ppr_programs.program_id
+ *
+ * @return {object}           query builder object
+ *
+ * @since 0.0.0
+ */
 export function selectDaysByProgram (programID) {
   return postgresSQL
     .select()
@@ -77,6 +107,15 @@ export function selectDaysByProgram (programID) {
     .where(`program_id = ${programID}`)
 }
 
+/**
+ * given a facility_id select all programs associated with that
+ * facility
+ * @param  {string} facilityID facility_id property
+ *
+ * @return {object}            query builder object
+ *
+ * @since 0.0.0
+ */
 export function selectProgramsByFacilityID (facilityID) {
   return selectPrograms().where(`ppr_programs.facility->>0 = '${facilityID}'`)
 }
@@ -99,10 +138,16 @@ export function selectFacilities () {
   return joinPPRAssetsWith(locationsQuery)
 }
 
+/**
+ * given a facility id get a facility
+ * @param  {string} facilityID facility.id
+ * @return {object}            query builder object
+ *
+ * @since 0.0.0
+ */
 export function selectFacility (facilityID) {
   let facilityQuery = selectFacilities()
                           .field('address')
-                          // @TOOO: return programs column as an array of json objects [{name: String, id: String}]
                           .field(`ARRAY(SELECT ${tables.programs}.program_name FROM ${tables.programs} WHERE ${tables.programs}.facility->>0 = ${tables.facilities}.id)`,
                             'programs')
                           .where(`${tables.facilities}.id = '${facilityID}'`)
