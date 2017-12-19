@@ -11,9 +11,9 @@
     "unit:report": "browser-sync start --config config/browser-sync-jest.config.js",
     "test": "concurrently --kill-others \"npm run unit:report\" \"npm run jest-test\" ",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
-    "styleguide": "vue-styleguidist server",
+    "styleguide": "cross-env AIS_API={} CARTO_API={} FLICKR_API={} vue-styleguidist server",
     "styleguide:build": "vue-styleguidist build",
-    "jest-test": "cross-env AIS_API={} CARTO_API={} jest --watchAll --notify"
+    "jest-test": "cross-env AIS_API={} CARTO_API={} FLICKR_API={} jest --watchAll --notify"
   },
   "dependencies": {
     "jest-html-reporter": "^0.5.3",
