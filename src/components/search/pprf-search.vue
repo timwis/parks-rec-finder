@@ -79,6 +79,13 @@ export default {
       this.$store.dispatch('updateSearchInput', {fields})
     }
 
+    let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.$store.state.search.filters))
+
+    if (searchFiltersFromRoute.length > 0) {
+      let filters = _.pick(this.$store.state.route.query, searchFiltersFromRoute)
+      this.$store.dispatch('updateSearchInput', {filters})
+    }
+
     // search if deep linked to Seach page
     if (this.$store.state.route.from && !this.$store.state.route.from.name) {
       this.$store.dispatch('submitSearch')
@@ -214,8 +221,8 @@ export default {
 
       if ([...searchFieldsFromRoute, ...searchFiltersFromRoute].length && this.$store.state.route.name === 'Search') {
         let fields = _.pick(val, searchFieldsFromRoute)
-        let filters = _.pick(val, searchFiltersFromRoute)
-        this.$store.dispatch('updateSearchInput', {fields, filters})
+
+        this.$store.dispatch('updateSearchInput', {fields})
         this.$store.dispatch('submitSearch')
       }
     }

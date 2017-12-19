@@ -1,5 +1,5 @@
 <template>
-  <section class="pprf-filter-bar">
+  <section :class="['pprf-filter-bar', {'pprf-filter-bar--open': open}]">
     <header
       class="pprf-filter-bar__header"
     >
@@ -28,30 +28,23 @@
 
         <legend>Fee</legend>
 
-        <div class="field field__inline field-fee--free">
-          <input
-            id="filter-fee__free"
-            type="radio"
-            name="fee"
-            v-model="filters.fee"
+        <v-radio-group
+          v-model="filters.fee"
+          :mandatory="false"
+        >
+          <v-radio
+            class="field field--inline field-fee--free"
+            label="Free"
             value="Free"
             @change="onInput"
-          >
-          <label class="field-label field-label__inline" for="fee">Free</label>
-        </div>
-
-        <div class="field field__inline field-fee--fee">
-          <input
-            id="filter-fee__fee"
-            type="radio"
-            name="fee"
-            v-model="filters.fee"
+          ></v-radio>
+          <v-radio
+            class="field field--inline field-fee--fee"
+            label="Fee"
             value="Fee"
             @change="onInput"
-          >
-          <label class="field-label field-label__inline" for="fee">Fee</label>
-        </div>
-
+          ></v-radio>
+        </v-radio-group>
       </fieldset>
 
 
@@ -59,20 +52,17 @@
 
         <legend>Age Range</legend>
 
-        <div
-          class="field field-age"
-          v-for="ageGroup in ageGroups"
-        >
-          <input
-            id="age"
-            type="checkbox"
-            :name="'age__'+ageGroup.name.split(' ')[0].toLowerCase()"
+          <v-checkbox
+            v-for="(ageGroup, idx) in ageGroups"
+            class="field field--inline"
+            :label="ageGroup.name"
+            :key="ageGroup.name"
             :value="ageGroup.range"
+            v-model="ageArr"
             ref="filter-age"
-            @change="updateAgeRange($event.target.value)"
+            light
           >
-          <label class="field-label field-label__inline" :name="'age__'+ageGroup.name.split(' ')[0].toLowerCase()">{{ageGroup.name}}</label>
-        </div>
+          </v-checkbox>
 
       </fieldset>
 
@@ -80,32 +70,48 @@
       <fieldset class="pprf-filter-bar-form--fieldset">
 
         <legend>Gender</legend>
-
-        <div
-          class="field"
-          v-for="gender in genders"
+         <v-radio-group
+          v-model="filters.gender"
+          :mandatory="false"
         >
-          <input
-            :id="'gender__'+gender.name.toLowerCase()"
-            type="radio"
-            :name="'filter-gender--'+gender.name.toLowerCase()"
-            v-model="filters.gender"
+          <v-radio
+            class="field field--inline"
+            v-for="gender in genders"
+            :key="gender.name"
+            :label="gender.name"
             :value="gender.value"
             @change="onInput"
+          ></v-radio>
+
+        </v-radio-group>
+      </fieldset>
+
+      <fieldset v-if="days.length" class="pprf-filter-bar-form--fieldset">
+        <legend>Time of week</legend>
+        <v-checkbox
+            v-for="day in days"
+            class="field field--inline"
+            :label="day.days_name"
+            :key="day.id"
+            :value="day.id"
+            v-model="filters.days"
+            ref="filter-day"
+            @change="onInput"
+            light
           >
-          <label class="field-label field-label__inline" :for="'gender__'+gender.name.toLowerCase()">{{gender.name}}</label>
-        </div>
+          </v-checkbox>
 
       </fieldset>
 
 
+
       <footer class="pprf-filter-bar-footer">
 
-        <phila-button @click.prevent="clearFilters">
+        <phila-button class="pprf-filters--cancel" @click.prevent="clearFilters">
           Cancel
         </phila-button>
 
-        <phila-button>
+        <phila-button class="pprf-filters--apply">
           Apply Filters
         </phila-button>
 
@@ -118,6 +124,7 @@
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import _ from 'underscore'
+import api from '@/sources/api'
 
 /**
  * Filter Bar
@@ -133,7 +140,7 @@ export default {
   data () {
     return {
       open: false,
-
+      days: [],
       ageGroups: [
         {
           name: 'Tot 2-5 (or younger)',
@@ -172,11 +179,12 @@ export default {
         }
       ],
 
-      ages: [],
+      ageArr: [],
 
       filters: {
         fee: null,
-        gender: null
+        gender: null,
+        days: []
       }
     }
   },
@@ -188,6 +196,11 @@ export default {
     if (searchFiltersFromRoute.length > 0) {
       this._updateFiltersFromRoute()
     }
+
+    api.getDays().then(results => {
+      debugger
+      this.days = results.data.rows
+    })
   },
 
   computed: {
@@ -202,8 +215,22 @@ export default {
       }
     },
 
+    ages: {
+      set: function (newVal) {
+        this.ageArr.push(newVal)
+      },
+      get: function () {
+        return _.flatten(this.ageArr)
+      }
+    },
+
     tags () {
-      let filters = Object.assign({}, this.filters, {ages: this.ages.length ? `Ages ${this.ageRange.low} - ${this.ageRange.high}` : null})
+      let filters = Object.assign(
+                      {},
+                      this.filters,
+                      {days: this.filters.days.length ? `${this.filters.days.length} days a week` : null},
+                      {ages: this.ageArr.length ? `Ages ${this.ageRange.low} - ${this.ageRange.high}` : null}
+                    )
       return _.omit(filters, val => _.isNull(val))
     },
 
@@ -236,25 +263,7 @@ export default {
       this.$emit('applyFilters', {filters: this.filtersList})
       this.open = false
     },
-    /**
-     * Update the computed age range given
-     * @param  {array} rangeArr array of age values to add to global array
-     * @return {void}
-     *
-     * @public
-     * @since 0.0.0
-     */
-    updateAgeRange (rangeArr) {
-      rangeArr.split(',').forEach(age => {
-        let _index = this.ages.indexOf(Number(age))
-        if (_index > -1) {
-          this.ages.splice(_index, 1)
-        } else {
-          this.ages.push(Number(age))
-        }
-      })
-      this.onInput()
-    },
+
     /**
      * Reset all filter values to null
      *
@@ -264,11 +273,11 @@ export default {
      * @since 0.0.0
      */
     clearFilters () {
-      this.ages = []
-      this.$refs['filter-age'].forEach(el => { el.checked = false })
+      this.ageArr = []
       this.filters = {
         fee: null,
-        gender: null
+        gender: null,
+        days: []
       }
       this._updateRouteFromFilters()
       this.onInput()
@@ -280,8 +289,10 @@ export default {
     removeFilter (filterKey) {
       switch (filterKey) {
         case 'ages':
-          this.ages = []
-          this.$refs['filter-age'].forEach(el => { el.checked = false })
+          this.ageArr = []
+          break
+        case 'days':
+          this.filters.days = []
           break
         default:
           this.filters[filterKey] = null
@@ -322,14 +333,22 @@ export default {
         paramKeys.forEach(key => {
           switch (key) {
             case 'ages':
-              let agesFromParams = this.$store.state.route.query[key].split('-')
-              this.ages = agesFromParams
-              this.$refs['filter-age'].forEach(filterEl => {
-                if (_.intersection(filterEl.value.split(','), agesFromParams).length > 0) {
-                  filterEl.checked = true
+              // get the array of age values from query params
+              let agesFromParams = this.$store.state.route.query[key].split('-').map(st => parseInt(st))
+              // loop through our age range checkboxes
+              for (var i = 0; i < this.$refs['filter-age'].length; i++) {
+                let $ref = this.$refs['filter-age'][i]
+                // check to see if there values fall within the range of values from the query params
+                if (_.intersection($ref.value, _.range(agesFromParams[0], agesFromParams[1])).length > 0) {
+                  // update local state
+                  this.ageArr.push(this.ageGroups[i].range)
+                  // hack to show the boxes as checked
+                  $ref.$el.children[1].children[0].innerHTML = 'check_box'
                 }
-              })
+              }
               break
+            // case 'days':
+            //   break
             // case 'fee':
             //   this.filters[key] = this.$store.state.route.query[key]
             //   break
@@ -345,7 +364,6 @@ export default {
   },
   watch: {
     '$route.query': function (val) {
-      console.log(val)
       let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
       let searchFiltersFromRoute = _.intersection(Object.keys(val), filterDefs)
       if (searchFiltersFromRoute.length) {
@@ -425,14 +443,22 @@ export default {
 
 .pprf-filter-bar-footer{
   width: 100%;
-  position:absolute;
-  left:0;
+
+  display:flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+  margin-top:50px;
   .button{
     padding:10px;
+    margin: 0 10px;
+    font-weight: 700;
+    font-family: $font-montserrat;
+    color: $white;
+  }
+  .pprf-filters--cancel{
+    background: $black;
   }
 }
 
-.pprf-filter-bar-form--fieldset{
 
-}
 </style>

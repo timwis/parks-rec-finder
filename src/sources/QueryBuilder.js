@@ -25,6 +25,8 @@ export function selectPrograms () {
                         .field(`${tables.programs}.gender->>0`, 'gender')
                         // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
                         .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
+                        .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+                        .field('days')
                         .field('address', 'facility_address')
                         .field('facility_name')
                         .field(`facility->>0`, 'facility_id')
@@ -61,6 +63,12 @@ export function selectProgram (programID) {
                         .field('days')
                         // @TODO: join on days tables
   return programQuery
+}
+
+export function selectDays () {
+  return postgresSQL
+          .select()
+          .from(tables.days)
 }
 
 export function selectDaysByProgram (programID) {
@@ -353,6 +361,7 @@ export function searchFieldsFor (sqlQueryObj, fields = [], searchText) {
  */
 export function addFilters (sqlQueryObj, filters) {
   filters = _.omit(filters, val => _.isNull(val))
+
   for (let filterKey in filters) {
     if (filterKey === 'fee') {
       let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
@@ -365,6 +374,9 @@ export function addFilters (sqlQueryObj, filters) {
     }
     if (filterKey === 'gender') {
       sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
+    }
+    if (filterKey === 'days' && filters.days.length) {
+      sqlQueryObj.where(`ARRAY[${filters.days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
     }
   }
 }

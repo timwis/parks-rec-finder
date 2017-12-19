@@ -1,10 +1,12 @@
 <template>
-  <div :class="['card', 'card--program', {'card--program--selected': selected}]">
+  <div :class="['card', 'card--program', {'card--program--selected': selected, 'card--nested-parent': location}]">
     <div class="card__info">
 
-      <h3 v-if="name" class="card__info-name text-nopad">
-        <router-link :to="'/program/'+programID">{{name}}</router-link>
-      </h3>
+
+        <router-link class="card__info-name text-nopad" v-if="name"  :to="'/program/'+programID">
+          <h3 class="text-nopad">{{name}}</h3>
+        </router-link>
+
 
       <div class="card__info-meta">
         <small><p v-if="ages">
@@ -78,7 +80,6 @@ export default {
 
 
     .card__info{
-      height: 80px;
       display:flex;
       flex-direction:column;
       flex:2;
@@ -89,6 +90,7 @@ export default {
     }
     .card__info-meta{
       display: flex;
+      margin-bottom:10px;
       small {margin-right: 5%;}
     }
 

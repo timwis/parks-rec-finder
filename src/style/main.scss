@@ -44,6 +44,12 @@ body {
      // overflow: auto;
 }
 
+a{
+  &:focus,
+  &:visited,
+  &:active{color: color(dark-ben-franklin);}
+}
+
 
 /* =======================================================================
   2. LAYOUT
@@ -76,7 +82,9 @@ body {
   overflow-y: auto;
 }
 
-
+.nopad{ padding:0; }
+.nomargin{margin:0;}
+.collapse{ margin:0; padding:0;}
 /* =======================================================================
   3. CARDS
 
@@ -85,20 +93,29 @@ body {
 ========================================================================== */
 .card{
   width: 100%;
-  min-height: 100px;
+  min-height: 80px;
   display: block;
   margin:5px 0;
   position: relative;
   // background: color(ghost-gray);
   // border-radius: 3px;
   // padding: 10px;
+
 }
 
  .card__info-name {
-    font: $font-montserrat;
-    font-weight: 700;
-    @include rem(font-size, 1.8);
-    @include rem(line-height , 2)
+    h3{
+      font: $font-montserrat;
+      font-weight: 700;
+      @include rem(font-size, 1.8);
+      @include rem(line-height , 2)
+      color: color(dark-ben-franklin);
+    }
+        text-decoration: none;
+    &:focus,
+    &:visited,
+    &:active{color: color(dark-ben-fraklin);}
+
   }
 
   .card__info-meta {
@@ -113,6 +130,9 @@ body {
     color: color(medium-gray);
     p{margin:0; padding:0;}
   }
+  .card--nested-parent{
+    .card__info-meta__label{display: none;}
+  }
   .card.card--nested{
     display: block;
     border-bottom:none !important;
@@ -120,7 +140,12 @@ body {
     margin-left:15px;
     .card__icon{display:none;}
     .card__info{display: block;}
-    .card__info-name{ @include rem(font-size, 1.2); }
+    .card__info-name{
+      @include rem(font-size, 1.2);
+      @include rem(line-height, 1.5);
+      padding-bottom: 10px;
+      flex-grow: none;
+    }
     .card__info-meta *{
       @include rem(font-size, 1.2);
       @include rem(line-height, 1.75);

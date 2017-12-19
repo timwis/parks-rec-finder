@@ -16,7 +16,8 @@ import {
   addDistanceFieldFromCoordinates,
   addWithinZipCodeField,
   searchFieldsFor,
-  addFilters
+  addFilters,
+  selectDays
 } from './QueryBuilder'
 
 const LOG_QUERIES = process.env.NODE_ENV === 'development'
@@ -64,6 +65,10 @@ class CartoAPI {
       console.log(`Carto API:runQuery \n ${sqlString}`)
     }
     return this.http.get(`sql?q=${encodeURIComponent(sqlString)}`)
+  }
+
+  getDays () {
+    return this.runQuery(selectDays())
   }
 
   /**
