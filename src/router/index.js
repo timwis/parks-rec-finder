@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-
+import routes from './routes'
+import store from '@/store'
+import { routerHistory, writeHistory } from 'vue-router-back-button'
 Vue.use(Router)
+Vue.use(routerHistory)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: HelloWorld
-    }
-  ]
+let router = new Router({ routes })
+
+router.beforeEach((to, from, next) => {
+  store.dispatch('resetMarkers')
+  next()
 })
+
+router.afterEach(writeHistory)
+
+export default router

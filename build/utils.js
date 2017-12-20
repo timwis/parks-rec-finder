@@ -21,6 +21,9 @@ exports.cssLoaders = function (options) {
     }
   }
 
+
+
+
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     const loaders = [cssLoader]
@@ -31,6 +34,7 @@ exports.cssLoaders = function (options) {
           sourceMap: options.sourceMap
         })
       })
+
     }
 
     // Extract CSS when that option is specified
@@ -43,17 +47,35 @@ exports.cssLoaders = function (options) {
     } else {
       return ['vue-style-loader'].concat(loaders)
     }
+
+
   }
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
-    css: generateLoaders(),
+    css:     generateLoaders(),
     postcss: generateLoaders(),
-    less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
-    stylus: generateLoaders('stylus'),
-    styl: generateLoaders('stylus')
+    less:    generateLoaders('less'),
+    sass:    generateLoaders('sass', { indentedSyntax: true }),
+    scss:    generateLoaders('sass').concat(
+      {
+        loader: 'sass-resources-loader',
+        options: {
+
+          includePaths: ["./node_modules"],
+
+          resources: [
+            './node_modules/normalize.css/normalize.css',
+            './node_modules/phila-standards/src/sass/utils/_colors.scss',
+            './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_unit.scss',
+            './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_breakpoint.scss',
+            path.resolve(__dirname, '../src/style/*.scss'),
+          ]
+        }
+      }
+    ),
+    stylus:  generateLoaders('stylus'),
+    styl:    generateLoaders('stylus')
   }
 }
 

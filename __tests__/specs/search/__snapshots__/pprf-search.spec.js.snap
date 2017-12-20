@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`search/pprf-search.vue mathches snapshot 1`] = `
+<form class="pprf-search form">
+    <div class="field field--freetext"><label id="freetext__label" for="freetext__input"><!----></label>
+        <!----><input type="text" id="freetext__input" name="freetext" placeholder="SEARCH BY ACTIVITY TYPE OR LOCATION NAME" tabindex="0" class="form__input form__input--freetext"></div>
+    <div class="field field--address field--w-icon"><label id="address__label" for="address__input"><!----></label>
+        <!----><input type="text" id="address__input" name="address" placeholder="ADDRESS OR ZIPCODE" tabindex="0" class="form__input form__input--address"></div> <button disabled="disabled" id="pprf-search__submit" tabindex="3" class="input input__submit pprf-btn button button--disabled"><div class="valign"><div class="button-label valign-cell"></div></div></button></form>
+`;

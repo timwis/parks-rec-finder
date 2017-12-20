@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TABS: pprf-tabs/ TAB: pprf-tabs/pprf-tab matches snapshot 1`] = `<div aria-hidden="true" aria-labelledby="foo-bar" class="pprf-tab-panel"></div>`;
+
+exports[`TABS: pprf-tabs/ TABS: pprf-tabs/pprf-tabs matches snapshot 1`] = `
+<div class="pprf-tabs">
+    <ul class="pprf-tabs__nav"></ul>
+    <div class="pprf-tabs__panels scrollable"></div>
+</div>
+`;
