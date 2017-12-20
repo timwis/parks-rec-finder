@@ -3,6 +3,7 @@ node_js:
   - '8'
 script:
   - npm run build
+local_dir: dist
 deploy:
   provider: pages
   skip_cleanup: true
