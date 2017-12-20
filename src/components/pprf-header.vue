@@ -1,11 +1,13 @@
 <template>
   <header class="pprf-header">
+    <p class="version-tag">v{{versionNumber}}</p>
     <pprf-search></pprf-search>
   </header>
 </template>
 
 <script>
 import pprfSearch from '@/components/search/pprf-search'
+import {version} from '../../package.json'
 /**
  * HEADER BAR
  *
@@ -15,7 +17,12 @@ import pprfSearch from '@/components/search/pprf-search'
  */
 export default {
   name: 'PPRF-Header',
-  components: {pprfSearch}
+  components: {pprfSearch},
+  data () {
+    return {
+      versionNumber: version
+    }
+  }
 }
 </script>
 
@@ -31,5 +38,12 @@ export default {
 
   background: color(dark-ben-franklin);
 
+}
+.version-tag{
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: $white;
 }
 </style>
