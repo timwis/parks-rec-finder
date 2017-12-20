@@ -75,6 +75,15 @@ import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 
+/**
+ * SEARCH RESULTS SIDEBAR STATE CONTAINER
+ *
+ * Contains the filterable list of search results.
+ *
+ * Maps search, programs, facilities, and activeTab to state
+ *
+ * @since 0.0.0
+ */
 export default {
 
   name: 'PPRF-Sidebar-Search-Container',
@@ -86,12 +95,6 @@ export default {
     pprfFilterBar,
     pprfProgramCard,
     pprfLocationCard
-  },
-
-  methods: {
-    filterEntities (filters) {
-      // this.$store.dispatch('submitSearch', filters)
-    }
   },
 
   computed: {

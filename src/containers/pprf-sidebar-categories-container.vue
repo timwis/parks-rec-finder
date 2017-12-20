@@ -76,14 +76,29 @@ import api from '@/sources/api'
 import pprfCategoryCard from '@/components/pprf-category-card'
 import _ from 'underscore'
 import slugify from 'slugify'
-// import {EventBus} from '@/event-bus'
-// import store from '@/store'
-// import updateStateFromCache from '@/mixins/update-state-from-cache'
 
+/**
+ * ENTITY CATEGORY TERMS STATE CONTAINER
+ *
+ * Fetches an entity's (programs | locations) category terms
+ * and displays them in a tabbed sidebar of category cards
+ * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
+ *
+ * @since 0.0.0
+ *
+ */
 export default {
   name: 'PPRF-Sidebar-Categories-Container',
 
-  props: ['entityType'],
+  props: {
+    /**
+     * Entity type passed from the route param
+     * with the same name
+     */
+    entityType: {
+      type: String
+    }
+  },
 
   components: {
     pprfSidebar,
@@ -91,7 +106,15 @@ export default {
     pprfTab,
     pprfCategoryCard
   },
-
+  /**
+   * Fetch our categories list data from the api and attach it to the state
+   * before we load the view.
+   * Display categories list w/ tabs containing category cards.
+   * Tab navigation updates the route.
+   * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
+   *
+   * @since 0.0.0
+   */
   beforeRouteEnter (to, from, next) {
     api.getTaxonomyTerms({taxonomy: 'category'}).then(results => {
       next(vm => {
@@ -119,7 +142,6 @@ export default {
     },
 
     slugifyURL (entityTerm) {
-      // let termSlug = entityTerm.split(' ').map(termPart => termPart.charAt(0).toLowerCase() + termPart.slice(1)).join('-')
       return `/${this.entityType}/${slugify(entityTerm)}`
     },
 

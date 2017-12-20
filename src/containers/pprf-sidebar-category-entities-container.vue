@@ -69,10 +69,35 @@ import pprfLocationCard from '@/components/pprf-location-card'
 import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
 import {EventBus} from '@/event-bus'
 
+/**
+ * CATEGORY ENTITIES STATE CONTAINER
+ *
+ * Fetches all entities for a given category term and
+ * displays them in a filterable list.
+ * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
+ *
+ * @since 0.0.0
+ */
 export default {
   name: 'PPRF-Sidebar-Category-Entities-Container',
 
-  props: ['entityType', 'entityTerm'],
+  props: {
+    /**
+     * Entity type passed from the route param
+     * with the same name
+     */
+    entityType: {
+      type: String
+    },
+
+    /**
+     * Category term passed from the route param
+     * with the same name
+     */
+    entityTerm: {
+      type: String
+    }
+  },
 
   components: {
     pprfSidebar,
@@ -101,6 +126,9 @@ export default {
     })
   },
 
+  /*
+   * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
+   */
   beforeRouteEnter (to, from, next) {
     api.getTaxonomyTermEntities(to.params, to.query).then(results => {
       next(vm => {
@@ -116,6 +144,12 @@ export default {
   },
 
   methods: {
+    /**
+     * re-fetch data with filter params
+     *
+     * @return {void}
+     * @since 0.0.0
+     */
     filterEntities () {
       api.getTaxonomyTermEntities(this.$store.state.route.params, this.search.filters)
           .then(results => {
@@ -123,6 +157,11 @@ export default {
             this.$store.dispatch('updateEntities', { [entity]: results.data.rows })
           })
     },
+    /*
+    * scroll to selected card
+    *
+    * @since 0.0.0
+    */
     selectCard (type, id) {
       this.activeCardID = id
       this.$scrollTo(`#${type}--${id}`, 1000, this.scrollOptions)

@@ -78,7 +78,7 @@ describe('search/pprf-search.vue', () => {
   })
 
 
-  describe('onSubmit', () => {
+  xdescribe('onSubmit', () => {
 
     it('calls store action "submitSearch" on form submission', () => {
       const wrapper = mount(pprfSearch, {store, localVue, router})
