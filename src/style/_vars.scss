@@ -21,7 +21,7 @@ TABLE OF CONTENTS;
 
 /* =======================================================================
   1. GLOBAL
-  @since 0.0.0
+  @since 0.1.0
 ========================================================================== */
 $header-height: 63px;
 $max-app-width: 100vw;//1440px
@@ -37,7 +37,7 @@ $box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
   Breakpoints are pulled from phila-standards (./node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_breakpoint.scss)
   and can be overridden below.
 
-  @since 0.0.0
+  @since 0.1.0
   @see https://foundation.zurb.com/sites/docs/media-queries.html
   @usage `@include breakpoint(small only) {}`
 ========================================================================== */
@@ -54,7 +54,7 @@ $box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
 
 /* =======================================================================
   3. BASE TYPOGRAPHY
-  @since 0.0.0
+  @since 0.1.0
 ========================================================================== */
 
 
@@ -64,7 +64,7 @@ $box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
   Base colors are pulled from phila-standards ('./node_modules/phila-standards/src/sass/utils/_colors.scss')
   and can be overridden below.
 
-  @since 0.0.0
+  @since 0.1.0
   @see http://standards.phila.gov/guidelines/design-development/brand-elements/color-palette/
   @usage: `color($color-name)`
 ========================================================================== */

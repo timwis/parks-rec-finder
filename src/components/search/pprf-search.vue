@@ -47,7 +47,7 @@ import _ from 'underscore'
  *
  * Connects to state to manage the state.search object and dispatch search events
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Search',
@@ -75,7 +75,7 @@ export default {
    * manages searching from deeplinks and updating state with query param values
    *
    * @public
-   * @since 0.0.0
+   * @since 0.1.0
    */
   mounted () {
     let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
@@ -118,7 +118,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     onFreetextInput (freetextVal) {
       this.search.fields.freetext = freetextVal
@@ -131,7 +131,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     onAddressInput (addressVal) {
       if (this._isValidZip(addressVal)) {
@@ -152,7 +152,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     onSubmit (e) {
       const _fields = this.search.fields
@@ -170,7 +170,7 @@ export default {
        * @event submit
        * @type {object} search fields
        *
-       * @since 0.0.0
+       * @since 0.1.0
        */
       this.$emit('submit', newSearch.fields)
     },
@@ -180,7 +180,7 @@ export default {
      * @param  {number}  zipcodeVal zipcode to validate
      * @return {boolean}            true if is valid; false if not
      *
-     * @since 0.0.0
+     * @since 0.1.0
      */
     _isValidZip (zipcodeVal) {
       return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))
@@ -193,7 +193,7 @@ export default {
       * @param  {object} fieldValues query parameter object
       * @return {void}
       *
-      * @since 0.0.0
+      * @since 0.1.0
       */
     _updateInputRefsValues (fieldValues = this.$store.state.route.query) {
       if (fieldValues.freetext) {
@@ -222,7 +222,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     updateSearchRouteParams (queryParams) {
       // merge with current search params
@@ -242,7 +242,7 @@ export default {
      * @param  {object} val new route query parameters
      * @return {void}
      *
-     * @since 0.0.0
+     * @since 0.1.0
      */
     '$route.query': function (val) {
       let searchFieldsFromRoute = _.intersection(Object.keys(val), Object.keys(this.$store.state.search.fields))

@@ -8,7 +8,7 @@ import _ from 'underscore'
  * Primary application api that interacts with the front-end.
  * This is used as a convenience aggregate api to pull from mul
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 class API {
   /**
@@ -16,7 +16,7 @@ class API {
  * @param  {object} searchParams - UI search fields key value pairs
  * @return {object}              Promise resolving with query results
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
   search (serachParams) {
     let {fields} = serachParams
@@ -37,7 +37,7 @@ class API {
  *
  * @return {object}              Promise resolving with query results
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
   _searchCarto (searchParams, coords) {
     let facilitiesSearchQuery = cartoAPI.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
@@ -53,7 +53,7 @@ class API {
    *
    * @return {object}  Promise, resolving when phpoto requests are returned
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   _mapFlickPhotosToResults (resultsSet, photoProp) {
     let categories = resultsSet.data.rows
@@ -70,7 +70,7 @@ class API {
    * fetch photos from the ppr_days table
    * @return {object} Promise resolving with resutls from ppr_days query
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getDays () {
     return cartoAPI.getDays()
@@ -83,7 +83,7 @@ class API {
    *
    * @return {object}    Promise, resolving with data from programs and locations category terms
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getTaxonomyTerms ({taxonomy}) {
     let programsTaxonomyTerms = cartoAPI
@@ -106,7 +106,7 @@ class API {
    *
    * @return {object}         Promise, resolves with array of entities
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getTaxonomyTermEntities (entity, filters) {
     return cartoAPI.getTaxonomyTermEntities(entity, filters)
@@ -119,7 +119,7 @@ class API {
    *
    * @return {object}           Promise, resolves with program entity list and assoicated program schedule data
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getProgramByID (programID) {
     let programQuery = cartoAPI.getProgramByID(programID)
@@ -134,7 +134,7 @@ class API {
    *
    * @return {object}            Promise
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getFacilityByID (facilityID) {
     let facilityQuery = cartoAPI.getFacilityByID(facilityID)

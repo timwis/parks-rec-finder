@@ -22,7 +22,7 @@ import pprfHeaderContainer from '@/containers/pprf-header-container'
  * This is the base component that lives at the top of
  * the component tree
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Finder',

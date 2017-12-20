@@ -11,7 +11,7 @@ import pprfHeader from '@/components/pprf-header'
  *
  * Generic container wrapper for the pprf-header component.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Header-Container',

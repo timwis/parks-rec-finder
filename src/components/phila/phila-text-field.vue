@@ -121,7 +121,7 @@
            *
            * @event change
            * @type {string}
-           * @since 0.0.0
+           * @since 0.1.0
            */
           this.$emit('change', this.lazyValue)
         }
@@ -136,7 +136,7 @@
        * @param  {object} e input event object
        * @return {void}
        * @public
-       * @since 0.0.0
+       * @since 0.1.0
        */
       onInput (e) {
         this.inputValue = e.target.value
@@ -146,7 +146,7 @@
        * @param  {object} e keyboard event
        * @return {void}
        * @public
-       * @since 0.0.0
+       * @since 0.1.0
        */
       onEnter (e) {
         /**
@@ -154,7 +154,7 @@
          *
          * @event enter
          * @type {void}
-         * @since 0.0.0
+         * @since 0.1.0
          */
         this.$emit('enter', e)
       },
@@ -164,7 +164,7 @@
        * @return {void}
        *
        * @public
-       * @since 0.0.0
+       * @since 0.1.0
        */
       blur (e) {
         this.focused = false
@@ -173,7 +173,7 @@
          *
          * @event blur
          * @type {oject}
-         * @since 0.0.0
+         * @since 0.1.0
          */
         this.$emit('blur', e)
       },
@@ -183,7 +183,7 @@
        * @return {Void}
        *
        * @public
-       * @since 0.0.0
+       * @since 0.1.0
        */
       focus (e) {
         this.focused = true
@@ -195,7 +195,7 @@
          *
          * @event focus
          * @type {object}
-         * @since 0.0.0
+         * @since 0.1.0
          */
         this.$emit('focus', e)
       }

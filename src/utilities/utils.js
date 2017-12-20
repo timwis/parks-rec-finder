@@ -3,7 +3,7 @@
    * @param  {any} coordinates - any coordinates input value
    * @return {string}             comma separated latitiude and longitude values
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
 export function stringifyCoordinates (coordinates = null) {
   if (coordinates === null || (typeof coordinates === 'string' && coordinates.includes(','))) {
@@ -20,7 +20,7 @@ export function stringifyCoordinates (coordinates = null) {
  * @param  {number}  zipcodeVal zipcode to validate
  * @return {boolean}            true if is valid; false if not
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function isValidZipcode (zipcodeVal) {
   return (/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcodeVal))

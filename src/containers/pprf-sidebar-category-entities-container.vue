@@ -76,7 +76,7 @@ import {EventBus} from '@/event-bus'
  * displays them in a filterable list.
  * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Sidebar-Category-Entities-Container',
@@ -148,7 +148,7 @@ export default {
      * re-fetch data with filter params
      *
      * @return {void}
-     * @since 0.0.0
+     * @since 0.1.0
      */
     filterEntities () {
       api.getTaxonomyTermEntities(this.$store.state.route.params, this.search.filters)
@@ -160,7 +160,7 @@ export default {
     /*
     * scroll to selected card
     *
-    * @since 0.0.0
+    * @since 0.1.0
     */
     selectCard (type, id) {
       this.activeCardID = id

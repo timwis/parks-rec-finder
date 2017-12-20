@@ -14,7 +14,7 @@
 /**
  * Single Tab to be nested in pprf-tabs component
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Tab',
@@ -23,7 +23,7 @@ export default {
     /**
      * Name that shows as tab and is slugified as url hash
      *
-     * @since 0.0.0
+     * @since 0.1.0
      */
     name: {
       type: String,
@@ -32,7 +32,7 @@ export default {
     /**
      * Active tab status
      *
-     * @since 0.0.0
+     * @since 0.1.0
      */
     selected: {
       type: Boolean,
@@ -41,7 +41,7 @@ export default {
     /**
      * Number of resource in tab
      *
-     * @since 0.0.0
+     * @since 0.1.0
      */
     count: {
       type: Number

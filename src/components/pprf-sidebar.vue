@@ -27,7 +27,7 @@ import pprfBackBtn from '@/components/pprf-back-btn'
  *
  * Layout wrapper component
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Sidebar',

@@ -15,7 +15,7 @@ const METERS_TO_MILES_RATIO = 0.000621371
  *
  * @return {object} programs query populated with facility, schedule, and assets data
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectPrograms () {
   let programsQuery = postgresSQL
@@ -42,7 +42,7 @@ export function selectPrograms () {
  *
  * @return {object}                  query builder object with joined tables
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function joinProgramsOnCategories (programsQueryObj) {
   programsQueryObj
@@ -62,7 +62,7 @@ export function joinProgramsOnCategories (programsQueryObj) {
  *
  * @return {object}           program query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectProgram (programID) {
   let programQuery = selectPrograms()
@@ -83,7 +83,7 @@ export function selectProgram (programID) {
  * get all results from the ppr_days table
  * @return {object} query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectDays () {
   return postgresSQL
@@ -97,7 +97,7 @@ export function selectDays () {
  *
  * @return {object}           query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectDaysByProgram (programID) {
   return postgresSQL
@@ -114,7 +114,7 @@ export function selectDaysByProgram (programID) {
  *
  * @return {object}            query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectProgramsByFacilityID (facilityID) {
   return selectPrograms().where(`ppr_programs.facility->>0 = '${facilityID}'`)
@@ -126,7 +126,7 @@ export function selectProgramsByFacilityID (facilityID) {
  *
  * @return {object} squel.js query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectFacilities () {
   // get facilites and assets with latitude and longitude values
@@ -143,7 +143,7 @@ export function selectFacilities () {
  * @param  {string} facilityID facility.id
  * @return {object}            query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectFacility (facilityID) {
   let facilityQuery = selectFacilities()
@@ -163,7 +163,7 @@ export function selectFacility (facilityID) {
  * @param  {string} catTerm category term to fetch programs for
  * @return {object} squel.js query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectProgramsCountPerCategoryTerm (catTerm) {
   // get programs per category
@@ -187,7 +187,7 @@ export function selectProgramsCountPerCategoryTerm (catTerm) {
  * @param  {string} entityType name of entity from url
  * @return {object} squel.js query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  *
  */
 export function selectTaxonomy ({entityType, taxonomy}) {
@@ -245,7 +245,7 @@ export function selectTaxonomy ({entityType, taxonomy}) {
  * @param  {string} taxonomyTerm term to search against
  * @return {object} squel.js query builder object
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
   let categoryEntitiesQuery = postgresSQL
@@ -296,7 +296,7 @@ export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
   * @param {number} zipcode
   * @return void
   *
-  * @since 0.0.0
+  * @since 0.1.0
   */
 export function joinPPRAssetsWith (sqlQueryObj) {
   return sqlQueryObj
@@ -315,7 +315,7 @@ export function joinPPRAssetsWith (sqlQueryObj) {
   *
   * @param {object} sqlQueryObj - squel.js query builder object
   *
-  * @since 0.0.0
+  * @since 0.1.0
   */
 export function orderByMilesFromZipcode (sqlQueryObj) {
   sqlQueryObj
@@ -332,7 +332,7 @@ export function orderByMilesFromZipcode (sqlQueryObj) {
   * @param {object} sqlQueryObj - squel.js query builder object
   * @param {string} coordinates - comma separated latitude and longitude values
   *
-  * @since 0.0.0
+  * @since 0.1.0
   */
 export function addDistanceFieldFromCoordinates (sqlQueryObj, coordinates) {
   sqlQueryObj
@@ -353,7 +353,7 @@ export function addDistanceFieldFromCoordinates (sqlQueryObj, coordinates) {
    * @param {object} sqlQueryObj squel.js query builder object
    * @param {number} zipcode     pre-validated zipcode
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
 export function addWithinZipCodeField (sqlQueryObj, zipcode) {
   sqlQueryObj
@@ -370,7 +370,7 @@ export function addWithinZipCodeField (sqlQueryObj, zipcode) {
    * @param  {string} searchText user input freetext search value
    * @return {void}
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
 
   // EXAMPLE:
@@ -400,7 +400,7 @@ export function searchFieldsFor (sqlQueryObj, fields = [], searchText) {
  * @param {oject} sqlQueryObj squel.js query builder object
  * @param {array} filters     array of filter object {filterName: String, filterValue: any}
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export function addFilters (sqlQueryObj, filters) {
   filters = _.omit(filters, val => _.isNull(val))

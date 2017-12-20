@@ -17,7 +17,7 @@ class AISAPI {
    * @param {string} apiKey - AIS gatekeeper key
    * @return void
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   _addKeyToGETRequests (apiKey) {
     this.http.interceptors.request.use((config) => {
@@ -36,7 +36,7 @@ class AISAPI {
    * @param  {object} locationData - location object returned from AIS query
    * @return {boolean}              ture if location has a feature of type 'POINT'
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   _locationExist (locationData) {
     //
@@ -49,7 +49,7 @@ class AISAPI {
    * @param  {string} rawAddressString - user input from address search field
    * @return {array}                  [latitude: string, longitude: string]
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getCoordsForAddress (rawAddressString) {
     return this.http

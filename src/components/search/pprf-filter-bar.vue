@@ -139,7 +139,7 @@ import api from '@/sources/api'
  * Filter Bar
  * Search filter container to add filtes to the global serach state
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Filter-Bar',
@@ -253,7 +253,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     onInput () {
       this.$store.dispatch('updateSearchInput', {filters: this.filtersList})
@@ -264,7 +264,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     onSubmit () {
       this._updateRouteFromFilters()
@@ -278,7 +278,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     clearFilters () {
       this.ageArr = []
@@ -312,7 +312,7 @@ export default {
      * Update url params from user selected fiter values
      * @return {void}
      *
-     * @since 0.0.0
+     * @since 0.1.0
      * @TODO: move to a more glocal location (i.e utility functions)
      */
     _updateRouteFromFilters () {
@@ -327,7 +327,7 @@ export default {
      * from url parametes
      *
      * @return {void}
-     * @since 0.0.0
+     * @since 0.1.0
      */
     _updateFiltersFromRoute () {
       let queryParams = Object.keys(this.$store.state.route.query)

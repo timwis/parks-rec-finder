@@ -26,7 +26,7 @@ const LOG_QUERIES = process.env.NODE_ENV === 'development'
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
  * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 class CartoAPI {
   constructor (httpClient) {
@@ -58,7 +58,7 @@ class CartoAPI {
    * @param  {string} sqlString - SQL Query
    * @return {object}           Prmoise Object with raw results
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   runQuery (sqlString) {
     if (this.LOG_QUERIES) {
@@ -71,7 +71,7 @@ class CartoAPI {
    * get all results from the ppr_days table
    * @return {object} Promise
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getDays () {
     return this.runQuery(selectDays())
@@ -84,7 +84,7 @@ class CartoAPI {
    * @param  {string} coords - comma separated latitude and longitude  of address search field value
    * @return {string}              SQL query
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getPrograms (freetextValue, coords = null, zipcode = null, filters = null) {
     this._programs = selectPrograms()
@@ -116,7 +116,7 @@ class CartoAPI {
    *
    * @return {object}           Promise
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getProgramByID (programID) {
     return this.runQuery(
@@ -141,7 +141,7 @@ class CartoAPI {
    * @param  {string} facilityID facility.facility_id
    * @return {object}            Promise
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getProgramsByFacilityID (facilityID) {
     return this.runQuery(selectProgramsByFacilityID(facilityID))
@@ -154,7 +154,7 @@ class CartoAPI {
    * @param  {string} coords - comma separated latitude and longitude  of address search field value
    * @return {object}              Promise
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getFacilities (freetextValue, coords = null, zipcode = null) {
     this._facilities = selectFacilities()
@@ -180,7 +180,7 @@ class CartoAPI {
    * @param  {string} facilityID facility_id, not the id column
    * @return {object}            Promise
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getFacilityByID (facilityID) {
     return this.runQuery(
@@ -193,7 +193,7 @@ class CartoAPI {
    * @param  {string} entityType name of entity
    * @return {void}
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getEntityTaxonomy (taxonomyParams) {
     return this.runQuery(selectTaxonomy(taxonomyParams).toString())
@@ -204,7 +204,7 @@ class CartoAPI {
    * @param  {object} entity {entityType: String, taxonomyTerm: String}
    * @return {void}
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   getTaxonomyTermEntities (entity, filters) {
     let taxonomyTerm = deSlugify(entity.entityTerm)

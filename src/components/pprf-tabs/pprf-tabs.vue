@@ -35,7 +35,7 @@
 /**
  * Tabular user interface
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Tabs',
@@ -57,7 +57,7 @@ export default {
      * @param  {object} selectedTab Vue instanace
      * @return {void}
      * @public
-     * @since 0.0.0
+     * @since 0.1.0
      */
     selectTab (selectedTab) {
       this.tabs.forEach(tab => {

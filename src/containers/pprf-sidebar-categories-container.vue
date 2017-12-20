@@ -84,7 +84,7 @@ import slugify from 'slugify'
  * and displays them in a tabbed sidebar of category cards
  * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
  *
- * @since 0.0.0
+ * @since 0.1.0
  *
  */
 export default {
@@ -113,7 +113,7 @@ export default {
    * Tab navigation updates the route.
    * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
    *
-   * @since 0.0.0
+   * @since 0.1.0
    */
   beforeRouteEnter (to, from, next) {
     api.getTaxonomyTerms({taxonomy: 'category'}).then(results => {

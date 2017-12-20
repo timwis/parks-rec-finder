@@ -14,7 +14,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 /**
  * Display the result count with an optional icon
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 export default {
   name: 'PPRF-Results-Count-Badge',
