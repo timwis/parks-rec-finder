@@ -22,7 +22,6 @@
 
                 <pprf-filter-bar
                   slot="beforePanes"
-                  @applyFilters="filterEntities"
                   v-show="this.activeTab == 'program'"
                 />
 
