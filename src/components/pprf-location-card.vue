@@ -50,7 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 
-  .card--location{
+  .card.card--location{
     display: flex;
     padding: 10px;
     border-bottom: 1px solid color(dark-gray);
