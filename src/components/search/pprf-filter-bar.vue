@@ -69,6 +69,7 @@
             :value="ageGroup.range"
             v-model="ageArr"
             ref="filter-age"
+            @change="onInput"
             light
           >
           </v-checkbox>
@@ -202,9 +203,16 @@ export default {
     let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
     let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), filterDefs)
 
+    // let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.$store.state.search.filters))
+
     if (searchFiltersFromRoute.length > 0) {
+      let filters = _.pick(this.$store.state.route.query, searchFiltersFromRoute)
+      this.$store.dispatch('updateSearchInput', {filters})
       this._updateFiltersFromRoute()
     }
+    // if (searchFiltersFromRoute.length > 0) {
+    //   this._updateFiltersFromRoute()
+    // }
 
     api.getDays().then(results => {
       this.days = results.data.rows
@@ -256,7 +264,8 @@ export default {
      * @since 0.1.0
      */
     onInput () {
-      this.$store.dispatch('updateSearchInput', {filters: this.filtersList})
+      // console.log(this.filters)
+      // this.$store.dispatch('updateSearchInput', this.filtersList)
     },
     /**
      * On Form Submission submit search with filter values
@@ -268,7 +277,7 @@ export default {
      */
     onSubmit () {
       this._updateRouteFromFilters()
-      this.$emit('applyFilters', {filters: this.filtersList})
+      this.$emit('applyFilters', this.filtersList)
       this.open = false
     },
 

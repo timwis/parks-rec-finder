@@ -23,6 +23,7 @@
                 <pprf-filter-bar
                   slot="beforePanes"
                   v-show="this.activeTab == 'program'"
+                  @applyFilters="filterSearch"
                 />
 
                 <pprf-tab
@@ -106,6 +107,12 @@ export default {
 
     resultsCount () {
       return isNaN(this.programs.length + this.facilities.length) ? 0 : (this.programs.length + this.facilities.length)
+    }
+  },
+  methods: {
+    filterSearch (filters) {
+      // this.$store.dispatch('updateSearchInput', )
+      this.$store.dispatch('submitSearch', {fields: this.search.fields, filters})
     }
   }
 }
