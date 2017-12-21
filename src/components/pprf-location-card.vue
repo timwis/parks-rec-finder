@@ -1,18 +1,25 @@
 <template>
   <div :class="['card', 'card--location', {'card--nested': nested}]">
       <font-awesome-icon
+        v-if="!nested"
         icon="map-marker-alt"
         size="3x"
         class="card__icon card--location__icon"
       />
 
     <div class="card__info">
-      <h3 v-if="name" class="card__info-name text-nopad">
-        <router-link :to="'/location/'+facilityID">{{name}}</router-link>
-      </h3>
+
+        <router-link
+          v-if="name"
+          :to="'/location/'+facilityID"
+          class="card__info-name text-nopad"
+        >
+          <h3 class="text-nopad"> {{name}}</h3>
+        </router-link>
+
 
         <address v-if="address" class="card__info-meta">
-          <p>{{address.street}} &nbsp; {{address.city}}, {{address.zip}}</p>
+          <p>{{address.street}}&nbsp;{{address.city}}, {{address.zip}}</p>
        </address>
     </div>
   </div>
@@ -68,6 +75,7 @@ export default {
     }
     .card__info-meta{
       display: flex;
+      margin-bottom: 10px;
       small {margin-right: 5%;}
     }
 
