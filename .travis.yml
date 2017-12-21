@@ -3,6 +3,8 @@ node_js:
   - '8'
 script:
   - npm run build
+before_deploy:
+  - rm -rf dist/*
 deploy:
   local_dir: dist
   provider: pages
