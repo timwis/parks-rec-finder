@@ -138,7 +138,7 @@ a{
     border-bottom:none !important;
     padding:0;
     margin-left:15px;
-    .card__icon{height: 15px;}
+    .card__icon{height: 15px; width: 15px;}
     .card__info{display: block;}
     .card__info-name{
       @include rem(font-size, 1.2);
