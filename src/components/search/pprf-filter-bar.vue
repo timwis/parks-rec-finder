@@ -229,7 +229,7 @@ export default {
      * check if user has interacted with form vales
      * @return {Boolean} true is a value has been selected
      *
-     * @since 0.3.1
+     * @since 0.1.3
      */
     isDirty () {
       return Object.values(this.filters).some((filterVal, idx, arr) => { return filterVal !== null })
@@ -239,7 +239,7 @@ export default {
      * derived filter key:value pairs
      * @return {object}
      *
-     * @since 0.3.1
+     * @since 0.1.3
      */
     filters () {
       let ages = {ages: this.selectedAgeRanges.length ? `${this.ageRange.low}-${this.ageRange.high}` : null}
@@ -293,7 +293,7 @@ export default {
      * @return {void}
      *
      * @public
-     * @since 0.3.1
+     * @since 0.1.0
      */
     onSubmit () {
       this._updateRouteFromFilters()
@@ -329,7 +329,7 @@ export default {
      * @param  {string} filterKey filter property
      *
      * @public
-     * @since 0.3.1
+     * @since 0.1.0
      */
     removeFilter (filterKey) {
       switch (filterKey) {
@@ -349,7 +349,7 @@ export default {
      * Update url params from user selected fiter values
      * @return {void}
      *
-     * @since 0.3.1
+     * @since 0.1.0
      */
     _updateRouteFromFilters () {
       let ages = this.ages.length ? this.filters.ages : null
@@ -363,7 +363,7 @@ export default {
      * from url parametes
      *
      * @return {void}
-     * @since 0.3.1
+     * @since 0.1.0
      */
     _updateFiltersFromRoute () {
       let queryParams = Object.keys(this.$store.state.route.query)
