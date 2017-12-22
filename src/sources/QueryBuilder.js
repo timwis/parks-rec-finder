@@ -46,9 +46,11 @@ export function selectPrograms () {
  */
 export function joinProgramsOnCategories (programsQueryObj) {
   programsQueryObj
-    .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
-    .join(`${tables.programCategoryTerms}`, 'activityType', `${tables.programs}.activity_type->>0 = activityType.id`)
-    .join(tables.programCategories, 'category', `activityType.actvity_type_category = category.activity_category_name::text`)
+    // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
+    // .join(`${tables.programCategoryTerms}`, 'activityType', `${tables.programs}.activity_type->>0 = activityType.id`)
+    // .join(tables.programCategories, 'category', `activityType.actvity_type_category = category.activity_category_name::text`)
+    .join(tables.programCategories, 'category', `activityType.actvity_category->>0 = category.id`)
+
     // @TODO: replace JOINs with below two lines when "category" column is added to ppr_programs table
     // and update all function calls
     // .field(`category`)
@@ -171,13 +173,14 @@ export function selectProgramsCountPerCategoryTerm (catTerm) {
                                 .select()
                                 .field(`count(*)`)
                                 .from(tables.programs)
+                                .join(tables.programCategories, 'category', `${tables.programs}.activity_category->>0 = category.id`)
                                 // @TODO replace joinProgramsOnCategories with "WHERE program.category = ppr_activity_categories.activity_category_name" once the schmea is in place
                                 // .where(`${tables.programs}.category = ${tables.programCategories}.activity_category_name`)
 
-  joinProgramsOnCategories(subSelectProgramsQuery)
+  // joinProgramsOnCategories(subSelectProgramsQuery)
 
   subSelectProgramsQuery
-    .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
+    // .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
     .where(`category::text = ${catTerm}.activity_category_name`)
   return subSelectProgramsQuery
 }
@@ -209,8 +212,9 @@ export function selectTaxonomy ({entityType, taxonomy}) {
         .field(`${entityName}.activity_category_name`)
         .field(`${entityName}.activity_category_description`)
         .field(`${entityName}.activity_category_photo`)
-        .field(`${entityName}.id`)
-        .field(selectProgramsCountPerCategoryTerm(entityName), 'count')
+        .field('count(*)', 'count')
+        .join(tables.programs, null, `${tables.programs}.activity_category->>0 = ${entityName}.id`)
+        .group(`${entityName}.activity_category_name, ${entityName}.activity_category_description, ${entityName}.activity_category_photo`)
         .order('activity_category_name')
       break
 
