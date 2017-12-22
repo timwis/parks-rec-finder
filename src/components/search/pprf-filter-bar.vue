@@ -5,10 +5,13 @@
     >
       <div @click="open = !open">
         <h4 class="text-nopad">Filters</h4>
-        <font-awesome-icon :icon="icon" />
+        <font-awesome-icon :icon="open ? 'minus' : 'plus'" />
       </div>
 
-      <div v-show="!open" class="pprf-filter-bar-tags-bar">
+      <div
+        v-show="!open && filtersApplied"
+        class="pprf-filter-bar-tags-bar"
+      >
         <h5 class="screen-reader-text">Applied Search Filters:</h5>
         <ul class="pprf-filter-bar-tags">
          <li v-for="(value, key) in tags" >
@@ -38,20 +41,18 @@
         <legend>Fee</legend>
 
         <v-radio-group
-          v-model="filters.fee"
+          v-model="filtersData.fee"
           :mandatory="false"
         >
           <v-radio
             class="field field--inline field-fee--free"
             label="Free"
             value="Free"
-            @change="onInput"
           ></v-radio>
           <v-radio
             class="field field--inline field-fee--fee"
             label="Fee"
             value="Fee"
-            @change="onInput"
           ></v-radio>
         </v-radio-group>
       </fieldset>
@@ -62,12 +63,12 @@
         <legend>Age Range</legend>
 
           <v-checkbox
-            v-for="(ageGroup, idx) in ageGroups"
             class="field field--inline"
+            v-model="selectedAgeRanges"
+            v-for="(ageGroup, idx) in ageGroups"
+            :value="ageGroup.range"
             :label="ageGroup.name"
             :key="ageGroup.name"
-            :value="ageGroup.range"
-            v-model="ageArr"
             ref="filter-age"
             light
           >
@@ -80,7 +81,7 @@
 
         <legend>Gender</legend>
          <v-radio-group
-          v-model="filters.gender"
+          v-model="filtersData.gender"
           :mandatory="false"
         >
           <v-radio
@@ -89,13 +90,15 @@
             :key="gender.name"
             :label="gender.name"
             :value="gender.value"
-            @change="onInput"
           ></v-radio>
 
         </v-radio-group>
       </fieldset>
 
-      <fieldset v-if="days.length" class="pprf-filter-bar-form--fieldset">
+      <fieldset
+        v-if="days.length"
+        class="pprf-filter-bar-form--fieldset"
+      >
         <legend>Time of week</legend>
         <v-checkbox
             v-for="day in days"
@@ -103,11 +106,9 @@
             :label="day.days_name"
             :key="day.id"
             :value="day.id"
-            v-model="filters.days"
+            v-model="selectedDays"
             ref="filter-day"
-            @change="onInput"
-            light
-          >
+        >
           </v-checkbox>
 
       </fieldset>
@@ -120,7 +121,7 @@
           Cancel
         </phila-button>
 
-        <phila-button class="pprf-filters--apply">
+        <phila-button class="pprf-filters--apply" :disabled="!isDirty">
           Apply Filters
         </phila-button>
 
@@ -149,7 +150,9 @@ export default {
   data () {
     return {
       open: false,
-      days: [],
+
+      filtersApplied: false,
+
       ageGroups: [
         {
           name: 'Tot 2-5 (or younger)',
@@ -188,47 +191,86 @@ export default {
         }
       ],
 
-      ageArr: [],
+      selectedAgeRanges: [],
 
-      filters: {
+      days: [],
+
+      selectedDays: [],
+
+      filtersData: {
         fee: null,
         gender: null,
-        days: []
+        days: [],
+        ages: null
       }
     }
   },
 
   mounted () {
-    let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
-    let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), filterDefs)
-
+    // update filters on deep link
+    let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.filtersData))
     if (searchFiltersFromRoute.length > 0) {
       this._updateFiltersFromRoute()
     }
-
+    /**
+     * get out Time of Week values directly from
+     * the ppr_days table so we can pass their
+     * ids to the queries in the api
+     *
+     * @since 0.1.0
+     */
     api.getDays().then(results => {
       this.days = results.data.rows
     })
   },
 
   computed: {
-    filtersList () {
-      return Object.assign({}, this.filters, {ageRange: this.ageRange})
+    /**
+     * check if user has interacted with form vales
+     * @return {Boolean} true is a value has been selected
+     *
+     * @since 0.1.3
+     */
+    isDirty () {
+      return Object.values(this.filters).some((filterVal, idx, arr) => { return filterVal !== null })
     },
 
+    /**
+     * derived filter key:value pairs
+     * @return {object}
+     *
+     * @since 0.1.3
+     */
+    filters () {
+      let ages = {ages: this.selectedAgeRanges.length ? `${this.ageRange.low}-${this.ageRange.high}` : null}
+      let days = {days: this.selectedDays.length ? this.filtersData.days : null}
+      return Object.assign({}, this.filtersData, ages, days)
+    },
+    /**
+     * dervied age range low and high
+     * used to build age range string
+     * @return {object}
+     *
+     * @since 0.1.0
+     */
     ageRange () {
       return {
         low: this.ages.length ? Math.min.apply(Math, this.ages) : null,
         high: this.ages.length ? Math.max.apply(Math, this.ages) : null
       }
     },
-
+    /**
+     * flattened array of all selected ages in the age range
+     * @type {array}
+     *
+     * @since 0.1.0
+     */
     ages: {
       set: function (newVal) {
-        this.ageArr.push(newVal)
+        this.selectedAgeRanges.push(newVal)
       },
       get: function () {
-        return _.flatten(this.ageArr)
+        return _.flatten(this.selectedAgeRanges)
       }
     },
 
@@ -236,28 +278,15 @@ export default {
       let filters = Object.assign(
                       {},
                       this.filters,
-                      {days: this.filters.days.length ? `${this.filters.days.length} days a week` : null},
-                      {ages: this.ageArr.length ? `Ages ${this.ageRange.low} - ${this.ageRange.high}` : null}
+                      {days: this.selectedDays.length ? `${this.filters.days.length} days a week` : null},
+                      {ages: this.selectedAgeRanges.length ? `Ages ${this.filters.ages}` : null}
                     )
       return _.omit(filters, val => _.isNull(val))
-    },
-
-    icon () {
-      return (this.open ? 'minus' : 'plus')
     }
   },
 
   methods: {
-    /**
-     * On filter value update reflect change in loccal and global state
-     * @return {void}
-     *
-     * @public
-     * @since 0.1.0
-     */
-    onInput () {
-      this.$store.dispatch('updateSearchInput', {filters: this.filtersList})
-    },
+
     /**
      * On Form Submission submit search with filter values
      *
@@ -268,8 +297,9 @@ export default {
      */
     onSubmit () {
       this._updateRouteFromFilters()
-      this.$emit('applyFilters', {filters: this.filtersList})
+      this.$emit('applyFilters', this.filters)
       this.open = false
+      this.filtersApplied = this.isDirty
     },
 
     /**
@@ -281,31 +311,38 @@ export default {
      * @since 0.1.0
      */
     clearFilters () {
-      this.ageArr = []
-      this.filters = {
+      this.selectedAgeRanges = []
+      this.selectedDays = []
+      this.filtersData = {
         fee: null,
         gender: null,
-        days: []
+        days: [],
+        ages: null
       }
       this._updateRouteFromFilters()
-      this.onInput()
-      this.onSubmit()
       this.$emit('clearFilters')
       this.open = false
+      this.filtersApplied = false
     },
-
+    /**
+     * Given a filter property nullify the value
+     * @param  {string} filterKey filter property
+     *
+     * @public
+     * @since 0.1.0
+     */
     removeFilter (filterKey) {
       switch (filterKey) {
         case 'ages':
-          this.ageArr = []
+          this.selectedAgeRanges = []
           break
         case 'days':
-          this.filters.days = []
+          this.selectedDays = []
+          this.filtersData.days = []
           break
         default:
-          this.filters[filterKey] = null
+          this.filtersData[filterKey] = null
       }
-      this.onInput()
       this.onSubmit()
     },
     /**
@@ -313,13 +350,12 @@ export default {
      * @return {void}
      *
      * @since 0.1.0
-     * @TODO: move to a more glocal location (i.e utility functions)
      */
     _updateRouteFromFilters () {
-      let ages = this.ages.length ? `${this.ageRange.low}-${this.ageRange.high}` : null
+      let ages = this.ages.length ? this.filters.ages : null
       let _query = Object.assign({}, this.$store.state.route.query, this.filters, {ages})
       let query = _.omit(_query, val => _.isNull(val))
-      this.$router.replace({query})
+      this.$router.push({query})
     },
 
     /**
@@ -332,7 +368,6 @@ export default {
     _updateFiltersFromRoute () {
       let queryParams = Object.keys(this.$store.state.route.query)
       let filterKeys = Object.keys(this.filters)
-      filterKeys.push('ages')
       // check to see if any filters are in url params
       let paramKeys = _.intersection(queryParams, filterKeys)
 
@@ -349,7 +384,7 @@ export default {
                 // check to see if there values fall within the range of values from the query params
                 if (_.intersection($ref.value, _.range(agesFromParams[0], agesFromParams[1])).length > 0) {
                   // update local state
-                  this.ageArr.push(this.ageGroups[i].range)
+                  this.selectedAgeRanges.push(this.ageGroups[i].range)
                   // hack to show the boxes as checked
                   $ref.$el.children[1].children[0].innerHTML = 'check_box'
                 }
@@ -361,19 +396,17 @@ export default {
             //   this.filters[key] = this.$store.state.route.query[key]
             //   break
             default:
-              this.filters[key] = this.$store.state.route.query[key]
+              this.filtersData[key] = this.$store.state.route.query[key]
               break
           }
         })
+        this.filtersApplied = true
       }
-      // update state with filter values
-      this.onInput()
     }
   },
   watch: {
     '$route.query': function (val) {
-      let filterDefs = Object.keys(this.$store.state.search.filters).concat('ages')
-      let searchFiltersFromRoute = _.intersection(Object.keys(val), filterDefs)
+      let searchFiltersFromRoute = _.intersection(Object.keys(val), Object.keys(this.filters))
       if (searchFiltersFromRoute.length) {
         this._updateFiltersFromRoute()
       }

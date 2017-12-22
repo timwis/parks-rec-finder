@@ -23,7 +23,8 @@
                 <pprf-filter-bar
                   slot="beforePanes"
                   v-show="this.activeTab == 'program'"
-                />
+                  @applyFilters="filterSearch"
+                ></pprf-filter-bar>
 
                 <pprf-tab
                     name="Programs"
@@ -31,9 +32,9 @@
                     :selected="true"
                    >
                       <pprf-program-card
-                        v-if="program"
+                        v-if="program.program_id"
                         v-for="program in programs"
-                        :key="program.id"
+                        :key="getUUID('programCard')"
                         :name="program.program_name"
                         :ages="{high: program.age_high, low: program.age_low}"
                         :gender="program.gender"
@@ -50,6 +51,7 @@
                   >
                     <div
                       v-for="facility in facilities"
+                      :key="getUUID('facilityCard')"
                     >
                       <pprf-location-card
                         :name="facility.facility_name"
@@ -73,7 +75,7 @@ import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
-
+import _ from 'underscore'
 /**
  * SEARCH RESULTS SIDEBAR STATE CONTAINER
  *
@@ -106,6 +108,17 @@ export default {
 
     resultsCount () {
       return isNaN(this.programs.length + this.facilities.length) ? 0 : (this.programs.length + this.facilities.length)
+    }
+  },
+
+  methods: {
+    filterSearch (filters) {
+      this.$store.dispatch('submitSearch', {filters: filters})
+    },
+    // generate ids for our cards because our data isn't clean enough
+    //
+    getUUID (entityType) {
+      return _.uniqueId(`${entityType}-`)
     }
   }
 }

@@ -163,6 +163,8 @@ export default {
           zip: _fields.zip
         }
       }
+      // update our search route params so our
+      // watcher will submit the search
       this.updateSearchRouteParams(this.search.fields)
       /**
        * Submit event w/ new search fields values
@@ -250,7 +252,7 @@ export default {
       let searchFiltersFromRoute = _.intersection(Object.keys(val), filterDefs)
 
       if ([...searchFieldsFromRoute, ...searchFiltersFromRoute].length && this.$store.state.route.name === 'Search') {
-        let fields = _.pick(val, searchFieldsFromRoute)
+        let fields = searchFieldsFromRoute.length ? _.pick(val, searchFieldsFromRoute) : null
 
         this.$store.dispatch('updateSearchInput', {fields})
         this.$store.dispatch('submitSearch')

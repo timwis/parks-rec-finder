@@ -404,13 +404,12 @@ export function searchFieldsFor (sqlQueryObj, fields = [], searchText) {
  */
 export function addFilters (sqlQueryObj, filters) {
   filters = _.omit(filters, val => _.isNull(val))
-
   for (let filterKey in filters) {
     if (filterKey === 'fee') {
       let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
       sqlQueryObj.where(`${filterKey} ${_feeCompartor} '0.00'`)
     }
-    if (filterKey === 'ages') {
+    if (filterKey === 'ages' && typeof filters[filterKey] === 'string') {
       let ages = filters[filterKey].split('-')
       sqlQueryObj.where(`age_low >= ${ages[0]}`)
       sqlQueryObj.where(`age_high <= ${ages[1]}`)
@@ -418,7 +417,7 @@ export function addFilters (sqlQueryObj, filters) {
     if (filterKey === 'gender') {
       sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
     }
-    if (filterKey === 'days' && filters.days.length) {
+    if (filterKey === 'days' && filters[filterKey].length) {
       sqlQueryObj.where(`ARRAY[${filters.days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
     }
   }

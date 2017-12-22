@@ -150,11 +150,12 @@ export default {
      * @return {void}
      * @since 0.1.0
      */
-    filterEntities () {
-      api.getTaxonomyTermEntities(this.$store.state.route.params, this.search.filters)
+    filterEntities (filters) {
+      api.getTaxonomyTermEntities(this.$store.state.route.params, filters)
           .then(results => {
             let entity = this.entityType === 'locations' ? 'facility' : 'program'
             this.$store.dispatch('updateEntities', { [entity]: results.data.rows })
+            this.$store.dispatch('setMapMarkers', {entityType: entity})
           })
     },
     /*
