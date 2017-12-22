@@ -48,7 +48,7 @@ export function joinProgramsOnCategories (programsQueryObj) {
   programsQueryObj
     .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
     .join(`${tables.programCategoryTerms}`, 'activityType', `${tables.programs}.activity_type->>0 = activityType.id`)
-    .join(tables.programCategories, 'category', `activityType.category = category.activity_category_name`)
+    .join(tables.programCategories, 'category', `activityType.actvity_type_category = category.activity_category_name::text`)
     // @TODO: replace JOINs with below two lines when "category" column is added to ppr_programs table
     // and update all function calls
     // .field(`category`)
@@ -171,12 +171,14 @@ export function selectProgramsCountPerCategoryTerm (catTerm) {
                                 .select()
                                 .field(`count(*)`)
                                 .from(tables.programs)
-  // @TODO replace joinProgramsOnCategories with "WHERE program.category = ppr_activity_categories.activity_category_name"
-  // once the schmea is in place
+                                // @TODO replace joinProgramsOnCategories with "WHERE program.category = ppr_activity_categories.activity_category_name" once the schmea is in place
+                                // .where(`${tables.programs}.category = ${tables.programCategories}.activity_category_name`)
+
   joinProgramsOnCategories(subSelectProgramsQuery)
+
   subSelectProgramsQuery
     .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-    .where(`category = ${catTerm}.activity_category_name`)
+    .where(`category::text = ${catTerm}.activity_category_name`)
   return subSelectProgramsQuery
 }
 
@@ -227,9 +229,10 @@ export function selectTaxonomy ({entityType, taxonomy}) {
             .select()
             .field('count(id)')
             .from(tables.facilities)
-            .where(`${tables.facilities}.facility_type = ${entityName}.location_type_name`)
+            .where(`${tables.facilities}.location_type->>0 = ${entityName}.id`)
           , 'count')
         .order('location_type_name')
+        .where(`${entityName}.location_type_is_published = true`)
       break
   }
 
