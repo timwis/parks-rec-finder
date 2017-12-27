@@ -18,7 +18,7 @@
 
 <script>
 import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
-import slugify from 'slugify'
+// import slugify from 'slugify'
 
 export default {
 
@@ -42,8 +42,8 @@ export default {
   },
   methods: {
     slugifyURL (taxonomyTerm) {
-      // let termSlug = entityTerm.split(' ').map(termPart => termPart.charAt(0).toLowerCase() + termPart.slice(1)).join('-')
-      return `/${this.$store.state.route.params.entityType}/${slugify(taxonomyTerm, {lower: true})}`
+      let termSlug = taxonomyTerm.split(' ').map(termPart => termPart.charAt(0).toLowerCase() + termPart.slice(1)).join('-')
+      return `/${this.$store.state.route.params.entityType}/${termSlug}`
     }
   }
 

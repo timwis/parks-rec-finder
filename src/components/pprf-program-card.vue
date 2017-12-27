@@ -51,7 +51,7 @@ export default {
       type: String
     },
     programID: {
-      type: String
+      type: Number
     },
     location: {
       type: Object

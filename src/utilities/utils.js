@@ -28,8 +28,9 @@ export function isValidZipcode (zipcodeVal) {
 
 export function deSlugify (slug) {
   return slug
-          .replace('-and-', '-&-')
+          // .replace('-and-', '-&-')
           .split('-')
           .map(slugPart => slugPart.charAt(0).toUpperCase() + slugPart.slice(1))
           .join(' ')
+          .replace('And', 'and')
 }
