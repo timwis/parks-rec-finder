@@ -61,7 +61,7 @@
                 v-for="program in facilityPrograms"
                 :key="program.id"
               >
-                <router-link :to="'/program/'+program.program_id">
+                <router-link :to="'/program/'+program.id">
                   {{program.program_name}}
                 </router-link>
               </li>
