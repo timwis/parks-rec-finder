@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import {Raptor} from './PPRFQueryBuilder'
 import squel from 'squel'
 import _ from 'underscore'
 import tables from './CartoDBTables'
