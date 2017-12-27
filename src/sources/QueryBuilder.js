@@ -73,7 +73,7 @@ export function selectProgram (programID) {
                         .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
                         .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                         .field(`${tables.facilities}.id`, 'location_id')
-                        .where(`${tables.programs}.program_id = ${programID}`)
+                        .where(`${tables.programs}.id = '${programID}'`)
 
   return programQuery
 }
@@ -103,7 +103,7 @@ export function selectDaysByProgram (programID) {
     .select()
     .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
     .join(tables.days, 'b', 'b.id = a._daysID')
-    .where(`program->>0 = ${programID}::text`)
+    .where(`program->>0 = '${programID}'`)
 }
 
 /**
@@ -153,28 +153,6 @@ export function selectFacility (facilityID) {
 
   return facilityQuery
 }
-
-/**
- * Get a count of all programs in a category
- * that are associated with a facility
- * associated facility must have a `website_locator_points_link_id`
- *
- * @param  {string} catTerm category term to fetch programs for
- * @return {object} squel.js query builder object
- *
- * @since 0.1.0
- */
-// export function selectProgramsCountPerCategoryTerm (catTerm) {
-//   // get programs per category
-//   let subSelectProgramsQuery = postgresSQL
-//                                 .select()
-//                                 .field(`count(*)`)
-//                                 .from(tables.programs)
-//                                 .join(tables.programCategories, 'category', `${tables.programs}.activity_category->>0 = category.id`)
-//                                 .where(`category::text = ${catTerm}.activity_category_name`)
-
-//   return subSelectProgramsQuery
-// }
 
 /**
  * given an entityType that maps to a table table
@@ -260,6 +238,8 @@ export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
                               .field(`${tables.programs}.age_high`)
                               .field(`${tables.programs}.fee`)
                               .field(`${tables.programs}.gender->>0`, 'gender')
+                              .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+                              .field('days')
                               .where(`${tables.programs}.program_is_public`)
     joinProgramsOnCategories(categoryEntitiesQuery, taxonomyTerm)
   } else if (entityType === 'locations') {
@@ -393,6 +373,7 @@ export function searchFieldsFor (sqlQueryObj, fields = [], searchText) {
  */
 export function addFilters (sqlQueryObj, filters) {
   filters = _.omit(filters, val => _.isNull(val))
+
   for (let filterKey in filters) {
     if (filterKey === 'fee') {
       let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
@@ -407,7 +388,8 @@ export function addFilters (sqlQueryObj, filters) {
       sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
     }
     if (filterKey === 'days' && filters[filterKey].length) {
-      sqlQueryObj.where(`ARRAY[${filters.days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
+      let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
+      sqlQueryObj.where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
     }
   }
 }

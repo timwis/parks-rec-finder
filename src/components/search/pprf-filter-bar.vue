@@ -243,8 +243,8 @@ export default {
      */
     filters () {
       let ages = {ages: this.selectedAgeRanges.length ? `${this.ageRange.low}-${this.ageRange.high}` : null}
-      let days = {days: this.selectedDays.length ? this.filtersData.days : null}
-      return Object.assign({}, this.filtersData, ages, days)
+      // let days = {days: this.selectedDays.length ? this.filtersData.days : null}
+      return Object.assign({}, this.filtersData, ages, {days: this.selectedDays})
     },
     /**
      * dervied age range low and high
@@ -278,7 +278,7 @@ export default {
       let filters = Object.assign(
                       {},
                       this.filters,
-                      {days: this.selectedDays.length ? `${this.filters.days.length} days a week` : null},
+                      {days: this.selectedDays.length ? `${this.filters.days.length} day(s) a week` : null},
                       {ages: this.selectedAgeRanges.length ? `Ages ${this.filters.ages}` : null}
                     )
       return _.omit(filters, val => _.isNull(val))

@@ -13,6 +13,7 @@
           class="category-results-badge"
         />
         <pprf-filter-bar
+          v-if="entityType == 'programs'"
           slot="beforePanes"
           @applyFilters="filterEntities"
         />
@@ -25,7 +26,7 @@
         <ul class="category-list">
             <li
               v-for="program in programs"
-              :key="program.id"
+              :key="getUUID('program')"
               v-if="entityType === 'programs' && programs"
             >
                <pprf-program-card
@@ -35,7 +36,7 @@
                 :ages="{high: program.age_high, low: program.age_low}"
                 :gender="program.gender"
                 :fee="program.fee"
-                :programID="program.program_id"
+                :programID="program.id"
               />
             </li>
 
@@ -43,6 +44,7 @@
             <li
               v-if="entityType == 'locations' && facilities"
               v-for="location in facilities"
+              :key="getUUID('location')"
             >
               <pprf-location-card
                 :name="location.facility_name"
@@ -68,6 +70,7 @@ import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
 import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
 import {EventBus} from '@/event-bus'
+import _ from 'underscore'
 
 /**
  * CATEGORY ENTITIES STATE CONTAINER
@@ -166,6 +169,9 @@ export default {
     selectCard (type, id) {
       this.activeCardID = id
       this.$scrollTo(`#${type}--${id}`, 1000, this.scrollOptions)
+    },
+    getUUID (entityType) {
+      return _.uniqueId(`${entityType}-`)
     }
   },
 

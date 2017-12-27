@@ -113,17 +113,17 @@ class API {
   }
 
   /**
-   * Given a program entity id return the program entity
+   * Given a program.id return the program entity
    * and it's associated program schedule
-   * @param  {string} programID program entity_id
+   * @param  {string} programID program.id
    *
    * @return {object}           Promise, resolves with program entity list and assoicated program schedule data
    *
    * @since 0.1.0
    */
   getProgramByID (programID) {
-    let programQuery = cartoAPI.getProgramByID(programID)
     let daysQuery = cartoAPI.getProgramDays(programID)
+    let programQuery = cartoAPI.getProgramByID(programID)
     return Promise.all([programQuery, daysQuery])
   }
 
