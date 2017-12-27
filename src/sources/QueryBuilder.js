@@ -101,9 +101,9 @@ export function selectDays () {
 export function selectDaysByProgram (programID) {
   return postgresSQL
     .select()
-    .from(`(SELECT program_id, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
+    .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
     .join(tables.days, 'b', 'b.id = a._daysID')
-    .where(`program_id = ${programID}`)
+    .where(`program->>0 = ${programID}::text`)
 }
 
 /**
