@@ -108,7 +108,6 @@ export default {
         .then(results => {
           next(vm => {
             results[0].data.rows[0].days = results[1].data.rows
-            console.log(results[0].data.rows)
             vm.$store.dispatch('updateEntities', { program: results[0].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'program' })
           })

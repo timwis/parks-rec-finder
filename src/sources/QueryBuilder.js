@@ -30,7 +30,7 @@ export function selectPrograms () {
                         .field('address', 'facility_address')
                         .field('facility_name')
                         .field(`facility->>0`, 'facility_id')
-                        .where(`publish = 'true'`)
+                        .where(`program_is_public`)
 
   return joinPPRAssetsWith(programsQuery)
 }
@@ -44,15 +44,14 @@ export function selectPrograms () {
  *
  * @since 0.1.0
  */
-export function joinProgramsOnCategories (programsQueryObj) {
+export function joinProgramsOnCategories (programsQueryObj, taxonomyTerm) {
   programsQueryObj
     .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
-    .join(`${tables.programCategoryTerms}`, 'activityType', `${tables.programs}.activity_type->>0 = activityType.id`)
-    .join(tables.programCategories, 'category', `activityType.category = category.activity_category_name`)
-    // @TODO: replace JOINs with below two lines when "category" column is added to ppr_programs table
-    // and update all function calls
-    // .field(`category`)
-    // .where(`category = '${taxonomyTerm}'`)
+    .join(tables.programCategories, 'category', `category.id = ${tables.programs}.activity_category->>0`)
+    .field(`category`)
+  if (taxonomyTerm) {
+    programsQueryObj.where(`category.activity_category_name = '${taxonomyTerm}'`)
+  }
 
   return programsQueryObj
 }
@@ -74,7 +73,7 @@ export function selectProgram (programID) {
                         .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
                         .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                         .field(`${tables.facilities}.id`, 'location_id')
-                        .where(`${tables.programs}.program_id = ${programID}::text`)
+                        .where(`${tables.programs}.id = '${programID}'`)
 
   return programQuery
 }
@@ -102,9 +101,9 @@ export function selectDays () {
 export function selectDaysByProgram (programID) {
   return postgresSQL
     .select()
-    .from(`(SELECT program_id, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
+    .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
     .join(tables.days, 'b', 'b.id = a._daysID')
-    .where(`program_id = ${programID}`)
+    .where(`program->>0 = '${programID}'`)
 }
 
 /**
@@ -156,31 +155,6 @@ export function selectFacility (facilityID) {
 }
 
 /**
- * Get a count of all programs in a category
- * that are associated with a facility
- * associated facility must have a `website_locator_points_link_id`
- *
- * @param  {string} catTerm category term to fetch programs for
- * @return {object} squel.js query builder object
- *
- * @since 0.1.0
- */
-export function selectProgramsCountPerCategoryTerm (catTerm) {
-  // get programs per category
-  let subSelectProgramsQuery = postgresSQL
-                                .select()
-                                .field(`count(*)`)
-                                .from(tables.programs)
-  // @TODO replace joinProgramsOnCategories with "WHERE program.category = ppr_activity_categories.activity_category_name"
-  // once the schmea is in place
-  joinProgramsOnCategories(subSelectProgramsQuery)
-  subSelectProgramsQuery
-    .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-    .where(`category = ${catTerm}.activity_category_name`)
-  return subSelectProgramsQuery
-}
-
-/**
  * given an entityType that maps to a table table
  * get a distinct list of categories from the associated taxonomy terms table
  *
@@ -207,8 +181,12 @@ export function selectTaxonomy ({entityType, taxonomy}) {
         .field(`${entityName}.activity_category_name`)
         .field(`${entityName}.activity_category_description`)
         .field(`${entityName}.activity_category_photo`)
-        .field(`${entityName}.id`)
-        .field(selectProgramsCountPerCategoryTerm(entityName), 'count')
+        .field('count(*)', 'count')
+        .join(tables.programs, null, `${tables.programs}.activity_category->>0 = ${entityName}.id`)
+        .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
+        .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
+        .where(`${tables.programs}.program_is_public`)
+        .group(`${entityName}.activity_category_name, ${entityName}.activity_category_description, ${entityName}.activity_category_photo`)
         .order('activity_category_name')
       break
 
@@ -222,14 +200,10 @@ export function selectTaxonomy ({entityType, taxonomy}) {
         .field(`${entityName}.location_type_description`)
         .field(`${entityName}.location_type_photo`)
         .field(`${entityName}.id`)
-        .field(
-          postgresSQL
-            .select()
-            .field('count(id)')
-            .from(tables.facilities)
-            .where(`${tables.facilities}.facility_type = ${entityName}.location_type_name`)
-          , 'count')
-        .order('location_type_name')
+        .field('count(*)', 'count')
+        .join(tables.facilities, null, `${tables.facilities}.location_type->>0 = ${entityName}.id`)
+        .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
+        .group(`${entityName}.location_type_name, ${entityName}.location_type_description, ${entityName}.location_type_photo, ${entityName}.id`)
       break
   }
 
@@ -253,7 +227,6 @@ export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
     categoryEntitiesQuery = postgresSQL
                               .select()
                               .from(tables.programs)
-                              // .field(`${tables.programs}.*`)
                               .field(`${tables.programs}.id`)
                               .field(`${tables.programs}.facility`)
                               .field(`${tables.programs}.program_id`)
@@ -264,23 +237,19 @@ export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
                               .field(`${tables.programs}.age_low`)
                               .field(`${tables.programs}.age_high`)
                               .field(`${tables.programs}.fee`)
-                              .field(`${tables.programs}.publish`)
-                              .field(`${tables.programs}.is_active`)
                               .field(`${tables.programs}.gender->>0`, 'gender')
-                              .field(`category`)
-
-    joinProgramsOnCategories(categoryEntitiesQuery)
-    if (taxonomyTerm) {
-      categoryEntitiesQuery.where(`category = '${taxonomyTerm}'`)
-    }
+                              .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+                              .field('days')
+                              .where(`${tables.programs}.program_is_public`)
+    joinProgramsOnCategories(categoryEntitiesQuery, taxonomyTerm)
   } else if (entityType === 'locations') {
     categoryEntitiesQuery = postgresSQL
                               .select()
                               .from(tables.facilities)
                               .field(`${tables.facilities}.*`)
-                              .join(`${tables.locationCategories}`, 'type', `type.location_type_name = ${tables.facilities}.facility_type`)
+                              .join(`${tables.locationCategories}`, 'type', `type.id = ${tables.facilities}.location_type->>0`)
     if (taxonomyTerm) {
-      categoryEntitiesQuery.where(`${tables.facilities}.facility_type = '${taxonomyTerm}'`)
+      categoryEntitiesQuery.where(`location_type_name = '${taxonomyTerm}'`)
     }
   }
   return joinPPRAssetsWith(categoryEntitiesQuery)
@@ -404,6 +373,7 @@ export function searchFieldsFor (sqlQueryObj, fields = [], searchText) {
  */
 export function addFilters (sqlQueryObj, filters) {
   filters = _.omit(filters, val => _.isNull(val))
+
   for (let filterKey in filters) {
     if (filterKey === 'fee') {
       let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
@@ -418,7 +388,8 @@ export function addFilters (sqlQueryObj, filters) {
       sqlQueryObj.where(`gender->>0 = '${filters[filterKey]}'`)
     }
     if (filterKey === 'days' && filters[filterKey].length) {
-      sqlQueryObj.where(`ARRAY[${filters.days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
+      let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
+      sqlQueryObj.where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
     }
   }
 }
