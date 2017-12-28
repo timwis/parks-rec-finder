@@ -1,8 +1,13 @@
 import _ from 'underscore'
+import { stringifyCoordinates } from '@/utilities/utils'
+
 import squel from 'squel'
 import tables from './CartoDBTables'
+
 import ProgramsQuery from './ProgramQueries'
 import TaxonomyQuery from './TaxonomyQuery'
+
+const METERS_TO_MILES_RATIO = 0.000621371
 
 export default class PPRFQuery {
   constructor (build) {
@@ -103,6 +108,76 @@ export default class PPRFQuery {
             .field(`ST_X(
               ST_Centroid(${tables.assets}.the_geom)
               ) as longitude`)
+        return this
+      }
+
+      searchFieldsFor (fields = [], searchText) {
+        let sqlExpr = null
+        for (let i in fields) {
+          let ilikeStatement = `${fields[i]} ILIKE '%${searchText}%'`
+          if (i === '0') {
+            sqlExpr = squel.expr().and(ilikeStatement)
+          } else {
+            sqlExpr.or(ilikeStatement)
+          }
+        }
+        this.query.where(sqlExpr)
+        return this
+      }
+
+      addWithinZipCodeField (zipcode) {
+        this.query
+            .field(`ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom) as within_zip_code`)
+            .left_join(`${tables.zipcodes}`, null, `${tables.zipcodes}.code = '${zipcode}'`)
+
+        return this
+      }
+
+      orderByMilesFromZipcode () {
+        this.query
+          .field(`ST_Distance(
+            ST_Centroid(${tables.assets}.the_geom)::geography,
+            ST_Centroid(${tables.zipcodes}.the_geom)::geography
+            ) * ${METERS_TO_MILES_RATIO} as distance`)
+          .order('distance')
+        return this
+      }
+
+      addDistanceFieldFromCoordinates (coordinates) {
+        this.query
+          .field(`ST_Distance(
+            ST_Centroid(${tables.assets}.the_geom)::geography,
+            ST_SetSRID(
+            ST_Point(${stringifyCoordinates(coordinates)}),
+            4326
+            )::geography
+            )  * ${METERS_TO_MILES_RATIO} as distance`)
+          .order('distance')
+
+        return this
+      }
+
+      addFilters (filters) {
+        filters = _.omit(filters, val => _.isNull(val))
+        let filterQuery = this.query
+        for (let filterKey in filters) {
+          if (filterKey === 'fee') {
+            let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
+            filterQuery.where(`${filterKey} ${_feeCompartor} '0.00'`)
+          }
+          if (filterKey === 'ages' && typeof filters[filterKey] === 'string') {
+            let ages = filters[filterKey].split('-')
+            filterQuery.where(`age_low >= ${ages[0]}`)
+            filterQuery.where(`age_high <= ${ages[1]}`)
+          }
+          if (filterKey === 'gender') {
+            filterQuery.where(`gender->>0 = '${filters[filterKey]}'`)
+          }
+          if (filterKey === 'days' && filters[filterKey].length) {
+            let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
+            filterQuery.where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
+          }
+        }
         return this
       }
 

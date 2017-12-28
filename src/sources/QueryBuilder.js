@@ -18,25 +18,11 @@ const METERS_TO_MILES_RATIO = 0.000621371
  * @since 0.1.0
  */
 export function selectPrograms () {
-  // let programsQuery = postgresSQL
-  //                       .select()
-  //                       .from(tables.programs)
-  //                       .field(`${tables.programs}.*`)
-  //                       .field(`${tables.programs}.gender->>0`, 'gender')
-  //                       // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
-  //                       .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
-  //                       .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-  //                       .field('days')
-  //                       .field('address', 'facility_address')
-  //                       .field('facility_name')
-  //                       .field(`facility->>0`, 'facility_id')
-  //                       .where(`program_is_public`)
   return new PPRFQuery.Builder('programs')
               .fields(['*'])
               .joinPPRAssets()
               .build()
               .query
-  // return joinPPRAssetsWith(programsQuery)
 }
 
 /**

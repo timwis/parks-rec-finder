@@ -10,7 +10,6 @@ import {
   selectDaysByProgram,
   selectFacilities,
   selectFacility,
-  selectTaxonomy,
   selectCategoryEntitiesFor,
   orderByMilesFromZipcode,
   addDistanceFieldFromCoordinates,
@@ -98,21 +97,25 @@ class CartoAPI {
                                    .joinPPRAssets()
     // get facilites and assets with latitude and longitude values
     if (coords && !zipcode) {
-      addDistanceFieldFromCoordinates(this._programs, coords)
-      orderByMilesFromZipcode(this._facilities)
+      this._programs
+          .addDistanceFieldFromCoordinates(coords)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      addWithinZipCodeField(this._programs, zipcode)
+      this._programs
+            .addWithinZipCodeField(zipcode)
+            .orderByMilesFromZipcode()
     }
 
     if (freetextValue !== null && freetextValue !== '') {
       // search via user input text value
-      searchFieldsFor(this._programs, ['program_name', 'program_description'], freetextValue)
+      this._programs
+          .searchFieldsFor(['program_name', 'program_description'], freetextValue)
     }
 
     if (filters) {
-      addFilters(this._programs, filters)
+      this._programs
+        .addFilters(filters)
     }
 
     return this.runQuery(this.programs)
