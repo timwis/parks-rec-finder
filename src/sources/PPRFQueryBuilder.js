@@ -1,7 +1,5 @@
 import _ from 'underscore'
-/* eslint-disable no-unused-vars */
 import squel from 'squel'
-/* eslint-disable no-unused-vars */
 import tables from './CartoDBTables'
 import ProgramsQuery from './ProgramQueries'
 import TaxonomyQuery from './TaxonomyQuery'
@@ -23,7 +21,6 @@ export default class PPRFQuery {
         this.entityType = entityType
         this.postgreSQL = squel.useFlavour('postgres')
         this.options = entityOptions
-
         switch (entityType) {
           case 'program':
           case 'programs':

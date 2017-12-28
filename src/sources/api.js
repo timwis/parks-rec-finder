@@ -22,27 +22,10 @@ class API {
     let {fields} = serachParams
     if (fields && (fields.address && fields.address !== null && fields.address !== '')) {
       return aisAPI.getCoordsForAddress(fields.address)
-                   .then(this._searchCarto.bind({}, serachParams))
+                   .then(cartoAPI.search.bind({}, serachParams))
     } else {
-      return this._searchCarto(serachParams, null)
+      return cartoAPI.search(serachParams, null)
     }
-  }
-
-/**
- * Given freetext and coordinate serach values
- * query the Carto DB to return a list of
- * PPR Facilites and Program entities
- * @param  {object} searchParams - UI search fields key value pairs
- * @param  {string} coords  - comma separated latitude and longitude
- *
- * @return {object}              Promise resolving with query results
- *
- * @since 0.1.0
- */
-  _searchCarto (searchParams, coords) {
-    let facilitiesSearchQuery = cartoAPI.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
-    let programsSearchQuery = cartoAPI.getPrograms(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
-    return Promise.all([facilitiesSearchQuery, programsSearchQuery])
   }
 
   /**

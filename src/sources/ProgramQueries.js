@@ -6,12 +6,14 @@ export default class ProgramsQuery extends QueryInterface {
     super(Builder)
 
     this.build = Builder
+    this.options = this.build.options
+
     this.query
         .field('facility_name')
+        .field(`gender->>0`, 'gender')
         .from(tables.programs)
-    this.defineQuery()
 
-    this.options = this.build.options
+    this.defineQuery()
 
     return this.query
   }
@@ -28,7 +30,6 @@ export default class ProgramsQuery extends QueryInterface {
 
   getAllRows () {
     return this.query
-                .field(`${tables.programs}.gender->>0`, 'gender')
                 .field('days')
                 .field('address', 'facility_address')
                 .field(`facility->>0`, 'facility_id')

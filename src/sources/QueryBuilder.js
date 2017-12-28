@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import PPRFQuery from './PPRFQueryBuilder'
-// import {Shop, run} from './Builder'
 import squel from 'squel'
 import _ from 'underscore'
 import tables from './CartoDBTables'
@@ -19,21 +18,25 @@ const METERS_TO_MILES_RATIO = 0.000621371
  * @since 0.1.0
  */
 export function selectPrograms () {
-  let programsQuery = postgresSQL
-                        .select()
-                        .from(tables.programs)
-                        .field(`${tables.programs}.*`)
-                        .field(`${tables.programs}.gender->>0`, 'gender')
-                        // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
-                        .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
-                        .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-                        .field('days')
-                        .field('address', 'facility_address')
-                        .field('facility_name')
-                        .field(`facility->>0`, 'facility_id')
-                        .where(`program_is_public`)
-
-  return joinPPRAssetsWith(programsQuery)
+  // let programsQuery = postgresSQL
+  //                       .select()
+  //                       .from(tables.programs)
+  //                       .field(`${tables.programs}.*`)
+  //                       .field(`${tables.programs}.gender->>0`, 'gender')
+  //                       // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
+  //                       .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
+  //                       .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+  //                       .field('days')
+  //                       .field('address', 'facility_address')
+  //                       .field('facility_name')
+  //                       .field(`facility->>0`, 'facility_id')
+  //                       .where(`program_is_public`)
+  return new PPRFQuery.Builder('programs')
+              .fields(['*'])
+              .joinPPRAssets()
+              .build()
+              .query
+  // return joinPPRAssetsWith(programsQuery)
 }
 
 /**
@@ -75,7 +78,6 @@ export function selectProgram (programID) {
                         .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                         .field(`${tables.facilities}.id`, 'location_id')
                         .where(`${tables.programs}.id = '${programID}'`)
-
   return programQuery
 }
 
@@ -337,7 +339,7 @@ export function searchFieldsFor (sqlQueryObj, fields = [], searchText) {
  */
 export function addFilters (sqlQueryObj, filters) {
   filters = _.omit(filters, val => _.isNull(val))
-
+  let filterQuery = sqlQueryObj.query
   for (let filterKey in filters) {
     if (filterKey === 'fee') {
       let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
