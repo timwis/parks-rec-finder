@@ -4,6 +4,7 @@ import squel from 'squel'
 /* eslint-disable no-unused-vars */
 import tables from './CartoDBTables'
 import ProgramsQuery from './ProgramQueries'
+import TaxonomyQuery from './TaxonomyQuery'
 
 export default class PPRFQuery {
   constructor (build) {
@@ -53,6 +54,23 @@ export default class PPRFQuery {
                 .where(`category.activity_category_name = '${this.options.term}'`)
 
             break
+          case 'programsCategories':
+          case 'programCategories':
+          case 'activitiesCategories':
+          case 'activityCategories':
+            this.entityType = 'programs'
+            this.DBtable = tables.programCategories
+            this.query = new TaxonomyQuery(this)
+            break
+          case 'locationsCategories':
+          case 'locationCategories':
+          case 'facilitiesCategories':
+          case 'facilityCategories':
+          case 'placesCategories':
+            this.entityType = 'facilities'
+            this.DBtable = tables.locationCategories
+            this.query = new TaxonomyQuery(this)
+            break
           case 'days':
             this.DBtable = tables.days
             this.query = this.postgreSQL.select().from(this.DBtable)
@@ -92,6 +110,7 @@ export default class PPRFQuery {
       }
 
       build () {
+        // console.log(this.query.toString())
         return new PPRFQuery(this)
       }
     }
@@ -99,9 +118,3 @@ export default class PPRFQuery {
     return Builder
   }
 }
-
-let program = new PPRFQuery.Builder('programsCategory', {term: 'Athletic'})
-                           .joinPPRAssets()
-                           .build()
-
-console.log(program.query)

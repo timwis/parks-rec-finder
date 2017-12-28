@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {PPRFQuery} from './PPRFQueryBuilder'
+import PPRFQuery from './PPRFQueryBuilder'
 // import {Shop, run} from './Builder'
 import squel from 'squel'
 import _ from 'underscore'
@@ -177,34 +177,14 @@ export function selectTaxonomy ({entityType, taxonomy}) {
       entityName = 'program' + taxonomy
       taxonomyTable = tables[`${entityName}`]
 
-      taxonomyQuery
-        .from(taxonomyTable, entityName)
-        .field(`${entityName}.activity_category_name`)
-        .field(`${entityName}.activity_category_description`)
-        .field(`${entityName}.activity_category_photo`)
-        .field('count(*)', 'count')
-        .join(tables.programs, null, `${tables.programs}.activity_category->>0 = ${entityName}.id`)
-        .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
-        .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-        .where(`${tables.programs}.program_is_public`)
-        .group(`${entityName}.activity_category_name, ${entityName}.activity_category_description, ${entityName}.activity_category_photo`)
-        .order('activity_category_name')
+      taxonomyQuery = new PPRFQuery.Builder('programsCategories').build().query
       break
 
     case 'locations':
       entityName = 'location' + taxonomy
       taxonomyTable = tables[`${entityName}`]
 
-      taxonomyQuery
-        .from(taxonomyTable, entityName)
-        .field(`${entityName}.location_type_name`)
-        .field(`${entityName}.location_type_description`)
-        .field(`${entityName}.location_type_photo`)
-        .field(`${entityName}.id`)
-        .field('count(*)', 'count')
-        .join(tables.facilities, null, `${tables.facilities}.location_type->>0 = ${entityName}.id`)
-        .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-        .group(`${entityName}.location_type_name, ${entityName}.location_type_description, ${entityName}.location_type_photo, ${entityName}.id`)
+      taxonomyQuery = new PPRFQuery.Builder('locationsCategories').build().query
       break
   }
 
@@ -225,24 +205,7 @@ export function selectTaxonomy ({entityType, taxonomy}) {
 export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
   let categoryEntitiesQuery = postgresSQL
   if (entityType === 'programs') {
-    categoryEntitiesQuery = postgresSQL
-                              .select()
-                              .from(tables.programs)
-                              .field(`${tables.programs}.id`)
-                              .field(`${tables.programs}.facility`)
-                              .field(`${tables.programs}.program_id`)
-                              .field(`${tables.programs}.program_name_full`)
-                              .field(`${tables.programs}.activity_type`)
-                              .field(`${tables.programs}.program_name`)
-                              .field(`${tables.programs}.program_description`)
-                              .field(`${tables.programs}.age_low`)
-                              .field(`${tables.programs}.age_high`)
-                              .field(`${tables.programs}.fee`)
-                              .field(`${tables.programs}.gender->>0`, 'gender')
-                              .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-                              .field('days')
-                              .where(`${tables.programs}.program_is_public`)
-    joinProgramsOnCategories(categoryEntitiesQuery, taxonomyTerm)
+    return new PPRFQuery.Builder(`${entityType}Category`, {term: taxonomyTerm}).joinPPRAssets().build().query
   } else if (entityType === 'locations') {
     categoryEntitiesQuery = postgresSQL
                               .select()
