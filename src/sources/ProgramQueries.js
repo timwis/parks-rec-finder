@@ -1,23 +1,26 @@
 import tables from './CartoDBTables'
 
 export default class ProgramsQuery {
-  constructor (SQLQuery, options = null) {
-    this.query = SQLQuery
+  constructor (Builder) {
+    this.build = Builder
+    this.query = this.build.postgreSQL
                   .select()
-                  .field(`${tables.programs}.*`)
+                  // .field(`${tables.programs}.*`)
                   .field('facility_name')
                   .from(tables.programs)
+                  .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+                  .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
+                  .where('program_is_public')
 
-    if (options && options.id) {
-      this.query = this.getRowsByID(options.id)
+    this.options = this.build.options
+
+    if (this.options && this.options.id) {
+      this.query = this.getRowsByID(this.options.id)
     } else {
       this.query = this.getAllRows()
     }
 
     return this.query
-               .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-               .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
-               .where('program_is_public')
   }
 
   getAllRows () {

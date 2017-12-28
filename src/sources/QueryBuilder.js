@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-import {Raptor} from './PPRFQueryBuilder'
+import {PPRFQuery} from './PPRFQueryBuilder'
+// import {Shop, run} from './Builder'
 import squel from 'squel'
 import _ from 'underscore'
 import tables from './CartoDBTables'
-import {
-  stringifyCoordinates
-} from '@/utilities/utils'
+import { stringifyCoordinates } from '@/utilities/utils'
 
 let postgresSQL = squel.useFlavour('postgres')
 const METERS_TO_MILES_RATIO = 0.000621371

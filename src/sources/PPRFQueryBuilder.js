@@ -1,3 +1,4 @@
+import _ from 'underscore'
 /* eslint-disable no-unused-vars */
 import squel from 'squel'
 /* eslint-disable no-unused-vars */
@@ -7,9 +8,12 @@ import ProgramsQuery from './ProgramQueries'
 export default class PPRFQuery {
   constructor (build) {
     this.entityType = build.entityType
-    this.speed = build.speed
-    this.plumage = build.plumage
     this.queryString = build.query.toString()
+    this.queryObject = build.query
+  }
+
+  get query () {
+    return this.queryString
   }
 
   static get Builder () {
@@ -17,29 +21,63 @@ export default class PPRFQuery {
       constructor (entityType, entityOptions) {
         this.entityType = entityType
         this.postgreSQL = squel.useFlavour('postgres')
+        this.options = entityOptions
 
         switch (entityType) {
           case 'program':
           case 'programs':
           case 'activities':
           case 'activitiy':
-            this.query = new ProgramsQuery(this.postgreSQL, entityOptions)
+            this.DBtable = tables.programs
+            this.query = new ProgramsQuery(this)
+            break
+          case 'programsCategory':
+          case 'activitiesCategory':
+            this.DBtable = tables.programs
+            this.query = new ProgramsQuery(this)
+            this.fields([
+              'program_name_full',
+              `id`,
+              'program_id',
+              'activity_type',
+              'program_name',
+              'program_description',
+              'age_low',
+              'age_high',
+              'fee',
+              {'gender->>0': 'gender'}
+            ])
+            this.query
+                .join(tables.programCategories, 'category', `category.id = ${this.DBtable}.activity_category->>0`)
+                .field(`category`)
+                .where(`category.activity_category_name = '${this.options.term}'`)
+
             break
           case 'days':
-            this.query = this.postgreSQL.select().from(tables.days)
+            this.DBtable = tables.days
+            this.query = this.postgreSQL.select().from(this.DBtable)
             break
         }
       }
 
-      // joinProgramSchedules () {
-      //   this.query.join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-      //   return this
-      // }
+      where (whereClause) {
+        this.query.where(whereClause)
+        return this.query
+      }
 
-      // joinFacilites () {
-      //   this.query.join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
-      //   return this
-      // }
+      fields (fieldDefs) {
+        if (_.isArray(fieldDefs)) {
+          fieldDefs.forEach(field => {
+            if (_.isObject(field)) {
+              this.query.field(`${this.DBtable}.${Object.keys(field)[0]}`, Object.values(field)[0])
+            } else {
+              this.query.field(`${this.DBtable}.${field}`)
+            }
+          })
+        }
+
+        return this
+      }
 
       joinPPRAssets () {
         this.query
@@ -54,7 +92,6 @@ export default class PPRFQuery {
       }
 
       build () {
-        console.log(this.query.toString())
         return new PPRFQuery(this)
       }
     }
@@ -63,6 +100,8 @@ export default class PPRFQuery {
   }
 }
 
-let raptor3 = new PPRFQuery.Builder('programs', {id: '57abb50bf6f0705e3051b869'})
+let program = new PPRFQuery.Builder('programsCategory', {term: 'Athletic'})
                            .joinPPRAssets()
                            .build()
+
+console.log(program.query)
