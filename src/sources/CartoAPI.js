@@ -5,7 +5,8 @@ import {
 } from '@/utilities/utils'
 import PPRFQuery from './PPRFQueryBuilder'
 
-const LOG_QUERIES = process.env.NODE_ENV === 'development'
+// const LOG_QUERIES = process.env.NODE_ENV === 'development'
+const LOG_QUERIES = false
 
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
@@ -35,7 +36,27 @@ class CartoAPI {
     if (this.LOG_QUERIES) {
       console.log(`Carto API:runQuery \n ${sqlString}`)
     }
+
+    if (window.localStorage.getItem(sqlString)) {
+      return new Promise((resolve) => {
+        resolve(JSON.parse(window.localStorage.getItem(sqlString)))
+      })
+    }
+
     return this.http.get(`sql?q=${encodeURIComponent(sqlString)}`)
+                    .then(results => {
+                      this.cacheQuery(sqlString, results)
+                      return results
+                    })
+  }
+
+  cacheQuery (sqlQueryString, data) {
+    let store = window.localStorage
+    if (store.getItem(sqlQueryString)) {
+      alert(sqlQueryString)
+    } else {
+      store.setItem(sqlQueryString, JSON.stringify(data))
+    }
   }
 
   search (searchParams, coords) {
