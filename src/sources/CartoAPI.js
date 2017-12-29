@@ -5,8 +5,7 @@ import {
 } from '@/utilities/utils'
 import PPRFQuery from './PPRFQueryBuilder'
 
-// const LOG_QUERIES = process.env.NODE_ENV === 'development'
-const LOG_QUERIES = false
+const LOG_QUERIES = process.env.NODE_ENV === 'development'
 
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
@@ -33,14 +32,17 @@ class CartoAPI {
   runQuery (sqlQuery) {
     let sqlString = sqlQuery.build().query
 
-    if (this.LOG_QUERIES) {
-      console.log(`Carto API:runQuery \n ${sqlString}`)
-    }
-
     if (window.localStorage.getItem(sqlString)) {
+      if (this.LOG_QUERIES) {
+        console.log(`Carto API:fromLocalStorageCache \n ${sqlString}`)
+      }
       return new Promise((resolve) => {
         resolve(JSON.parse(window.localStorage.getItem(sqlString)))
       })
+    }
+
+    if (this.LOG_QUERIES) {
+      console.log(`Carto API:runQuery \n ${sqlString}`)
     }
 
     return this.http.get(`sql?q=${encodeURIComponent(sqlString)}`)
@@ -108,7 +110,7 @@ class CartoAPI {
 
     if (filters) {
       this.programs
-        .addFilters(filters)
+          .addFilters(filters)
     }
 
     return this.runQuery(this.programs)
@@ -225,9 +227,9 @@ class CartoAPI {
     let taxonomyTerm = deSlugify(entity.entityTerm)
     let categoryEntityQuery = new PPRFQuery.Builder(`${entity.entityType}Category`, {term: taxonomyTerm})
                                            .joinPPRAssets()
-    if (filters && entity.entityTerm === 'programs') {
+    if (filters && entity.entityType === 'programs') {
       categoryEntityQuery
-        .addFilters(categoryEntityQuery, filters)
+        .addFilters(filters)
     }
 
     return this.runQuery(categoryEntityQuery)
