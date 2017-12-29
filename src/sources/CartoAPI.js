@@ -3,21 +3,7 @@ import {
   isValidZipcode,
   deSlugify
 } from '@/utilities/utils'
-/* eslint-disable no-unused-vars */
 import PPRFQuery from './PPRFQueryBuilder'
-import {
-  selectProgramsByFacilityID,
-  selectDaysByProgram,
-  selectFacilities,
-  selectFacility,
-  selectCategoryEntitiesFor,
-  orderByMilesFromZipcode,
-  addDistanceFieldFromCoordinates,
-  addWithinZipCodeField,
-  searchFieldsFor,
-  addFilters,
-  selectDays
-} from './QueryBuilder'
 
 const LOG_QUERIES = process.env.NODE_ENV === 'development'
 
@@ -36,22 +22,6 @@ class CartoAPI {
     this.programFields = ['id', 'program_name', 'program_description', 'age_low', 'age_high', 'fee']
   }
 
-  set programs (programs) {
-    this._programs = programs
-  }
-  // stringify sql query
-  get programs () {
-    return this._programs.build().query
-  }
-
-  set facilities (programs) {
-    this._facilities = programs
-  }
-  // stringify sql query
-  get facilities () {
-    return this._facilities.toString()
-  }
-
   /**
    * GET SQL query results from the Cart API
    * @param  {string} sqlString - SQL Query
@@ -59,7 +29,9 @@ class CartoAPI {
    *
    * @since 0.1.0
    */
-  runQuery (sqlString) {
+  runQuery (sqlQuery) {
+    let sqlString = sqlQuery.build().query
+
     if (this.LOG_QUERIES) {
       console.log(`Carto API:runQuery \n ${sqlString}`)
     }
@@ -79,7 +51,7 @@ class CartoAPI {
    * @since 0.1.0
    */
   getDays () {
-    return this.runQuery(new PPRFQuery.Builder('days').build().query)
+    return this.runQuery(new PPRFQuery.Builder('days'))
   }
 
   /**
@@ -92,29 +64,29 @@ class CartoAPI {
    * @since 0.1.0
    */
   getPrograms (freetextValue, coords = null, zipcode = null, filters = null) {
-    this._programs = new PPRFQuery.Builder('programs')
+    this.programs = new PPRFQuery.Builder('programs')
                                    .fields(this.programFields)
                                    .joinPPRAssets()
     // get facilites and assets with latitude and longitude values
     if (coords && !zipcode) {
-      this._programs
+      this.programs
           .addDistanceFieldFromCoordinates(coords)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      this._programs
+      this.programs
             .addWithinZipCodeField(zipcode)
             .orderByMilesFromZipcode()
     }
 
     if (freetextValue !== null && freetextValue !== '') {
       // search via user input text value
-      this._programs
+      this.programs
           .searchFieldsFor(['program_name', 'program_description'], freetextValue)
     }
 
     if (filters) {
-      this._programs
+      this.programs
         .addFilters(filters)
     }
 
@@ -134,8 +106,6 @@ class CartoAPI {
       new PPRFQuery.Builder('program', {id: programID})
                    .fields(this.programFields)
                    .joinPPRAssets()
-                   .build()
-                   .query
     )
   }
 
@@ -146,9 +116,7 @@ class CartoAPI {
    * @return {object}           Promise
    */
   getProgramDays (programID) {
-    return this.runQuery(
-      selectDaysByProgram(programID)
-    )
+    return this.runQuery(new PPRFQuery.Builder('programScheduleDays', {id: programID}))
   }
   /**
    * Given a `facility_id` get all programs associated
@@ -159,7 +127,11 @@ class CartoAPI {
    * @since 0.1.0
    */
   getProgramsByFacilityID (facilityID) {
-    return this.runQuery(selectProgramsByFacilityID(facilityID))
+    return this.runQuery(
+       new PPRFQuery.Builder('programs')
+                     .fields(['id', 'program_name'])
+                     .where(`ppr_programs.facility->>0 = '${facilityID}'`)
+    )
   }
 
   /**
@@ -172,19 +144,23 @@ class CartoAPI {
    * @since 0.1.0
    */
   getFacilities (freetextValue, coords = null, zipcode = null) {
-    this._facilities = selectFacilities()
+    this.facilities = new PPRFQuery.Builder('facilities').joinPPRAssets()
+
     if (coords && !zipcode) {
-      addDistanceFieldFromCoordinates(this._facilities, coords)
+      this.facilities
+          .addDistanceFieldFromCoordinates(coords)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      addWithinZipCodeField(this._facilities)
-      orderByMilesFromZipcode(this._facilities)
+      this.facilities
+            .addWithinZipCodeField(zipcode)
+            .orderByMilesFromZipcode()
     }
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
-      searchFieldsFor(this._facilities, ['facility_description', 'facility_name', 'long_name'], freetextValue)
+      this.facilities
+          .searchFieldsFor(['facility_description', 'facility_name', 'long_name'], freetextValue)
     }
 
     return this.runQuery(this.facilities)
@@ -199,7 +175,8 @@ class CartoAPI {
    */
   getFacilityByID (facilityID) {
     return this.runQuery(
-      selectFacility(facilityID)
+      new PPRFQuery.Builder('facility', {id: facilityID})
+                   .joinPPRAssets()
     )
   }
 
@@ -212,8 +189,7 @@ class CartoAPI {
    */
   getEntityTaxonomy ({entityType, taxonomy}) {
     if (taxonomy === 'category') { taxonomy = 'Categories' }
-    let entityName = `${entityType}${taxonomy}`
-    let taxonomyQuery = new PPRFQuery.Builder(entityName).build().query
+    let taxonomyQuery = new PPRFQuery.Builder(`${entityType}${taxonomy}`)
     return this.runQuery(taxonomyQuery)
   }
 
@@ -226,14 +202,11 @@ class CartoAPI {
    */
   getTaxonomyTermEntities (entity, filters) {
     let taxonomyTerm = deSlugify(entity.entityTerm)
-    // let categoryEntityQuery = selectCategoryEntitiesFor(entity.entityType, taxonomyTerm)
     let categoryEntityQuery = new PPRFQuery.Builder(`${entity.entityType}Category`, {term: taxonomyTerm})
-                                          .joinPPRAssets()
-                                          .build()
-                                          .query
-    if (filters) {
-      addFilters(categoryEntityQuery, filters)
-      return this.runQuery(categoryEntityQuery)
+                                           .joinPPRAssets()
+    if (filters && entity.entityTerm === 'programs') {
+      categoryEntityQuery
+        .addFilters(categoryEntityQuery, filters)
     }
 
     return this.runQuery(categoryEntityQuery)

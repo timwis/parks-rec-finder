@@ -54,4 +54,12 @@ export default class ProgramsQuery extends QueryInterface {
             .where('program_is_public')
             // .where('program_is_approved')
   }
+
+  static getProgramScheduleDays (query, programID) {
+    return query
+            .select()
+            .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
+            .join(tables.days, 'b', 'b.id = a._daysID')
+            .where(`program->>0 = '${programID}'`)
+  }
 }

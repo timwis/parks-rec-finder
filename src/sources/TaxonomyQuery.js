@@ -37,6 +37,8 @@ export default class TaxonomyQuery extends QueryInterface {
       case 'location':
       case 'facilities':
       case 'facility':
+      case 'places':
+      case 'place':
         this.query
           .field(`${this.tableAlias}.location_type_name`)
           .field(`${this.tableAlias}.location_type_description`)

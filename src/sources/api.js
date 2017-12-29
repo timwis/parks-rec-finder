@@ -106,6 +106,7 @@ class API {
    */
   getProgramByID (programID) {
     let daysQuery = cartoAPI.getProgramDays(programID)
+    console.log(daysQuery)
     let programQuery = cartoAPI.getProgramByID(programID)
     return Promise.all([programQuery, daysQuery])
   }

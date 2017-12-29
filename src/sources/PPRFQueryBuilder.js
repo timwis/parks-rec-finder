@@ -5,6 +5,8 @@ import squel from 'squel'
 import tables from './CartoDBTables'
 
 import ProgramsQuery from './ProgramQueries'
+/* eslint-disable no-unused-vars */
+import FacilitiesQuery from './FacilitiesQuery'
 import TaxonomyQuery from './TaxonomyQuery'
 
 const METERS_TO_MILES_RATIO = 0.000621371
@@ -64,6 +66,23 @@ export default class PPRFQuery {
             this.DBtable = tables.programCategories
             this.query = new TaxonomyQuery(this)
             break
+          case 'programDays':
+          case 'programScheduleDays':
+            this.query = this.postgreSQL
+                             .select()
+                             .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
+                             .join(tables.days, 'b', 'b.id = a._daysID')
+                             .where(`program->>0 = '${this.options.id}'`)
+            break
+          case 'locations':
+          case 'location':
+          case 'facilities':
+          case 'facility':
+          case 'places':
+            this.entityType = 'facility'
+            this.DBtable = tables.facilities
+            this.query = new FacilitiesQuery(this)
+            break
           case 'locationsCategories':
           case 'locationCategories':
           case 'facilitiesCategories':
@@ -72,6 +91,16 @@ export default class PPRFQuery {
             this.entityType = 'facilities'
             this.DBtable = tables.locationCategories
             this.query = new TaxonomyQuery(this)
+            break
+          case 'locationsCategory':
+          case 'facilitiesCategory':
+          case 'placesCategory':
+            this.entityType = 'facilities'
+            this.DBtable = tables.facilities
+            this.query = new FacilitiesQuery(this)
+            this.query
+                .join(tables.locationCategories, null, `${tables.locationCategories}.id = ${this.DBtable}.location_type->>0`)
+                .where(`location_type_name = '${this.options.term}'`)
             break
           case 'days':
             this.DBtable = tables.days
@@ -82,7 +111,7 @@ export default class PPRFQuery {
 
       where (whereClause) {
         this.query.where(whereClause)
-        return this.query
+        return this
       }
 
       fields (fieldDefs) {

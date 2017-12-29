@@ -79,7 +79,7 @@ export function selectDays () {
           .from(tables.days)
 }
 /**
- * given a program_id get all schedule days for that program
+ * given a program.id get all schedule days for that program
  * from the ppr_days table
  * @param  {string} programID ppr_programs.program_id
  *
