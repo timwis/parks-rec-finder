@@ -250,7 +250,7 @@ export default {
       let searchFieldsFromRoute = _.intersection(Object.keys(val), Object.keys(this.$store.state.search.fields))
       let previousFieldValues = Object.values(_.pick(this.$store.state.route.from.query, searchFieldsFromRoute))
       let newFieldValues = Object.values(_.pick(val, searchFieldsFromRoute))
-
+      this.$Progress.start()
       if (_.difference(newFieldValues, previousFieldValues).length && this.$store.state.route.name === 'Search') {
         let fields = searchFieldsFromRoute.length ? _.pick(val, searchFieldsFromRoute) : null
 

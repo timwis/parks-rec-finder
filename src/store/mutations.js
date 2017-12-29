@@ -1,6 +1,14 @@
 import * as types from './mutation-types'
 
 const mutations = {
+  [types.APP_LOADING] (state) {
+    state.loading = true
+  },
+
+  [types.APP_LOADED] (state) {
+    state.loading = false
+  },
+
   // tabs
   [types.SET_ACTIVE_TAB] (state, entityType) {
     state.activeTab = entityType
@@ -48,12 +56,14 @@ const mutations = {
   },
 
   [types.SUBMIT_SEARCH] (state, searchParams) {
+    state.loading = true
     state.search.loading = true
     state.search.success = false
     state.search = searchParams
   },
 
   [types.RECEIVE_SEARCH_SUCCESS] (state, entities) {
+    state.loading = false
     state.search.loading = false
     state.search.success = true
   },

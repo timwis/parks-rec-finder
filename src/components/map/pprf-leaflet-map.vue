@@ -1,5 +1,8 @@
 <template>
- <div class="pprf-map__container">
+ <div  class="pprf-map__container">
+
+   <div v-show="loading" class="loading-overlay"></div>
+
     <v-map ref="leafletMap" id="PPRF-Leaflet-Map" :zoom="zoom" :center="center">
 
       <v-tilelayer :url="basemap" ></v-tilelayer>
@@ -73,7 +76,8 @@ export default {
   computed: {
     ...mapState({
       markers: state => state.mapMarkers,
-      zipcodeSearched: state => state.search.fields.zip
+      zipcodeSearched: state => state.search.fields.zip,
+      loading: state => state.loading
     }),
     activeEntity () {
       let entityTypeParam = this.$store.state.route.params.entityType
@@ -114,10 +118,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .loading-overlay{
+    position:absolute;
+    display:block;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background: rgba(0,0,0,.85);
+    z-index: 1000;
+    pointer-events: none;
+  }
   .pprf-map__container{
     flex:1;
     width: 100%;
+    position:relative;
     display: block;
     height:calc(#{$max-app-height} - #{$header-height});
   }

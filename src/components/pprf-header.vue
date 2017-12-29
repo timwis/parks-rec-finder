@@ -1,5 +1,6 @@
 <template>
   <header class="pprf-header">
+    <vue-progress-bar></vue-progress-bar>
     <p class="version-tag">v{{versionNumber}}</p>
     <pprf-search></pprf-search>
   </header>
