@@ -66,14 +66,29 @@ export default class PPRFQuery {
             this.DBtable = tables.programCategories
             this.query = new TaxonomyQuery(this)
             break
-          case 'programDays':
-          case 'programScheduleDays':
+          case 'programSchedules':
+          case 'programSchedule':
             this.query = this.postgreSQL
                              .select()
-                             .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
-                             .join(tables.days, 'b', 'b.id = a._daysID')
+                             .field('*')
+                             .field(`to_char(time_from, 'HH:MM am')`, 'time_from')
+                             .field(`to_char(time_to, 'HH:MM am')`, 'time_to')
+                             .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
+                             .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
+                             .from(tables.programSchedules)
                              .where(`program->>0 = '${this.options.id}'`)
+                             .where('time_to > now()')
             break
+          // DEPRICATED
+          // case 'programDays':
+          // case 'programScheduleDays':
+          //   this.query = this.postgreSQL
+          //                    .select()
+          //                    .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
+          //                    .join(tables.days, 'b', 'b.id = a._daysID')
+          //                    .where(`program->>0 = '${this.options.id}'`)
+
+          //   break
           case 'locations':
           case 'location':
           case 'facilities':

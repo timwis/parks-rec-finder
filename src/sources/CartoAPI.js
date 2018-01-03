@@ -6,6 +6,7 @@ import {
 import PPRFQuery from './PPRFQueryBuilder'
 
 const LOG_QUERIES = process.env.NODE_ENV === 'development'
+const CACHE_QUERIES = process.env.CARTO_API.CACHE_QUERIES
 
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
@@ -47,7 +48,9 @@ class CartoAPI {
 
     return this.http.get(`sql?q=${encodeURIComponent(sqlString)}`)
                     .then(results => {
-                      this.cacheQuery(sqlString, results)
+                      if (CACHE_QUERIES) {
+                        this.cacheQuery(sqlString, results)
+                      }
                       return results
                     })
   }
@@ -140,6 +143,10 @@ class CartoAPI {
    */
   getProgramDays (programID) {
     return this.runQuery(new PPRFQuery.Builder('programScheduleDays', {id: programID}))
+  }
+
+  getProgramSchedules (programID) {
+    return this.runQuery(new PPRFQuery.Builder('programSchedules', {id: programID}))
   }
   /**
    * Given a `facility_id` get all programs associated

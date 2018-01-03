@@ -40,17 +40,21 @@
           </pprf-detail-content-section>
 
 
+
+
+
           <pprf-detail-content-section
-            v-if="program.start_date"
-            heading="Program Schedule"
+            v-if="program.scheudles"
+            heading="Program Schedule(s)"
             icon="calendar-alt"
           >
-            <p class="text-nopad">
-              <b v-for="(value, key, index) in days">{{value}} </b>
-            </p>
-            <p class="text-nopad" >Start Date: {{program.start_date}}</p>
-            <p class="text-nopad" >End Date: {{program.end_date}}</p>
-            <!-- <p>Frequency: XXXXXXX</p> -->
+            <div v-for="schedule in schedules">
+              <p class="text-nopad" ><b>Start Date:</b> {{schedule.start_date}}</p>
+              <p class="text-nopad" ><b>End Date:</b> {{schedule.end_date}}</p>
+              <table class="program__schedule">
+                <tr v-for="day in schedule.days"><td>{{day.days_name}}</td> <td>{{schedule.time_from}} - {{schedule.time_to}}</td></tr>
+              </table>
+            </div>
 
           </pprf-detail-content-section>
 
@@ -92,6 +96,7 @@ import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfDetailContentSection from '@/components/pprf-detail-content-section'
 import api from '@/sources/api'
+import _ from 'underscore'
 
 export default {
   name: 'PPRF-Sidebar-entity-detail-Container',
@@ -107,6 +112,12 @@ export default {
     api.getProgramByID(to.params.program_id)
         .then(results => {
           next(vm => {
+            let schedules = results[1].data.rows
+            // map days to each schedule
+            for (var i = 0; i < schedules.rows.length; i++) {
+              schedules.rows[i].days = schedules.rows[i].days.map(day => _.findWhere(window.PPRdaysTable, {id: day}))
+            }
+            vm.schedules = schedules
             results[0].data.rows[0].days = results[1].data.rows
             vm.$store.dispatch('updateEntities', { program: results[0].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'program' })
@@ -114,26 +125,14 @@ export default {
         })
   },
 
-  computed: {
-    ...mapState({
-      program: state => state.entities.program[0]
-    }),
-    days () {
-      let _days = this.program.days.map((day, idx, array) => {
-        let _day = day.days_name + 's'
-
-        if (array.length > 2 & idx < array.length - 1) {
-          _day = _day + ' ,'
-        }
-        return _day
-      })
-
-      if (this.program.days.length > 1) {
-        _days.splice(_days.length - 1, 0, ' and ')
-      }
-
-      return _days
+  data () {
+    return {
+      schedules: []
     }
+  },
+
+  computed: {
+    ...mapState({ program: state => state.entities.program[0] })
   }
 }
 </script>
@@ -163,6 +162,18 @@ export default {
   justify-content: center;
   small {margin-right: 5%;}
   p{margin:0; padding:0;}
+}
+
+.program__schedule{
+  font-family: $font-open-sans;
+  @include rem(font-size, 1.4);
+  margin-bottom: 20px;
+  tr{
+    background: color(ghost-gray);
+  }
+  td{
+    padding: 3px 10px;
+  }
 }
 
 </style>

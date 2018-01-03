@@ -1,4 +1,5 @@
 <template>
+
     <pprf-sidebar
       class="pprf-sidebar--nopad"
     >
