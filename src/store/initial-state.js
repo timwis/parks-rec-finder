@@ -1,4 +1,5 @@
 const state = {
+  loading: true,
   entities: {
     program: [],
     facility: [],

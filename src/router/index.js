@@ -9,8 +9,13 @@ Vue.use(routerHistory)
 let router = new Router({ routes })
 
 router.beforeEach((to, from, next) => {
+  store.dispatch('dataLoading')
   store.dispatch('resetMarkers')
   next()
+})
+
+router.afterEach((to, from) => {
+  store.dispatch('dataLoaded')
 })
 
 router.afterEach(writeHistory)

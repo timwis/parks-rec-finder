@@ -1,3 +1,6 @@
+export const APP_LOADING = 'appLoading/IS_LOADING'
+export const APP_LOADED = 'appLoading/IS_LOADED'
+
 // GLOBAL
 export const UPDATE_ENTITIES = 'UPDATE_ENTITIES'
 

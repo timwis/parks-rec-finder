@@ -3,7 +3,8 @@
     <header
       class="pprf-filter-bar__header"
     >
-      <div @click="open = !open">
+      <!-- <div @click="open = !open"> -->
+      <div @click="toggleOpen">
         <h4 class="text-nopad">Filters</h4>
         <font-awesome-icon :icon="open ? 'minus' : 'plus'" />
       </div>
@@ -286,7 +287,14 @@ export default {
   },
 
   methods: {
-
+    toggleOpen () {
+      this.open = !this.open
+      if (this.open) {
+        this.$store.dispatch('dataLoading')
+      } else {
+        this.$store.dispatch('dataLoaded')
+      }
+    },
     /**
      * On Form Submission submit search with filter values
      *
@@ -323,6 +331,8 @@ export default {
       this.$emit('clearFilters')
       this.open = false
       this.filtersApplied = false
+      this.onSubmit()
+      // this.$store.dispatch('dataLoaded')
     },
     /**
      * Given a filter property nullify the value
@@ -343,6 +353,7 @@ export default {
         default:
           this.filtersData[filterKey] = null
       }
+      this.$store.dispatch('dataLoading')
       this.onSubmit()
     },
     /**

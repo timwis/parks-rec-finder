@@ -1,6 +1,6 @@
 <template>
   <pprf-sidebar
-    class="pprf-sidebar--category pprf-sidebar--nopad"
+    :class="['pprf-sidebar--category', `pprf-sidebar--category--${entityType}`, 'pprf-sidebar--nopad']"
   >
       <div
         slot="sidebar-header"
@@ -207,7 +207,19 @@ export default {
     list-style: none;
     li{margin:0; padding:0;}
   }
+  .pprf-sidebar--category--locations{
+    .pprf-sidebar__header--category{
+      background: color(pride-purple);
+      .pprf-sidebar__title{
+        color:$white;
+      }
+    }
 
+  }
+  .pprf-sidebar__title--category{
+    display: inline-block;
+    width: 75%;
+  }
   .card--program--selected{
     border-radius: $border-radius;
     box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);

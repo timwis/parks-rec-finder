@@ -33,7 +33,7 @@ export default {
 <style lang="scss" scoped>
   .pprf-detail-section{
 
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     address{
       font-style: normal;
     }
@@ -52,7 +52,7 @@ export default {
     align-items: center;
     color: color(medium-gray);
     @include rem(font-size, 1.5);
-    @include rem(line-height, 1.5);
+    @include rem(line-height, 1.25);
     padding-bottom:5px;
   }
   .pprf-detail-section__heading-icon{

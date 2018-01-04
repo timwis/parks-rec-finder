@@ -2,6 +2,13 @@ import api from '@/sources/api'
 import * as types from './mutation-types'
 
 const actions = {
+  dataLoading ({state, commit}) {
+    commit(types.APP_LOADING)
+  },
+
+  dataLoaded ({state, commit}) {
+    commit(types.APP_LOADED)
+  },
 
   setActiveTab ({commit, state}, entityType) {
     let type = entityType.toLowerCase().replace('s', '')
