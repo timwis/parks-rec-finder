@@ -53,6 +53,12 @@ export default {
     next()
   },
 
+  mounted () {
+    navigator.geolocation.getCurrentPosition(position => {
+      this.userLocation = L.latLng(position.coords.latitude, position.coords.longitude)
+    })
+  },
+
   updated () {
     this.fitToMarkerBounds()
   },
@@ -90,12 +96,6 @@ export default {
     }
   },
 
-  mounted () {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.userLocation = L.latLng(position.coords.latitude, position.coords.longitude)
-    })
-  },
-
   methods: {
     fitToMarkerBounds () {
       let _markers = this.markers
@@ -117,7 +117,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
   .loading-overlay{
     position:absolute;
     display:block;
@@ -135,5 +135,15 @@ export default {
     position:relative;
     display: block;
     height:calc(#{$max-app-height} - #{$header-height});
+  }
+
+  .leaflet-control-zoom{
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    border: 3px solid color(ben-franklin-blue) !important;
+    color: color(ben-franklin-blue) !important;
+    border-radius: 0px !important;
+    * { border-radius: 0px !important; }
   }
 </style>
