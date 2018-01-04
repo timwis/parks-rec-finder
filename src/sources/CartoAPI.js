@@ -3,24 +3,10 @@ import {
   isValidZipcode,
   deSlugify
 } from '@/utilities/utils'
-import {
-  selectPrograms,
-  selectProgram,
-  selectProgramsByFacilityID,
-  selectDaysByProgram,
-  selectFacilities,
-  selectFacility,
-  selectTaxonomy,
-  selectCategoryEntitiesFor,
-  orderByMilesFromZipcode,
-  addDistanceFieldFromCoordinates,
-  addWithinZipCodeField,
-  searchFieldsFor,
-  addFilters,
-  selectDays
-} from './QueryBuilder'
+import PPRFQuery from './PPRFQueryBuilder'
 
 const LOG_QUERIES = process.env.NODE_ENV === 'development'
+const CACHE_QUERIES = process.env.CARTO_API.CACHE_QUERIES
 
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
@@ -33,24 +19,8 @@ class CartoAPI {
     this.LOG_QUERIES = LOG_QUERIES
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
-    this._programs = selectPrograms()
-    this._facilities = selectFacilities()
-  }
-
-  set programs (programs) {
-    this._programs = programs
-  }
-  // stringify sql query
-  get programs () {
-    return this._programs.toString()
-  }
-
-  set facilities (programs) {
-    this._facilities = programs
-  }
-  // stringify sql query
-  get facilities () {
-    return this._facilities.toString()
+    // this._facilities = selectFacilities()
+    this.programFields = ['id', 'program_name', 'program_description', 'age_low', 'age_high', 'fee']
   }
 
   /**
@@ -60,11 +30,44 @@ class CartoAPI {
    *
    * @since 0.1.0
    */
-  runQuery (sqlString) {
+  runQuery (sqlQuery) {
+    let sqlString = sqlQuery.build().query
+
+    if (window.localStorage.getItem(sqlString)) {
+      if (this.LOG_QUERIES) {
+        console.log(`Carto API:fromLocalStorageCache \n ${sqlString}`)
+      }
+      return new Promise((resolve) => {
+        resolve(JSON.parse(window.localStorage.getItem(sqlString)))
+      })
+    }
+
     if (this.LOG_QUERIES) {
       console.log(`Carto API:runQuery \n ${sqlString}`)
     }
+
     return this.http.get(`sql?q=${encodeURIComponent(sqlString)}`)
+                    .then(results => {
+                      if (CACHE_QUERIES) {
+                        this.cacheQuery(sqlString, results)
+                      }
+                      return results
+                    })
+  }
+
+  cacheQuery (sqlQueryString, data) {
+    let store = window.localStorage
+    if (store.getItem(sqlQueryString)) {
+      alert(sqlQueryString)
+    } else {
+      store.setItem(sqlQueryString, JSON.stringify(data))
+    }
+  }
+
+  search (searchParams, coords) {
+    let facilitiesSearchQuery = this.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
+    let programsSearchQuery = this.getPrograms(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
+    return Promise.all([facilitiesSearchQuery, programsSearchQuery])
   }
 
   /**
@@ -74,7 +77,7 @@ class CartoAPI {
    * @since 0.1.0
    */
   getDays () {
-    return this.runQuery(selectDays())
+    return this.runQuery(new PPRFQuery.Builder('days'))
   }
 
   /**
@@ -87,24 +90,30 @@ class CartoAPI {
    * @since 0.1.0
    */
   getPrograms (freetextValue, coords = null, zipcode = null, filters = null) {
-    this._programs = selectPrograms()
+    this.programs = new PPRFQuery.Builder('programs')
+                                   .fields(this.programFields)
+                                   .joinPPRAssets()
     // get facilites and assets with latitude and longitude values
     if (coords && !zipcode) {
-      addDistanceFieldFromCoordinates(this._programs, coords)
-      orderByMilesFromZipcode(this._facilities)
+      this.programs
+          .addDistanceFieldFromCoordinates(coords)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      addWithinZipCodeField(this._programs, zipcode)
+      this.programs
+            .addWithinZipCodeField(zipcode)
+            .orderByMilesFromZipcode()
     }
 
     if (freetextValue !== null && freetextValue !== '') {
       // search via user input text value
-      searchFieldsFor(this._programs, ['program_name', 'program_description'], freetextValue)
+      this.programs
+          .searchFieldsFor(['program_name', 'program_description'], freetextValue)
     }
 
     if (filters) {
-      addFilters(this._programs, filters)
+      this.programs
+          .addFilters(filters)
     }
 
     return this.runQuery(this.programs)
@@ -120,7 +129,9 @@ class CartoAPI {
    */
   getProgramByID (programID) {
     return this.runQuery(
-      selectProgram(programID)
+      new PPRFQuery.Builder('program', {id: programID})
+                   .fields(this.programFields)
+                   .joinPPRAssets()
     )
   }
 
@@ -131,9 +142,11 @@ class CartoAPI {
    * @return {object}           Promise
    */
   getProgramDays (programID) {
-    return this.runQuery(
-      selectDaysByProgram(programID)
-    )
+    return this.runQuery(new PPRFQuery.Builder('programScheduleDays', {id: programID}))
+  }
+
+  getProgramSchedules (programID) {
+    return this.runQuery(new PPRFQuery.Builder('programSchedules', {id: programID}))
   }
   /**
    * Given a `facility_id` get all programs associated
@@ -144,7 +157,11 @@ class CartoAPI {
    * @since 0.1.0
    */
   getProgramsByFacilityID (facilityID) {
-    return this.runQuery(selectProgramsByFacilityID(facilityID))
+    return this.runQuery(
+       new PPRFQuery.Builder('programs')
+                     .fields(['id', 'program_name'])
+                     .where(`ppr_programs.facility->>0 = '${facilityID}'`)
+    )
   }
 
   /**
@@ -157,19 +174,23 @@ class CartoAPI {
    * @since 0.1.0
    */
   getFacilities (freetextValue, coords = null, zipcode = null) {
-    this._facilities = selectFacilities()
+    this.facilities = new PPRFQuery.Builder('facilities').joinPPRAssets()
+
     if (coords && !zipcode) {
-      addDistanceFieldFromCoordinates(this._facilities, coords)
+      this.facilities
+          .addDistanceFieldFromCoordinates(coords)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      addWithinZipCodeField(this._facilities)
-      orderByMilesFromZipcode(this._facilities)
+      this.facilities
+            .addWithinZipCodeField(zipcode)
+            .orderByMilesFromZipcode()
     }
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
-      searchFieldsFor(this._facilities, ['facility_description', 'facility_name', 'long_name'], freetextValue)
+      this.facilities
+          .searchFieldsFor(['facility_description', 'facility_name', 'long_name'], freetextValue)
     }
 
     return this.runQuery(this.facilities)
@@ -184,7 +205,8 @@ class CartoAPI {
    */
   getFacilityByID (facilityID) {
     return this.runQuery(
-      selectFacility(facilityID)
+      new PPRFQuery.Builder('facility', {id: facilityID})
+                   .joinPPRAssets()
     )
   }
 
@@ -195,8 +217,10 @@ class CartoAPI {
    *
    * @since 0.1.0
    */
-  getEntityTaxonomy (taxonomyParams) {
-    return this.runQuery(selectTaxonomy(taxonomyParams).toString())
+  getEntityTaxonomy ({entityType, taxonomy}) {
+    if (taxonomy === 'category') { taxonomy = 'Categories' }
+    let taxonomyQuery = new PPRFQuery.Builder(`${entityType}${taxonomy}`)
+    return this.runQuery(taxonomyQuery)
   }
 
   /**
@@ -208,14 +232,14 @@ class CartoAPI {
    */
   getTaxonomyTermEntities (entity, filters) {
     let taxonomyTerm = deSlugify(entity.entityTerm)
-    let categoryEntityQuery = selectCategoryEntitiesFor(entity.entityType, taxonomyTerm)
-
-    if (filters) {
-      addFilters(categoryEntityQuery, filters)
-      return this.runQuery(categoryEntityQuery)
+    let categoryEntityQuery = new PPRFQuery.Builder(`${entity.entityType}Category`, {term: taxonomyTerm})
+                                           .joinPPRAssets()
+    if (filters && entity.entityType === 'programs') {
+      categoryEntityQuery
+        .addFilters(filters)
     }
 
-    return this.runQuery(selectCategoryEntitiesFor(entity.entityType, taxonomyTerm))
+    return this.runQuery(categoryEntityQuery)
   }
 }
 

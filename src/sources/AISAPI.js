@@ -39,7 +39,6 @@ class AISAPI {
    * @since 0.1.0
    */
   _locationExist (locationData) {
-    //
     return (locationData.features.length > 0 && (locationData.features[0].geometry && locationData.features[0].geometry.type === 'Point'))
   }
 

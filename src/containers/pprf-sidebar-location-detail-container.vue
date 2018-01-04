@@ -1,4 +1,5 @@
 <template>
+
     <pprf-sidebar
       class="pprf-sidebar--nopad pprf-sidebar--entity-detail"
     >
@@ -61,6 +62,7 @@
                 v-for="program in facilityPrograms"
                 :key="program.id"
               >
+
                 <router-link
                   :class="['program-detail__programs-list__item', {'program-detail__programs-list__item-prev': previousProgramID == program.program_id}]"
                   :to="'/program/'+program.program_id"

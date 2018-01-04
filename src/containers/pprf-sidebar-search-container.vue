@@ -32,7 +32,7 @@
                     :selected="true"
                    >
                       <pprf-program-card
-                        v-if="program.program_id"
+                        v-if="program.id"
                         v-for="program in programs"
                         :key="getUUID('programCard')"
                         :name="program.program_name"
