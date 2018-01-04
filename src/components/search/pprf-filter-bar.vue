@@ -226,7 +226,7 @@ export default {
 
     //   this.days = results.data.rows
     // })
-    this.days = window.PPRdaysTable
+    this.days = JSON.parse(window.localStorage.getItem('ppr-days-table'))
   },
 
   computed: {

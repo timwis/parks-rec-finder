@@ -71,13 +71,13 @@ export default class PPRFQuery {
             this.query = this.postgreSQL
                              .select()
                              .field('*')
-                             .field(`to_char(time_from, 'HH:MM am')`, 'time_from')
-                             .field(`to_char(time_to, 'HH:MM am')`, 'time_to')
+                             .field(`to_char(time_from, 'HH:MI am')`, 'time_from')
+                             .field(`to_char(time_to, 'HH:MI am')`, 'time_to')
                              .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
                              .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                              .from(tables.programSchedules)
                              .where(`program->>0 = '${this.options.id}'`)
-                             .where('time_to > now()')
+                             .where('time_to >= now()')
             break
           // DEPRICATED
           // case 'programDays':

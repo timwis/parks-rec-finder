@@ -44,7 +44,7 @@
 
 
           <pprf-detail-content-section
-            v-if="program.scheudles"
+            v-if="schedules.length"
             heading="Program Schedule(s)"
             icon="calendar-alt"
           >
@@ -113,12 +113,13 @@ export default {
         .then(results => {
           next(vm => {
             let schedules = results[1].data.rows
+            console.log(schedules)
             // map days to each schedule
-            for (var i = 0; i < schedules.rows.length; i++) {
-              schedules.rows[i].days = schedules.rows[i].days.map(day => _.findWhere(window.PPRdaysTable, {id: day}))
+            for (var i = 0; i < schedules.length; i++) {
+              // find the days records from our cached days table in local storage
+              schedules[i].days = schedules[i].days.map(day => _.findWhere(JSON.parse(window.localStorage.getItem('ppr-days-table')), {id: day}))
             }
             vm.schedules = schedules
-            results[0].data.rows[0].days = results[1].data.rows
             vm.$store.dispatch('updateEntities', { program: results[0].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'program' })
           })
