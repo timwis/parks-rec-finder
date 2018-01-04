@@ -4,7 +4,7 @@
       <h4 class="text-nopad">{{title}}</h4>
       <font-awesome-icon :icon="icon" />
     </div>
-    <div v-show="!open" class="pprf-collapse-content--panel">
+    <div v-show="open" class="pprf-collapse-content--panel">
       <slot/>
     </div>
   </div>
@@ -20,14 +20,13 @@ export default {
   props: {
     title: {
       type: String
+    },
+    open: {
+      type: Boolean,
+      default: false
     }
   },
 
-  data () {
-    return {
-      open: false
-    }
-  },
   computed: {
     icon () {
       return (this.open ? 'minus' : 'plus')

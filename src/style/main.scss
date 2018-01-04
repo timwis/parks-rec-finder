@@ -33,6 +33,10 @@ html{
     overflow-x:hidden;
     // overflow: hidden;
     height: 100%;
+    font:{
+      family: $font-open-sans;
+      weight:  normal;
+  };
 }
 
 body {
@@ -50,6 +54,9 @@ a{
   &:active{color: color(dark-ben-franklin);}
 }
 
+address{
+  @extend %p;
+}
 
 /* =======================================================================
   2. LAYOUT
