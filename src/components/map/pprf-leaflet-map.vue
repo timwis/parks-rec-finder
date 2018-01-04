@@ -126,7 +126,7 @@ export default {
     width:100%;
     height: 100%;
     background: rgba(0,0,0,.85);
-    z-index: 1000;
+    z-index: 100000;
     pointer-events: none;
   }
   .pprf-map__container{
@@ -141,6 +141,7 @@ export default {
     position: fixed;
     bottom: 40px;
     right: 20px;
+    z-index: 100;
     border: 3px solid color(ben-franklin-blue) !important;
     color: color(ben-franklin-blue) !important;
     border-radius: 0px !important;
