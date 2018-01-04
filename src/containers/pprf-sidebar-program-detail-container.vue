@@ -74,7 +74,7 @@
 
 
           <pprf-detail-content-section
-            heading="Registraion Information"
+            heading="Registration Information"
             icon="info-circle"
           >
             <p>To sign up or learn more, use the information listed here!</p>
