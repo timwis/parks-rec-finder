@@ -1,6 +1,6 @@
 <template>
     <pprf-sidebar
-      class="pprf-sidebar--nopad pprf-sidebar--entity-detail"
+      class="pprf-sidebar--nopad"
     >
         <div
           slot="sidebar-header"
@@ -29,7 +29,7 @@
               {{facility.address.city}},
               {{facility.address.zip}}
             </address>
-            <a class="program-detail__directions" :href="gmapsLink(facility.latitude, facility.longitude)" target="_blank">Get directions <font-awesome-icon icon="external-link-alt" size="s" /></a>
+            <a :href="gmapsLink(facility.latitude, facility.longitude)" target="_blank">Get Directions <font-awesome-icon icon="external-link-alt" size="xs" /></a>
           </pprf-detail-content-section>
 
           <pprf-detail-content-section
@@ -37,12 +37,12 @@
             heading="Contact"
             icon="phone"
           >
-            <a class="program-detail__phone" :href="'tel:'+facility.contact_phone">{{facility.contact_phone}}</a>
+            <a :href="'tel:'+facility.contact_phone">{{facility.contact_phone}}</a>
           </pprf-detail-content-section>
 
           <pprf-detail-content-section
             v-if="facility.facility_description"
-            class="program__content-section program-detail__about"
+            class="program__content-section"
             heading="About this location"
            >
             <p>{{facility.facility_description}}</p>
@@ -56,19 +56,12 @@
           <pprf-collapsable-content
             :title="facilityPrograms.length+ ' Programs offered here'"
            >
-            <ul class="program-detail__programs-list">
+            <ul>
               <li
                 v-for="program in facilityPrograms"
                 :key="program.id"
               >
-                <router-link
-                  :class="['program-detail__programs-list__item', {'program-detail__programs-list__item-prev': previousProgramID == program.program_id}]"
-                  :to="'/program/'+program.program_id"
-                >
-                <font-awesome-icon
-                  v-if="previousProgramID == program.program_id"
-                  icon="chevron-left"
-                />
+                <router-link :to="'/program/'+program.id">
                   {{program.program_name}}
                 </router-link>
               </li>
@@ -115,13 +108,7 @@ export default {
     ...mapState({
       facility: state => state.entities.facility[0],
       facilityPrograms: state => state.entities.program
-    }),
-    previousProgramID () {
-      if (this.$store.state.route.from.params.program_id) {
-        return this.$store.state.route.from.params.program_id
-      }
-      return null
-    }
+    })
   },
   methods: {
     gmapsLink (lat, lng) {
@@ -139,43 +126,11 @@ export default {
   color: $white;
   margin-top:20px;
 }
-
-.program-detail__directions{
-  .svg-inline--fa{vertical-align: 0%; margin-left: 3px;}
-}
-.pprf-detail-section a.program-detail__phone{
-  @include rem(font-size, 1.4);
-
-  color: $black;
-  text-decoration: none;
-  font-family: $font-montserrat;
-  font-weight: 100;
-}
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
   padding: 20px 0;
   margin:0;
-}
-
-.program-detail__programs-list{
-  list-style: none;
-  margin: 0;
-  padding:0 0 0 20px;
-}
-
-.program-detail__programs-list__item{
-  text-decoration: none;
-  @include rem(font-size, 1.5);
-  color: color(dark-ben-franklin);
-}
-.program-detail__programs-list__item-prev{
-  font-weight: 700;
-  .svg-inline--fa{ vertical-align: -6%; }
-}
-
-.program-detail__about{
-  p{margin-top:0; padding:0;}
 }
 
 .entity-detail__reg-status {
