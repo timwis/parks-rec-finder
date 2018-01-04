@@ -1,6 +1,6 @@
 <template>
   <pprf-sidebar
-    class="pprf-sidebar--category pprf-sidebar--nopad"
+    :class="['pprf-sidebar--category', `pprf-sidebar--category--${entityType}`, 'pprf-sidebar--nopad']"
   >
       <div
         slot="sidebar-header"
@@ -206,6 +206,15 @@ export default {
     padding-right: 10px;
     list-style: none;
     li{margin:0; padding:0;}
+  }
+  .pprf-sidebar--category--locations{
+    .pprf-sidebar__header--category{
+      background: color(pride-purple);
+      .pprf-sidebar__title{
+        color:$white;
+      }
+    }
+
   }
   .pprf-sidebar__title--category{
     display: inline-block;
