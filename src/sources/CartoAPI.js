@@ -233,7 +233,7 @@ class CartoAPI {
 
     let categoryEntityQuery = new PPRFQuery.Builder(`${_entity.name}Category`, {term: taxonomyTerm})
 
-    if (_entity.name === 'programs') {
+    if (_entity.name === 'program') {
       categoryEntityQuery
         .fields(['program_name_full', `id`, 'program_id', 'activity_type', 'program_name', 'program_description', 'age_low', 'age_high', 'fee', {'gender->>0': 'gender'}], _entity.DBTable)
         .field('activity_category_name')

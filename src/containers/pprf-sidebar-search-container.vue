@@ -22,12 +22,12 @@
 
                 <pprf-filter-bar
                   slot="beforePanes"
-                  v-show="this.activeTab == 'program'"
+                  v-show="this.activeTab === 'program'"
                   @applyFilters="filterSearch"
                 ></pprf-filter-bar>
 
                 <pprf-tab
-                    name="Programs"
+                    name="Activities"
                     :count="programs.length"
                     :selected="true"
                    >

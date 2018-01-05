@@ -5,13 +5,14 @@ export default function resolveEntityType (entityType) {
     name: null,
     DBTable: null
   }
+  // let sanitizedType = `${entityType.charAt(0).toLowerCase()} + ${entityType.slice(1)}`.trim()
   switch (entityType) {
     case 'program':
     case 'programs':
     case 'activities':
     case 'activitiy':
       entity = {
-        name: 'programs',
+        name: 'program',
         DBTable: tables.programs
       }
       break

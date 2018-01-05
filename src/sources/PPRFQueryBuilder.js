@@ -49,7 +49,7 @@ export default class PPRFQuery {
         this.entity = resolveEntityType(entityType)
 
         switch (this.entity.name) {
-          case 'programs':
+          case 'program':
           case 'programCategory':
             this.query = new ProgramsQuery(this)
             break

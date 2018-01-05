@@ -10,7 +10,7 @@ import pprfSidebarLocationDetailContainer from '@/containers/pprf-sidebar-locati
 
 const routes = [
   {
-    path: '/', redirect: '/programs'
+    path: '/', redirect: '/activities'
   },
   {
     path: '/search',
