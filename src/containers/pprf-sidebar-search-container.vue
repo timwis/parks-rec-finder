@@ -22,17 +22,17 @@
 
                 <pprf-filter-bar
                   slot="beforePanes"
-                  v-show="this.activeTab == 'program'"
+                  v-show="this.activeTab === 'program'"
                   @applyFilters="filterSearch"
                 ></pprf-filter-bar>
 
                 <pprf-tab
-                    name="Programs"
+                    name="Activities"
                     :count="programs.length"
                     :selected="true"
                    >
                       <pprf-program-card
-                        v-if="program.program_id"
+                        v-if="program.id"
                         v-for="program in programs"
                         :key="getUUID('programCard')"
                         :name="program.program_name"

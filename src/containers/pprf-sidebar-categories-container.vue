@@ -2,7 +2,7 @@
   <pprf-sidebar>
 
       <div slot="sidebar-header">
-        <div  v-if="entityType === 'programs'">
+        <div  v-if="activeEntityType === 'program'">
 
           <h2 class="pprf-sidebar__title text-nopad">Things to do</h2>
           <div class="pprf-sidebar__desc">
@@ -11,7 +11,7 @@
 
         </div>
 
-        <div v-if="entityType === 'locations'">
+        <div v-if="activeEntityType === 'facility'">
           <h2  class="pprf-sidebar__title text-nopad">Places to go</h2>
           <div class="pprf-sidebar__desc">
             <p>Choose a category from the list below to explore our locations.</p>
@@ -28,9 +28,9 @@
           @tabSelected="updateRoute"
          >
           <pprf-tab
-            name="Programs"
+            name="Activities"
             :count="totalResultsCountFor(programCategories)"
-            :selected="entityType === 'programs'"
+            :selected="activeEntityType === 'program'"
           >
             <ul class="category-list">
               <li v-for="term in programCategories">
@@ -49,7 +49,7 @@
           <pprf-tab
             name="Locations"
             :count="totalResultsCountFor(facilityCategories)"
-            :selected="entityType === 'locations'"
+            :selected="activeEntityType === 'facility'"
           >
             <ul class="category-list">
               <li v-for="term in facilityCategories" >
@@ -72,6 +72,7 @@
 import { mapState } from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
+import resolveEntityType from '@/utilities/entity-type-resolver'
 import api from '@/sources/api'
 import pprfCategoryCard from '@/components/pprf-category-card'
 import _ from 'underscore'
@@ -129,6 +130,9 @@ export default {
   },
 
   computed: {
+    activeEntityType () {
+      return resolveEntityType(this.entityType).name
+    },
     ...mapState({
       programCategories: state => state.entities.category.program,
       facilityCategories: state => state.entities.category.facility,

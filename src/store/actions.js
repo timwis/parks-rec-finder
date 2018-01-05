@@ -1,5 +1,6 @@
 import api from '@/sources/api'
 import * as types from './mutation-types'
+import resolveEntityType from '@/utilities/entity-type-resolver'
 
 const actions = {
   dataLoading ({state, commit}) {
@@ -11,8 +12,7 @@ const actions = {
   },
 
   setActiveTab ({commit, state}, entityType) {
-    let type = entityType.toLowerCase().replace('s', '')
-    if (type === 'location') { type = 'facility' }
+    let type = resolveEntityType(entityType.toLowerCase()).name
     commit(types.SET_ACTIVE_TAB, type)
     commit(types.SET_MAP_MARKERS, {entityType: type})
   },

@@ -20,11 +20,11 @@ export default {
   props: {
     title: {
       type: String
-    },
-    open: {
-      type: Boolean,
-      default: false
     }
+  },
+
+  data () {
+    return {open: false}
   },
 
   computed: {

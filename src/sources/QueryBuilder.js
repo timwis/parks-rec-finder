@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
+import PPRFQuery from './PPRFQueryBuilder'
 import squel from 'squel'
 import _ from 'underscore'
 import tables from './CartoDBTables'
-import {
-  stringifyCoordinates
-} from '@/utilities/utils'
+import { stringifyCoordinates } from '@/utilities/utils'
 
 let postgresSQL = squel.useFlavour('postgres')
 const METERS_TO_MILES_RATIO = 0.000621371
@@ -18,21 +18,11 @@ const METERS_TO_MILES_RATIO = 0.000621371
  * @since 0.1.0
  */
 export function selectPrograms () {
-  let programsQuery = postgresSQL
-                        .select()
-                        .from(tables.programs)
-                        .field(`${tables.programs}.*`)
-                        .field(`${tables.programs}.gender->>0`, 'gender')
-                        // .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
-                        .join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
-                        .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-                        .field('days')
-                        .field('address', 'facility_address')
-                        .field('facility_name')
-                        .field(`facility->>0`, 'facility_id')
-                        .where(`program_is_public`)
-
-  return joinPPRAssetsWith(programsQuery)
+  return new PPRFQuery.Builder('programs')
+              .fields(['*'])
+              .joinPPRAssets()
+              .build()
+              .query
 }
 
 /**
@@ -74,7 +64,6 @@ export function selectProgram (programID) {
                         .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                         .field(`${tables.facilities}.id`, 'location_id')
                         .where(`${tables.programs}.id = '${programID}'`)
-
   return programQuery
 }
 
@@ -90,7 +79,7 @@ export function selectDays () {
           .from(tables.days)
 }
 /**
- * given a program_id get all schedule days for that program
+ * given a program.id get all schedule days for that program
  * from the ppr_days table
  * @param  {string} programID ppr_programs.program_id
  *
@@ -176,34 +165,14 @@ export function selectTaxonomy ({entityType, taxonomy}) {
       entityName = 'program' + taxonomy
       taxonomyTable = tables[`${entityName}`]
 
-      taxonomyQuery
-        .from(taxonomyTable, entityName)
-        .field(`${entityName}.activity_category_name`)
-        .field(`${entityName}.activity_category_description`)
-        .field(`${entityName}.activity_category_photo`)
-        .field('count(*)', 'count')
-        .join(tables.programs, null, `${tables.programs}.activity_category->>0 = ${entityName}.id`)
-        .join(tables.facilities, null, `${tables.facilities}.id = ${tables.programs}.facility->>0`)
-        .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-        .where(`${tables.programs}.program_is_public`)
-        .group(`${entityName}.activity_category_name, ${entityName}.activity_category_description, ${entityName}.activity_category_photo`)
-        .order('activity_category_name')
+      taxonomyQuery = new PPRFQuery.Builder('programsCategories').build().query
       break
 
     case 'locations':
       entityName = 'location' + taxonomy
       taxonomyTable = tables[`${entityName}`]
 
-      taxonomyQuery
-        .from(taxonomyTable, entityName)
-        .field(`${entityName}.location_type_name`)
-        .field(`${entityName}.location_type_description`)
-        .field(`${entityName}.location_type_photo`)
-        .field(`${entityName}.id`)
-        .field('count(*)', 'count')
-        .join(tables.facilities, null, `${tables.facilities}.location_type->>0 = ${entityName}.id`)
-        .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-        .group(`${entityName}.location_type_name, ${entityName}.location_type_description, ${entityName}.location_type_photo, ${entityName}.id`)
+      taxonomyQuery = new PPRFQuery.Builder('locationsCategories').build().query
       break
   }
 
@@ -224,24 +193,7 @@ export function selectTaxonomy ({entityType, taxonomy}) {
 export function selectCategoryEntitiesFor (entityType, taxonomyTerm) {
   let categoryEntitiesQuery = postgresSQL
   if (entityType === 'programs') {
-    categoryEntitiesQuery = postgresSQL
-                              .select()
-                              .from(tables.programs)
-                              .field(`${tables.programs}.id`)
-                              .field(`${tables.programs}.facility`)
-                              .field(`${tables.programs}.program_id`)
-                              .field(`${tables.programs}.program_name_full`)
-                              .field(`${tables.programs}.activity_type`)
-                              .field(`${tables.programs}.program_name`)
-                              .field(`${tables.programs}.program_description`)
-                              .field(`${tables.programs}.age_low`)
-                              .field(`${tables.programs}.age_high`)
-                              .field(`${tables.programs}.fee`)
-                              .field(`${tables.programs}.gender->>0`, 'gender')
-                              .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-                              .field('days')
-                              .where(`${tables.programs}.program_is_public`)
-    joinProgramsOnCategories(categoryEntitiesQuery, taxonomyTerm)
+    return new PPRFQuery.Builder(`${entityType}Category`, {term: taxonomyTerm}).joinPPRAssets().build().query
   } else if (entityType === 'locations') {
     categoryEntitiesQuery = postgresSQL
                               .select()
@@ -373,7 +325,7 @@ export function searchFieldsFor (sqlQueryObj, fields = [], searchText) {
  */
 export function addFilters (sqlQueryObj, filters) {
   filters = _.omit(filters, val => _.isNull(val))
-
+  let filterQuery = sqlQueryObj.query
   for (let filterKey in filters) {
     if (filterKey === 'fee') {
       let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
@@ -389,7 +341,10 @@ export function addFilters (sqlQueryObj, filters) {
     }
     if (filterKey === 'days' && filters[filterKey].length) {
       let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
-      sqlQueryObj.where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
+      sqlQueryObj
+        .field('days')
+        .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+        .where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
     }
   }
 }

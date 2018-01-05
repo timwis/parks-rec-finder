@@ -13,7 +13,7 @@
           class="category-results-badge"
         />
         <pprf-filter-bar
-          v-if="entityType == 'programs'"
+          v-if="activeEntityType === 'program'"
           slot="beforePanes"
           @applyFilters="filterEntities"
         />
@@ -27,7 +27,7 @@
             <li
               v-for="program in programs"
               :key="getUUID('program')"
-              v-if="entityType === 'programs' && programs"
+              v-if="activeEntityType === 'program' && programs"
             >
                <pprf-program-card
                 :selected="activeCardID === program.program_id"
@@ -42,7 +42,7 @@
 
 
             <li
-              v-if="entityType == 'locations' && facilities"
+              v-if="activeEntityType == 'facility' && facilities"
               v-for="location in facilities"
               :key="getUUID('location')"
             >
@@ -63,6 +63,7 @@
 <script>
 import { mapState } from 'vuex'
 import {deSlugify} from '@/utilities/utils'
+import resolveEntityType from '@/utilities/entity-type-resolver'
 import pprfSidebar from '@/components/pprf-sidebar'
 import api from '@/sources/api'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
@@ -135,12 +136,8 @@ export default {
   beforeRouteEnter (to, from, next) {
     api.getTaxonomyTermEntities(to.params, to.query).then(results => {
       next(vm => {
-        let entity = to.params.entityType === 'locations' ? 'facility' : 'program'
-        vm.$store.dispatch('updateEntities',
-          {
-            [entity]: results.data.rows
-          }
-        )
+        let entity = resolveEntityType(to.params.entityType).name
+        vm.$store.dispatch('updateEntities', {[entity]: results.data.rows})
         vm.$store.dispatch('setMapMarkers', {entityType: entity})
       })
     })
@@ -156,7 +153,7 @@ export default {
     filterEntities (filters) {
       api.getTaxonomyTermEntities(this.$store.state.route.params, filters)
           .then(results => {
-            let entity = this.entityType === 'locations' ? 'facility' : 'program'
+            let entity = resolveEntityType(this.entityType).name
             this.$store.dispatch('updateEntities', { [entity]: results.data.rows })
             this.$store.dispatch('setMapMarkers', {entityType: entity})
           })
@@ -176,7 +173,9 @@ export default {
   },
 
   computed: {
-
+    activeEntityType () {
+      return resolveEntityType(this.entityType).name
+    },
     ...mapState({
       search: state => state.search,
       programs: state => state.entities.program,
@@ -184,9 +183,10 @@ export default {
       activeTab: state => state.activeTab
     }),
     resultsCount () {
-      if (this.entityType === 'locations') {
+      let entity = resolveEntityType(this.entityType).name
+      if (entity === 'facility') {
         return this.facilities.length
-      } else if (this.entityType === 'programs') {
+      } else if (entity === 'program') {
         return this.programs.length
       }
     },

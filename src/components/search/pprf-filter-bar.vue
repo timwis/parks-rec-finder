@@ -135,7 +135,7 @@
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import _ from 'underscore'
-import api from '@/sources/api'
+// import api from '@/sources/api'
 
 /**
  * Filter Bar
@@ -220,9 +220,14 @@ export default {
      *
      * @since 0.1.0
      */
-    api.getDays().then(results => {
-      this.days = results.data.rows
-    })
+    // api.getDays().then(results => {
+    //   console.log(
+    //     window.localStorage.getItem('pprf-days-table')
+    //   )
+
+    //   this.days = results.data.rows
+    // })
+    this.days = JSON.parse(window.localStorage.getItem('ppr-days-table'))
   },
 
   computed: {
