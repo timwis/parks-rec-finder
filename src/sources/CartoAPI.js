@@ -79,7 +79,6 @@ class CartoAPI {
    * @since 0.1.0
    */
   getDays () {
-    debugger
     return this.runQuery(new PPRFQuery.Builder('days'))
   }
 
@@ -132,7 +131,6 @@ class CartoAPI {
    */
   getProgramByID (programID) {
     let programQuery = new PPRFQuery.Builder('program', {id: programID}).field('*').joinPPRAssets()
-    debugger
     return this.runQuery(programQuery)
   }
 
@@ -155,7 +153,6 @@ class CartoAPI {
    * @since 0.1.0
    */
   getProgramsByFacilityID (facilityID) {
-    debugger
     return this.runQuery(
        new PPRFQuery.Builder('program').fields(['id', 'program_name']).where(`ppr_programs.facility->>0 = '${facilityID}'`)
     )
@@ -172,7 +169,6 @@ class CartoAPI {
    */
   getFacilities (freetextValue, coords = null, zipcode = null) {
     this.facilities = new PPRFQuery.Builder('facilities').joinPPRAssets()
-    debugger
     if (coords && !zipcode) {
       this.facilities
           .addDistanceFieldFromCoordinates(coords)
