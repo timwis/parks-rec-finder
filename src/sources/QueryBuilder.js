@@ -341,7 +341,10 @@ export function addFilters (sqlQueryObj, filters) {
     }
     if (filterKey === 'days' && filters[filterKey].length) {
       let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
-      sqlQueryObj.where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
+      sqlQueryObj
+        .field('days')
+        .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+        .where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
     }
   }
 }

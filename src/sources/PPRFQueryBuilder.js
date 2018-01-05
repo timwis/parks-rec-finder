@@ -36,14 +36,12 @@ export default class PPRFQuery {
     this.queryObject = build.query
   }
 
-  // get query () {
-  //   return this.queryString
-  // }
-
+  /**
+   * internal builder that holds our chainable builder methods
+   */
   static get Builder () {
     class Builder {
       constructor (entityType, entityOptions) {
-        this.entityType = entityType
         this.postgreSQL = squel.useFlavour('postgres')
         this.options = entityOptions
         this.entity = resolveEntityType(entityType)
@@ -67,7 +65,7 @@ export default class PPRFQuery {
                              .field(`to_char(date_to, '${DATE_FORMAT}')`, 'end_date')
                              .from(this.entity.DBTable)
                              .where(`program->>0 = '${this.options.id}'`)
-                             .where('time_to >= now()')
+                             .where('date_to >= now()')
             break
           case 'facility':
           case 'facilityCategory':
@@ -186,7 +184,19 @@ export default class PPRFQuery {
           }
           if (filterKey === 'days' && filters[filterKey].length) {
             let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
-            filterQuery.where(`ARRAY[${days.map(dayID => `'${dayID}'`)}] = ARRAY(SELECT jsonb_array_elements_text(days))`)
+            // group by program schedule days
+            // and then concatenate all future schedule days into a string
+            // to check the values against those passed in
+            filterQuery
+              .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+              .where('date_to >= now()')
+              .group(`${tables.programs}.id, program_name, program_name_full, program_id, activity_type, activity_category_name, program_description, age_low, age_high, fee, ppr_facilities.facility_name, gender, address, facility, ${tables.assets}.the_geom`)
+              // .having('count(days) > ?', 1)
+
+            for (var i = 0; i < days.length; i++) {
+              /* eslint-disable no-useless-escape */
+              filterQuery.having(`regexp_replace(jsonb_agg(days)::text,'\[|\]|"|,', '', 'g') iLIKE '%${days[i]}%'`)
+            }
           }
         }
         return this

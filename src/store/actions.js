@@ -12,8 +12,6 @@ const actions = {
   },
 
   setActiveTab ({commit, state}, entityType) {
-    // let type = entityType.toLowerCase().replace('s', '')
-    // if (type === 'location') { type = 'facility' }
     let type = resolveEntityType(entityType.toLowerCase()).name
     commit(types.SET_ACTIVE_TAB, type)
     commit(types.SET_MAP_MARKERS, {entityType: type})
