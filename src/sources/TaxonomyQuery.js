@@ -6,9 +6,9 @@ import ProgramsQuery from './ProgramQueries'
 export default class TaxonomyQuery extends QueryInterface {
   constructor (Builder) {
     super(Builder)
-    this.tableAlias = this.build.DBtable
+    this.tableAlias = this.build.entity.DBTable
     this.query
-        .from(this.build.DBtable, this.tableAlias)
+        .from(this.build.entity.DBTable, this.tableAlias)
         .field('count(*)', 'count')
     this.defineQuery()
 
@@ -16,11 +16,8 @@ export default class TaxonomyQuery extends QueryInterface {
   }
 
   defineQuery () {
-    switch (this.build.entityType) {
-      case 'program':
-      case 'programs':
-      case 'activity':
-      case 'activities':
+    switch (this.build.entity.name) {
+      case 'programCategories':
         this.query
             .field(`${this.tableAlias}.activity_category_name`)
             .field(`${this.tableAlias}.activity_category_description`)
@@ -33,12 +30,7 @@ export default class TaxonomyQuery extends QueryInterface {
             .order('activity_category_name')
 
         break
-      case 'locations':
-      case 'location':
-      case 'facilities':
-      case 'facility':
-      case 'places':
-      case 'place':
+      case 'facilityCategories':
         this.query
           .field(`${this.tableAlias}.location_type_name`)
           .field(`${this.tableAlias}.location_type_description`)

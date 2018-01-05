@@ -1,16 +1,34 @@
 import _ from 'underscore'
 import { stringifyCoordinates } from '@/utilities/utils'
+import resolveEntityType from '@/utilities/entity-type-resolver'
 
 import squel from 'squel'
 import tables from './CartoDBTables'
 
 import ProgramsQuery from './ProgramQueries'
-/* eslint-disable no-unused-vars */
 import FacilitiesQuery from './FacilitiesQuery'
 import TaxonomyQuery from './TaxonomyQuery'
 
 const METERS_TO_MILES_RATIO = 0.000621371
+const TIME_FORMAT = 'HH:MI am'
+const DATE_FORMAT = 'Month DD, YYYY'
 
+/**
+ * Builder object for PPRF CartoDB specific sql query strings.
+ * This class allows you to easily construct SQL strings
+ * using [squel.js]( https://hiddentao.com/squel/) as it's engine.
+ *
+ * @since 0.2.5
+ *
+ *
+ * USEAGE:
+ * ```js
+ *  new PPRFQuery.Builder('program', {id: programID})
+ *                 .fields(['id', 'program_name', 'program_description', 'age_low', 'age_high', 'fee'])
+ *                 .joinPPRAssets()
+ *                 .build()
+ * ```
+ */
 export default class PPRFQuery {
   constructor (build) {
     this.entityType = build.entityType
@@ -18,9 +36,9 @@ export default class PPRFQuery {
     this.queryObject = build.query
   }
 
-  get query () {
-    return this.queryString
-  }
+  // get query () {
+  //   return this.queryString
+  // }
 
   static get Builder () {
     class Builder {
@@ -28,100 +46,39 @@ export default class PPRFQuery {
         this.entityType = entityType
         this.postgreSQL = squel.useFlavour('postgres')
         this.options = entityOptions
-        switch (entityType) {
-          case 'program':
-          case 'programs':
-          case 'activities':
-          case 'activitiy':
-            this.DBtable = tables.programs
-            this.query = new ProgramsQuery(this)
-            break
-          case 'programsCategory':
-          case 'activitiesCategory':
-            this.DBtable = tables.programs
-            this.query = new ProgramsQuery(this)
-            this.fields([
-              'program_name_full',
-              `id`,
-              'program_id',
-              'activity_type',
-              'program_name',
-              'program_description',
-              'age_low',
-              'age_high',
-              'fee',
-              {'gender->>0': 'gender'}
-            ])
-            this.query
-                .join(tables.programCategories, 'category', `category.id = ${this.DBtable}.activity_category->>0`)
-                .field(`category`)
-                .where(`category.activity_category_name = '${this.options.term}'`)
+        this.entity = resolveEntityType(entityType)
 
+        switch (this.entity.name) {
+          case 'programs':
+          case 'programCategory':
+            this.query = new ProgramsQuery(this)
             break
-          case 'programsCategories':
+          case 'facilityCategories':
           case 'programCategories':
-          case 'activitiesCategories':
-          case 'activityCategories':
-            this.entityType = 'programs'
-            this.DBtable = tables.programCategories
             this.query = new TaxonomyQuery(this)
             break
           case 'programSchedules':
-          case 'programSchedule':
             this.query = this.postgreSQL
                              .select()
                              .field('*')
-                             .field(`to_char(time_from, 'HH:MI am')`, 'time_from')
-                             .field(`to_char(time_to, 'HH:MI am')`, 'time_to')
-                             .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
-                             .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
-                             .from(tables.programSchedules)
+                             .field(`to_char(time_from, '${TIME_FORMAT}')`, 'time_from')
+                             .field(`to_char(time_to, '${TIME_FORMAT}')`, 'time_to')
+                             .field(`to_char(date_from, '${DATE_FORMAT}')`, 'start_date')
+                             .field(`to_char(date_to, '${DATE_FORMAT}')`, 'end_date')
+                             .from(this.entity.DBTable)
                              .where(`program->>0 = '${this.options.id}'`)
                              .where('time_to >= now()')
             break
-          // DEPRICATED
-          // case 'programDays':
-          // case 'programScheduleDays':
-          //   this.query = this.postgreSQL
-          //                    .select()
-          //                    .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
-          //                    .join(tables.days, 'b', 'b.id = a._daysID')
-          //                    .where(`program->>0 = '${this.options.id}'`)
-
-          //   break
-          case 'locations':
-          case 'location':
-          case 'facilities':
           case 'facility':
-          case 'places':
-            this.entityType = 'facility'
-            this.DBtable = tables.facilities
+          case 'facilityCategory':
             this.query = new FacilitiesQuery(this)
-            break
-          case 'locationsCategories':
-          case 'locationCategories':
-          case 'facilitiesCategories':
-          case 'facilityCategories':
-          case 'placesCategories':
-            this.entityType = 'facilities'
-            this.DBtable = tables.locationCategories
-            this.query = new TaxonomyQuery(this)
-            break
-          case 'locationsCategory':
-          case 'facilitiesCategory':
-          case 'placesCategory':
-            this.entityType = 'facilities'
-            this.DBtable = tables.facilities
-            this.query = new FacilitiesQuery(this)
-            this.query
-                .join(tables.locationCategories, null, `${tables.locationCategories}.id = ${this.DBtable}.location_type->>0`)
-                .where(`location_type_name = '${this.options.term}'`)
             break
           case 'days':
-            this.DBtable = tables.days
-            this.query = this.postgreSQL.select().from(this.DBtable)
+            this.query = this.postgreSQL.select().from(this.entity.DBTable)
             break
         }
+
+        return this
       }
 
       where (whereClause) {
@@ -129,17 +86,27 @@ export default class PPRFQuery {
         return this
       }
 
-      fields (fieldDefs) {
+      fields (fieldDefs, tablePrefix = this.entity.DBTable) {
         if (_.isArray(fieldDefs)) {
           fieldDefs.forEach(field => {
             if (_.isObject(field)) {
-              this.query.field(`${this.DBtable}.${Object.keys(field)[0]}`, Object.values(field)[0])
+              this.query.field(`${tablePrefix}.${Object.keys(field)[0]}`, Object.values(field)[0])
             } else {
-              this.query.field(`${this.DBtable}.${field}`)
+              this.query.field(`${tablePrefix}.${field}`)
             }
           })
         }
 
+        return this
+      }
+
+      field (fieldName) {
+        this.query.field(fieldName)
+        return this
+      }
+
+      join (joinTable, alias = null, joinClause) {
+        this.query.join(joinTable, alias, joinClause)
         return this
       }
 
@@ -227,7 +194,7 @@ export default class PPRFQuery {
 
       build () {
         // console.log(this.query.toString())
-        return new PPRFQuery(this)
+        return new PPRFQuery(this).queryString
       }
     }
 

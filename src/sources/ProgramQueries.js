@@ -30,6 +30,7 @@ export default class ProgramsQuery extends QueryInterface {
 
   getAllRows () {
     return this.query
+                .field('gender->>0', 'gender')
                 .field('address', 'facility_address')
                 .field(`facility->>0`, 'facility_id')
   }
@@ -37,6 +38,7 @@ export default class ProgramsQuery extends QueryInterface {
   getRowsByID (id) {
     return this.query
                 .field('address')
+                .field('gender->>0', 'gender')
                 // .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
                 // .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                 .field(`${tables.facilities}.id`, 'location_id')
@@ -55,11 +57,11 @@ export default class ProgramsQuery extends QueryInterface {
             .where('program_is_active')
   }
 
-  static getProgramScheduleDays (query, programID) {
-    return query
-            .select()
-            .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
-            .join(tables.days, 'b', 'b.id = a._daysID')
-            .where(`program->>0 = '${programID}'`)
-  }
+  // static getProgramScheduleDays (query, programID) {
+  //   return query
+  //           .select()
+  //           .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
+  //           .join(tables.days, 'b', 'b.id = a._daysID')
+  //           .where(`program->>0 = '${programID}'`)
+  // }
 }

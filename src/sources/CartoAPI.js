@@ -3,7 +3,9 @@ import {
   isValidZipcode,
   deSlugify
 } from '@/utilities/utils'
+import resolveEntityType from '@/utilities/entity-type-resolver'
 import PPRFQuery from './PPRFQueryBuilder'
+import tables from './CartoDBTables'
 
 const LOG_QUERIES = process.env.NODE_ENV === 'development'
 const CACHE_QUERIES = process.env.CARTO_API.CACHE_QUERIES
@@ -20,7 +22,7 @@ class CartoAPI {
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
     // this._facilities = selectFacilities()
-    this.programFields = ['id', 'program_name', 'program_description', 'age_low', 'age_high', 'fee']
+    this.programFields = ['id', 'program_name', 'program_description', 'age_low', 'age_high', 'fee', {'gender->>0': 'gender'}]
   }
 
   /**
@@ -31,7 +33,7 @@ class CartoAPI {
    * @since 0.1.0
    */
   runQuery (sqlQuery) {
-    let sqlString = sqlQuery.build().query
+    let sqlString = sqlQuery.build()
 
     if (window.localStorage.getItem(sqlString)) {
       if (this.LOG_QUERIES) {
@@ -77,6 +79,7 @@ class CartoAPI {
    * @since 0.1.0
    */
   getDays () {
+    debugger
     return this.runQuery(new PPRFQuery.Builder('days'))
   }
 
@@ -128,11 +131,9 @@ class CartoAPI {
    * @since 0.1.0
    */
   getProgramByID (programID) {
-    return this.runQuery(
-      new PPRFQuery.Builder('program', {id: programID})
-                   .fields(this.programFields)
-                   .joinPPRAssets()
-    )
+    let programQuery = new PPRFQuery.Builder('program', {id: programID}).field('*').joinPPRAssets()
+    debugger
+    return this.runQuery(programQuery)
   }
 
   /**
@@ -141,9 +142,6 @@ class CartoAPI {
    * @param  {string} programID program.program_id
    * @return {object}           Promise
    */
-  getProgramDays (programID) {
-    return this.runQuery(new PPRFQuery.Builder('programScheduleDays', {id: programID}))
-  }
 
   getProgramSchedules (programID) {
     return this.runQuery(new PPRFQuery.Builder('programSchedules', {id: programID}))
@@ -157,10 +155,9 @@ class CartoAPI {
    * @since 0.1.0
    */
   getProgramsByFacilityID (facilityID) {
+    debugger
     return this.runQuery(
-       new PPRFQuery.Builder('programs')
-                     .fields(['id', 'program_name'])
-                     .where(`ppr_programs.facility->>0 = '${facilityID}'`)
+       new PPRFQuery.Builder('program').fields(['id', 'program_name']).where(`ppr_programs.facility->>0 = '${facilityID}'`)
     )
   }
 
@@ -175,7 +172,7 @@ class CartoAPI {
    */
   getFacilities (freetextValue, coords = null, zipcode = null) {
     this.facilities = new PPRFQuery.Builder('facilities').joinPPRAssets()
-
+    debugger
     if (coords && !zipcode) {
       this.facilities
           .addDistanceFieldFromCoordinates(coords)
@@ -231,15 +228,29 @@ class CartoAPI {
    * @since 0.1.0
    */
   getTaxonomyTermEntities (entity, filters) {
+    let _entity = resolveEntityType(entity.entityType)
     let taxonomyTerm = deSlugify(entity.entityTerm)
-    let categoryEntityQuery = new PPRFQuery.Builder(`${entity.entityType}Category`, {term: taxonomyTerm})
-                                           .joinPPRAssets()
-    if (filters && entity.entityType === 'programs') {
+
+    let categoryEntityQuery = new PPRFQuery.Builder(`${_entity.name}Category`, {term: taxonomyTerm})
+
+    if (_entity.name === 'programs') {
       categoryEntityQuery
-        .addFilters(filters)
+        .fields(['program_name_full', `id`, 'program_id', 'activity_type', 'program_name', 'program_description', 'age_low', 'age_high', 'fee', {'gender->>0': 'gender'}], _entity.DBTable)
+        .field('activity_category_name')
+        .join(tables.programCategories, 'category', `category.id = ${_entity.DBTable}.activity_category->>0`)
+        .where(`category.activity_category_name = '${taxonomyTerm}'`)
+
+      if (filters) {
+        categoryEntityQuery
+          .addFilters(filters)
+      }
+    } else if (_entity.name === 'facility') {
+      categoryEntityQuery
+        .join(tables.locationCategories, null, `${tables.locationCategories}.id = ${_entity.DBTable}.location_type->>0`)
+        .where(`location_type_name = '${taxonomyTerm}'`)
     }
 
-    return this.runQuery(categoryEntityQuery)
+    return this.runQuery(categoryEntityQuery.joinPPRAssets())
   }
 }
 

@@ -63,6 +63,7 @@
 <script>
 import { mapState } from 'vuex'
 import {deSlugify} from '@/utilities/utils'
+// import resolveEntityType from '@/utilities/entity-type-resolver'
 import pprfSidebar from '@/components/pprf-sidebar'
 import api from '@/sources/api'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
@@ -136,6 +137,7 @@ export default {
     api.getTaxonomyTermEntities(to.params, to.query).then(results => {
       next(vm => {
         let entity = to.params.entityType === 'locations' ? 'facility' : 'program'
+        // let entity = resolveEntityType(to.params.entityType).replace('s', '')
         vm.$store.dispatch('updateEntities',
           {
             [entity]: results.data.rows

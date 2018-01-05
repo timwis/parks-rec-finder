@@ -13,13 +13,11 @@ router.beforeEach((to, from, next) => {
   store.dispatch('dataLoading')
   store.dispatch('resetMarkers')
   let PPRdaysTable = JSON.parse(window.localStorage.getItem('ppr-days-table'))
-
   if (!PPRdaysTable) {
     api.getDays().then(results => {
       window.localStorage.setItem('ppr-days-table', JSON.stringify(results.data.rows))
     })
   }
-
   next()
 })
 

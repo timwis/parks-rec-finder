@@ -64,11 +64,11 @@
               >
 
                 <router-link
-                  :class="['program-detail__programs-list__item', {'program-detail__programs-list__item-prev': previousProgramID == program.program_id}]"
-                  :to="'/program/'+program.program_id"
+                  :class="['program-detail__programs-list__item', {'program-detail__programs-list__item-prev': previousProgramID == program.id}]"
+                  :to="'/program/'+program.id"
                 >
                 <font-awesome-icon
-                  v-if="previousProgramID == program.program_id"
+                  v-if="previousProgramID == program.id"
                   icon="chevron-left"
                 />
                   {{program.program_name}}
