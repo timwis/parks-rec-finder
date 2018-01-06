@@ -137,9 +137,9 @@ export default {
       padding:0 !important;
     }
     .pprf-filter-bar{margin-top: 10px;}
-    .pprf-filter-bar--open{
-      margin-top: 50px !important;
-    }
+    //.pprf-filter-bar--open{
+      //margin-top: 50px !important;
+    //}
   }
 
 </style>

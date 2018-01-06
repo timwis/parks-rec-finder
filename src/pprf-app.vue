@@ -59,7 +59,7 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import "~leaflet/dist/leaflet.css";
 
     #pprf-app__container {

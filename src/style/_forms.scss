@@ -188,6 +188,10 @@ fieldset{
   border:none;
   outline:none;
 }
+.input-group--flex .input-group__input{
+  display: flex;
+  justify-content: space-between;
+}
 
 .field,
 .field-label{
@@ -197,7 +201,6 @@ fieldset{
 }
 
 .field--inline{
-  width: 48%;
   display: inline-block;
   padding-bottom: 10px;
   .input-group__input{
@@ -205,18 +208,21 @@ fieldset{
     float:left;
 
     .icon--selection-control{
-      @include rem(font-size, 1.5)
+      @include rem(font-size, 1.25)
       color: color(dark-ben-franklin);
-      margin: 0 10px 0 0;
+      margin: 0 5px 0 0;
     }
   }
   label{
     display: inline-block;
     // float:left;
-    @include rem(font-size, 1.4)
+    @include rem(font-size, 1.35)
     color: color(dark-ben-franklin)
   }
 }
+.field--inline-half{ width: 48%; }
+.field--inline-third{ width: 33.333%; }
+.field--inline-quarter{ width: 25%; }
 
 
 legend{

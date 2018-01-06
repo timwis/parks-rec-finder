@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
   .pprf-sidebar{
       flex: 1;
@@ -64,7 +64,7 @@ export default {
         height:100%;
         display:flex;
         flex-flow:column;
-        overflow: auto;
+        //overflow: auto;
     }
         .pprf-sidebar__header{}
         .pprf-sidebar__title{
@@ -73,6 +73,7 @@ export default {
                 weight: 700;
             }
         }
+
         .pprf-sidebar__desc{
           width: 90%;
           min-height: 50px;
@@ -82,14 +83,21 @@ export default {
         flex:1;
         display: flex;
         flex-direction: column;
-        //overflow: auto;
+        overflow: auto;
       }
 
+
+
 /* =======================================================================
-Category Sidebar
+Single Category Sidebar
 ========================================================================== */
 
-.pprf-sidebar--category{
+.pprf-sidebar.pprf-sidebar--category{
+  .pprf-filter-bar-form__open{
+    .scrollable{
+      height: calc(100vh - 220px);
+    }
+  }
 
 }
 .pprf-sidebar__header--category{

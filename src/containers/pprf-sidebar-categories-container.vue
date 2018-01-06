@@ -1,5 +1,5 @@
 <template>
-  <pprf-sidebar>
+  <pprf-sidebar class="pprf-sidebar--categories">
 
       <div slot="sidebar-header">
         <div  v-if="activeEntityType === 'program'">
@@ -156,10 +156,24 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.category-list{
-  list-style: none;
-  margin:0;
-  padding:0;
+<style lang="scss">
+.pprf-sidebar.pprf-sidebar--categories{
+
+  .pprf-tabs__panels{
+    top: 50px;
+  }
+
+  .category-list{
+    list-style: none;
+    margin:0;
+    padding:0;
+  }
+
 }
+
+
+
+
+
+
 </style>
