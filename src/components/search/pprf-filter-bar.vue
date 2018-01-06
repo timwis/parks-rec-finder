@@ -204,7 +204,7 @@ export default {
       filtersData: {
         fee: null,
         gender: null,
-        days: null,
+        days: [],
         ages: null
       }
     }

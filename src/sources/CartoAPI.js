@@ -13,6 +13,8 @@ const CACHE_QUERIES = process.env.CARTO_API.CACHE_QUERIES
 /**
  * API abstracton layer for querying the City of Philadelphia's CARTO ( Location Intelligence Software) Database
  * @docs https://cityofphiladelphia.github.io/carto-api-explorer/#<table-name>
+ * Since CARTO only has one endpoint (read-only) that you pass a postgresSQL statemnt strings to
+ * this constructos those statements and provides a REST-like API to be used by PPRF internally.p
  *
  * @since 0.1.0
  */
@@ -27,7 +29,7 @@ class CartoAPI {
 
   /**
    * GET SQL query results from the Cart API
-   * @param  {string} sqlString - SQL Query
+   * @param  {string} sqlString - SQL Query Statement
    * @return {object}           Prmoise Object with raw results
    *
    * @since 0.1.0
@@ -57,6 +59,15 @@ class CartoAPI {
                     })
   }
 
+  /**
+   * cache reponse data in localStorage using the
+   * SQL statement as the key
+   * @param  {string} sqlQueryString SQL statement
+   * @param  {Object JSON} data       JSON respose data to store
+   * @return {void}
+   *
+   * @since 0.2.5
+   */
   cacheQuery (sqlQueryString, data) {
     let store = window.localStorage
     if (store.getItem(sqlQueryString)) {
@@ -66,6 +77,18 @@ class CartoAPI {
     }
   }
 
+  /**
+   * given search parameters and/or coords search the CartoAPI
+   * for both Facilities and Programs.
+   * This provides a nice aggregate dataset for the front-end to consume.
+   *
+   * @param  {object} searchParams search fields and filter object {definition: value}
+   * @param  {??} coords       coordinates to sort by
+   * @return {object} Promise with facilities = data[0].data.rows
+   *                                programs =  data[1].data.rows
+   *
+   * @since 0.1.0
+ */
   search (searchParams, coords) {
     let facilitiesSearchQuery = this.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
     let programsSearchQuery = this.getPrograms(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
