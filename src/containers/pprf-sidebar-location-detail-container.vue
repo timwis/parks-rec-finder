@@ -55,7 +55,8 @@
             class="program__content-section"
           >
           <pprf-collapsable-content
-            :title="facilityPrograms.length+ ' Programs offered here'"
+            class="facility-detail__programs"
+            :title="programsListTitle"
            >
             <ul class="program-detail__programs-list">
               <li
@@ -123,6 +124,10 @@ export default {
         return this.$store.state.route.from.params.program_id
       }
       return null
+    },
+    programsListTitle () {
+      let activityWord = this.facilityPrograms.length === 1 ? 'activity' : 'activities'
+      return `${this.facilityPrograms.length} ${activityWord} offered here`
     }
   },
   methods: {
