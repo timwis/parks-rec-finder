@@ -10,6 +10,7 @@ export default class FacilitiesQuery extends QueryInterface {
     this.query
         .field(`${tables.facilities}.*`)
         .from(tables.facilities)
+        .order('lower(facility_name)')
     this.defineQuery()
     return this.query
   }
