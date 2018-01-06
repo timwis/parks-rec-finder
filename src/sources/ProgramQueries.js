@@ -12,6 +12,7 @@ export default class ProgramsQuery extends QueryInterface {
         .field('facility_name')
         .field(`gender->>0`, 'gender')
         .from(tables.programs)
+        .order('lower(program_name)')
 
     this.defineQuery()
 

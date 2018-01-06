@@ -1,12 +1,12 @@
 <template>
-  <pprf-sidebar>
+  <pprf-sidebar class="pprf-sidebar--categories">
 
       <div slot="sidebar-header">
         <div  v-if="activeEntityType === 'program'">
 
           <h2 class="pprf-sidebar__title text-nopad">Things to do</h2>
           <div class="pprf-sidebar__desc">
-            <p>Chose a category from the list below to find a program for you.</p>
+            <p>Choose a category from the list below to find an activity.</p>
           </div>
 
         </div>
@@ -156,10 +156,24 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.category-list{
-  list-style: none;
-  margin:0;
-  padding:0;
+<style lang="scss">
+.pprf-sidebar.pprf-sidebar--categories{
+
+  .pprf-tabs__panels{
+    top: 50px;
+  }
+
+  .category-list{
+    list-style: none;
+    margin:0;
+    padding:0;
+  }
+
 }
+
+
+
+
+
+
 </style>

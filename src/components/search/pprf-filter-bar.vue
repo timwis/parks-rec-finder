@@ -3,7 +3,7 @@
     <header
       class="pprf-filter-bar__header"
     >
-      <!-- <div @click="open = !open"> -->
+
       <div @click="toggleOpen">
         <h4 class="text-nopad">Filters</h4>
         <font-awesome-icon :icon="open ? 'minus' : 'plus'" />
@@ -37,6 +37,7 @@
       @submit.prevent="onSubmit"
       ref="searchFilterForm"
     >
+      <div class="scrollable">
       <fieldset class="pprf-filter-bar-form--fieldset">
 
         <legend>Fee</legend>
@@ -46,7 +47,7 @@
           :mandatory="false"
         >
           <v-radio
-            class="field field--inline field-fee--free"
+            class="field field--inline field--inline-half field-fee--free"
             label="Free"
             value="Free"
           ></v-radio>
@@ -64,7 +65,7 @@
         <legend>Age Range</legend>
 
           <v-checkbox
-            class="field field--inline"
+            class="field field--inline field--inline-half"
             v-model="selectedAgeRanges"
             v-for="(ageGroup, idx) in ageGroups"
             :value="ageGroup.range"
@@ -82,9 +83,10 @@
 
         <legend>Gender</legend>
          <v-radio-group
-          v-model="filtersData.gender"
-          :mandatory="false"
-        >
+            class="input-group--flex input-group__gender"
+            v-model="filtersData.gender"
+            :mandatory="false"
+          >
           <v-radio
             class="field field--inline"
             v-for="gender in genders"
@@ -103,7 +105,7 @@
         <legend>Time of week</legend>
         <v-checkbox
             v-for="day in days"
-            class="field field--inline"
+            class="field field--inline field--inline-quarter"
             :label="day.days_name"
             :key="day.id"
             :value="day.id"
@@ -127,6 +129,7 @@
         </phila-button>
 
       </footer>
+      </div>
     </form>
   </section>
 </template>
@@ -201,7 +204,7 @@ export default {
       filtersData: {
         fee: null,
         gender: null,
-        days: [],
+        days: null,
         ages: null
       }
     }
@@ -220,13 +223,6 @@ export default {
      *
      * @since 0.1.0
      */
-    // api.getDays().then(results => {
-    //   console.log(
-    //     window.localStorage.getItem('pprf-days-table')
-    //   )
-
-    //   this.days = results.data.rows
-    // })
     this.days = JSON.parse(window.localStorage.getItem('ppr-days-table'))
   },
 
@@ -238,6 +234,7 @@ export default {
      * @since 0.1.3
      */
     isDirty () {
+      console.log(Object.values(this.filters))
       return Object.values(this.filters).some((filterVal, idx, arr) => { return filterVal !== null })
     },
 
@@ -249,8 +246,8 @@ export default {
      */
     filters () {
       let ages = {ages: this.selectedAgeRanges.length ? `${this.ageRange.low}-${this.ageRange.high}` : null}
-      // let days = {days: this.selectedDays.length ? this.filtersData.days : null}
-      return Object.assign({}, this.filtersData, ages, {days: this.selectedDays})
+      let days = {days: this.selectedDays.length ? this.selectedDays : null}
+      return Object.assign({}, this.filtersData, ages, days)
     },
     /**
      * dervied age range low and high
@@ -501,10 +498,21 @@ export default {
   display:none;
   background: color(ghost-gray);
 }
+.input-group__gender{
+  width: 80%;
+}
 
 .pprf-filter-bar-form__open{
   display: block;
+  position:absolute;
   height: 100vh;
+  overflow: scroll;
+  .scrollable{
+    position:absolute;
+    height: calc(100vh - 300px);
+    overflow:scroll;
+    padding-bottom: 30px;
+  }
 }
 
 .pprf-filter-bar-footer{

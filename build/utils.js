@@ -69,7 +69,7 @@ exports.cssLoaders = function (options) {
             './node_modules/phila-standards/src/sass/utils/_colors.scss',
             './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_unit.scss',
             './node_modules/phila-standards/src/vendor/foundation-sites/scss/util/_breakpoint.scss',
-            path.resolve(__dirname, '../src/style/*.scss'),
+            path.resolve(__dirname, '../src/style/main.scss'),
           ]
         }
       }

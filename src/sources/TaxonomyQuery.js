@@ -10,6 +10,7 @@ export default class TaxonomyQuery extends QueryInterface {
     this.query
         .from(this.build.entity.DBTable, this.tableAlias)
         .field('count(*)', 'count')
+        .order('count', false)
     this.defineQuery()
 
     return this.query
