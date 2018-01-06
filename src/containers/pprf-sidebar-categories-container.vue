@@ -6,7 +6,7 @@
 
           <h2 class="pprf-sidebar__title text-nopad">Things to do</h2>
           <div class="pprf-sidebar__desc">
-            <p>Chose a category from the list below to find a program for you.</p>
+            <p>Choose a category from the list below to find an activity.</p>
           </div>
 
         </div>
