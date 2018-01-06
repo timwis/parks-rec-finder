@@ -1,12 +1,11 @@
 import {cartoAPI} from './CartoAPI'
 import {aisAPI} from './AISAPI'
-/* eslint-disable no-unused-vars */
 import {flickrAPI} from './FlickrAPI'
-import _ from 'underscore'
 
 /**
- * Primary application api that interacts with the front-end.
- * This is used as a convenience aggregate api to pull from mul
+ * Primary REST-like API layer for the application that is consumed by the store and
+ * calls in containers. This is here to act as an aggregate API to make
+ * request for data in the font-end cleaner.
  *
  * @since 0.1.0
  */

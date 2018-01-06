@@ -14,13 +14,13 @@ const TIME_FORMAT = 'HH:MI am'
 const DATE_FORMAT = 'Month DD, YYYY'
 
 /**
- * Builder object for PPRF CartoDB specific sql query strings.
- * This class allows you to easily construct SQL strings
- * using [squel.js]( https://hiddentao.com/squel/) as it's engine.
+ * Builder object for PPRF CartoDB specific SQL statement strings.
+ * This class allows you to easily construct SQL strings by chaining
+ * together methods to add parts to your SQL statement.
+ * It uses [squel.js]( https://hiddentao.com/squel/) as it's engine and
+ * provides central control over meta queries for entities such as Programs and Facilites.
  *
- * @since 0.2.5
- *
- *
+ * @example: https://medium.com/@axelhadfeg/builder-pattern-using-javascript-and-es6-ec1539182e24
  * USEAGE:
  * ```js
  *  new PPRFQuery.Builder('program', {id: programID})
@@ -28,12 +28,13 @@ const DATE_FORMAT = 'Month DD, YYYY'
  *                 .joinPPRAssets()
  *                 .build()
  * ```
+ *
+ * @since 0.2.5
+ *
  */
 export default class PPRFQuery {
   constructor (build) {
-    this.entityType = build.entityType
     this.queryString = build.query.toString()
-    this.queryObject = build.query
   }
 
   /**
@@ -44,8 +45,11 @@ export default class PPRFQuery {
       constructor (entityType, entityOptions) {
         this.postgreSQL = squel.useFlavour('postgres')
         this.options = entityOptions
+
+        // resolve our passed in entity
         this.entity = resolveEntityType(entityType)
 
+        // map to the Query to be built
         switch (this.entity.name) {
           case 'program':
           case 'programCategory':
@@ -56,6 +60,7 @@ export default class PPRFQuery {
             this.query = new TaxonomyQuery(this)
             break
           case 'programSchedules':
+            // get current program schedules
             this.query = this.postgreSQL
                              .select()
                              .field('*')
@@ -72,6 +77,7 @@ export default class PPRFQuery {
             this.query = new FacilitiesQuery(this)
             break
           case 'days':
+            // this is also cached in localStorage on app load
             this.query = this.postgreSQL.select().from(this.entity.DBTable)
             break
         }
@@ -79,11 +85,27 @@ export default class PPRFQuery {
         return this
       }
 
+      /**
+       * monkey patch to expose squel.js 'where' method
+       * @param  {string} whereClause
+       * @return {Builder Object}             PPRFQuery.Builder Object
+       *
+       * @since 0.2.5
+       */
       where (whereClause) {
         this.query.where(whereClause)
         return this
       }
 
+      /**
+       * given an array of field name add each to the query.
+       * if array value is an object map it as a field alias
+       * @param  {array} fieldDefs   array of field names, either a string or object of schema {field-name String: field-alias String}
+       * @param  {string} tablePrefix table name to prefix to field
+       * @return {Builder Object}             PPRFQuery.Builder Object
+       *
+       * @since 0.2.5
+       */
       fields (fieldDefs, tablePrefix = this.entity.DBTable) {
         if (_.isArray(fieldDefs)) {
           fieldDefs.forEach(field => {
@@ -98,16 +120,37 @@ export default class PPRFQuery {
         return this
       }
 
+      /**
+       * * monkey patch to expose squel.js 'field' method
+       * @param  {string} fieldName name of field
+       * @return {Builder Object}           PPRFQuery.Builder method
+       *
+       * @since 0.2.5
+       */
       field (fieldName) {
         this.query.field(fieldName)
         return this
       }
 
+      /**
+       * monkey patch to expose squel.js `join` method
+       * @return {Builder Object}           PPRFQuery.Builder method
+       *
+       * @since 0.2.5
+       */
       join (joinTable, alias = null, joinClause) {
         this.query.join(joinTable, alias, joinClause)
         return this
       }
 
+      /**
+       * INNER JOIN ppr_assets with ppr_facilites
+       * This allows gives us our geospatial fields for latitude and longitiude
+       * This is needed to map both Locations and Programs (each program is related to a Location allowing it to be mapped)
+       * @return {Builder Object}           PPRFQuery.Builder method
+       *
+       * @since 0.2.5
+       */
       joinPPRAssets () {
         this.query
              .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
@@ -120,6 +163,26 @@ export default class PPRFQuery {
         return this
       }
 
+      /**
+      * Given an array of fields and a text value to search
+      * constructs and ILIKE comparison for each field.
+      * reetext search implementation using a basic SQL ILIKE
+      *
+      * @param  {object} sqlQueryObj   squel.js query builder object
+      * @param  {array}  fields        array of field names (strings) to search on
+      * @param  {string} searchText user input freetext search value
+      * @return {Builder Object}           PPRFQuery.Builder method
+      *
+      * @since 0.2.5
+      */
+
+      // EXAMPLE:
+      // sqlQuery
+      //  .where(
+      //    squel.expr()
+      //            .and(`program_name ILIKE '%${searchText}%'`)
+      //            .or(`program_description ILIKE '%${searchText}%'`)
+      //  )
       searchFieldsFor (fields = [], searchText) {
         let sqlExpr = null
         for (let i in fields) {
@@ -134,14 +197,31 @@ export default class PPRFQuery {
         return this
       }
 
+      /**
+      * Given a zipcode get entities in ascending order of
+      * distance from centroid of zipcode polygon in units of miles
+      *
+      * @param {number} zipcode     pre-validated zipcode
+      * @return {Builder Object}           PPRFQuery.Builder method
+      *
+      * @since 0.2.5
+      */
       addWithinZipCodeField (zipcode) {
         this.query
-            .field(`ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom) as within_zip_code`)
+            .field(`ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom)`, 'within_zip_code')
             .left_join(`${tables.zipcodes}`, null, `${tables.zipcodes}.code = '${zipcode}'`)
 
         return this
       }
 
+      /**
+      * get entities within relative distance to given coordinates
+      * returned in ascending order of miles
+      *
+      * @return {Builder Object}           PPRFQuery.Builder method
+      *
+      * @since 0.2.5
+      */
       orderByMilesFromZipcode () {
         this.query
           .field(`ST_Distance(
@@ -152,6 +232,14 @@ export default class PPRFQuery {
         return this
       }
 
+    /**
+      * Given a set of coordinates get entites in ascening order of distance in miles
+      *
+      * @param {string|array} coordinates - comma separated latitude and longitude values
+      * @return {Builder Object}           PPRFQuery.Builder method
+      *
+      * @since 0.2.5
+      */
       addDistanceFieldFromCoordinates (coordinates) {
         this.query
           .field(`ST_Distance(
@@ -166,6 +254,15 @@ export default class PPRFQuery {
         return this
       }
 
+      /**
+      * given an array of filter objects
+      * add each valid filter to the query as a WHERE clause
+      * with appropriate comparison
+      *
+      * @param {array} filters     array of filter object {filterName: String, filterValue: any}
+      *
+      * @since 0.2.5
+      */
       addFilters (filters) {
         filters = _.omit(filters, val => _.isNull(val))
         let filterQuery = this.query
@@ -202,8 +299,14 @@ export default class PPRFQuery {
         return this
       }
 
+      /**
+       * Construct our full query object and
+       * return the query string
+       * @return {String} postgreSQL statement
+       *
+       * @since 0.2.5
+       */
       build () {
-        // console.log(this.query.toString())
         return new PPRFQuery(this).queryString
       }
     }
