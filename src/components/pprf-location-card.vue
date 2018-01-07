@@ -1,5 +1,8 @@
 <template>
-  <div :class="['card', 'card--location', {'card--nested': nested}]">
+  <div
+   :class="['card', 'card--location', {'card--nested': nested, 'card--selected': selected}]"
+   :id="'facility--'+facilityID"
+  >
       <font-awesome-icon
         v-if="!nested"
         icon="map-marker-alt"
@@ -50,6 +53,10 @@ export default {
     },
     nested: {
       type: Boolean
+    },
+    selected: {
+      type: Boolean,
+      default: false
     }
   }
 }

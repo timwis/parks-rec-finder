@@ -142,4 +142,16 @@ export default {
     border-radius: 0px !important;
     * { border-radius: 0px !important; }
   }
+  .leaflet-popup {
+    .leaflet-popup-content-wrapper {
+      border-radius: $border-radius;
+      h3{
+        font:{
+          family: $font-montserrat;
+          weight: 700;
+        };
+        color: color(dark-ben-franklin);
+      }
+    }
+  }
 </style>

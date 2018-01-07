@@ -38,6 +38,7 @@
                         :gender="program.gender"
                         :fee="program.fee"
                         :programID="program.id"
+                        :selected="activeCardID === program.id"
                         :location="{ address: program.facility_address, name: program.facility_name, id: program.facility_id }"
                       />
 
@@ -56,6 +57,7 @@
                         :address="facility.address"
                         :facilityID="facility.id"
                         :distance="facility.distance"
+                        :selected="activeCardID === facility.id"
                       />
                     </div>
                   </pprf-tab>
@@ -67,7 +69,7 @@
 
 <script>
 import { mapState } from 'vuex'
-
+import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
@@ -86,7 +88,7 @@ import _ from 'underscore'
 export default {
 
   name: 'PPRF-Sidebar-Search-Container',
-
+  mixins: [scrollListToMapPinMixin],
   components: {
     pprfSidebar,
     pprfTabs,
@@ -94,6 +96,14 @@ export default {
     pprfFilterBar,
     pprfProgramCard,
     pprfLocationCard
+  },
+
+  data () {
+    return {
+      scrollOptions: {
+        container: '.pprf-tabs__panels'
+      }
+    }
   },
 
   computed: {
