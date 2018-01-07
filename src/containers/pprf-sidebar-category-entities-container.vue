@@ -21,7 +21,7 @@
 
       <div
         slot="sidebar-main"
-        class="scrollable"
+        class="scrollable entity-list-container"
       >
         <ul class="category-list">
             <li
@@ -30,8 +30,7 @@
               v-if="activeEntityType === 'program' && programs"
             >
                <pprf-program-card
-                :selected="activeCardID === program.program_id"
-                :id="'program--'+program.program_id"
+                :selected="activeCardID === program.id"
                 :name="program.program_name"
                 :ages="{high: program.age_high, low: program.age_low}"
                 :gender="program.gender"
@@ -47,6 +46,8 @@
               :key="getUUID('location')"
             >
               <pprf-location-card
+                :selected="activeCardID === location.id"
+                :class="[{'card--selected': activeCardID === location.id}]"
                 :name="location.facility_name"
                 :address="location.address"
                 :facilityID="location.id"
@@ -61,17 +62,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import {deSlugify} from '@/utilities/utils'
-import resolveEntityType from '@/utilities/entity-type-resolver'
-import pprfSidebar from '@/components/pprf-sidebar'
 import api from '@/sources/api'
+import { mapState } from 'vuex'
+import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
+import pprfSidebar from '@/components/pprf-sidebar'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
 import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
-import {EventBus} from '@/event-bus'
+// import {EventBus} from '@/event-bus'
 import _ from 'underscore'
+import {deSlugify} from '@/utilities/utils'
+import resolveEntityType from '@/utilities/entity-type-resolver'
 
 /**
  * CATEGORY ENTITIES STATE CONTAINER
@@ -84,7 +86,7 @@ import _ from 'underscore'
  */
 export default {
   name: 'PPRF-Sidebar-Category-Entities-Container',
-
+  mixins: [scrollListToMapPinMixin],
   props: {
     /**
      * Entity type passed from the route param
@@ -109,25 +111,6 @@ export default {
     pprfProgramCard,
     pprfLocationCard,
     pprfResultsCountBadge
-  },
-
-  data () {
-    return {
-      scrollOptions: {
-        container: '.scrollable',
-        easing: 'ease-in',
-        onDone: function () {},
-        x: false,
-        y: true
-      },
-      activeCardID: null
-    }
-  },
-
-  mounted () {
-    EventBus.$on('map:markerClick', ({type, id}) => {
-      this.selectCard(type, id)
-    })
   },
 
   /*
@@ -158,15 +141,7 @@ export default {
             this.$store.dispatch('setMapMarkers', {entityType: entity})
           })
     },
-    /*
-    * scroll to selected card
-    *
-    * @since 0.1.0
-    */
-    selectCard (type, id) {
-      this.activeCardID = id
-      this.$scrollTo(`#${type}--${id}`, 1000, this.scrollOptions)
-    },
+
     getUUID (entityType) {
       return _.uniqueId(`${entityType}-`)
     }
@@ -220,9 +195,6 @@ export default {
     display: inline-block;
     width: 75%;
   }
-  .card--program--selected{
-    border-radius: $border-radius;
-    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
-  }
+
 
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <div :class="['card', 'card--program', {'card--program--selected': selected, 'card--nested-parent': location}]">
+  <div
+    :class="['card', 'card--program', {'card--selected': selected, 'card--nested-parent': location}]"
+    :id="'program--'+programID"
+  >
     <div class="card__info">
 
         <router-link class="card__info-name text-nopad" v-if="name"  :to="'/program/'+programID">
