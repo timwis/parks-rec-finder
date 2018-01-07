@@ -287,9 +287,11 @@ export default class PPRFQuery {
             filterQuery
               .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
               .where('date_to >= now()')
-              .group(`${tables.programs}.id, program_name, program_name_full, program_id, activity_type, activity_category_name, program_description, age_low, age_high, fee, ppr_facilities.facility_name, gender, address, facility, ${tables.assets}.the_geom`)
+              .group(`${tables.programs}.id, program_name, program_name_full, program_id, program_description, age_low, age_high, fee, ppr_facilities.facility_name, gender, address, facility, ${tables.assets}.the_geom`)
               // .having('count(days) > ?', 1)
-
+            if (this.entity.DBTable === tables.programCategoryTerms) {
+              filterQuery.group('activity_type, activity_category_name')
+            }
             for (var i = 0; i < days.length; i++) {
               /* eslint-disable no-useless-escape */
               filterQuery.having(`regexp_replace(jsonb_agg(days)::text,'\[|\]|"|,', '', 'g') iLIKE '%${days[i]}%'`)

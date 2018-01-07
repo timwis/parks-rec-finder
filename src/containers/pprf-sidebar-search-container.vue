@@ -23,7 +23,6 @@
                 <pprf-filter-bar
                   slot="beforePanes"
                   v-show="this.activeTab === 'program'"
-                  @applyFilters="filterSearch"
                 ></pprf-filter-bar>
 
                 <pprf-tab
@@ -112,9 +111,6 @@ export default {
   },
 
   methods: {
-    filterSearch (filters) {
-      this.$store.dispatch('submitSearch', {filters: filters})
-    },
     // generate ids for our cards because our data isn't clean enough
     //
     getUUID (entityType) {

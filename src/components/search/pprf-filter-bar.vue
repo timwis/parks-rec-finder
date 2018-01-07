@@ -211,11 +211,6 @@ export default {
   },
 
   mounted () {
-    // update filters on deep link
-    let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.filtersData))
-    if (searchFiltersFromRoute.length > 0) {
-      this._updateFiltersFromRoute()
-    }
     /**
      * get out Time of Week values directly from
      * the ppr_days table so we can pass their
@@ -224,6 +219,12 @@ export default {
      * @since 0.1.0
      */
     this.days = JSON.parse(window.localStorage.getItem('ppr-days-table'))
+
+    // update filters on deep link
+    let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.filtersData))
+    if (searchFiltersFromRoute.length > 0) {
+      this._updateFiltersFromRoute()
+    }
   },
 
   computed: {
@@ -234,7 +235,6 @@ export default {
      * @since 0.1.3
      */
     isDirty () {
-      console.log(Object.values(this.filters))
       return Object.values(this.filters).some((filterVal, idx, arr) => { return filterVal !== null })
     },
 
@@ -392,7 +392,7 @@ export default {
               // get the array of age values from query params
               let agesFromParams = this.$store.state.route.query[key].split('-').map(st => parseInt(st))
               // loop through our age range checkboxes
-              for (var i = 0; i < this.$refs['filter-age'].length; i++) {
+              for (let i = 0; i < this.$refs['filter-age'].length; i++) {
                 let $ref = this.$refs['filter-age'][i]
                 // check to see if there values fall within the range of values from the query params
                 if (_.intersection($ref.value, _.range(agesFromParams[0], agesFromParams[1])).length > 0) {
@@ -403,8 +403,9 @@ export default {
                 }
               }
               break
-            // case 'days':
-            //   break
+            case 'days':
+              // this.selectedDays.push(this.$store.state.route.query[key])
+              break
             // case 'fee':
             //   this.filters[key] = this.$store.state.route.query[key]
             //   break
@@ -414,14 +415,26 @@ export default {
           }
         })
         this.filtersApplied = true
+      } else {
+        // clear filter values
+        this.selectedAgeRanges = []
+        this.selectedDays = []
+        this.filtersData = {
+          fee: null,
+          gender: null,
+          days: [],
+          ages: null
+        }
       }
     }
   },
   watch: {
     '$route.query': function (val) {
-      let searchFiltersFromRoute = _.intersection(Object.keys(val), Object.keys(this.filters))
-      if (searchFiltersFromRoute.length) {
-        this._updateFiltersFromRoute()
+      this._updateFiltersFromRoute()
+      if (this.$store.state.route.name !== 'Search') {
+        this.$emit('applyFilters', this.filters)
+        this.open = false
+        this.filtersApplied = this.isDirty
       }
     }
   }

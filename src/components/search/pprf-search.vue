@@ -60,7 +60,7 @@ export default {
   data () {
     return {
       isDisabled: true,
-
+      formSubmited: false,
       search: {
         fields: {
           freetext: null,
@@ -72,30 +72,15 @@ export default {
     }
   },
   /**
-   * manages searching from deeplinks and updating state with query param values
+   * manages searching from deeplinks
    *
    * @public
    * @since 0.1.0
    */
   mounted () {
-    let searchFieldsFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
-
-    if (searchFieldsFromRoute.length > 0) {
-      let fields = _.pick(this.$store.state.route.query, searchFieldsFromRoute)
-      this._updateInputRefsValues(this.$store.state.route.query)
-      this.$store.dispatch('updateSearchInput', {fields})
-    }
-
-    let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.$store.state.search.filters))
-
-    if (searchFiltersFromRoute.length > 0) {
-      let filters = _.pick(this.$store.state.route.query, searchFiltersFromRoute)
-      this.$store.dispatch('updateSearchInput', {filters})
-    }
-
     // search if deep linked to Seach page
     if (this.$store.state.route.from && !this.$store.state.route.from.name) {
-      this.$store.dispatch('submitSearch')
+      this.searchFromRoute(this.$store.state.route.query)
     }
 
     /**
@@ -112,6 +97,23 @@ export default {
   },
 
   methods: {
+    /**
+     * on route query param update, submit the search
+     * this allows us to search using the browser's address bar
+     * and also syncs searching with browser history
+     * @public
+     *
+     * @param  {object} queryParams query parameters from router
+     * @return {void}
+     *
+     * @since 0.2.7
+     */
+    searchFromRoute (queryParams) {
+      if (this.$store.state.route.name === 'Search') {
+        this._updateInputRefsValues(this.$store.state.route.query)
+        this.$store.dispatch('submitSearch', {fields: this.searchValuesFromRoute, filters: this.searchFiltersFromRoute})
+      }
+    },
     /**
      * Sets local search field state
      * @param  {string} freetextVal user input
@@ -163,9 +165,7 @@ export default {
           zip: _fields.zip
         }
       }
-      // update our search route params so our
-      // watcher will submit the search
-      this.updateSearchRouteParams(this.search.fields)
+
       /**
        * Submit event w/ new search fields values
        *
@@ -175,6 +175,9 @@ export default {
        * @since 0.1.0
        */
       this.$emit('submit', newSearch.fields)
+      // update our search route params so our
+      // watcher will submit the search
+      this.updateSearchRouteParams(this.search.fields)
     },
 
     /**
@@ -206,14 +209,6 @@ export default {
         this.isDisabled = false
         this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
       }
-      /**
-       * Vuex event to update search values in state
-       *
-       * @event dispatch - updateSearchInput
-       * @type {object}
-       * with query param values
-       */
-      this.$store.dispatch('updateSearchInput', fieldValues)
     },
 
     /**
@@ -235,28 +230,30 @@ export default {
     }
   },
 
+  computed: {
+    searchFieldsFromRoute () {
+      return _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
+    },
+    searchValuesFromRoute () {
+      return _.pick(this.$store.state.route.query, this.searchFieldsFromRoute)
+    },
+    searchFiltersFromRoute () {
+      return _.pick(this.$store.state.route.query, _.without(Object.keys(this.$store.state.route.query), this.searchFieldsFromRoute))
+    }
+  },
+
   watch: {
     /**
      * On route query param change update the search state
      * if in the Search route update the search input and re-submit search.
-     * This is helpful when navigating backwards through browser history with the back buton
      *
      * @param  {object} val new route query parameters
      * @return {void}
      *
-     * @since 0.1.0
+     * @since 0.2.7
      */
     '$route.query': function (val) {
-      let searchFieldsFromRoute = _.intersection(Object.keys(val), Object.keys(this.$store.state.search.fields))
-      let previousFieldValues = Object.values(_.pick(this.$store.state.route.from.query, searchFieldsFromRoute))
-      let newFieldValues = Object.values(_.pick(val, searchFieldsFromRoute))
-      this.$Progress.start()
-      if (_.difference(newFieldValues, previousFieldValues).length && this.$store.state.route.name === 'Search') {
-        let fields = searchFieldsFromRoute.length ? _.pick(val, searchFieldsFromRoute) : null
-
-        this.$store.dispatch('updateSearchInput', {fields})
-        this.$store.dispatch('submitSearch')
-      }
+      this.searchFromRoute(val)
     }
   }
 }
