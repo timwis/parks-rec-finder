@@ -22,7 +22,6 @@
 
                 <pprf-filter-bar
                   slot="beforePanes"
-                  v-show="this.activeTab === 'program'"
                 ></pprf-filter-bar>
 
                 <pprf-tab

@@ -39,6 +39,8 @@ const mutations = {
   },
   [types.RESET_MARKERS] (state) {
     state.mapMarkers = []
+    state.entities.marker.facility = []
+    state.entities.marker.program = []
   },
 
   // search
