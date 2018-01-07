@@ -48,11 +48,6 @@ export default {
     'v-circle-marker': Vue2Leaflet.CircleMarker
   },
 
-  beforeRouteUpdate (to, from, next) {
-    this.$store.dispatch('resetMarkers')
-    next()
-  },
-
   mounted () {
     navigator.geolocation.getCurrentPosition(position => {
       this.userLocation = L.latLng(position.coords.latitude, position.coords.longitude)
