@@ -119,7 +119,7 @@ export default {
     top:0;
     left:0;
     width:100%;
-    height: 100%;
+    height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height});
     background: rgba(0,0,0,.85);
     z-index: 100000;
     pointer-events: none;
@@ -129,12 +129,12 @@ export default {
     width: 100%;
     position:relative;
     display: block;
-    height:calc(#{$max-app-height} - #{$header-height});
+    height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
   }
 
   .leaflet-control-zoom{
     position: fixed;
-    bottom: 40px;
+    bottom: 60px;
     right: 20px;
     z-index: 100;
     border: 3px solid color(ben-franklin-blue) !important;

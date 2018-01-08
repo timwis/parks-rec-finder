@@ -1,20 +1,25 @@
 <template>
+    <div id="pprf-app__container" >
 
-  <div id="pprf-app__container" >
+      <pprf-header-container></pprf-header-container>
 
-    <pprf-header-container></pprf-header-container>
+      <main class="pprf-app__main">
+          <router-view name="sidebar"></router-view>
+          <router-view name="map"></router-view>
+      </main>
 
-    <main class="pprf-app__main">
-        <router-view name="sidebar"></router-view>
-        <router-view name="map"></router-view>
-    </main>
-
-  </div>
-
+      <footer class="pprf-footer">
+        <a class="text-upper" href="http://beta.phila.gov">City of Philadelphia</a> |
+        <a class="text-upper" href="">How to use</a> |
+        <a class="text-upper" href="">Feedback</a>
+        <small id="versionNumber" class="text-nopad">v{{version}}</small>
+      </footer>
+    </div>
 </template>
 
 <script>
 import pprfHeaderContainer from '@/containers/pprf-header-container'
+import {version} from '../package.json'
 
 /**
  * MAIN APPLICATION COMPONENT.
@@ -27,6 +32,9 @@ import pprfHeaderContainer from '@/containers/pprf-header-container'
 export default {
   name: 'PPRF-Finder',
   components: {pprfHeaderContainer},
+  data () {
+    return {version}
+  },
   mounted () {
     //  [App.vue specific] When App.vue is finish loading finish the progress bar
     this.$Progress.finish()
@@ -72,16 +80,42 @@ export default {
       margin: 0 auto;
       padding:0;
       box-sizing: border-box;
-      overflow: hidden;
+      //overflow: hidden;
       //border: 3px solid red;
     }
 
 
     .pprf-app__main {
         display:flex;
-        height: 91.5vh;
+        //height: 91.5vh;
         //border: 3px solid green;
         flex-direction: row;
     }
+  .pprf-footer{
+    width: 100%;
+    height: $footer-height;
+    display:inline-block;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left:0;
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: baseline;
+    background: color(dark-ben-franklin);
+    color: $white;
+    a{
+      color: $white !important;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0 10px;
+    }
+  }
+
+  #versionNumber{
+    position: absolute;
+    right: 15px;
+    top: 5px;
+  }
 
 </style>

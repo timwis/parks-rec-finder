@@ -269,6 +269,7 @@ export default {
 
 <style lang="scss" scoped>
 .pprf-search{
+  width: 80%;
   display: flex;
   flex-direction: row;
   max-width: 998px;
