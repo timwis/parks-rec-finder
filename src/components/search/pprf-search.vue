@@ -109,8 +109,8 @@ export default {
      * @since 0.2.7
      */
     searchFromRoute (queryParams) {
+      this._updateInputRefsValues(this.$store.state.route.query)
       if (this.$store.state.route.name === 'Search') {
-        this._updateInputRefsValues(this.$store.state.route.query)
         this.$store.dispatch('submitSearch', {fields: this.searchValuesFromRoute, filters: this.searchFiltersFromRoute})
       }
     },
@@ -204,10 +204,14 @@ export default {
       if (fieldValues.freetext) {
         this.isDisabled = false
         this.$refs.freetextField.inputValue = fieldValues.freetext
+      } else {
+        this.$refs.freetextField.inputValue = null
       }
       if (fieldValues.address || fieldValues.zip) {
         this.isDisabled = false
         this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
+      } else {
+        this.$refs.addressField.inputValue = null
       }
     },
 
@@ -223,9 +227,9 @@ export default {
      */
     updateSearchRouteParams (queryParams) {
       // merge with current search params
-      let query = Object.assign({}, this.$store.state.route.query, queryParams)
+      // let query = Object.assign({}, this.$store.state.route.query, queryParams)
       // only submit submit valid params
-      query = _.omit(query, val => _.isNull(val))
+      let query = _.omit(queryParams, val => _.isNull(val))
       this.$router.push({path: '/search', query})
     }
   },
@@ -253,6 +257,10 @@ export default {
      * @since 0.2.7
      */
     '$route.query': function (val) {
+      if (_.difference([val.freetext], [this.$store.state.search.fields.freetext]).length) {
+        val.zip = null
+        val.address = null
+      }
       this.searchFromRoute(val)
     }
   }

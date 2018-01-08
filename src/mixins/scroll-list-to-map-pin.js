@@ -27,7 +27,6 @@ let scrollListToMapPinMixin = {
     * @since 0.1.0
     */
     selectCard (type, id) {
-      console.log(`#${type}--${id}`)
       this.activeCardID = id
       this.$scrollTo(`#${type}--${id}`, 100, this.scrollOptions)
     }
