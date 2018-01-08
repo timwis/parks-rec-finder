@@ -76,6 +76,7 @@ import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
 import _ from 'underscore'
+
 /**
  * SEARCH RESULTS SIDEBAR STATE CONTAINER
  *
@@ -140,6 +141,7 @@ export default {
     }
     .pprf-sidebar__main{
       padding:0 !important;
+      overflow:hidden;
     }
     .pprf-filter-bar{margin-top: 10px;}
     //.pprf-filter-bar--open{

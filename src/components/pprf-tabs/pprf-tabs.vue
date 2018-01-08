@@ -79,8 +79,8 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
-  display: flex;
-  flex-flow: column;
+  //display: flex;
+  //flex-flow: column;
 }
     .pprf-tabs__nav{
         width:100%;
