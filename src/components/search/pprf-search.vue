@@ -269,13 +269,12 @@ export default {
 
 <style lang="scss" scoped>
 .pprf-search{
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   max-width: 998px;
   margin: auto;
-  border-radius: 2px;
-  background: color(ben-franklin-blue);
+  border-radius: $border-radius;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
   transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
   overflow: hidden;
@@ -286,22 +285,35 @@ export default {
 
   .field--freetext{
     max-width: 650px;
-    display:block;
+    //display:block;
     flex: 3;
     border-right: 1px solid $black;
   }
 
   .field--address{
     max-width: 358px;
-    display:block;
+    //display:block;
     flex: 2;
   }
 
   #pprf-search__submit{
     min-width: 40px;
-
+    background: color(ben-franklin-blue);
+    &[disabled] {
+      background: color(sidewalk);
+    }
     .fa-search{
       color:$white;
+    }
+  }
+
+
+  @include breakpoint(medium down) {
+    .pprf-search {
+      box-shadow: none;
+      &:hover{ box-shadow: none;}
+      .field--freetext{ max-width: 100%; border-right: none; }
+      .field--address{ display: none; }
     }
   }
 </style>

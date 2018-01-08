@@ -1,9 +1,9 @@
 <template>
-    <div id="pprf-app__container" >
+    <div id="pprf-app__container"  >
 
       <pprf-header-container></pprf-header-container>
 
-      <main class="pprf-app__main">
+      <main :class="['pprf-app__main', {'pprf-app__main--mobile-map-view': !mobileListView}]" >
           <router-view name="sidebar"></router-view>
           <router-view name="map"></router-view>
       </main>
@@ -20,7 +20,7 @@
 <script>
 import pprfHeaderContainer from '@/containers/pprf-header-container'
 import {version} from '../package.json'
-
+import {EventBus} from '@/event-bus'
 /**
  * MAIN APPLICATION COMPONENT.
  *
@@ -33,11 +33,17 @@ export default {
   name: 'PPRF-Finder',
   components: {pprfHeaderContainer},
   data () {
-    return {version}
+    return {
+      version,
+      mobileListView: true
+    }
   },
   mounted () {
     //  [App.vue specific] When App.vue is finish loading finish the progress bar
     this.$Progress.finish()
+    EventBus.$on('mobileView:toggle', () => {
+      this.mobileListView = !this.mobileListView
+    })
   },
   created () {
     //  [App.vue specific] When App.vue is first loaded start the progress bar
@@ -91,6 +97,8 @@ export default {
         //border: 3px solid green;
         flex-direction: row;
     }
+
+
   .pprf-footer{
     width: 100%;
     height: $footer-height;
@@ -118,4 +126,22 @@ export default {
     top: 5px;
   }
 
+
+  @include breakpoint(medium down) {
+      .pprf-app__main {
+        flex-direction: column;
+      }
+      .pprf-app__main--mobile-map-view{
+        .pprf-map__container{
+          z-index: 900;
+          top:212px;
+          height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px - 40px);
+        }
+      }
+
+      .pprf-footer{
+        display: none;
+      }
+
+  }
 </style>

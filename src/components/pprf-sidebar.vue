@@ -7,7 +7,7 @@
           <slot name="sidebar-header" />
         </header>
 
-        <main class="pprf-sidebar__main">
+        <main  :class="['pprf-sidebar__main', {'pprf-sidebar__main--hidden': !mobileListView}]" >
           <slot name="sidebar-main" />
         </main>
 
@@ -22,6 +22,7 @@
 
 <script>
 import pprfBackBtn from '@/components/pprf-back-btn'
+import {EventBus} from '@/event-bus'
 /**
  * APPLICATION SIDEBAR
  *
@@ -37,6 +38,16 @@ export default {
       type: String,
       default: null
     }
+  },
+  data () {
+    return {
+      mobileListView: true
+    }
+  },
+  mounted () {
+    EventBus.$on('mobileView:toggle', () => {
+      this.mobileListView = !this.mobileListView
+    })
   }
 }
 </script>
@@ -66,8 +77,11 @@ export default {
         flex-flow:column;
         //overflow: auto;
     }
-        .pprf-sidebar__header{}
+        .pprf-sidebar__header{
+          background: $white;
+        }
         .pprf-sidebar__title{
+
             font: {
                 family: $font-montserrat;
                 weight: 700;
@@ -86,7 +100,9 @@ export default {
         overflow: auto;
       }
 
-
+.pprf-sidebar--mobile-view-btn{
+  display: none;
+}
 
 /* =======================================================================
 Single Category Sidebar
@@ -106,6 +122,7 @@ Single Category Sidebar
     border-bottom: 1px solid $white;
   }
   .pprf-sidebar__title--category {
+    max-width: 75%;
     padding: 0px 0px 20px 20px;
     margin:0;
     color: $black;
@@ -123,5 +140,35 @@ Entity Detail
   color: $black;
 }
 
+
+
+@include breakpoint (medium down) {
+  .pprf-sidebar {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    height:calc(#{$max-app-height} - #{$header-height-mobile});
+    //position: absolute;
+    //top:$header-height-mobile;
+    //left: 0;
+    z-index: 1000;
+  }
+  .pprf-sidebar__main {
+    background: $white;
+  }
+  .pprf-sidebar__main--hidden{
+    display: none;
+  }
+
+  .pprf-sidebar.pprf-sidebar--nopad{
+    .pprf-sidebar__header{ padding: 0;}
+  }
+  .pprf-sidebar__header{
+    padding: 15px;
+  }
+
+
+
+}
 
 </style>

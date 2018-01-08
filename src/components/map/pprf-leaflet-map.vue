@@ -136,7 +136,7 @@ export default {
     position: fixed;
     bottom: 60px;
     right: 20px;
-    z-index: 100;
+    z-index: 1;
     border: 3px solid color(ben-franklin-blue) !important;
     color: color(ben-franklin-blue) !important;
     border-radius: 0px !important;
@@ -154,4 +154,14 @@ export default {
       }
     }
   }
+
+
+@include breakpoint (medium down) {
+  .pprf-map__container{
+    position: absolute;
+    height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px);
+    top: calc(#{$header-height-mobile} + 88px);
+    z-index:1;
+  }
+}
 </style>

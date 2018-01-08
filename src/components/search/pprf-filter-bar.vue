@@ -519,6 +519,7 @@ export default {
   display: block;
   position:absolute;
   height: 100vh;
+  z-index: 10002;
   overflow: scroll;
   .scrollable{
     position:absolute;

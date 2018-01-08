@@ -56,7 +56,7 @@
 
          </ul>
       </div>
-
+      <pprf-mobile-view-toggle-btn slot="sidebar-footer"/>
 
   </pprf-sidebar>
 </template>
@@ -66,6 +66,7 @@ import api from '@/sources/api'
 import { mapState } from 'vuex'
 import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
 import pprfSidebar from '@/components/pprf-sidebar'
+import pprfMobileViewToggleBtn from '@/components/pprf-mobile-view-toggle-btn'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
@@ -87,6 +88,7 @@ import resolveEntityType from '@/utilities/entity-type-resolver'
 export default {
   name: 'PPRF-Sidebar-Category-Entities-Container',
   mixins: [scrollListToMapPinMixin],
+
   props: {
     /**
      * Entity type passed from the route param
@@ -110,7 +112,8 @@ export default {
     pprfFilterBar,
     pprfProgramCard,
     pprfLocationCard,
-    pprfResultsCountBadge
+    pprfResultsCountBadge,
+    pprfMobileViewToggleBtn
   },
 
   /*
@@ -190,10 +193,6 @@ export default {
       }
     }
 
-  }
-  .pprf-sidebar__title--category{
-    display: inline-block;
-    width: 75%;
   }
 
 

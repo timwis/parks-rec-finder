@@ -173,4 +173,20 @@ export default {
         margin-top:20px;
         padding-right: 10px;
     }
+
+
+
+@include breakpoint (medium down) {
+  .pprf-tabs__nav{
+    padding: 0 15px;
+    justify-content:space-around;
+  }
+
+  .pprf-tabs__nav-item{
+    width: 100%;
+    text-align: center;
+  }
+
+}
+
 </style>

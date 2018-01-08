@@ -138,4 +138,16 @@ export default {
 
     float:right;
   }
+
+
+
+
+
+  @include breakpoint (medium down) {
+    .pprf-category-card{
+      margin-bottom: 0;
+      border-radius: 0px;
+    }
+
+  }
 </style>

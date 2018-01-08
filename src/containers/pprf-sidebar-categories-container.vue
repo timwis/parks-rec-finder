@@ -162,7 +162,9 @@ export default {
   .pprf-tabs__panels{
     top: 50px;
   }
-
+  .pprf-sidebar__title--category{
+    max-width: 75%;
+  }
   .category-list{
     list-style: none;
     margin:0;
@@ -172,7 +174,10 @@ export default {
 }
 
 
+@include breakpoint(medium down) {
 
+
+}
 
 
 
