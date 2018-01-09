@@ -30,7 +30,7 @@ export function deSlugify (slug) {
   return slug
           // .replace('-and-', '-&-')
           .split('-')
-          .map(slugPart => slugPart.charAt(0).toUpperCase() + slugPart.slice(1))
+          // .map(slugPart => slugPart.charAt(0).toLowerCase() + slugPart.slice(1))
           .join(' ')
           .replace('And', 'and')
 }

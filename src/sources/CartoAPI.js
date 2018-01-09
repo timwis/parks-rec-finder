@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {
-  isValidZipcode,
-  deSlugify
+  isValidZipcode
 } from '@/utilities/utils'
 import resolveEntityType from '@/utilities/entity-type-resolver'
 import PPRFQuery from './PPRFQueryBuilder'
@@ -248,16 +247,16 @@ class CartoAPI {
    */
   getTaxonomyTermEntities (entity, filters) {
     let _entity = resolveEntityType(entity.entityType)
-    let taxonomyTerm = deSlugify(entity.entityTerm)
-
+    let taxonomyTerm = entity.entityTerm.replace(/(-)/ig, ' ')
+    debugger
     let categoryEntityQuery = new PPRFQuery.Builder(`${_entity.name}Category`, {term: taxonomyTerm})
 
     if (_entity.name === 'program') {
       categoryEntityQuery
         .fields(['program_name_full', `id`, 'program_id', 'activity_type', 'program_name', 'program_description', 'age_low', 'age_high', 'fee', {'gender->>0': 'gender'}], _entity.DBTable)
-        .field('activity_category_name')
+        .field('lower(activity_category_name) as activity_category_name')
         .join(tables.programCategories, 'category', `category.id = ${_entity.DBTable}.activity_category->>0`)
-        .where(`category.activity_category_name = '${taxonomyTerm}'`)
+        .where(`lower(category.activity_category_name) = '${taxonomyTerm}'`)
 
       if (filters) {
         categoryEntityQuery
