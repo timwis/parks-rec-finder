@@ -1,9 +1,9 @@
 <template>
- <div :class="['pprf-map__container', {'pprf-map__container--open-mobile': mobileOpen}]">
+ <div class="pprf-map__container">
 
    <div v-show="loading" class="loading-overlay"></div>
 
-    <v-map ref="leafletMap" id="PPRF-Leaflet-Map" :zoom="zoom" :center="center">
+    <v-map ref="leafletMap" id="PPRF-Leaflet-Map" :options="mapOptions" :zoom="zoom" :center="center" :minZoom="zoom">
 
       <v-tilelayer :url="basemap" ></v-tilelayer>
       <v-tilelayer :url="streets" ></v-tilelayer>
@@ -61,6 +61,11 @@ export default {
   data () {
     return {
       zoom: 14,
+      mapOptions: {
+        zoomControl: {
+          position: 'bottomright'
+        }
+      },
       center: [39.9523893, -75.1636291],
       basemap: process.env.ESRI.tiledLayers.basemap,
       streets: process.env.ESRI.tiledLayers.streets,
@@ -132,11 +137,14 @@ export default {
     display: block;
     height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
   }
+  .pprf-map__container.pprf-map__container--mobile{
+    display: none;
+  }
 
   .leaflet-control-zoom{
-    position: fixed;
-    bottom: 60px;
-    right: 20px;
+    //position: fixed;
+    //bottom: 60px;
+    //right: 20px;
     z-index: 1;
     border: 3px solid color(ben-franklin-blue) !important;
     color: color(ben-franklin-blue) !important;
@@ -165,10 +173,20 @@ export default {
   }
   .pprf-map__container{
     display: none;
-    position: absolute;
-    height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px);
-    top: calc(#{$header-height-mobile} + 88px);
-    z-index:1;
+  }
+  // filters open
+  .pprf-app--mobile-filters-open {
+    .loading-overlay,
+    .pprf-map__container.pprf-map__container--mobile{
+      display: none;
+    }
+  }
+
+  .pprf-map__container.pprf-map__container--mobile{
+    flex:.999;
+    height: auto;
+    position: relative;
+    top:auto;
   }
   .pprf-map__container.pprf-map__container--open-mobile{
     display: block;

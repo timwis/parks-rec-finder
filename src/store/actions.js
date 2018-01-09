@@ -96,8 +96,8 @@ const actions = {
       commit(types.SET_MOBILE_VIEW, state.mobile.listView)
     }
   },
-  toggleMobileFilters ({commit}) {
-    commit(types.TOGGLE_MOBILE_FILTERS)
+  toggleMobileFilters ({commit}, toggleState) {
+    commit(types.TOGGLE_MOBILE_FILTERS, toggleState)
   }
 }
 
