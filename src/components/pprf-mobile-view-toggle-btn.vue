@@ -28,11 +28,12 @@ export default {
 @include breakpoint (medium down) {
   .pprf-sidebar--mobile-view-btn{
     display: block;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     padding: 10px;
     color: $black;
+    z-index: 1000;
     background: lighten(color(light-ben-franklin), 10%);
   }
 }
