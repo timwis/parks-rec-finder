@@ -20,9 +20,9 @@ Vue.use(Vuex)
 Vue.use(Vuetify)
 Vue.use(VueScrollTo)
 Vue.use(VueProgressBar, {
-  color: 'rgb(143, 255, 199)',
+  color: 'rgb(37, 206, 247)',
   failedColor: 'red',
-  height: '2px'
+  thickness: '5px'
 })
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'

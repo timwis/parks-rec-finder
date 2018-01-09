@@ -15,6 +15,7 @@
         <pprf-filter-bar
           v-if="activeEntityType === 'program'"
           slot="beforePanes"
+          :disabled="mobile.searchOpen"
           @applyFilters="filterEntities"
         />
       </div>
@@ -56,8 +57,7 @@
 
          </ul>
       </div>
-
-
+    <pprf-mobile-view-toggle-btn slot="sidebar-footer"/>
   </pprf-sidebar>
 </template>
 
@@ -66,6 +66,7 @@ import api from '@/sources/api'
 import { mapState } from 'vuex'
 import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
 import pprfSidebar from '@/components/pprf-sidebar'
+import pprfMobileViewToggleBtn from '@/components/pprf-mobile-view-toggle-btn'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/pprf-program-card'
 import pprfLocationCard from '@/components/pprf-location-card'
@@ -87,6 +88,7 @@ import resolveEntityType from '@/utilities/entity-type-resolver'
 export default {
   name: 'PPRF-Sidebar-Category-Entities-Container',
   mixins: [scrollListToMapPinMixin],
+
   props: {
     /**
      * Entity type passed from the route param
@@ -110,7 +112,8 @@ export default {
     pprfFilterBar,
     pprfProgramCard,
     pprfLocationCard,
-    pprfResultsCountBadge
+    pprfResultsCountBadge,
+    pprfMobileViewToggleBtn
   },
 
   /*
@@ -155,7 +158,8 @@ export default {
       search: state => state.search,
       programs: state => state.entities.program,
       facilities: state => state.entities.facility,
-      activeTab: state => state.activeTab
+      activeTab: state => state.activeTab,
+      mobile: state => state.mobile
     }),
     resultsCount () {
       let entity = resolveEntityType(this.entityType).name
@@ -190,10 +194,6 @@ export default {
       }
     }
 
-  }
-  .pprf-sidebar__title--category{
-    display: inline-block;
-    width: 75%;
   }
 
 

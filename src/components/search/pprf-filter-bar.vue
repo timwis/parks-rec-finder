@@ -1,5 +1,5 @@
 <template>
-  <section :class="['pprf-filter-bar', {'pprf-filter-bar--open': open}]">
+  <section :class="['pprf-filter-bar', {'pprf-filter-bar--open': open, 'pprf-filter-bar--disabled': disabled}]">
     <header
       class="pprf-filter-bar__header"
     >
@@ -138,7 +138,6 @@
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import _ from 'underscore'
-// import api from '@/sources/api'
 
 /**
  * Filter Bar
@@ -150,7 +149,11 @@ export default {
   name: 'PPRF-Filter-Bar',
 
   components: {FontAwesomeIcon, PhilaButton},
-
+  props: {
+    disabled: {
+      default: false
+    }
+  },
   data () {
     return {
       open: false,
@@ -291,6 +294,7 @@ export default {
   methods: {
     toggleOpen () {
       this.open = !this.open
+      this.$store.dispatch('toggleMobileFilters')
       if (this.open) {
         this.$store.dispatch('dataLoading')
       } else {
@@ -436,6 +440,11 @@ export default {
         this.open = false
         this.filtersApplied = this.isDirty
       }
+    },
+    'disabled': function (val) {
+      if (this.open) {
+        this.open = false
+      }
     }
   }
 }
@@ -450,6 +459,13 @@ export default {
   z-index:5;
   background: lighten(color(light-ben-franklin), 10%);
   border-top: 1px solid $white;
+}
+.pprf-filter-bar--disabled{
+  opacity: 0.5;
+  pointer-events: none;
+  .pprf-filter-bar-form{
+    display: none !important;
+  }
 }
 .pprf-sidebar--nopad {
   .pprf-filter-bar__header {padding: 0 20px;}
@@ -519,6 +535,7 @@ export default {
   display: block;
   position:absolute;
   height: 100vh;
+  z-index: 10002;
   overflow: scroll;
   .scrollable{
     position:absolute;
@@ -547,5 +564,15 @@ export default {
   }
 }
 
+
+@include breakpoint (medium down) {
+  .pprf-sidebar__desc{
+    min-height: 0px;
+    p {padding:0; margin:0;}
+  }
+  .pprf-filter-bar-form__open{
+    z-index: 30000;
+  }
+}
 
 </style>

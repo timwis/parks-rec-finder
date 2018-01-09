@@ -12,6 +12,8 @@ let router = new Router({ routes })
 router.beforeEach((to, from, next) => {
   store.dispatch('dataLoading')
   store.dispatch('resetMarkers')
+  store.dispatch('setMobileView', 'list')
+
   let PPRdaysTable = JSON.parse(window.localStorage.getItem('ppr-days-table'))
   if (!PPRdaysTable) {
     api.getDays().then(results => {

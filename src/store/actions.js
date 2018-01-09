@@ -82,6 +82,22 @@ const actions = {
         console.log(err)
         commit(types.RECEIVE_SEARCH_FAILURE, err)
       })
+  },
+
+  toggleMobileSearch ({commit}) {
+    commit(types.TOGGLE_MOBILE_SEARCH)
+  },
+  setMobileView ({commit, state}, view) {
+    if (view !== 'undefined' && view === 'list') {
+      commit(types.SET_MOBILE_VIEW, true)
+    } else if (view === 'map') {
+      commit(types.SET_MOBILE_VIEW, false)
+    } else {
+      commit(types.SET_MOBILE_VIEW, state.mobile.listView)
+    }
+  },
+  toggleMobileFilters ({commit}) {
+    commit(types.TOGGLE_MOBILE_FILTERS)
   }
 }
 

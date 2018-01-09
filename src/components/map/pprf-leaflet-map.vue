@@ -1,5 +1,5 @@
 <template>
- <div  class="pprf-map__container">
+ <div :class="['pprf-map__container', {'pprf-map__container--open-mobile': mobileOpen}]">
 
    <div v-show="loading" class="loading-overlay"></div>
 
@@ -78,7 +78,8 @@ export default {
     ...mapState({
       markers: state => state.mapMarkers,
       zipcodeSearched: state => state.search.fields.zip,
-      loading: state => state.loading
+      loading: state => state.loading,
+      mobileOpen: state => !state.mobile.listView
     }),
     activeEntity () {
       let entityTypeParam = this.$store.state.route.params.entityType
@@ -119,7 +120,7 @@ export default {
     top:0;
     left:0;
     width:100%;
-    height: 100%;
+    height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height});
     background: rgba(0,0,0,.85);
     z-index: 100000;
     pointer-events: none;
@@ -129,14 +130,14 @@ export default {
     width: 100%;
     position:relative;
     display: block;
-    height:calc(#{$max-app-height} - #{$header-height});
+    height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
   }
 
   .leaflet-control-zoom{
     position: fixed;
-    bottom: 40px;
+    bottom: 60px;
     right: 20px;
-    z-index: 100;
+    z-index: 1;
     border: 3px solid color(ben-franklin-blue) !important;
     color: color(ben-franklin-blue) !important;
     border-radius: 0px !important;
@@ -154,4 +155,19 @@ export default {
       }
     }
   }
+
+
+@include breakpoint (medium down) {
+  .loading-overlay{
+    position:fixed;
+    height:calc(#{$max-app-height} - #{$header-height-mobile});
+    top: $header-height-mobile;
+  }
+  .pprf-map__container{
+    position: absolute;
+    height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px);
+    top: calc(#{$header-height-mobile} + 88px);
+    z-index:1;
+  }
+}
 </style>

@@ -18,6 +18,9 @@ const routes = [
     components: {
       'map': pprfLeafletMap,
       'sidebar': pprfSidebarSearchContainer
+    },
+    meta: {
+      bodyClass: 'view--search'
     }
   },
   {
@@ -27,7 +30,10 @@ const routes = [
       'map': pprfLeafletMap,
       'sidebar': pprfSidebarProgramDetailContainer
     },
-    props: { default: true, sidebar: true }
+    props: { default: true, sidebar: true },
+    meta: {
+      bodyClass: 'view--entity-detail'
+    }
   },
 
   {
@@ -37,7 +43,10 @@ const routes = [
       'map': pprfLeafletMap,
       'sidebar': pprfSidebarLocationDetailContainer
     },
-    props: { default: true, sidebar: true }
+    props: { default: true, sidebar: true },
+    meta: {
+      bodyClass: 'view--entity-detail'
+    }
   },
 
   {
@@ -47,7 +56,10 @@ const routes = [
       'map': pprfLeafletMap,
       'sidebar': pprfSidebaCategoryEntitiesContainer
     },
-    props: { default: true, sidebar: true }
+    props: { default: true, sidebar: true },
+    meta: {
+      bodyClass: 'view--entity-list'
+    }
   },
   {
     path: '/:entityType',
@@ -56,7 +68,10 @@ const routes = [
       'map': pprfLeafletMap,
       'sidebar': pprfSidebarCategoriesContainer
     },
-    props: { default: true, sidebar: true }
+    props: { default: true, sidebar: true },
+    meta: {
+      bodyClass: 'view--taxonomy-list'
+    }
   }
 ]
 export default routes

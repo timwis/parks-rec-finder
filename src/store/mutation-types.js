@@ -25,3 +25,9 @@ export const RESET_MARKERS = 'markers/RESET_MARKERS'
 
 // TABS
 export const SET_ACTIVE_TAB = 'SET_ACTIVE_TAB'
+
+// MOBILE
+export const TOGGLE_MOBILE_NAV = 'mobile/TOGGLE_MOBILE_NAV'
+export const TOGGLE_MOBILE_SEARCH = 'mobile/TOGGLE_MOBILE_SEARCH'
+export const SET_MOBILE_VIEW = 'mobile/SET_MOBILE_VIEW'
+export const TOGGLE_MOBILE_FILTERS = 'mobile/TOGGLE_MOBILE_FILTERS'

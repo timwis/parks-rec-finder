@@ -23,12 +23,18 @@ TABLE OF CONTENTS;
   1. GLOBAL
   @since 0.1.0
 ========================================================================== */
-$header-height: 63px;
+$header-height: 100px;
+$footer-height: 40px;
 $max-app-width: 100vw;//1440px
 $max-app-height: 100vh;
 
+$header-height-mobile: 60px;
+
 $border-radius: 2px;
 $box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+
+
+
 
 
 /* =======================================================================

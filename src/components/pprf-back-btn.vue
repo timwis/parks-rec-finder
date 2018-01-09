@@ -64,4 +64,6 @@ export default {
     .svg-inline--fa{ transform: translateX(-3px);}
   }
 }
+
+
 </style>

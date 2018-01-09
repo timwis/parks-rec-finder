@@ -1,5 +1,13 @@
 const state = {
   loading: true,
+
+  mobile: {
+    searchOpen: false,
+    listView: true,
+    navOpen: false,
+    filtersOpen: false
+  },
+
   entities: {
     program: [],
     facility: [],
