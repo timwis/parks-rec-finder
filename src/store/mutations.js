@@ -89,6 +89,9 @@ const mutations = {
   },
   [types.SET_MOBILE_VIEW] (state, view) {
     state.mobile.listView = view
+  },
+  [types.TOGGLE_MOBILE_NAV] (state) {
+    state.mobile.navOpen = !state.mobile.navOpen
   }
 }
 
