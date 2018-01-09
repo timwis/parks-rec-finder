@@ -460,6 +460,7 @@ export default {
   z-index:5;
   background: lighten(color(light-ben-franklin), 10%);
   border-top: 1px solid $white;
+  &:hover{ cursor: pointer; cursor: hand; }
 }
 .pprf-filter-bar--disabled{
   opacity: 0.5;
@@ -559,6 +560,7 @@ export default {
     font-weight: 700;
     font-family: $font-montserrat;
     color: $white;
+    &:hover{cursor: pointer; cursor: hand;}
   }
   .pprf-filters--cancel{
     background: $black;
