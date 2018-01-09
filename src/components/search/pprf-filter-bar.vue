@@ -40,7 +40,7 @@
       <div class="scrollable">
       <fieldset class="pprf-filter-bar-form--fieldset">
 
-        <legend>Fee</legend>
+        <legend>Cost</legend>
 
         <v-radio-group
           v-model="filtersData.fee"
@@ -102,7 +102,7 @@
         v-if="days.length"
         class="pprf-filter-bar-form--fieldset"
       >
-        <legend>Time of week</legend>
+        <legend>Day of week</legend>
         <v-checkbox
             v-for="day in days"
             class="field field--inline field--inline-quarter"
