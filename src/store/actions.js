@@ -98,6 +98,9 @@ const actions = {
   },
   toggleMobileFilters ({commit}, toggleState) {
     commit(types.TOGGLE_MOBILE_FILTERS, toggleState)
+  },
+  toggleMobileNav ({commit}) {
+    commit(types.TOGGLE_MOBILE_NAV)
   }
 }
 
