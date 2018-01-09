@@ -164,10 +164,14 @@ export default {
     top: $header-height-mobile;
   }
   .pprf-map__container{
+    display: none;
     position: absolute;
     height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px);
     top: calc(#{$header-height-mobile} + 88px);
     z-index:1;
+  }
+  .pprf-map__container.pprf-map__container--open-mobile{
+    display: block;
   }
 }
 </style>

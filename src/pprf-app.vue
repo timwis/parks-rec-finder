@@ -175,14 +175,14 @@ export default {
     }
 
 
-    //.view--taxonomy-list.pprf-app--mobile-map-view{
-    //  .pprf-map__container{
-    //    display: none;
-    //  }
-    //  .pprf-sidebar__main {
-    //    display: block;
-    //  }
-    //}
+    .view--taxonomy-list{
+      .pprf-map__container{
+        display: none;
+      }
+      .pprf-sidebar__main {
+        display: block;
+      }
+    }
 
 
 
