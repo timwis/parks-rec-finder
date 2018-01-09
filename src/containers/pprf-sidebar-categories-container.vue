@@ -175,8 +175,14 @@ export default {
 
 
 @include breakpoint(medium down) {
-
-
+  .pprf-sidebar.pprf-sidebar--categories{
+    .pprf-sidebar__header{
+      padding: 15px 15px 0 15px;
+    }
+    .pprf-sidebar__desc p{
+      padding: 0; margin: 0;
+    }
+  }
 }
 
 

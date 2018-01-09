@@ -1,5 +1,5 @@
 <template>
- <div  class="pprf-map__container">
+ <div :class="['pprf-map__container', {'pprf-map__container--open-mobile': mobileOpen}]">
 
    <div v-show="loading" class="loading-overlay"></div>
 
@@ -78,7 +78,8 @@ export default {
     ...mapState({
       markers: state => state.mapMarkers,
       zipcodeSearched: state => state.search.fields.zip,
-      loading: state => state.loading
+      loading: state => state.loading,
+      mobileOpen: state => !state.mobile.listView
     }),
     activeEntity () {
       let entityTypeParam = this.$store.state.route.params.entityType
@@ -157,6 +158,11 @@ export default {
 
 
 @include breakpoint (medium down) {
+  .loading-overlay{
+    position:fixed;
+    height:calc(#{$max-app-height} - #{$header-height-mobile});
+    top: $header-height-mobile;
+  }
   .pprf-map__container{
     position: absolute;
     height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px);

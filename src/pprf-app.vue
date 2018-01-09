@@ -1,9 +1,11 @@
 <template>
-    <div id="pprf-app__container"  >
+    <div id="pprf-app__container"
+         :class="[bodyClass, {'pprf-app--mobile-search-open': mobile.searchOpen, 'pprf-app--mobile-map-view': !mobile.listView, 'pprf-app--mobile-filters-open': mobile.filtersOpen}]"
+    >
 
       <pprf-header-container></pprf-header-container>
 
-      <main :class="['pprf-app__main', {'pprf-app__main--mobile-map-view': !mobileListView}]" >
+      <main class="pprf-app__main" >
           <router-view name="sidebar"></router-view>
           <router-view name="map"></router-view>
       </main>
@@ -19,6 +21,7 @@
 
 <script>
 import pprfHeaderContainer from '@/containers/pprf-header-container'
+import { mapState } from 'vuex'
 import {version} from '../package.json'
 import {EventBus} from '@/event-bus'
 /**
@@ -43,6 +46,12 @@ export default {
     this.$Progress.finish()
     EventBus.$on('mobileView:toggle', () => {
       this.mobileListView = !this.mobileListView
+    })
+  },
+  computed: {
+    ...mapState({
+      mobile: state => state.mobile,
+      bodyClass: state => state.route.meta.bodyClass
     })
   },
   created () {
@@ -128,20 +137,58 @@ export default {
 
 
   @include breakpoint(medium down) {
-      .pprf-app__main {
-        flex-direction: column;
-      }
-      .pprf-app__main--mobile-map-view{
-        .pprf-map__container{
-          z-index: 900;
-          top:212px;
-          height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px - 40px);
-        }
-      }
+    .pprf-app__main {
+      flex-direction: column;
+    }
 
-      .pprf-footer{
+    // search open
+    .pprf-app--mobile-search-open{
+       .pprf-header { height: 120px; }
+       .pprf-sidebar { height: calc(100vh - 120px); }
+    }
+
+    // search and map open
+    .pprf-app--mobile-search-open.pprf-app--mobile-map-view{
+      .pprf-map__container{
+        top: 272px;
+        height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px - 102px);
+      }
+    }
+
+    // map open
+    .pprf-app--mobile-map-view{
+      .pprf-map__container{
+        z-index: 1000;
+        top:212px;
+        height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px - 40px);
+      }
+      .pprf-sidebar__main {
         display: none;
       }
+    }
+
+    // map and filters open
+    .pprf-app--mobile-map-view.pprf-app--mobile-filters-open{
+      .pprf-map__container{
+        z-index: 100;
+      }
+    }
+
+
+    //.view--taxonomy-list.pprf-app--mobile-map-view{
+    //  .pprf-map__container{
+    //    display: none;
+    //  }
+    //  .pprf-sidebar__main {
+    //    display: block;
+    //  }
+    //}
+
+
+
+    .pprf-footer{
+      display: none;
+    }
 
   }
 </style>

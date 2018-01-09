@@ -74,6 +74,17 @@ const mutations = {
     state.search.loading = false
     state.search.success = false
     state.search.error = err
+  },
+
+  // MOBILE
+  [types.TOGGLE_MOBILE_SEARCH] (state) {
+    state.mobile.searchOpen = !state.mobile.searchOpen
+  },
+  [types.TOGGLE_MOBILE_FILTERS] (state) {
+    state.mobile.filtersOpen = !state.mobile.filtersOpen
+  },
+  [types.SET_MOBILE_VIEW] (state, view) {
+    state.mobile.listView = view
   }
 }
 

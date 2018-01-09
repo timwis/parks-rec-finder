@@ -149,4 +149,13 @@ export default {
     //}
   }
 
+  @include breakpoint(medium down) {
+    .pprf-sidebar--search {
+      .pprf-sidebar__desc{
+        min-height: 0px;
+        p {padding: 0px; margin:0px;}
+      }
+    }
+  }
+
 </style>

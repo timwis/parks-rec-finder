@@ -15,6 +15,7 @@
         <pprf-filter-bar
           v-if="activeEntityType === 'program'"
           slot="beforePanes"
+          :disabled="mobile.searchOpen"
           @applyFilters="filterEntities"
         />
       </div>
@@ -56,8 +57,7 @@
 
          </ul>
       </div>
-      <pprf-mobile-view-toggle-btn slot="sidebar-footer"/>
-
+    <pprf-mobile-view-toggle-btn slot="sidebar-footer"/>
   </pprf-sidebar>
 </template>
 
@@ -158,7 +158,8 @@ export default {
       search: state => state.search,
       programs: state => state.entities.program,
       facilities: state => state.entities.facility,
-      activeTab: state => state.activeTab
+      activeTab: state => state.activeTab,
+      mobile: state => state.mobile
     }),
     resultsCount () {
       let entity = resolveEntityType(this.entityType).name

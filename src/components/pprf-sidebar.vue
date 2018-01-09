@@ -7,7 +7,7 @@
           <slot name="sidebar-header" />
         </header>
 
-        <main  :class="['pprf-sidebar__main', {'pprf-sidebar__main--hidden': !mobileListView}]" >
+        <main class="pprf-sidebar__main" >
           <slot name="sidebar-main" />
         </main>
 
@@ -22,7 +22,7 @@
 
 <script>
 import pprfBackBtn from '@/components/pprf-back-btn'
-import {EventBus} from '@/event-bus'
+
 /**
  * APPLICATION SIDEBAR
  *
@@ -38,16 +38,6 @@ export default {
       type: String,
       default: null
     }
-  },
-  data () {
-    return {
-      mobileListView: true
-    }
-  },
-  mounted () {
-    EventBus.$on('mobileView:toggle', () => {
-      this.mobileListView = !this.mobileListView
-    })
   }
 }
 </script>
@@ -63,6 +53,7 @@ export default {
       border-right: 1px solid color(ghost-gray);
       overflow: hidden;
   }
+
   .pprf-sidebar--nopad {
     padding:0;
     .pprf-back-btn{margin-left: 15px;}

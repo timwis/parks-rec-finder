@@ -1,24 +1,23 @@
 <template>
   <button @click="toggleView" class="pprf-btn pprf-sidebar--mobile-view-btn" >
-       <font-awesome-icon :icon="listView ? 'list-ul' : 'map'" /> {{listView ? 'List' : 'Map'}} View
+       <font-awesome-icon :icon="listView ? 'map' : 'list-ul'" /> {{listView ? 'Map' : 'List'}} View
   </button>
 </template>
 
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import {EventBus} from '@/event-bus'
+import {mapState} from 'vuex'
 export default {
   name: 'PPRF-Mobile-View-Toggle-Btn',
   components: {FontAwesomeIcon},
-  data () {
-    return {
-      listView: false
-    }
+  computed: {
+    ...mapState({
+      'listView': state => state.mobile.listView
+    })
   },
   methods: {
     toggleView () {
-      this.listView = !this.listView
-      EventBus.$emit('mobileView:toggle')
+      this.$store.dispatch('setMobileView', this.listView ? 'map' : 'list')
     }
   }
 }
@@ -33,6 +32,7 @@ export default {
     bottom: 0;
     width: 100%;
     padding: 10px;
+    color: $black;
     background: lighten(color(light-ben-franklin), 10%);
   }
 }

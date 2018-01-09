@@ -1,5 +1,5 @@
 <template>
-  <header :class="['pprf-header', {'pprf-header--mobile-open': mSearchOpen}]">
+  <header class="pprf-header">
 
     <div class="pprf-header__branding">
       <h1>
@@ -20,12 +20,12 @@
         </button>
         <h2 class="text-nopad">FINDER</h2>
 
-        <button @click.prevent="mSearchOpen = !mSearchOpen" class="pprf-btn pprf-header--mobile__search-icon">
-            <font-awesome-icon :icon="mSearchOpen ? 'times' : 'search' " />
+        <button @click.prevent="toggleMobileSearch" class="pprf-header--mobile__search-icon">
+            <font-awesome-icon :icon="mobile.searchOpen ? 'times' : 'search' " />
         </button>
     </div>
 
-    <div  :class="['pprf-header__search' ,{'pprf-header__search--mOpen': mSearchOpen}]">
+    <div  :class="['pprf-header__search' ,{'pprf-header__search--mOpen': mobile.searchOpen}]">
       <pprf-search></pprf-search>
     </div>
 
@@ -36,7 +36,7 @@
 <script>
 import pprfSearch from '@/components/search/pprf-search'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-
+import { mapState } from 'vuex'
 /**
  * HEADER BAR
  *
@@ -51,13 +51,22 @@ export default {
     return {
       mSearchOpen: false
     }
+  },
+  computed: {
+    ...mapState(['mobile'])
+  },
+  methods: {
+    toggleMobileSearch () {
+      this.$store.dispatch('toggleMobileSearch')
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.pprf-header{
+<style lang="scss" >
+header.pprf-header{
   display:flex;
+  flex-direction: row;
   position:relative;
 
   width: 100%;
@@ -98,6 +107,8 @@ export default {
 .pprf-header--mobile__nav-icon,
 .pprf-header--mobile__search-icon{
     display: none;
+    background: none;
+    border: none;
 }
 
 .pprf-header__search{
@@ -105,11 +116,13 @@ export default {
 }
 
 @include breakpoint(medium down) {
-  .pprf-header{
+
+  header.pprf-header{
     height: 60px;
     padding:0;
     flex-direction: column;
     &.pprf-header--mobile-open{ height: 120px; }
+  }
 
     .pprf-header__branding {
         width: 100%;
@@ -122,18 +135,17 @@ export default {
     hr {
       display: none;
     }
-    .pprf-btn{
-        @include rem(font-size, 2);
-        color: $white;
-        display: block;
-    }
+
     .pprf-header--mobile__nav-icon{
         background: none;
         display:block;
         margin: 5px;
+        color: $white;
     }
 
     .pprf-header--mobile__search-icon{
+        display:block;
+        color: $white;
         position: absolute;
         right: 10px;
         top: 10px;
@@ -157,7 +169,7 @@ export default {
       .pprf-search{
         padding: 10px;
       }
-  }
+
 
 
 }
