@@ -314,6 +314,7 @@ export default {
       this.$emit('applyFilters', this.filters)
       this.open = false
       this.filtersApplied = this.isDirty
+      this.$store.dispatch('toggleMobileFilters', false)
     },
 
     /**

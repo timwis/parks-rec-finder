@@ -20,9 +20,6 @@
 
       </div>
 
-
-
-
          <pprf-tabs
           slot="sidebar-main"
           @tabSelected="updateRoute"

@@ -80,8 +80,12 @@ const mutations = {
   [types.TOGGLE_MOBILE_SEARCH] (state) {
     state.mobile.searchOpen = !state.mobile.searchOpen
   },
-  [types.TOGGLE_MOBILE_FILTERS] (state) {
-    state.mobile.filtersOpen = !state.mobile.filtersOpen
+  [types.TOGGLE_MOBILE_FILTERS] (state, toggleState) {
+    if (toggleState !== 'undefined') {
+      state.mobile.filtersOpen = toggleState
+    } else {
+      state.mobile.filtersOpen = !state.mobile.filtersOpen
+    }
   },
   [types.SET_MOBILE_VIEW] (state, view) {
     state.mobile.listView = view

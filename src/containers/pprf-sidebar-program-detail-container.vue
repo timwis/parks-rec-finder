@@ -113,7 +113,6 @@ export default {
         .then(results => {
           next(vm => {
             let schedules = results[1].data.rows
-            console.log(schedules)
             // map days to each schedule
             for (var i = 0; i < schedules.length; i++) {
               // find the days records from our cached days table in local storage

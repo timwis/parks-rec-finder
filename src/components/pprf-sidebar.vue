@@ -11,6 +11,8 @@
           <slot name="sidebar-main" />
         </main>
 
+        <pprf-leaflet-map :class="['pprf-map__container--mobile', {'pprf-map__container--open-mobile': mobileMapOpen}]" />
+
         <footer class="pprf-sidebar__footer">
           <slot name="sidebar-footer" />
         </footer>
@@ -22,6 +24,7 @@
 
 <script>
 import pprfBackBtn from '@/components/pprf-back-btn'
+import pprfLeafletMap from '@/components/map/pprf-leaflet-map'
 
 /**
  * APPLICATION SIDEBAR
@@ -32,11 +35,16 @@ import pprfBackBtn from '@/components/pprf-back-btn'
  */
 export default {
   name: 'PPRF-Sidebar',
-  components: {pprfBackBtn},
+  components: {pprfBackBtn, pprfLeafletMap},
   props: {
     modifierClass: {
       type: String,
       default: null
+    }
+  },
+  computed: {
+    mobileMapOpen () {
+      return !this.$store.state.mobile.listView
     }
   }
 }
@@ -52,6 +60,9 @@ export default {
       color: color(dark-ben-franklin);
       border-right: 1px solid color(ghost-gray);
       overflow: hidden;
+      .pprf-map__container{
+        display: none;
+      }
   }
 
   .pprf-sidebar--nopad {
