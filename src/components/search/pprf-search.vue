@@ -210,7 +210,7 @@ export default {
       if (fieldValues.address || fieldValues.zip) {
         this.isDisabled = false
         this.$refs.addressField.inputValue = fieldValues.address || fieldValues.zip
-      } else {
+      } else if (!fieldValues.freetext) {
         this.$refs.addressField.inputValue = null
       }
     },
