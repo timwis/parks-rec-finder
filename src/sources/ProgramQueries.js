@@ -51,16 +51,8 @@ export default class ProgramsQuery extends QueryInterface {
 
   static isPublished (query) {
     return query
-            // .where('program_is_public')
-            // .where('program_is_approved')
-            // .where('program_is_active')
+            .where('program_is_public')
+            .where('program_is_approved')
+            .where('program_is_active')
   }
-
-  // static getProgramScheduleDays (query, programID) {
-  //   return query
-  //           .select()
-  //           .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
-  //           .join(tables.days, 'b', 'b.id = a._daysID')
-  //           .where(`program->>0 = '${programID}'`)
-  // }
 }
