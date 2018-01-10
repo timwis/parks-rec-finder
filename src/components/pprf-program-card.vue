@@ -17,7 +17,7 @@
           <span class="card__info-meta__label">Gender:</span> {{gender}}</p>
         </small>
         <small><p v-if="fee">
-          <span class="card__info-meta__label">Cost:</span> ${{fee}} <span class="fee_frequency">{{feeFreq.toLowerCase()}}</span></p>
+          <span class="card__info-meta__label">Cost:</span> ${{fee}} <span v-if="feeFreq" class="fee_frequency text-lower">{{feeFreq}}</span></p>
         </small>
       </div>
     </div>

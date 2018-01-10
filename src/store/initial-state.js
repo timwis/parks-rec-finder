@@ -36,7 +36,9 @@ const state = {
       fee: null,
       gender: null,
       ageRange: {low: null, high: null},
-      days: null
+      days: null,
+      startDate: null,
+      endDate: null
     }
   }
 }
