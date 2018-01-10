@@ -10,7 +10,7 @@ export default class ProgramsQuery extends QueryInterface {
         .field('facility_name')
         .field(`gender->>0`, 'gender')
         .from(tables.programs)
-        .order('lower(program_name)')
+        // .order('lower(program_name)')
 
     this.defineQuery()
 
@@ -51,9 +51,9 @@ export default class ProgramsQuery extends QueryInterface {
 
   static isPublished (query) {
     return query
-            .where('program_is_public')
-            .where('program_is_approved')
-            .where('program_is_active')
+            // .where('program_is_public')
+            // .where('program_is_approved')
+            // .where('program_is_active')
   }
 
   // static getProgramScheduleDays (query, programID) {

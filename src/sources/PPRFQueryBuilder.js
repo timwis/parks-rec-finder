@@ -143,6 +143,11 @@ export default class PPRFQuery {
         return this
       }
 
+      order (orderClause, dsc = true) {
+        this.query.order(orderClause, dsc)
+        return this
+      }
+
       /**
        * INNER JOIN ppr_assets with ppr_facilites
        * This allows gives us our geospatial fields for latitude and longitiude
@@ -206,6 +211,7 @@ export default class PPRFQuery {
         this.query
             .field(`ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom)`, 'within_zip_code')
             .left_join(`${tables.zipcodes}`, null, `${tables.zipcodes}.code = '${zipcode}'`)
+            .order(`(case when ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom) then 1 when ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom) is null then 2 else 3 end)`)
 
         return this
       }

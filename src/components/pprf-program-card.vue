@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['card', 'card--program', {'card--selected': selected, 'card--nested-parent': location}]"
+    :class="['card', 'card--program', {'card--selected': selected, 'card--nested-parent': location, 'card--within-zip': withinZipcode !== 'undefined' && withinZipcode, 'card--outside-zip': withinZipcode !== 'undefined' && !withinZipcode}]"
     :id="'program--'+programID"
   >
     <div class="card__info">
@@ -29,7 +29,9 @@
       :address="location.address"
       :facilityID="location.id"
     />
-
+    <div  class="card__in-zipcode-bar">
+        <h5> {{withinZipcode ? 'within' : 'near'}} zip code</h5>
+    </div>
   </div>
 </template>
 
@@ -61,6 +63,13 @@ export default {
     },
     location: {
       type: Object
+    },
+    withinZipcode: {
+      type: Boolean,
+      default: 'undefined'
+    },
+    distance: {
+      type: Number
     },
     selected: {
       type: Boolean,

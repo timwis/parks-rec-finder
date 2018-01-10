@@ -25,6 +25,9 @@
           <p>{{address.street}}&nbsp;{{address.city}}, {{address.zip}}</p>
        </address>
     </div>
+    <div v-if="withinZipcode !== 'undefined'" class="card__in-zipcode-bar">
+        <h5> {{withinZipcode ? 'within' : 'near'}} zip code</h5>
+    </div>
   </div>
 </template>
 
@@ -53,6 +56,10 @@ export default {
     },
     nested: {
       type: Boolean
+    },
+    withinZipcode: {
+      type: Boolean,
+      default: 'undefined'
     },
     selected: {
       type: Boolean,

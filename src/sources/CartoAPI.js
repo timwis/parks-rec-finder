@@ -117,10 +117,13 @@ class CartoAPI {
     this.programs = new PPRFQuery.Builder('programs')
                                    .fields(this.programFields)
                                    .joinPPRAssets()
+
+    if (!zipcode) {
+      this.programs.order('lower(program_name)')
+    }
     // get facilites and assets with latitude and longitude values
     if (coords && !zipcode) {
-      this.programs
-          .addDistanceFieldFromCoordinates(coords)
+      this.programs.addDistanceFieldFromCoordinates(coords)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
@@ -131,13 +134,11 @@ class CartoAPI {
 
     if (freetextValue !== null && freetextValue !== '') {
       // search via user input text value
-      this.programs
-          .searchFieldsFor(['program_name', 'program_description'], freetextValue)
+      this.programs.searchFieldsFor(['program_name', 'program_description'], freetextValue)
     }
 
     if (filters) {
-      this.programs
-          .addFilters(filters)
+      this.programs.addFilters(filters)
     }
 
     return this.runQuery(this.programs)
@@ -192,10 +193,14 @@ class CartoAPI {
    * @since 0.1.0
    */
   getFacilities (freetextValue, coords = null, zipcode = null) {
-    this.facilities = new PPRFQuery.Builder('facilities').joinPPRAssets()
+    this.facilities = new PPRFQuery.Builder('facilities')
+                                   .joinPPRAssets()
+    if (!zipcode) {
+      this.facilities.order('lower(facility_name)')
+    }
+
     if (coords && !zipcode) {
-      this.facilities
-          .addDistanceFieldFromCoordinates(coords)
+      this.facilities.addDistanceFieldFromCoordinates(coords)
     }
 
     if ((zipcode && isValidZipcode(zipcode)) && !coords) {
@@ -206,8 +211,7 @@ class CartoAPI {
 
     if (freetextValue !== null && freetextValue !== '') {
       // search facilites via user input text value
-      this.facilities
-          .searchFieldsFor(['facility_description', 'facility_name', 'long_name'], freetextValue)
+      this.facilities.searchFieldsFor(['facility_description', 'facility_name', 'long_name'], freetextValue)
     }
 
     return this.runQuery(this.facilities)

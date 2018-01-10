@@ -120,7 +120,7 @@
 
       </fieldset>
 
-      <fieldset class="pprf-filter-bar-form--fieldset">
+      <!-- <fieldset class="pprf-filter-bar-form--fieldset">
         <legend>Program Dates</legend>
         <v-menu
           class="field field--inline field--inline-half"
@@ -192,7 +192,7 @@
             </template>
           </v-date-picker>
         </v-menu>
-      </fieldset>
+      </fieldset> -->
 
       <footer class="pprf-filter-bar-footer">
 
