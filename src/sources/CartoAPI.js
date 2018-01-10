@@ -152,7 +152,9 @@ class CartoAPI {
    * @since 0.1.0
    */
   getProgramByID (programID) {
-    let programQuery = new PPRFQuery.Builder('program', {id: programID}).field('*').joinPPRAssets()
+    let programQuery = new PPRFQuery.Builder('program', {id: programID})
+                                    .field('fee_frequency->>0', 'fee_frequency')
+                                    .joinPPRAssets()
     return this.runQuery(programQuery)
   }
 
@@ -248,7 +250,7 @@ class CartoAPI {
   getTaxonomyTermEntities (entity, filters) {
     let _entity = resolveEntityType(entity.entityType)
     let taxonomyTerm = entity.entityTerm.replace(/(-)/ig, ' ')
-    debugger
+
     let categoryEntityQuery = new PPRFQuery.Builder(`${_entity.name}Category`, {term: taxonomyTerm})
 
     if (_entity.name === 'program') {

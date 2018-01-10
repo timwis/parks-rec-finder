@@ -12,6 +12,7 @@ TABLE OF CONTENTS;
 @import '_mixins';
 @import '_typography';
 @import '_forms';
+@import '_vuetify-overrides';
 
 
 
@@ -155,6 +156,7 @@ address{
     border-bottom:none !important;
     padding:0;
     margin-left:15px;
+    box-shadow: none;
     .card__icon{height: 15px; }
     .card__info{display: block;}
     .card__info-name{

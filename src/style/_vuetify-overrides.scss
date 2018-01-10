@@ -1,0 +1,43 @@
+.input-group {padding-top: 0px;}
+.input-group__details {display: none;}
+.radio-group--column .input-group__input{ display: flex !important; }
+// .input-group--selection-controls__ripple{ width: 0px;}
+.input-group.input-group--selection-controls label {
+    max-width: 100%;
+    line-height: 1;
+    left:0;
+    padding-left: 20px;
+    @include rem(font-size, 1.35)
+}
+.input-group.input-group--selection-controls .input-group__input{ width: auto !important; }
+.menu__content{
+    // min-width: 0px !important;
+    // position: relative !important;
+    top: 0% !important;
+    left: -100% !important;
+    transform: translate(68%, -100%) !important;
+    // left: 50% !important;
+    background: $white;
+}
+
+.field--end-date {
+    .menu__content{
+        left: -100% !important;
+        transform: translate(36%, -100%) !important;
+    }
+}
+
+.input-group--text-field.input-group--dirty.input-group--select label, .input-group--text-field.input-group--dirty:not(.input-group--textarea) label {
+    transform: translateY(-23px) scale(.75);
+}
+
+@include breakpoint (medium down) {
+    .field--end-date .menu__content,
+    .menu__content{
+        position: fixed !important;
+        left: 50% !important;
+        top: 63% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 1000000!important;
+    }
+}

@@ -11,7 +11,7 @@
             <div class="entity-detail__header-meta">
               <small><p>Ages {{program.age_low}}-{{program.age_high}}</p></small>
               <small><p>Gender: {{program.gender}}</p></small>
-              <small><p>Cost: {{program.fee != "Free" ? '$'+program.fee : program.fee }}</p></small>
+              <small><p>Cost: {{program.fee != "Free" ? '$'+program.fee : program.fee }} </p></small>
             </div>
             <p class="entity-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
         </div>

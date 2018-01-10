@@ -4,10 +4,8 @@ import QueryInterface from './QueryInterface'
 export default class ProgramsQuery extends QueryInterface {
   constructor (Builder) {
     super(Builder)
-
     this.build = Builder
     this.options = this.build.options
-
     this.query
         .field('facility_name')
         .field(`gender->>0`, 'gender')
