@@ -13,7 +13,7 @@
               <small><p>Gender: {{program.gender}}</p></small>
               <small><p>Cost: {{program.fee != "Free" && program.fee != '' ? '$'+program.fee : program.fee }} <span v-if="program.fee != '' && program.fee_frequency" class="entity-detail__fee-frequency text-lower">{{program.fee_frequency}}</span></p></small>
             </div>
-            <p class="entity-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
+            <p class="entity-detail__reg-status"><b>Registration - </b> {{program.registration_status}}</p>
         </div>
 
 
@@ -22,6 +22,14 @@
           class="program--content scrollable"
           v-if="program"
         >
+         <pprf-detail-content-section
+            v-if="program.desc_short"
+            class="program__content-section program-detail__about"
+            heading="About this program"
+           >
+            <p>{{program.desc_short}}</p>
+          </pprf-detail-content-section>
+
           <pprf-detail-content-section
             v-if="program.address"
             heading="Location"
