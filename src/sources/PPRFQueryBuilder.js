@@ -261,24 +261,33 @@ export default class PPRFQuery {
       addFilters (filters) {
         filters = _.omit(filters, val => _.isNull(val))
         let filterQuery = this.query
+
         for (let filterKey in filters) {
+          // FILTER: COST <string>
           if (filterKey === 'fee') {
             let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
             filterQuery.where(`${filterKey} ${_feeCompartor} '0.00'`)
           }
+
+          // FILTER: AGE RANGE <string>
           if (filterKey === 'ages' && typeof filters[filterKey] === 'string') {
             let ages = filters[filterKey].split('-')
             filterQuery.where(`age_low >= ${ages[0]}`)
             filterQuery.where(`age_high <= ${ages[1]}`)
           }
+
+          // FILTER: GENDER <string>
           if (filterKey === 'gender') {
             filterQuery.where(`gender->>0 = '${filters[filterKey]}'`)
           }
+
+          // FILTER: DAY OF WEEK <string[]>
+          // group by program schedule days (gives nested jsonb array [['<day-id>'],['<day-id>','<day-id>','<day-id>'], ... ])
+          // cast to string and remove brackets to get a space separated string of day ids
+          // to check the values against those passed in
           if (filterKey === 'days' && filters[filterKey].length) {
             let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
-            // group by program schedule days
-            // and then concatenate all future schedule days into a string
-            // to check the values against those passed in
+            // get current programs grouped on schedules
             filterQuery
               .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
               .where('date_to >= now()')
@@ -287,12 +296,42 @@ export default class PPRFQuery {
             if (this.entity.DBTable === tables.programCategoryTerms) {
               filterQuery.group('activity_type, activity_category_name')
             }
+            // check all current program schedule days for passed in days filter
             for (var i = 0; i < days.length; i++) {
+              // note: 'jsonb_agg(days)' creates the nested jsonb_agg array mentioned above
               /* eslint-disable no-useless-escape */
               filterQuery.having(`regexp_replace(jsonb_agg(days)::text,'\[|\]|"|,', '', 'g') iLIKE '%${days[i]}%'`)
             }
           }
+
+          // FILTER: DATE RANGE <iso-date-string>
+          if (filterKey === 'start_date') {
+            // just start date given
+            let dateClamp = null
+            if (filters['start_date'] && !filters['end_date']) {
+              dateClamp = `date_from >= '${filters['start_date']}' `
+            } else if (filters['end_date'] && !filters['start_date']) {
+              dateClamp = `date_from > '${filters['end_date']}'`
+            } else if (filters['start_date'] && filters['end_date']) {
+              dateClamp = `( date_from >= '${filters['start_date']}' AND date_to < '${filters['start_date']}' ) OR ( date_from > '${filters['end_date']}' AND date_to <= '${filters['end_date']}' )`
+            } else {
+              throw new TypeError(`PPRFQuery::addFilters DATE RANGE 'start_date' or 'end_date' filter keys not found`)
+            }
+
+            let subQuery = this.postgreSQL
+                .select()
+                .field('program->>0', 'program')
+                .from(tables.programSchedules)
+                .where(dateClamp)
+                .group('program')
+
+            filterQuery
+              .field('program')
+              .with('matched_programs', subQuery)
+              .join('matched_programs', null, `program = ${tables.programs}.id`)
+          }
         }
+
         return this
       }
 

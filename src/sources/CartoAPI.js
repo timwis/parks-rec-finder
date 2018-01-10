@@ -153,7 +153,7 @@ class CartoAPI {
    */
   getProgramByID (programID) {
     let programQuery = new PPRFQuery.Builder('program', {id: programID})
-                                    .field('fee_frequency->>0', 'fee_frequency')
+                                    .fields([{'fee_frequency->>0': 'fee_frequency'}, ...this.programFields])
                                     .joinPPRAssets()
     return this.runQuery(programQuery)
   }
