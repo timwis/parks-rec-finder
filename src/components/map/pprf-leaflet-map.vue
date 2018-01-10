@@ -3,7 +3,7 @@
 
    <div v-show="loading" class="loading-overlay"></div>
 
-    <v-map ref="leafletMap" id="PPRF-Leaflet-Map" :options="mapOptions" :zoom="zoom" :center="center" :minZoom="zoom">
+    <v-map ref="leafletMap" id="PPRF-Leaflet-Map" :options="mapOptions" :zoom="zoom" :center="center" >
 
       <v-tilelayer :url="basemap" ></v-tilelayer>
       <v-tilelayer :url="streets" ></v-tilelayer>

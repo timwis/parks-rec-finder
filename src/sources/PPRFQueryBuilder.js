@@ -63,7 +63,6 @@ export default class PPRFQuery {
             // get current program schedules
             this.query = this.postgreSQL
                              .select()
-                             .field('*')
                              .field(`to_char(time_from, '${TIME_FORMAT}')`, 'time_from')
                              .field(`to_char(time_to, '${TIME_FORMAT}')`, 'time_to')
                              .field(`to_char(date_from, '${DATE_FORMAT}')`, 'start_date')
@@ -154,12 +153,8 @@ export default class PPRFQuery {
       joinPPRAssets () {
         this.query
              .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-             .field(`ST_Y(
-                      ST_Centroid(${tables.assets}.the_geom)
-                      ) as latitude`)
-            .field(`ST_X(
-              ST_Centroid(${tables.assets}.the_geom)
-              ) as longitude`)
+             .field(`ST_Y(ST_Centroid(${tables.assets}.the_geom)) as latitude`)
+            .field(`ST_X(ST_Centroid(${tables.assets}.the_geom)) as longitude`)
         return this
       }
 

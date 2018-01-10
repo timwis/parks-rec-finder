@@ -13,7 +13,7 @@
 
       <phila-text-field
         name="address"
-        placeholder="ADDRESS OR ZIPCODE"
+        placeholder="ADDRESS OR ZIP CODE"
         icon="map-marker-alt"
         @input="onAddressInput"
         ref="addressField"

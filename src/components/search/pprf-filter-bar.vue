@@ -40,7 +40,7 @@
       <div class="scrollable">
       <fieldset class="pprf-filter-bar-form--fieldset">
 
-        <legend>Fee</legend>
+        <legend>Cost</legend>
 
         <v-radio-group
           v-model="filtersData.fee"
@@ -102,7 +102,7 @@
         v-if="days.length"
         class="pprf-filter-bar-form--fieldset"
       >
-        <legend>Time of week</legend>
+        <legend>Day of week</legend>
         <v-checkbox
             v-for="day in days"
             class="field field--inline field--inline-quarter"
@@ -460,6 +460,7 @@ export default {
   z-index:5;
   background: lighten(color(light-ben-franklin), 10%);
   border-top: 1px solid $white;
+  &:hover{ cursor: pointer; cursor: hand; }
 }
 .pprf-filter-bar--disabled{
   opacity: 0.5;
@@ -559,6 +560,7 @@ export default {
     font-weight: 700;
     font-family: $font-montserrat;
     color: $white;
+    &:hover{cursor: pointer; cursor: hand;}
   }
   .pprf-filters--cancel{
     background: $black;

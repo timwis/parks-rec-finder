@@ -30,7 +30,10 @@
         <button @click="toggleMobileNav" class="pprf-btn pprf-header--mobile__nav-icon">
             <font-awesome-icon icon="bars" />
         </button>
-        <h2 class="text-nopad">FINDER</h2>
+
+        <router-link class="app-title" to="/">
+            <h2 class="text-nopad">FINDER</h2>
+        </router-link>
 
         <button :disabled="mobile.navOpen" @click.prevent="toggleMobileSearch" class="pprf-header--mobile__search-icon">
             <font-awesome-icon :icon="mobile.searchOpen ? 'times' : 'search' " />
@@ -97,7 +100,9 @@ header.pprf-header{
 
   background: color(dark-ben-franklin);
 }
-
+.app-title h2{
+    color:$white;
+}
 .__cov-progress{
   position: absolute !important;
   top: auto !important;
