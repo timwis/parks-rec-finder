@@ -40,6 +40,8 @@
                         :programID="program.id"
                         :selected="activeCardID === program.id"
                         :location="{ address: program.facility_address, name: program.facility_name, id: program.facility_id }"
+                        :withinZipcode="program.within_zip_code"
+                        :distance="program.distance"
                       />
 
                   </pprf-tab>
@@ -58,6 +60,7 @@
                         :facilityID="facility.id"
                         :distance="facility.distance"
                         :selected="activeCardID === facility.id"
+                        :withinZipcode="facility.within_zip_code"
                       />
                     </div>
                   </pprf-tab>
@@ -148,6 +151,9 @@ export default {
       //margin-top: 50px !important;
     //}
   }
+
+
+
 
   @include breakpoint(medium down) {
     .pprf-sidebar--search {

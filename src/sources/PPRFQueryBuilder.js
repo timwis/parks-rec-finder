@@ -143,6 +143,11 @@ export default class PPRFQuery {
         return this
       }
 
+      order (orderClause, dsc = true) {
+        this.query.order(orderClause, dsc)
+        return this
+      }
+
       /**
        * INNER JOIN ppr_assets with ppr_facilites
        * This allows gives us our geospatial fields for latitude and longitiude
@@ -206,6 +211,7 @@ export default class PPRFQuery {
         this.query
             .field(`ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom)`, 'within_zip_code')
             .left_join(`${tables.zipcodes}`, null, `${tables.zipcodes}.code = '${zipcode}'`)
+            .order(`(case when ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom) then 1 when ST_Intersects(${tables.zipcodes}.the_geom, ${tables.assets}.the_geom) is null then 2 else 3 end)`)
 
         return this
       }
@@ -282,41 +288,20 @@ export default class PPRFQuery {
             filterQuery.where(`gender->>0 = '${filters[filterKey]}'`)
           }
 
-          // FILTER: DAY OF WEEK <string[]>
-          // group by program schedule days (gives nested jsonb array [['<day-id>'],['<day-id>','<day-id>','<day-id>'], ... ])
-          // cast to string and remove brackets to get a space separated string of day ids
-          // to check the values against those passed in
-          if (filterKey === 'days' && filters[filterKey].length) {
-            let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
-            // get current programs grouped on schedules
-            filterQuery
-              .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-              .where('date_to >= now()')
-              .group(`${tables.programs}.id, program_name, program_name_full, program_id, program_description, age_low, age_high, fee, ppr_facilities.facility_name, gender, address, facility, ${tables.assets}.the_geom`)
-              // .having('count(days) > ?', 1)
-            if (this.entity.DBTable === tables.programCategoryTerms) {
-              filterQuery.group('activity_type, activity_category_name')
-            }
-            // check all current program schedule days for passed in days filter
-            for (var i = 0; i < days.length; i++) {
-              // note: 'jsonb_agg(days)' creates the nested jsonb_agg array mentioned above
-              /* eslint-disable no-useless-escape */
-              filterQuery.having(`regexp_replace(jsonb_agg(days)::text,'\[|\]|"|,', '', 'g') iLIKE '%${days[i]}%'`)
-            }
-          }
-
           // FILTER: DATE RANGE <iso-date-string>
-          if (filterKey === 'start_date') {
+          if (filters['startDate'] || filters['endDate']) {
+            const startDate = filters['startDate']
+            const endDate = filters['endDate']
             // just start date given
             let dateClamp = null
-            if (filters['start_date'] && !filters['end_date']) {
-              dateClamp = `date_from >= '${filters['start_date']}' `
-            } else if (filters['end_date'] && !filters['start_date']) {
-              dateClamp = `date_from > '${filters['end_date']}'`
-            } else if (filters['start_date'] && filters['end_date']) {
-              dateClamp = `( date_from >= '${filters['start_date']}' AND date_to < '${filters['start_date']}' ) OR ( date_from > '${filters['end_date']}' AND date_to <= '${filters['end_date']}' )`
+            if (startDate && !endDate) {
+              dateClamp = `date_from >= '${startDate}' `
+            } else if (endDate && !startDate) {
+              dateClamp = `date_from > '${endDate}'`
+            } else if (startDate && endDate) {
+              dateClamp = `( date_from >= '${startDate}' AND date_to < '${startDate}' ) OR ( date_from > '${endDate}' AND date_to <= '${endDate}' )`
             } else {
-              throw new TypeError(`PPRFQuery::addFilters DATE RANGE 'start_date' or 'end_date' filter keys not found`)
+              throw new TypeError(`PPRFQuery::addFilters DATE RANGE 'startDate' or 'endDate' parameters not found`)
             }
 
             let subQuery = this.postgreSQL
@@ -327,9 +312,52 @@ export default class PPRFQuery {
                 .group('program')
 
             filterQuery
-              .field('program')
+              .field('matched_programs.program')
               .with('matched_programs', subQuery)
-              .join('matched_programs', null, `program = ${tables.programs}.id`)
+              .join('matched_programs', null, `matched_programs.program = ${tables.programs}.id`)
+          }
+
+          // FILTER: DAY OF WEEK <string[]>
+          // group by program schedule days (gives nested jsonb array [['<day-id>'],['<day-id>','<day-id>','<day-id>'], ... ])
+          // cast to string and remove brackets to get a space separated string of day ids
+          // to check the values against those passed in
+          if (filterKey === 'days' && filters[filterKey].length) {
+            let days = _.isArray(filters[filterKey]) ? filters[filterKey] : [filters[filterKey]]
+
+            // get current programs grouped on schedules
+            filterQuery
+              .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
+              .where('date_to >= now()')
+              .group(`${tables.programs}.id,
+                      program_name,
+                      program_name_full,
+                      program_id,
+                      program_description,
+                      age_low,
+                      age_high,
+                      fee,
+                      ppr_facilities.facility_name,
+                      gender,
+                      address,
+                      facility,
+                      ${tables.assets}.the_geom,
+                      fee_frequency`)
+              // .having('count(days) > ?', 1)
+            if (this.entity.DBTable === tables.programCategoryTerms) {
+              filterQuery.group('activity_type, activity_category_name')
+            }
+            // if filters for both Date Range and Day of Week are selected
+            // we need to include our new column into the group by
+            if (filters['startDate'] || filters['endDate']) {
+              filterQuery.group('matched_programs.program')
+            }
+
+            // check all current program schedule days for passed in days filter
+            for (var i = 0; i < days.length; i++) {
+              // note: 'jsonb_agg(days)' creates the nested jsonb_agg array mentioned above
+              /* eslint-disable no-useless-escape */
+              filterQuery.having(`regexp_replace(jsonb_agg(days)::text,'\[|\]|"|,', '', 'g') iLIKE '%${days[i]}%'`)
+            }
           }
         }
 

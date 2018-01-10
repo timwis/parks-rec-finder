@@ -1,6 +1,6 @@
 {
-  "name": "ppr-finder",
-  "version": "0.5.16",
+  "name": "parks-rec-finder",
+  "version": "0.5.17",
   "description": "Philadelphia Parks & Recreation Finder Application ",
   "author": "City of Philadelphia - Office of Open Data and Digital Transformation",
   "private": true,

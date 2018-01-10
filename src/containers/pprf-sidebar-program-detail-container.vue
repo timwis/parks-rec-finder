@@ -11,7 +11,7 @@
             <div class="entity-detail__header-meta">
               <small><p>Ages {{program.age_low}}-{{program.age_high}}</p></small>
               <small><p>Gender: {{program.gender}}</p></small>
-              <small><p>Cost: {{program.fee != "Free" && program.fee != '' ? '$'+program.fee : program.fee }} <span class="entity-detail__fee-frequency">{{program.fee_frequency.toLowerCase()}}</span></p></small>
+              <small><p>Cost: {{program.fee != "Free" && program.fee != '' ? '$'+program.fee : program.fee }} <span v-if="program.fee != '' && program.fee_frequency" class="entity-detail__fee-frequency text-lower">{{program.fee_frequency}}</span></p></small>
             </div>
             <p class="entity-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
         </div>

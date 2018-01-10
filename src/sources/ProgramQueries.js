@@ -10,7 +10,7 @@ export default class ProgramsQuery extends QueryInterface {
         .field('facility_name')
         .field(`gender->>0`, 'gender')
         .from(tables.programs)
-        .order('lower(program_name)')
+        // .order('lower(program_name)')
 
     this.defineQuery()
 
@@ -55,12 +55,4 @@ export default class ProgramsQuery extends QueryInterface {
             .where('program_is_approved')
             .where('program_is_active')
   }
-
-  // static getProgramScheduleDays (query, programID) {
-  //   return query
-  //           .select()
-  //           .from(`(SELECT program, jsonb_array_elements_text(${tables.programSchedules}.days) _daysID FROM ${tables.programSchedules})`, 'a')
-  //           .join(tables.days, 'b', 'b.id = a._daysID')
-  //           .where(`program->>0 = '${programID}'`)
-  // }
 }

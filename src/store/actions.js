@@ -65,6 +65,7 @@ const actions = {
 
     api.search(searchTerms)
       .then(searchResults => {
+        console.log(searchResults)
         commit(types.RECEIVE_SEARCH_SUCCESS)
         let facility = searchResults[0].data.rows
         let program = searchResults[1].data.rows

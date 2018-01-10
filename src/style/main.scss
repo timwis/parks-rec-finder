@@ -106,7 +106,7 @@ address{
   width: 100%;
   min-height: 80px;
   display: block;
-  margin:5px 0;
+  margin:5px 0 10px 0;
   position: relative;
   // background: color(ghost-gray);
   // border-radius: 3px;
@@ -172,6 +172,54 @@ address{
       @include rem(font-size, 1.2);
       @include rem(line-height, 1.75);
     }
+  }
+
+.card.card--within-zip:first-child{
+  margin-top: 40px !important;
+      &:before{
+        width: 100%;
+        text-align: center;
+        content: 'within zip code';
+        position: absolute;
+        top:-40px;
+        color: $black;
+      }
+}
+
+.card--within-zip + .card--outside-zip{
+      margin-top: 40px !important;
+      &:before{
+        width: 100%;
+        text-align: center;
+        content: 'near zip code';
+        position: absolute;
+        top:-40px;
+        color: $black;
+      }
+  }
+
+  .card--outside-zip{
+    transform: scale(0.95);
+    // opacity: 0.75;
+  }
+
+  .card--selected .card__in-zipcode-bar{
+    display: block;
+  }
+
+  .card__in-zipcode-bar {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom:0;
+    width: 100%;
+    background: color(ghost-gray);
+    text-align: center;
+    padding:2px 10px;
+    margin:0;
+    line-height:1;
+    @include rem(font-size, 1.25);
+    color: $black;
   }
 
 /* =======================================================================

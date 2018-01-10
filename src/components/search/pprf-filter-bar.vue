@@ -120,7 +120,7 @@
 
       </fieldset>
 
-      <fieldset class="pprf-filter-bar-form--fieldset">
+      <!-- <fieldset class="pprf-filter-bar-form--fieldset">
         <legend>Program Dates</legend>
         <v-menu
           class="field field--inline field--inline-half"
@@ -136,12 +136,15 @@
           <v-text-field
             slot="activator"
             label="Start Date"
-            v-model="filtersData.start_date"
+            append-icon="event"
+            v-model="startDateFormatted"
+            @blur="filtersData.startDate = parseDate(startDateFormatted)"
             readonly
           ></v-text-field>
             <v-date-picker
               no-title
-              v-model="filtersData.start_date"
+              v-model="filtersData.startDate"
+              @input="startDateFormatted = formatDate($event)"
               color="blue"
               actions
             >
@@ -152,8 +155,9 @@
               </v-card-actions>
             </template>
           </v-date-picker>
-        </v-menu>
 
+        </v-menu>
+        <font-awesome-icon icon="arrow-right" />
         <v-menu
           class="field field--inline field--inline-half field--end-date"
           lazy
@@ -168,11 +172,14 @@
           <v-text-field
             slot="activator"
             label="End Date"
-            v-model="filtersData.end_date"
+            append-icon="event"
+            v-model="endDateFormatted"
+            @blur="filtersData.endDate = parseDate(endDateFormatted)"
             readonly
           ></v-text-field>
             <v-date-picker
-              v-model="filtersData.end_date"
+              v-model="filtersData.endDate"
+              @input="endDateFormatted = formatDate($event)"
               no-title
               color="blue"
               actions
@@ -185,7 +192,7 @@
             </template>
           </v-date-picker>
         </v-menu>
-      </fieldset>
+      </fieldset> -->
 
       <footer class="pprf-filter-bar-footer">
 
@@ -273,13 +280,17 @@ export default {
 
       selectedDays: [],
 
+      startDateFormatted: null,
+
+      endDateFormatted: null,
+
       filtersData: {
         fee: null,
         gender: null,
         days: [],
         ages: null,
-        start_date: null,
-        end_date: null
+        startDate: null,
+        endDate: null
       }
     }
   },
@@ -356,7 +367,9 @@ export default {
                       {},
                       this.filters,
                       {days: this.selectedDays.length ? `${this.filters.days.length} day(s) a week` : null},
-                      {ages: this.selectedAgeRanges.length ? `Ages ${this.filters.ages}` : null}
+                      {ages: this.selectedAgeRanges.length ? `Ages ${this.filters.ages}` : null},
+                      {startDate: this.filtersData.startDate ? `Starts: ${this.startDateFormatted}` : null},
+                      {endDate: this.filtersData.endDate ? `Ends: ${this.endDateFormatted}` : null}
                     )
       return _.omit(filters, val => _.isNull(val))
     }
@@ -399,11 +412,15 @@ export default {
     clearFilters () {
       this.selectedAgeRanges = []
       this.selectedDays = []
+      this.startDateFormatted = null
+      this.endDateFormatted = null
       this.filtersData = {
         fee: null,
         gender: null,
         days: [],
-        ages: null
+        ages: null,
+        startDate: null,
+        endDate: null
       }
       this._updateRouteFromFilters()
       this.$emit('clearFilters')
@@ -427,6 +444,14 @@ export default {
         case 'days':
           this.selectedDays = []
           this.filtersData.days = []
+          break
+        case 'startDate':
+          this.startDateFormatted = null
+          this.filtersData.startDate = null
+          break
+        case 'endDate':
+          this.endDateFormatted = null
+          this.filtersData.endDate = null
           break
         default:
           this.filtersData[filterKey] = null
@@ -502,6 +527,23 @@ export default {
           ages: null
         }
       }
+    },
+
+    formatDate (date) {
+      if (!date) {
+        return null
+      }
+
+      const [year, month, day] = date.split('-')
+      return `${month}/${day}/${year}`
+    },
+    parseDate (date) {
+      if (!date) {
+        return null
+      }
+
+      const [month, day, year] = date.split('/')
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     }
   },
   watch: {
