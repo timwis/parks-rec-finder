@@ -50,11 +50,15 @@
             class="field field--inline field--inline-half field-fee--free"
             label="Free"
             value="Free"
+            :hide-details="true"
+            :ripple="false"
           ></v-radio>
           <v-radio
             class="field field--inline field-fee--fee"
             label="Fee"
             value="Fee"
+            :hide-details="true"
+            :ripple="false"
           ></v-radio>
         </v-radio-group>
       </fieldset>
@@ -116,7 +120,72 @@
 
       </fieldset>
 
+      <fieldset class="pprf-filter-bar-form--fieldset">
+        <legend>Program Dates</legend>
+        <v-menu
+          class="field field--inline field--inline-half"
+          lazy
+          :close-on-content-click="false"
+          transition="scale-transition"
+          origin="bottom center"
+          full-width
+          max-width="290px"
+          min-width="290px"
+        >
+          <h4 class="field-picker__header">Program Start Date</h4>
+          <v-text-field
+            slot="activator"
+            label="Start Date"
+            v-model="filtersData.start_date"
+            readonly
+          ></v-text-field>
+            <v-date-picker
+              no-title
+              v-model="filtersData.start_date"
+              color="blue"
+              actions
+            >
+            <template slot-scope="{ save, cancel }">
+              <v-card-actions>
+                <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                <v-btn flat color="primary" @click="save">OK</v-btn>
+              </v-card-actions>
+            </template>
+          </v-date-picker>
+        </v-menu>
 
+        <v-menu
+          class="field field--inline field--inline-half field--end-date"
+          lazy
+          :close-on-content-click="false"
+          transition="scale-transition"
+          origin="bottom center"
+          full-width
+          max-width="290px"
+          min-width="290px"
+        >
+          <h4 class="field-picker__header">Program End Date</h4>
+          <v-text-field
+            slot="activator"
+            label="End Date"
+            v-model="filtersData.end_date"
+            readonly
+          ></v-text-field>
+            <v-date-picker
+              v-model="filtersData.end_date"
+              no-title
+              color="blue"
+              actions
+            >
+            <template slot-scope="{ save, cancel }">
+              <v-card-actions>
+                <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                <v-btn flat color="primary" @click="save">OK</v-btn>
+              </v-card-actions>
+            </template>
+          </v-date-picker>
+        </v-menu>
+      </fieldset>
 
       <footer class="pprf-filter-bar-footer">
 
@@ -156,7 +225,7 @@ export default {
   },
   data () {
     return {
-      open: false,
+      open: true,
 
       filtersApplied: false,
 
@@ -208,7 +277,9 @@ export default {
         fee: null,
         gender: null,
         days: [],
-        ages: null
+        ages: null,
+        start_date: null,
+        end_date: null
       }
     }
   },
@@ -479,6 +550,17 @@ export default {
     float:right;
   }
 }
+.field-picker__header {
+  width: 100%;
+  background: color(dark-ben-franklin);
+  color:$white;
+  text-align: center;
+  font-weight: 700;
+  padding: 10px;
+  @include rem(font-size, 2);
+  text-transfrom: uppercase;
+
+}
 
 .pprf-filter-bar-tags-bar{
   width: 100%;
@@ -496,10 +578,11 @@ export default {
   display: flex;
   border: none;
   border-radius: 10px;
-  padding-top: 2px;
+  padding: 2px 5px;
   align-items: center;
   font-weight: 700;
   //background: lighten(color(sidewalk), 5%);
+  background: $white;
   color: color(ben-franklin-blue);
   border: 1px solid color(ben-franklin-blue);
   margin:0px 5px 5px 5px;
@@ -512,7 +595,7 @@ export default {
 }
 
   .svg-inline--fa.pprf-filter-bar-filter-tag__remove{
-    margin:3px 0px 3px 8px;
+    margin:4px 0px 3px 8px;
     opacity: 0.5;
     transition: all 0.5s ease;
     color: color(love-park-red);
@@ -539,11 +622,12 @@ export default {
   height: 100vh;
   z-index: 10002;
   overflow: scroll;
+
   .scrollable{
     position:absolute;
     height: calc(100vh - 300px);
     overflow:scroll;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
   }
 }
 
