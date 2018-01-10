@@ -13,7 +13,7 @@
               <small><p>Gender: {{program.gender}}</p></small>
               <small><p>Cost: {{program.fee != "Free" && program.fee != '' ? '$'+program.fee : program.fee }} <span v-if="program.fee != '' && program.fee_frequency" class="entity-detail__fee-frequency text-lower">{{program.fee_frequency}}</span></p></small>
             </div>
-            <p class="entity-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
+            <p class="entity-detail__reg-status"><b>Registration - </b> {{program.registration_status}}</p>
         </div>
 
 

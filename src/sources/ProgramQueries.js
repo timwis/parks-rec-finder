@@ -39,6 +39,7 @@ export default class ProgramsQuery extends QueryInterface {
                 .field('address')
                 .field('gender->>0', 'gender')
                 .field('programdescriptionshort', 'desc_short')
+                .field('registration_status->>0', 'registration_status')
                 // .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
                 // .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                 .field(`${tables.facilities}.id`, 'location_id')
