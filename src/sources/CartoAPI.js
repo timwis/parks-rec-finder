@@ -267,7 +267,7 @@ class CartoAPI {
     } else if (_entity.name === 'facility') {
       categoryEntityQuery
         .join(tables.locationCategories, null, `${tables.locationCategories}.id = ${_entity.DBTable}.location_type->>0`)
-        .where(`location_type_name = '${taxonomyTerm}'`)
+        .where(`lower(location_type_name) = '${taxonomyTerm}'`)
     }
 
     return this.runQuery(categoryEntityQuery.joinPPRAssets())
