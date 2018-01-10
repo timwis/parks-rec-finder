@@ -273,7 +273,11 @@ export default class PPRFQuery {
           // FILTER: COST <string>
           if (filterKey === 'fee') {
             let _feeCompartor = filters[filterKey] === 'Free' ? '=' : '!='
-            filterQuery.where(`${filterKey} ${_feeCompartor} '0.00'`)
+            if (filters[filterKey] === 'Free') {
+              filterQuery.where(`${filterKey} ${_feeCompartor} '0.00' OR ${filterKey} ${_feeCompartor} ''`)
+            } else {
+              filterQuery.where(`${filterKey} ${_feeCompartor} '0.00' AND ${filterKey} ${_feeCompartor} ''`)
+            }
           }
 
           // FILTER: AGE RANGE <string>
