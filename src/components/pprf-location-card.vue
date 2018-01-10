@@ -58,7 +58,6 @@ export default {
       type: Boolean
     },
     withinZipcode: {
-      type: Boolean,
       default: 'undefined'
     },
     selected: {

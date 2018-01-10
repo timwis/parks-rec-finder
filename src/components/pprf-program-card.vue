@@ -29,7 +29,7 @@
       :address="location.address"
       :facilityID="location.id"
     />
-    <div  class="card__in-zipcode-bar">
+    <div v-if="withinZipcode !== 'undefined'"  class="card__in-zipcode-bar">
         <h5> {{withinZipcode ? 'within' : 'near'}} zip code</h5>
     </div>
   </div>
@@ -65,7 +65,6 @@ export default {
       type: Object
     },
     withinZipcode: {
-      type: Boolean,
       default: 'undefined'
     },
     distance: {
