@@ -11,7 +11,7 @@
             <div class="entity-detail__header-meta">
               <small><p>Ages {{program.age_low}}-{{program.age_high}}</p></small>
               <small><p>Gender: {{program.gender}}</p></small>
-              <small><p>Cost: {{program.fee != "Free" ? '$'+program.fee : program.fee }} </p></small>
+              <small><p>Cost: {{program.fee != "Free" && program.fee != '' ? '$'+program.fee : program.fee }} <span class="entity-detail__fee-frequency">{{program.fee_frequency.toLowerCase()}}</span></p></small>
             </div>
             <p class="entity-detail__reg-status"><i>Registration is {{program.active ? 'open' : 'closed'}}</i></p>
         </div>
@@ -146,10 +146,14 @@ export default {
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
+  font-weight: 700;
   padding: 20px 0;
   margin:0;
 }
 
+.entity-detail__fee-frequency{
+  font-size: 85%;
+}
 .entity-detail__reg-status {
   width: 100%;
   background: $white;
