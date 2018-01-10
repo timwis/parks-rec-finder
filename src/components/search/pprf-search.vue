@@ -294,6 +294,7 @@ export default {
     max-width: 358px;
     //display:block;
     flex: 2;
+    position: relative;
   }
 
   #pprf-search__submit{

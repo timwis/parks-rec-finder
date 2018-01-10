@@ -17,7 +17,7 @@
           <span class="card__info-meta__label">Gender:</span> {{gender}}</p>
         </small>
         <small><p v-if="fee">
-          <span class="card__info-meta__label">Cost:</span> ${{fee}}</p>
+          <span class="card__info-meta__label">Cost:</span> ${{fee}} <span class="fee_frequency">{{feeFreq.toLowerCase()}}</span></p>
         </small>
       </div>
     </div>
@@ -51,6 +51,9 @@ export default {
       type: String
     },
     fee: {
+      type: String
+    },
+    feeFreq: {
       type: String
     },
     programID: {
@@ -93,6 +96,9 @@ export default {
       display: flex;
       margin-bottom:10px;
       small {margin-right: 5%;}
+    }
+    .fee_frequency{
+      font-size: 85%;
     }
 
     .card--location{flex:1;}

@@ -63,6 +63,7 @@ export default class PPRFQuery {
             // get current program schedules
             this.query = this.postgreSQL
                              .select()
+                             .field('days')
                              .field(`to_char(time_from, '${TIME_FORMAT}')`, 'time_from')
                              .field(`to_char(time_to, '${TIME_FORMAT}')`, 'time_to')
                              .field(`to_char(date_from, '${DATE_FORMAT}')`, 'start_date')

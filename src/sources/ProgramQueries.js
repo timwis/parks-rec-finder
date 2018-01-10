@@ -29,6 +29,7 @@ export default class ProgramsQuery extends QueryInterface {
 
   getAllRows () {
     return this.query
+                .field('fee_frequency->>0', 'fee_frequency')
                 .field('address', 'facility_address')
                 .field(`facility->>0`, 'facility_id')
   }

@@ -36,6 +36,7 @@
                 :ages="{high: program.age_high, low: program.age_low}"
                 :gender="program.gender"
                 :fee="program.fee"
+                :feeFreq="program.fee_frequency"
                 :programID="program.id"
               />
             </li>
