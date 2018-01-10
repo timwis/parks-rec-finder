@@ -22,6 +22,14 @@
           class="program--content scrollable"
           v-if="program"
         >
+         <pprf-detail-content-section
+            v-if="program.desc_short"
+            class="program__content-section program-detail__about"
+            heading="About this program"
+           >
+            <p>{{program.desc_short}}</p>
+          </pprf-detail-content-section>
+
           <pprf-detail-content-section
             v-if="program.address"
             heading="Location"
