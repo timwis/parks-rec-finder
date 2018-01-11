@@ -182,7 +182,7 @@ export default {
     }
   }
 
-  .pprf-map__container.pprf-map__container--mobile{
+ .pprf-sidebar .pprf-map__container.pprf-map__container--mobile{
     flex:.999;
     height: auto;
     position: relative;
