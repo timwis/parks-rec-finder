@@ -18,8 +18,14 @@
 
 <script>
 import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
-// import slugify from 'slugify'
 
+/**
+ * ENTITY CATEGORY CARD
+ *
+ * Simple functional component to display a category card with image, desc, count, and title
+ *
+ * @since 0.1.0
+ */
 export default {
 
   name: 'PPRF-Category-Card',
@@ -28,6 +34,10 @@ export default {
     name: {
       type: String
     },
+    /**
+     * number of entities (progams or locations) in category
+     * @type {Object}
+     */
     count: {
       type: Number
     },
@@ -41,6 +51,14 @@ export default {
     }
   },
   methods: {
+    /**
+     * slugify the category name from the name prop
+     * @param  {string} taxonomyTerm
+     * @return {string}              FORMAT: /entity-type/taxonomy-term-slug
+     *
+     * @public
+     * @since 0.1.0
+     */
     slugifyURL (taxonomyTerm) {
       let termSlug = taxonomyTerm.split(' ').map(termPart => termPart.charAt(0).toLowerCase() + termPart.slice(1)).join('-')
       return `/${this.$store.state.route.params.entityType}/${termSlug}`

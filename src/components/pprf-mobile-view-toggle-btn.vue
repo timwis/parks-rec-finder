@@ -7,6 +7,13 @@
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import {mapState} from 'vuex'
+/**
+ * TOGGLE FOR MAP/LIST VIEW IN MOBILE
+ *
+ * Dispatches 'setMobileView' event to store to manage global mobile state
+ *
+ * @since 0.4.10
+ */
 export default {
   name: 'PPRF-Mobile-View-Toggle-Btn',
   components: {FontAwesomeIcon},

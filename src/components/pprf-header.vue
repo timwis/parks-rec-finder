@@ -57,12 +57,12 @@ import {version} from '../../package.json'
 /**
  * HEADER BAR
  *
- * Contains Search Input components
+ * Contains Search, Logo and mobile nav
  *
  * @since 0.1.0
  */
 export default {
-  name: 'PPRF-Header',
+  name: 'PPRF-Header-Container',
   components: {pprfSearch, FontAwesomeIcon, pprfLogoSvg},
   data () {
     return {

@@ -8,6 +8,11 @@
 </template>
 
 <script>
+/**
+ * PARKS & REC LOGO SVG
+ *
+ * @since 0.4.12
+ */
 export default {
   name: 'PPRF-Logo-Svg'
 }

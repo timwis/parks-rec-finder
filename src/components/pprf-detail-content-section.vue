@@ -14,6 +14,13 @@
 
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+/**
+ * ENTITY DETAIL CONTENT SECTION
+ *
+ * used to show conent with a heading and heading icon
+ *
+ * @since 0.1.0
+ */
 export default {
 
   name: 'PPRF-Detail-Content-Section',
