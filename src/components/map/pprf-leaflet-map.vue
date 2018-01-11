@@ -188,7 +188,7 @@ export default {
     position: relative;
     top:auto;
   }
-  .pprf-map__container.pprf-map__container--open-mobile{
+.pprf-sidebar .pprf-map__container.pprf-map__container--open-mobile{
     display: block;
   }
 }
