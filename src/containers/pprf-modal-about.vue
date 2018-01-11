@@ -34,7 +34,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
  *
  * Hightlights certain elements of the interface on keyword hover.
  *
- * @since 0.5.23
+ * @since 0.6.22
  */
 export default {
 
