@@ -77,8 +77,11 @@ const mutations = {
   },
 
   // MOBILE
-  [types.TOGGLE_MOBILE_SEARCH] (state) {
-    state.mobile.searchOpen = !state.mobile.searchOpen
+  [types.TOGGLE_MOBILE_SEARCH] (state, {open}) {
+    /* eslint-disable  space-unary-ops */
+    console.log(typeof(open))
+    state.mobile.searchOpen = typeof(open) === 'undefined' ? !state.mobile.searchOpen : open.open
+    // state.mobile.searchOpen = !state.mobile.searchOpen
   },
   [types.TOGGLE_MOBILE_FILTERS] (state, toggleState) {
     if (toggleState !== 'undefined') {
@@ -92,6 +95,16 @@ const mutations = {
   },
   [types.TOGGLE_MOBILE_NAV] (state) {
     state.mobile.navOpen = !state.mobile.navOpen
+  },
+
+  // modals
+  [types.TOGGLE_MODAL] (state, {name, open}) {
+    state.modals[name].open = open === null ? !state.modals[name].open : open
+  },
+  [types.CLOSE_MODALS] (state) {
+    for (let modalName in state.modals) {
+      state.modals[modalName].open = false
+    }
   }
 }
 

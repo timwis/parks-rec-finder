@@ -5,8 +5,8 @@
     >
 
       <div @click="toggleOpen">
-        <h4 class="text-nopad">Filters</h4>
-        <font-awesome-icon :icon="open ? 'minus' : 'plus'" />
+        <h4 class="text-nopad"> <font-awesome-icon class="pprf-filter-bar__header__filter-icon" size="xs" icon="filter"/> Filters</h4>
+        <font-awesome-icon class="pprf-filter-bar__header__toggle-icon" :icon="open ? 'minus' : 'plus'" />
       </div>
 
       <div
@@ -589,11 +589,16 @@ export default {
 }
 .pprf-filter-bar__header{
   h4{display:inline; marign-bottom:0; padding-bottom:0;}
-  .svg-inline--fa{
+}
+.pprf-filter-bar__header__filter-icon{
+  vertical-align: -0.5%;
+}
+
+.pprf-filter-bar__header__toggle-icon{
     margin:2% 2% 0 2%;
     float:right;
-  }
 }
+
 .field-picker__header {
   width: 100%;
   background: color(dark-ben-franklin);

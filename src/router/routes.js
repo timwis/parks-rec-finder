@@ -8,6 +8,11 @@ import pprfSidebaCategoryEntitiesContainer from '@/containers/pprf-sidebar-categ
 import pprfSidebarProgramDetailContainer from '@/containers/pprf-sidebar-program-detail-container'
 import pprfSidebarLocationDetailContainer from '@/containers/pprf-sidebar-location-detail-container'
 
+// order of route definitions is important
+// they need to be ordered from most to least specific
+// in order for the route params to function properly
+// @see https://router.vuejs.org/en/essentials/dynamic-matching.html
+//
 const routes = [
   {
     path: '/', redirect: '/activities'
@@ -16,7 +21,7 @@ const routes = [
     path: '/search',
     name: 'Search',
     components: {
-      'map': pprfLeafletMap,
+      'main': pprfLeafletMap,
       'sidebar': pprfSidebarSearchContainer
     },
     meta: {
@@ -27,7 +32,7 @@ const routes = [
     path: '/program/:program_id',
     name: 'Program Detail',
     components: {
-      'map': pprfLeafletMap,
+      'main': pprfLeafletMap,
       'sidebar': pprfSidebarProgramDetailContainer
     },
     props: { default: true, sidebar: true },
@@ -40,7 +45,7 @@ const routes = [
     path: '/location/:facility_id',
     name: 'Location Detail',
     components: {
-      'map': pprfLeafletMap,
+      'main': pprfLeafletMap,
       'sidebar': pprfSidebarLocationDetailContainer
     },
     props: { default: true, sidebar: true },
@@ -53,7 +58,7 @@ const routes = [
     path: '/:entityType/:entityTerm+',
     name: 'Taxonxomy Term Entities',
     components: {
-      'map': pprfLeafletMap,
+      'main': pprfLeafletMap,
       'sidebar': pprfSidebaCategoryEntitiesContainer
     },
     props: { default: true, sidebar: true },
@@ -65,7 +70,7 @@ const routes = [
     path: '/:entityType',
     name: 'Taxonomy Terms',
     components: {
-      'map': pprfLeafletMap,
+      'main': pprfLeafletMap,
       'sidebar': pprfSidebarCategoriesContainer
     },
     props: { default: true, sidebar: true },

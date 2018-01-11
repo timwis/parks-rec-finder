@@ -8,6 +8,12 @@ const state = {
     filtersOpen: false
   },
 
+  modals: {
+    about: {
+      open: false
+    }
+  },
+
   entities: {
     program: [],
     facility: [],

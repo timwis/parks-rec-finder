@@ -13,6 +13,7 @@ router.beforeEach((to, from, next) => {
   store.dispatch('dataLoading')
   store.dispatch('resetMarkers')
   store.dispatch('setMobileView', 'list')
+  store.dispatch('closeModals')
 
   let PPRdaysTable = JSON.parse(window.localStorage.getItem('ppr-days-table'))
   if (!PPRdaysTable) {

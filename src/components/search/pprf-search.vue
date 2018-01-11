@@ -286,6 +286,23 @@ export default {
     box-shadow: $box-shadow;
   }
 }
+.pprf-search.tour-highlight{
+  input[type="text"]{
+    &::-webkit-input-placeholder {
+    color: color(black) !important;
+  }
+  &::-moz-placeholder {
+    color: color(black) !important;
+  }
+  &:-ms-input-placeholder {
+    color: color(black) !important;
+  }
+  &:-moz-placeholder {
+    color: color(black)!important;
+  }
+
+  }
+}
 
   .field--freetext{
     max-width: 650px;
