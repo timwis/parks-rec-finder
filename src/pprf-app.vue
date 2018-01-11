@@ -7,20 +7,19 @@
 
       <main class="pprf-app__main" >
           <router-view name="sidebar"></router-view>
-          <router-view name="map"></router-view>
+          <router-view name="main"></router-view>
+          <pprf-modal-about/>
       </main>
 
-      <footer class="pprf-footer">
-        <a class="text-upper" href="http://beta.phila.gov">City of Philadelphia</a> |
-        <a class="text-upper" href="">How to use</a> |
-        <a class="text-upper" href="">Feedback</a>
-        <small id="versionNumber" class="text-nopad">v{{version}}</small>
-      </footer>
+      <pprf-footer></pprf-footer>
+
     </div>
 </template>
 
 <script>
 import pprfHeaderContainer from '@/containers/pprf-header-container'
+import pprfModalAbout from '@/containers/pprf-modal-about'
+import pprfFooter from '@/components/pprf-footer'
 import { mapState } from 'vuex'
 import {version} from '../package.json'
 import {EventBus} from '@/event-bus'
@@ -34,7 +33,7 @@ import {EventBus} from '@/event-bus'
  */
 export default {
   name: 'PPRF-Finder',
-  components: {pprfHeaderContainer},
+  components: {pprfHeaderContainer, pprfFooter, pprfModalAbout},
   data () {
     return {
       version,
@@ -106,34 +105,6 @@ export default {
         //border: 3px solid green;
         flex-direction: row;
     }
-
-
-  .pprf-footer{
-    width: 100%;
-    height: $footer-height;
-    display:inline-block;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    left:0;
-    z-index: 1000;
-    justify-content: space-around;
-    align-items: baseline;
-    background: color(dark-ben-franklin);
-    color: $white;
-    a{
-      color: $white !important;
-      text-decoration: none;
-      font-weight: 700;
-      padding: 0 10px;
-    }
-  }
-
-  #versionNumber{
-    position: absolute;
-    right: 15px;
-    top: 5px;
-  }
 
 
   @include breakpoint(medium down) {

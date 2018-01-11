@@ -85,8 +85,11 @@ const actions = {
       })
   },
 
-  toggleMobileSearch ({commit}) {
-    commit(types.TOGGLE_MOBILE_SEARCH)
+  // mobile
+  toggleMobileSearch ({commit}, open) {
+    console.log(open)
+    // open = {open} === 'undefined' ? null : open
+    commit(types.TOGGLE_MOBILE_SEARCH, {open})
   },
   setMobileView ({commit, state}, view) {
     if (view !== 'undefined' && view === 'list') {
@@ -102,6 +105,14 @@ const actions = {
   },
   toggleMobileNav ({commit}) {
     commit(types.TOGGLE_MOBILE_NAV)
+  },
+  // modals
+  toggleModal ({commit}, modal) {
+    modal.open = modal.open === 'undefined' ? null : modal.open
+    commit(types.TOGGLE_MODAL, modal)
+  },
+  closeModals ({commit}) {
+    commit(types.CLOSE_MODALS)
   }
 }
 

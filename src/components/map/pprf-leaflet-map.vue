@@ -1,8 +1,5 @@
 <template>
  <div class="pprf-map__container">
-
-   <div v-show="loading" class="loading-overlay"></div>
-
     <v-map ref="leafletMap" id="PPRF-Leaflet-Map" :options="mapOptions" :zoom="zoom" :center="center" >
 
       <v-tilelayer :url="basemap" ></v-tilelayer>
@@ -25,8 +22,8 @@
       >
         <v-popup :content="marker.content()" />
       </v-svg-marker>
-
     </v-map>
+    <div v-show="loading" class="loading-overlay"></div>
  </div>
 </template>
 
@@ -95,7 +92,8 @@ export default {
       markers: state => state.mapMarkers,
       zipcodeSearched: state => state.search.fields.zip,
       loading: state => state.loading,
-      mobileOpen: state => !state.mobile.listView
+      mobileOpen: state => !state.mobile.listView,
+      modals: state => state.modals
     }),
     activeEntity () {
       let entityTypeParam = this.$store.state.route.params.entityType

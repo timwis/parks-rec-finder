@@ -31,3 +31,7 @@ export const TOGGLE_MOBILE_NAV = 'mobile/TOGGLE_MOBILE_NAV'
 export const TOGGLE_MOBILE_SEARCH = 'mobile/TOGGLE_MOBILE_SEARCH'
 export const SET_MOBILE_VIEW = 'mobile/SET_MOBILE_VIEW'
 export const TOGGLE_MOBILE_FILTERS = 'mobile/TOGGLE_MOBILE_FILTERS'
+
+// modals
+export const TOGGLE_MODAL = 'modal/TOGGLE_MODAL'
+export const CLOSE_MODALS = 'modal/CLOSE_MODALS'

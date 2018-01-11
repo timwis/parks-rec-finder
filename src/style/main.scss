@@ -6,7 +6,7 @@ TABLE OF CONTENTS;
 2. LAYOUT
 3. CARDS
 4. BUTTONS
-
+5. TOUR
 ******************************************************************/
 @import '_vars';
 @import '_mixins';
@@ -233,4 +233,53 @@ address{
   background: none;
   font-family: $font-montserrat;
   cursor: pointer; cursor: hand;
+}
+
+
+/* =======================================================================
+  5. TOUR
+
+  Desc
+  @since 0.6.22
+========================================================================== */
+.tour-highlight {
+  transform-origin: center center;
+  transform: scale(1.0625);
+  transition: all 0.5s ease !important;
+  box-shadow:  0 0px 10px 6px rgba(color(electric-blue), 0.5) !important;
+}
+
+.tour-tip{
+  border-left: 3px solid color(dark-ben-franklin);
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  &:hover{
+    cursor: pointer;
+    cursor: hand;
+    background: color(ghost-gray);
+  }
+}
+.tour-tip__action{
+  color: color(dark-ben-franklin);
+  @include rem(font-size, 1.75);
+  margin:0;
+  padding:0;
+}
+.tour-tip__result{
+  // padding-left: 30px;
+}
+.tour-tip__icon {
+  margin-right: 10px;
+  @include rem(font-size, 3)
+  color: color(electric-blue);
+}
+
+@include breakpoint(medium down) {
+  .tour-highlight{
+    transform: scale(1);
+    transition: all 0.5s ease !important;
+    box-shadow:  none !important;
+  }
 }

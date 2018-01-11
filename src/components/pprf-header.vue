@@ -9,7 +9,7 @@
         </h1>
         <ul>
             <li>
-                <a class="text-upper" href="">How to use</a>
+                <a @click.prevent="openModal('about')" class="text-upper" href="">How to use</a>
             </li>
             <li>
                 <a class="text-upper" href="">Feedback</a>
@@ -74,6 +74,11 @@ export default {
     ...mapState(['mobile'])
   },
   methods: {
+    openModal (name) {
+      this.toggleMobileNav()
+      this.$store.dispatch('toggleMobileSearch', {open: false})
+      this.$store.dispatch('toggleModal', {name, open: true})
+    },
     toggleMobileSearch () {
       this.$store.dispatch('toggleMobileSearch')
     },
@@ -210,7 +215,7 @@ header.pprf-header{
     .pprf-header--mobile__nav-icon{
         background: none;
         display:block;
-        margin: 5px;
+        margin: 5px 15px 5px 15px;
         color: $white;
     }
 

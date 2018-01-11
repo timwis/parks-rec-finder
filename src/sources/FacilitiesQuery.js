@@ -30,8 +30,7 @@ export default class FacilitiesQuery extends QueryInterface {
     return this.query
                 .field('address')
                 .field('location_contact_name')
-                .field(`ARRAY(SELECT ${tables.programs}.program_name FROM ${tables.programs} WHERE ${tables.programs}.facility->>0 = ${tables.facilities}.id)`,
-                            'programs')
+                .field(`ARRAY(SELECT ${tables.programs}.program_name FROM ${tables.programs} WHERE ${tables.programs}.facility->>0 = ${tables.facilities}.id)`, 'programs')
                 .where(`${tables.facilities}.id = '${id}'`)
   }
 }

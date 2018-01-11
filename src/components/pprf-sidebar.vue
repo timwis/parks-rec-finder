@@ -55,7 +55,7 @@ export default {
   .pprf-sidebar{
       flex: 1;
       height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
-      max-width: 451px;
+      max-width: $sidebar-width;
       padding: 15px 20px 0 20px;
       color: color(dark-ben-franklin);
       border-right: 1px solid color(ghost-gray);
