@@ -38,6 +38,11 @@
 <script>
 import pprfLocationCard from '@/components/pprf-location-card'
 
+/**
+ * RENDERS A CARD FOR A LOCATION ENTITY
+ *
+ * This card can be nested inside of a program card.
+ */
 export default {
 
   name: 'PPRF-Program-Card',
@@ -66,9 +71,6 @@ export default {
     },
     withinZipcode: {
       default: 'undefined'
-    },
-    distance: {
-      type: Number
     },
     selected: {
       type: Boolean,

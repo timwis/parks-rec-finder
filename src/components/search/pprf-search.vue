@@ -44,8 +44,8 @@ import _ from 'underscore'
  * SEARCH BAR COMPONENT
  *
  * Contains input fields for performing freetext, address, and zipcode searches.
- *
- * Connects to state to manage the state.search object and dispatch search events
+ * This component dispathces 'submitSearch' to the store in order to perform the search
+ * and update state. Search can also be driven by the route to allow for deeplinked searches.
  *
  * @since 0.1.0
  */
@@ -71,13 +71,14 @@ export default {
 
     }
   },
-  /**
+
+  mounted () {
+    /**
    * manages searching from deeplinks
    *
    * @public
-   * @since 0.1.0
+   * @since 0.3.7
    */
-  mounted () {
     // search if deep linked to Seach page
     if (this.$store.state.route.from && !this.$store.state.route.from.name) {
       this.searchFromRoute(this.$store.state.route.query)
@@ -106,7 +107,7 @@ export default {
      * @param  {object} queryParams query parameters from router
      * @return {void}
      *
-     * @since 0.2.7
+     * @since 0.3.7
      */
     searchFromRoute (queryParams) {
       this._updateInputRefsValues(this.$store.state.route.query)
@@ -235,12 +236,15 @@ export default {
   },
 
   computed: {
+    // find all the search fields keys in the query params
     searchFieldsFromRoute () {
       return _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.search.fields))
     },
+    // find all the search fields values in the query params
     searchValuesFromRoute () {
       return _.pick(this.$store.state.route.query, this.searchFieldsFromRoute)
     },
+    // find all the search filters values in the query params
     searchFiltersFromRoute () {
       return _.pick(this.$store.state.route.query, _.without(Object.keys(this.$store.state.route.query), this.searchFieldsFromRoute))
     }
@@ -254,7 +258,7 @@ export default {
      * @param  {object} val new route query parameters
      * @return {void}
      *
-     * @since 0.2.7
+     * @since 0.3.7
      */
     '$route.query': function (val) {
       if (_.difference([val.freetext], [this.$store.state.search.fields.freetext]).length) {

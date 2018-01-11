@@ -12,7 +12,9 @@
 
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-
+/**
+ * SHOW/HIDE TOGGLE CONTENT SECTION
+ */
 export default {
 
   name: 'PPRF-Collapsable-Content',

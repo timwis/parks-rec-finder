@@ -216,8 +216,10 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import _ from 'underscore'
 
 /**
- * Filter Bar
- * Search filter container to add filtes to the global serach state
+ * SEARCH FILTER BAR
+ *
+ * Manages filtering entities list both by user filter selection and
+ * query param changes.
  *
  * @since 0.1.0
  */
@@ -314,8 +316,8 @@ export default {
 
   computed: {
     /**
-     * check if user has interacted with form vales
-     * @return {Boolean} true is a value has been selected
+     * check if user has interacted with form values
+     * @return {Boolean} true if a filter has been selected
      *
      * @since 0.1.3
      */
@@ -460,7 +462,8 @@ export default {
       this.onSubmit()
     },
     /**
-     * Update url params from user selected fiter values
+     * Update url params from user selected filter values.
+     * Pushes new query to router history
      * @return {void}
      *
      * @since 0.1.0
@@ -473,8 +476,7 @@ export default {
     },
 
     /**
-     * Update the local and global state with filter values
-     * from url parametes
+     * Update the local state with filter values from url parametes
      *
      * @return {void}
      * @since 0.1.0

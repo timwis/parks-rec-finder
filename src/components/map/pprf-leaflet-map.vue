@@ -36,6 +36,15 @@ import Vue2Leaflet from 'vue2-leaflet'
 import {mapState} from 'vuex'
 import {EventBus} from '@/event-bus'
 
+/**
+ * Leaflet.js MAP component
+ *
+ * Map implementatation using City of Philadelphia's ESRI base map layers. This
+ * component uses the git sub-moduled version of Vue2Leaflet as a simple Vue wrapper
+ * for Leaflet.js
+ *
+ * 0.1.0
+ */
 export default {
 
   name: 'PPRF-Leaflet-Map',
@@ -49,6 +58,8 @@ export default {
   },
 
   mounted () {
+    // get the users current location
+    // and drop a pin
     navigator.geolocation.getCurrentPosition(position => {
       this.userLocation = L.latLng(position.coords.latitude, position.coords.longitude)
     })
@@ -98,6 +109,13 @@ export default {
   },
 
   methods: {
+    /**
+     * Zoom the map the bounds of all the markers
+     * @return {void}
+     *
+     * @public
+     * @since 0.1.1
+     */
     fitToMarkerBounds () {
       let _markers = this.markers
       // @TODO: don't add zipcode zoom until polygons are added
@@ -111,6 +129,14 @@ export default {
         this.$refs.leafletMap.fitBounds([[_southWest.lat, _southWest.lng], [_northEast.lat, _northEast.lng]])
       }
     },
+    /**
+     * on marker click emit a global event
+     * @param  {object} marker dervied marker object from store/modules/markers/Marker.js
+     * @return {void}
+     *
+     * @public
+     * @since 0.3.9
+     */
     onMarkerClick (marker) {
       EventBus.$emit('map:markerClick', marker)
     }

@@ -29,7 +29,7 @@ import pprfLeafletMap from '@/components/map/pprf-leaflet-map'
 /**
  * APPLICATION SIDEBAR
  *
- * Layout wrapper component
+ * simple layout wrapper, also contains the mobile leaflet map
  *
  * @since 0.1.0
  */
