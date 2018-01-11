@@ -33,12 +33,21 @@
             <a class="program-detail__directions" :href="gmapsLink(facility.latitude, facility.longitude)" target="_blank">Get directions <font-awesome-icon icon="external-link-alt" size="s" /></a>
           </pprf-detail-content-section>
 
+
           <pprf-detail-content-section
             v-if="facility.contact_phone"
             heading="Contact"
             icon="phone"
           >
             <a class="program-detail__phone" :href="'tel:'+facility.contact_phone">{{facility.contact_phone}}</a>
+          </pprf-detail-content-section>
+
+          <pprf-detail-content-section
+            heading="Site contact"
+            v-if="facility.location_contact_name.first"
+            icon="user"
+          >
+            <p>{{facility.location_contact_name.first}} {{facility.location_contact_name.middle}} {{facility.location_contact_name.last}}</p>
           </pprf-detail-content-section>
 
           <pprf-detail-content-section
@@ -108,6 +117,10 @@ export default {
     api.getFacilityByID(to.params.facility_id)
         .then(results => {
           next(vm => {
+            /* eslint-disable no-eval */
+            var parsedJSON = eval('(' + results[0].data.rows[0].location_contact_name + ')')
+            results[0].data.rows[0].location_contact_name = parsedJSON
+
             vm.$store.dispatch('updateEntities', { facility: results[0].data.rows, program: results[1].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'facility' })
           })
