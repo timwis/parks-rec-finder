@@ -60,6 +60,7 @@ export default {
       color: color(dark-ben-franklin);
       border-right: 1px solid color(ghost-gray);
       overflow: hidden;
+
       .pprf-map__container{
         display: none;
       }
