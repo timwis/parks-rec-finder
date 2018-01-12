@@ -29,7 +29,7 @@ export default class TaxonomyQuery extends QueryInterface {
         this.query = ProgramsQuery.joinWithAggregateData(this.query)
         this.query = ProgramsQuery.isPublished(this.query)
             .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-            .group(`${this.tableAlias}.activity_category_name, ${this.tableAlias}.activity_category_description, ${this.tableAlias}.activity_category_photo`)
+            .group(`${this.tableAlias}.activity_category_name, ${this.tableAlias}.activity_category_description, ${this.tableAlias}.activity_category_photo, ${tables.facilities}.facility_is_published`)
             .order('activity_category_name')
 
         break
@@ -40,11 +40,15 @@ export default class TaxonomyQuery extends QueryInterface {
           .field(`${this.tableAlias}.location_type_photo`)
           .field(`${this.tableAlias}.location_type_is_published`)
           .field(`${this.tableAlias}.id`)
-          .where('location_type_is_published')
+          .where(`${this.tableAlias}.location_type_is_published`)
           .join(tables.facilities, null, `${tables.facilities}.location_type->>0 = ${this.tableAlias}.id`)
         this.query = FacilitiesQuery.isPublished(this.query)
           .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-          .group(`${this.tableAlias}.location_type_name, ${this.tableAlias}.location_type_description, ${this.tableAlias}.location_type_photo, ${this.tableAlias}.id, ${this.tableAlias}.location_type_is_published`)
+          .group(`${this.tableAlias}.location_type_name,
+                  ${this.tableAlias}.location_type_description,
+                  ${this.tableAlias}.location_type_photo,
+                  ${this.tableAlias}.id,
+                  ${this.tableAlias}.location_type_is_published`)
         break
     }
   }

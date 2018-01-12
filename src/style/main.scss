@@ -186,7 +186,8 @@ address{
       }
 }
 
-.card--within-zip + .card--outside-zip{
+.card--within-zip + .card--outside-zip,
+.pprf-tab-panel .card--outside-zip:first-child{
       margin-top: 40px !important;
       &:before{
         width: 100%;

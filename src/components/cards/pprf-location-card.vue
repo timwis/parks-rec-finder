@@ -1,6 +1,6 @@
 <template>
   <div
-   :class="['card', 'card--location', {'card--nested': nested, 'card--selected': selected}]"
+   :class="['card', 'card--location', {'card--nested': nested, 'card--selected': selected, 'card--within-zip': withinZipcode !== 'undefined' && withinZipcode, 'card--outside-zip': withinZipcode !== 'undefined' && !withinZipcode}]"
    :id="'facility--'+facilityID"
   >
       <font-awesome-icon
