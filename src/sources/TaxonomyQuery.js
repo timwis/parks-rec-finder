@@ -2,6 +2,7 @@
 import tables from './CartoDBTables'
 import QueryInterface from './QueryInterface'
 import ProgramsQuery from './ProgramQueries'
+import FacilitiesQuery from './FacilitiesQuery'
 
 export default class TaxonomyQuery extends QueryInterface {
   constructor (Builder) {
@@ -23,6 +24,7 @@ export default class TaxonomyQuery extends QueryInterface {
             .field(`${this.tableAlias}.activity_category_name`)
             .field(`${this.tableAlias}.activity_category_description`)
             .field(`${this.tableAlias}.activity_category_photo`)
+            .where('activity_category_is_published')
             .join(tables.programs, null, `${tables.programs}.activity_category->>0 = ${this.tableAlias}.id`)
         this.query = ProgramsQuery.joinWithAggregateData(this.query)
         this.query = ProgramsQuery.isPublished(this.query)
@@ -36,10 +38,13 @@ export default class TaxonomyQuery extends QueryInterface {
           .field(`${this.tableAlias}.location_type_name`)
           .field(`${this.tableAlias}.location_type_description`)
           .field(`${this.tableAlias}.location_type_photo`)
+          .field(`${this.tableAlias}.location_type_is_published`)
           .field(`${this.tableAlias}.id`)
+          .where('location_type_is_published')
           .join(tables.facilities, null, `${tables.facilities}.location_type->>0 = ${this.tableAlias}.id`)
+        this.query = FacilitiesQuery.isPublished(this.query)
           .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-          .group(`${this.tableAlias}.location_type_name, ${this.tableAlias}.location_type_description, ${this.tableAlias}.location_type_photo, ${this.tableAlias}.id`)
+          .group(`${this.tableAlias}.location_type_name, ${this.tableAlias}.location_type_description, ${this.tableAlias}.location_type_photo, ${this.tableAlias}.id, ${this.tableAlias}.location_type_is_published`)
         break
     }
   }

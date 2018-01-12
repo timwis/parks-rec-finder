@@ -10,7 +10,7 @@ const tables = {
   programCategoryTerms: 'ppr_activity_types',
 
   zipcodes: 'zip_codes',
-  days: 'ppr_days'
+  days: 'ppr_days' // cached in sessionStorage on router:beforeRouteEnter
 }
 
 export default tables

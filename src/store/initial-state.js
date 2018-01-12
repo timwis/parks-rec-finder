@@ -26,8 +26,11 @@ const state = {
       facility: []
     }
   },
+
   mapMarkers: [],
+
   activeTab: 'program',
+
   search: {
     loading: false,
     error: null,

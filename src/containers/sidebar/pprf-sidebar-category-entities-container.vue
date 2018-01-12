@@ -63,19 +63,26 @@
 </template>
 
 <script>
-import api from '@/sources/api'
-import { mapState } from 'vuex'
-import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
-import pprfSidebar from '@/components/pprf-sidebar'
-import pprfMobileViewToggleBtn from '@/components/pprf-mobile-view-toggle-btn'
-import pprfFilterBar from '@/components/search/pprf-filter-bar'
-import pprfProgramCard from '@/components/pprf-program-card'
-import pprfLocationCard from '@/components/pprf-location-card'
-import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
-// import {EventBus} from '@/event-bus'
+// utilities
 import _ from 'underscore'
 import {deSlugify} from '@/utilities/utils'
 import resolveEntityType from '@/utilities/entity-type-resolver'
+
+// state
+import api from '@/sources/api'
+import { mapState } from 'vuex'
+// mixins
+import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
+
+// components
+import pprfSidebar from '@/components/pprf-sidebar'
+import pprfMobileViewToggleBtn from '@/components/buttons/pprf-mobile-view-toggle-btn'
+
+import pprfFilterBar from '@/components/search/pprf-filter-bar'
+
+import pprfProgramCard from '@/components/cards/pprf-program-card'
+import pprfLocationCard from '@/components/cards/pprf-location-card'
+import pprfResultsCountBadge from '@/components/cards/pprf-results-count-badge'
 
 /**
  * CATEGORY ENTITIES STATE CONTAINER

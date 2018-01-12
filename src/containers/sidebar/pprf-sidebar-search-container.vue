@@ -71,14 +71,14 @@
 </template>
 
 <script>
+import _ from 'underscore'
 import { mapState } from 'vuex'
 import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfFilterBar from '@/components/search/pprf-filter-bar'
-import pprfProgramCard from '@/components/pprf-program-card'
-import pprfLocationCard from '@/components/pprf-location-card'
+import pprfProgramCard from '@/components/cards/pprf-program-card'
+import pprfLocationCard from '@/components/cards/pprf-location-card'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
-import _ from 'underscore'
 
 /**
  * SEARCH RESULTS SIDEBAR STATE CONTAINER

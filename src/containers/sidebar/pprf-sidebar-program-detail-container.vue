@@ -88,11 +88,13 @@
 </template>
 
 <script>
+import api from '@/sources/api'
+import _ from 'underscore'
+
 import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfDetailContentSection from '@/components/pprf-detail-content-section'
-import api from '@/sources/api'
-import _ from 'underscore'
+import LocalCacheManager from '@/sources/LocalCacheManager'
 
 export default {
   name: 'PPRF-Sidebar-entity-detail-Container',
@@ -112,7 +114,7 @@ export default {
             // map days to each schedule
             for (var i = 0; i < schedules.length; i++) {
               // find the days records from our cached days table in local storage
-              schedules[i].days = schedules[i].days.map(day => _.findWhere(JSON.parse(window.localStorage.getItem('ppr-days-table')), {id: day}))
+              schedules[i].days = schedules[i].days.map(day => _.findWhere(LocalCacheManager.getRow('daysTable'), {id: day}))
             }
             vm.schedules = schedules
             vm.$store.dispatch('updateEntities', { program: results[0].data.rows })

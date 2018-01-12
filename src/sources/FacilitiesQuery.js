@@ -10,6 +10,8 @@ export default class FacilitiesQuery extends QueryInterface {
     this.query
         .field(`${tables.facilities}.*`)
         .from(tables.facilities)
+    this.query = FacilitiesQuery.isPublished(this.query)
+
     this.defineQuery()
     return this.query
   }
@@ -32,5 +34,9 @@ export default class FacilitiesQuery extends QueryInterface {
                 .field('location_contact_name')
                 .field(`ARRAY(SELECT ${tables.programs}.program_name FROM ${tables.programs} WHERE ${tables.programs}.facility->>0 = ${tables.facilities}.id)`, 'programs')
                 .where(`${tables.facilities}.id = '${id}'`)
+  }
+
+  static isPublished (query) {
+    return query.where('facility_is_published')
   }
 }

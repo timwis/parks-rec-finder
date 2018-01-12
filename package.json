@@ -1,6 +1,6 @@
 {
   "name": "parks-rec-finder",
-  "version": "0.7.22",
+  "version": "0.8.22",
   "description": "Philadelphia Parks & Recreation Finder Application ",
   "author": "City of Philadelphia - Office of Open Data and Digital Transformation",
   "private": true,
@@ -71,6 +71,8 @@
     "jest": "^21.1.0",
     "jest-html-reporter": "^0.5.3",
     "jest-serializer-vue": "^0.2.0",
+    "js-sha256": "^0.9.0",
+    "moment": "^2.20.1",
     "mustache": "^2.3.0",
     "node-sass": "^4.5.3",
     "opn": "^5.1.0",

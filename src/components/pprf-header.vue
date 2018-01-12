@@ -62,7 +62,7 @@ import {version} from '../../package.json'
  * @since 0.1.0
  */
 export default {
-  name: 'PPRF-Header-Container',
+  name: 'PPRF-Header',
   components: {pprfSearch, FontAwesomeIcon, pprfLogoSvg},
   data () {
     return {

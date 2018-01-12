@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import pprfResultsCountBadge from '@/components/pprf-results-count-badge'
+import pprfResultsCountBadge from '@/components/cards/pprf-results-count-badge'
 
 /**
  * ENTITY CATEGORY CARD

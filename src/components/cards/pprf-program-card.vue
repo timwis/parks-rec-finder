@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import pprfLocationCard from '@/components/pprf-location-card'
+import pprfLocationCard from '@/components/cards/pprf-location-card'
 
 /**
  * RENDERS A CARD FOR A LOCATION ENTITY

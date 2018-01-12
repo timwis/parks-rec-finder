@@ -21,6 +21,6 @@ module.exports = merge(prodEnv, {
   FLICKR_API: {
     KEY: '"d725fbb674d097510cba546d70aa0244"',
     BASE:  '"https://api.flickr.com/services/rest"',
-    CACHE_QUERIES: true
+    CACHE_QUERIES: false
   }
 })
