@@ -11,7 +11,7 @@
           <slot name="sidebar-main" />
         </main>
 
-        <pprf-leaflet-map :class="['pprf-map__container--mobile', {'pprf-map__container--open-mobile': mobileMapOpen}]" />
+        <pprf-leaflet-map-container :class="['pprf-map__container--mobile', {'pprf-map__container--open-mobile': mobileMapOpen}]" />
 
         <footer class="pprf-sidebar__footer">
           <slot name="sidebar-footer" />
@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import pprfBackBtn from '@/components/pprf-back-btn'
-import pprfLeafletMap from '@/components/map/pprf-leaflet-map'
+import pprfBackBtn from '@/components/buttons/pprf-back-btn'
+import pprfLeafletMapContainer from '@/containers/main/map/pprf-leaflet-map-container'
 
 /**
  * APPLICATION SIDEBAR
@@ -35,7 +35,7 @@ import pprfLeafletMap from '@/components/map/pprf-leaflet-map'
  */
 export default {
   name: 'PPRF-Sidebar',
-  components: {pprfBackBtn, pprfLeafletMap},
+  components: {pprfBackBtn, pprfLeafletMapContainer},
   props: {
     modifierClass: {
       type: String,

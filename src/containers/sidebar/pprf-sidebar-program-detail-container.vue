@@ -88,11 +88,12 @@
 </template>
 
 <script>
+import api from '@/sources/api'
+import _ from 'underscore'
+
 import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import pprfDetailContentSection from '@/components/pprf-detail-content-section'
-import api from '@/sources/api'
-import _ from 'underscore'
 
 export default {
   name: 'PPRF-Sidebar-entity-detail-Container',

@@ -66,14 +66,17 @@
 </template>
 
 <script>
+import _ from 'underscore'
+import resolveEntityType from '@/utilities/entity-type-resolver'
+import slugify from 'slugify'
+
 import { mapState } from 'vuex'
+
 import pprfSidebar from '@/components/pprf-sidebar'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
-import resolveEntityType from '@/utilities/entity-type-resolver'
+
 import api from '@/sources/api'
-import pprfCategoryCard from '@/components/pprf-category-card'
-import _ from 'underscore'
-import slugify from 'slugify'
+import pprfCategoryCard from '@/components/cards/pprf-category-card'
 
 /**
  * ENTITY CATEGORY TERMS STATE CONTAINER

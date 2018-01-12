@@ -94,12 +94,13 @@
 </template>
 
 <script>
+import api from '@/sources/api'
 import {mapState} from 'vuex'
+
 import pprfSidebar from '@/components/pprf-sidebar'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import pprfDetailContentSection from '@/components/pprf-detail-content-section'
 import pprfCollapsableContent from '@/components/pprf-collapsable-content'
-import api from '@/sources/api'
 
 export default {
   name: 'PPRF-Sidebar-Location-Detail-Container',

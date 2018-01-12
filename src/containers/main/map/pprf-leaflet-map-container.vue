@@ -44,7 +44,7 @@ import {EventBus} from '@/event-bus'
  */
 export default {
 
-  name: 'PPRF-Leaflet-Map',
+  name: 'PPRF-Leaflet-Map-Container',
 
   components: {
     'v-map': Vue2Leaflet.Map,

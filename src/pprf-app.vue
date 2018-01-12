@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import pprfHeaderContainer from '@/containers/pprf-header-container'
-import pprfModalAbout from '@/containers/pprf-modal-about'
+import pprfHeaderContainer from '@/containers/header/pprf-header-container'
+import pprfModalAbout from '@/containers/modals/pprf-modal-about'
 import pprfFooter from '@/components/pprf-footer'
 import { mapState } from 'vuex'
 import {version} from '../package.json'
@@ -54,7 +54,6 @@ export default {
     })
   },
   created () {
-    //  [App.vue specific] When App.vue is first loaded start the progress bar
     this.$Progress.start()
     //  hook the progress bar to start before we move router-view
     this.$router.beforeEach((to, from, next) => {
@@ -71,6 +70,7 @@ export default {
       //  continue to next page
       next()
     })
+
     //  hook the progress bar to finish after we've finished moving router-view
     this.$router.afterEach((to, from) => {
       //  finish the progress bar
