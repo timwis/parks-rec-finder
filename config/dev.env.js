@@ -6,7 +6,7 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   CARTO_API: {
     BASE: '"https://phl.carto.com/api/v2/"',
-    CACHE_QUERIES: true
+    CACHE_QUERIES: false
   },
   AIS_API:{
     BASE: '"https://api.phila.gov/ais/v1/"',

@@ -34,7 +34,6 @@ class CartoAPI {
   runQuery (sqlQuery) {
     let sqlString = sqlQuery.build()
     let cachedQuery = LocalCacheManager.getRow(sqlString)
-    console.log(cachedQuery)
     if (cachedQuery) {
       if (this.LOG_QUERIES) {
         console.log(`Carto API::runQuery:fromLocalCache \n ${sqlString}`)
