@@ -2,7 +2,9 @@
   <footer class="pprf-footer">
     <a class="text-upper" href="http://beta.phila.gov">City of Philadelphia</a> |
     <a @click.prevent="toggleModal('about')" class="text-upper" href="">How to use</a> |
-    <a class="text-upper" href="">Feedback</a>
+    <a class="text-upper" href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))">
+      Feedback
+    </a>
     <small id="versionNumber" class="text-nopad">v{{version}}</small>
   </footer>
 </template>

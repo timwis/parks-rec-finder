@@ -12,7 +12,7 @@
                 <a @click.prevent="openModal('about')" class="text-upper" href="">How to use</a>
             </li>
             <li>
-                <a class="text-upper" href="">Feedback</a>
+                <a class="text-upper" href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))">Feedback</a>
             </li>
         </ul>
         <small class="app-version text-nopad">v{{version}}</small>
