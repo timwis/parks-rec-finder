@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import state from '@/store/initial-state'
-import PPRFMarker from '@/store/modules/markers/Marker'
+import PPRFMarker from '@/store/Marker'
 
 import actions from './actions'
 import mutations from './mutations'

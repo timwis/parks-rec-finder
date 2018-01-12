@@ -67,6 +67,7 @@
 import _ from 'underscore'
 import {deSlugify} from '@/utilities/utils'
 import resolveEntityType from '@/utilities/entity-type-resolver'
+
 // state
 import api from '@/sources/api'
 import { mapState } from 'vuex'

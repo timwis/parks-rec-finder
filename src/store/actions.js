@@ -3,6 +3,7 @@ import * as types from './mutation-types'
 import resolveEntityType from '@/utilities/entity-type-resolver'
 
 const actions = {
+  // LOADING
   dataLoading ({state, commit}) {
     commit(types.APP_LOADING)
   },
@@ -11,11 +12,13 @@ const actions = {
     commit(types.APP_LOADED)
   },
 
+  // TABS
   setActiveTab ({commit, state}, entityType) {
     let type = resolveEntityType(entityType.toLowerCase()).name
     commit(types.SET_ACTIVE_TAB, type)
     commit(types.SET_MAP_MARKERS, {entityType: type})
   },
+
   // MARKERS
   resetMarkers ({commit}) {
     commit(types.RESET_MARKERS)
@@ -46,7 +49,6 @@ const actions = {
     }
   },
 
-  // API
   getTerms ({commit, state}, entityType) {
     api.getTerms(entityType).then(results => {
       // console.log(results.data.rows)
@@ -55,10 +57,6 @@ const actions = {
   },
 
   // SEARCH
-  updateSearchInput ({commit}, serachParams) {
-    commit(types.UPDATE_SEARCH_INPUT, serachParams)
-  },
-
   submitSearch ({commit, state, getters}, serachParams) {
     let searchTerms = Object.assign({}, {fields: state.search.fields}, {filters: state.search.filters}, serachParams)
     commit(types.SUBMIT_SEARCH, searchTerms)
@@ -87,8 +85,6 @@ const actions = {
 
   // mobile
   toggleMobileSearch ({commit}, open) {
-    console.log(open)
-    // open = {open} === 'undefined' ? null : open
     commit(types.TOGGLE_MOBILE_SEARCH, {open})
   },
   setMobileView ({commit, state}, view) {
@@ -106,6 +102,7 @@ const actions = {
   toggleMobileNav ({commit}) {
     commit(types.TOGGLE_MOBILE_NAV)
   },
+
   // modals
   toggleModal ({commit}, modal) {
     modal.open = modal.open === 'undefined' ? null : modal.open

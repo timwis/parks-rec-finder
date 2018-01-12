@@ -6,7 +6,7 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   CARTO_API: {
     BASE: '"https://phl.carto.com/api/v2/"',
-    CACHE_QUERIES: false
+    CACHE_QUERIES: true
   },
   AIS_API:{
     BASE: '"https://api.phila.gov/ais/v1/"',
@@ -21,6 +21,6 @@ module.exports = merge(prodEnv, {
   FLICKR_API: {
     KEY: '"d725fbb674d097510cba546d70aa0244"',
     BASE:  '"https://api.flickr.com/services/rest"',
-    CACHE_QUERIES: true
+    CACHE_QUERIES: false
   }
 })

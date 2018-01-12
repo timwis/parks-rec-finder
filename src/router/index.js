@@ -8,17 +8,18 @@ Vue.use(Router)
 Vue.use(routerHistory)
 
 let router = new Router({ routes })
-
+// beforeEach also call in pprf-app
+// to hook to progress bar
 router.beforeEach((to, from, next) => {
   store.dispatch('dataLoading')
   store.dispatch('resetMarkers')
   store.dispatch('setMobileView', 'list')
   store.dispatch('closeModals')
 
-  let PPRdaysTable = JSON.parse(window.localStorage.getItem('ppr-days-table'))
+  let PPRdaysTable = JSON.parse(window.sessionStorage.getItem('ppr-days-table'))
   if (!PPRdaysTable) {
     api.getDays().then(results => {
-      window.localStorage.setItem('ppr-days-table', JSON.stringify(results.data.rows))
+      window.sessionStorage.setItem('ppr-days-table', JSON.stringify(results.data.rows))
     })
   }
   next()

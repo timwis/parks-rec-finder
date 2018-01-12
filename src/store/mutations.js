@@ -1,6 +1,7 @@
 import * as types from './mutation-types'
 
 const mutations = {
+  // LOADING
   [types.APP_LOADING] (state) {
     state.loading = true
   },
@@ -9,12 +10,12 @@ const mutations = {
     state.loading = false
   },
 
-  // tabs
+  // TABS
   [types.SET_ACTIVE_TAB] (state, entityType) {
     state.activeTab = entityType
   },
 
-  // programs
+  // ENTITY: PROGRAMS
   [types.UPDATE_PROGRAMS] (state, programs) {
     state.entities.program = programs
   },
@@ -22,7 +23,7 @@ const mutations = {
     state.entities.category.program = programCategories
   },
 
-  // facilities
+  // ENTITY: FACILITIES
   [types.UPDATE_FACILITIES] (state, facilities) {
     state.entities.facility = facilities
   },
@@ -30,7 +31,7 @@ const mutations = {
     state.entities.category.facility = facilityCategories
   },
 
-  // markers
+  // ENTITY: MARKERS
   [types.UPDATE_MARKERS] (state, markers) {
     state.entities.marker = Object.assign({}, state.entities.marker, markers)
   },
@@ -43,7 +44,7 @@ const mutations = {
     state.entities.marker.program = []
   },
 
-  // search
+  // SEARCH
   [types.UPDATE_SEARCH_INPUT] (state, {fields, filters}) {
     let _filters = filters || state.search.filters
     let updatedSearch = {
@@ -79,9 +80,7 @@ const mutations = {
   // MOBILE
   [types.TOGGLE_MOBILE_SEARCH] (state, {open}) {
     /* eslint-disable  space-unary-ops */
-    console.log(typeof(open))
     state.mobile.searchOpen = typeof(open) === 'undefined' ? !state.mobile.searchOpen : open.open
-    // state.mobile.searchOpen = !state.mobile.searchOpen
   },
   [types.TOGGLE_MOBILE_FILTERS] (state, toggleState) {
     if (toggleState !== 'undefined') {
@@ -97,7 +96,7 @@ const mutations = {
     state.mobile.navOpen = !state.mobile.navOpen
   },
 
-  // modals
+  // MODALS
   [types.TOGGLE_MODAL] (state, {name, open}) {
     state.modals[name].open = open === null ? !state.modals[name].open : open
   },
