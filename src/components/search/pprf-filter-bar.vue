@@ -211,6 +211,7 @@
 </template>
 
 <script>
+import LocalCacheManager from '@/sources/LocalCacheManager'
 import PhilaButton from '@/components/phila/phila-button'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import _ from 'underscore'
@@ -305,7 +306,7 @@ export default {
      *
      * @since 0.1.0
      */
-    this.days = JSON.parse(window.localStorage.getItem('ppr-days-table'))
+    this.days = LocalCacheManager.getRow('daysTable')
 
     // update filters on deep link
     let searchFiltersFromRoute = _.intersection(Object.keys(this.$store.state.route.query), Object.keys(this.filtersData))

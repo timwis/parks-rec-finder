@@ -1,10 +1,9 @@
 import axios from 'axios'
-import {
-  isValidZipcode
-} from '@/utilities/utils'
+import {isValidZipcode} from '@/utilities/utils'
 import resolveEntityType from '@/utilities/entity-type-resolver'
 import PPRFQuery from './PPRFQueryBuilder'
 import tables from './CartoDBTables'
+import LocalCacheManager from './LocalCacheManager'
 
 const LOG_QUERIES = process.env.NODE_ENV === 'development'
 const CACHE_QUERIES = process.env.CARTO_API.CACHE_QUERIES
@@ -22,7 +21,6 @@ class CartoAPI {
     this.LOG_QUERIES = LOG_QUERIES
     // set our api base url for all requests
     this.http = httpClient.create({baseURL: process.env.CARTO_API.BASE})
-    // this._facilities = selectFacilities()
     this.programFields = ['id', 'program_name', 'program_description', 'age_low', 'age_high', 'fee', {'gender->>0': 'gender'}]
   }
 
@@ -35,45 +33,28 @@ class CartoAPI {
    */
   runQuery (sqlQuery) {
     let sqlString = sqlQuery.build()
-
-    if (window.localStorage.getItem(sqlString)) {
+    let cachedQuery = LocalCacheManager.getRow(sqlString)
+    console.log(cachedQuery)
+    if (cachedQuery) {
       if (this.LOG_QUERIES) {
-        console.log(`Carto API:fromLocalStorageCache \n ${sqlString}`)
+        console.log(`Carto API::runQuery:fromLocalCache \n ${sqlString}`)
       }
       return new Promise((resolve) => {
-        resolve(JSON.parse(window.localStorage.getItem(sqlString)))
+        resolve(cachedQuery)
       })
     }
 
     if (this.LOG_QUERIES) {
-      console.log(`Carto API:runQuery \n ${sqlString}`)
+      console.log(`Carto API::runQuery:fromDB \n ${sqlString}`)
     }
 
     return this.http.get(`sql?q=${encodeURIComponent(sqlString)}`)
                     .then(results => {
                       if (CACHE_QUERIES) {
-                        this.cacheQuery(sqlString, results)
+                        LocalCacheManager.store(sqlString, results)
                       }
                       return results
                     })
-  }
-
-  /**
-   * cache reponse data in localStorage using the
-   * SQL statement as the key
-   * @param  {string} sqlQueryString SQL statement
-   * @param  {Object JSON} data       JSON respose data to store
-   * @return {void}
-   *
-   * @since 0.2.5
-   */
-  cacheQuery (sqlQueryString, data) {
-    let store = window.localStorage
-    if (store.getItem(sqlQueryString)) {
-      alert(sqlQueryString)
-    } else {
-      store.setItem(sqlQueryString, JSON.stringify(data))
-    }
   }
 
   /**

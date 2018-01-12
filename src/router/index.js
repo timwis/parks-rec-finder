@@ -4,6 +4,7 @@ import routes from './routes'
 import store from '@/store'
 import api from '@/sources/api'
 import { routerHistory, writeHistory } from 'vue-router-back-button'
+import LocalCacheManager from '@/sources/LocalCacheManager'
 Vue.use(Router)
 Vue.use(routerHistory)
 
@@ -16,10 +17,10 @@ router.beforeEach((to, from, next) => {
   store.dispatch('setMobileView', 'list')
   store.dispatch('closeModals')
 
-  let PPRdaysTable = JSON.parse(window.sessionStorage.getItem('ppr-days-table'))
-  if (!PPRdaysTable) {
+  if (!LocalCacheManager.getRow('daysTable')) {
     api.getDays().then(results => {
-      window.sessionStorage.setItem('ppr-days-table', JSON.stringify(results.data.rows))
+      LocalCacheManager.store('daysTable', results.data.rows)
+      // window.sessionStorage.setItem('ppr-days-table', JSON.stringify(results.data.rows))
     })
   }
   next()

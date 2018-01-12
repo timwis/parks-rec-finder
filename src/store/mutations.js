@@ -45,18 +45,18 @@ const mutations = {
   },
 
   // SEARCH
-  [types.UPDATE_SEARCH_INPUT] (state, {fields, filters}) {
-    let _filters = filters || state.search.filters
-    let updatedSearch = {
-      fields: {
-        freetext: fields ? fields.freetext : state.search.fields.freetext,
-        address: fields ? fields.address : state.search.fields.address,
-        zip: fields ? fields.zip : state.search.fields.zip
-      },
-      filters: _filters
-    }
-    state.search = Object.assign({}, state.search, updatedSearch)
-  },
+  // [types.UPDATE_SEARCH_INPUT] (state, {fields, filters}) {
+  //   let _filters = filters || state.search.filters
+  //   let updatedSearch = {
+  //     fields: {
+  //       freetext: fields ? fields.freetext : state.search.fields.freetext,
+  //       address: fields ? fields.address : state.search.fields.address,
+  //       zip: fields ? fields.zip : state.search.fields.zip
+  //     },
+  //     filters: _filters
+  //   }
+  //   state.search = Object.assign({}, state.search, updatedSearch)
+  // },
 
   [types.SUBMIT_SEARCH] (state, searchParams) {
     state.loading = true
