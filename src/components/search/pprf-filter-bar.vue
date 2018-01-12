@@ -256,8 +256,8 @@ export default {
           range: [20, 55]
         },
         {
-          name: 'Senior (55+)',
-          range: [55, 99]
+          name: 'Senior (56+)',
+          range: [56, 99]
         }
       ],
 

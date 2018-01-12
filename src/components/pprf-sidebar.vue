@@ -150,6 +150,7 @@ Entity Detail
     width: 100%;
     max-width: 100%;
     padding: 0;
+    flex: auto;
     height:calc(#{$max-app-height} - #{$header-height-mobile});
     //position: absolute;
     //top:$header-height-mobile;
