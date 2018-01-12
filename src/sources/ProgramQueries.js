@@ -48,7 +48,7 @@ export default class ProgramsQuery extends QueryInterface {
 
   static joinWithAggregateData (query) {
     // .join(tables.programSchedules, null, `${tables.programSchedules}.program->>0 = ${tables.programs}.id`)
-    return query.join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`)
+    return query.join(tables.facilities, null, `${tables.programs}.facility->>0 = ${tables.facilities}.id`).field('facility_is_published')
   }
 
   static isPublished (query) {

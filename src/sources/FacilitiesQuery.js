@@ -25,7 +25,7 @@ export default class FacilitiesQuery extends QueryInterface {
   }
 
   getAllRows () {
-    return this.query
+    return this.query.field('location_contact_name')
   }
 
   getRowsByID (id) {

@@ -118,9 +118,11 @@ export default {
     api.getFacilityByID(to.params.facility_id)
         .then(results => {
           next(vm => {
-            /* eslint-disable no-eval */
-            var parsedJSON = eval('(' + results[0].data.rows[0].location_contact_name + ')')
-            results[0].data.rows[0].location_contact_name = parsedJSON
+            if (results[0].data.rows[0].location_contact_name) {
+              /* eslint-disable no-eval */
+              var parsedJSON = eval('(' + results[0].data.rows[0].location_contact_name + ')')
+              results[0].data.rows[0].location_contact_name = parsedJSON
+            }
 
             vm.$store.dispatch('updateEntities', { facility: results[0].data.rows, program: results[1].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'facility' })

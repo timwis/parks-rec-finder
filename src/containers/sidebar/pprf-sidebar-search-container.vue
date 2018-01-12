@@ -50,11 +50,10 @@
                     name="Locations"
                     :count="facilities.length"
                   >
-                    <div
-                      v-for="facility in facilities"
-                      :key="getUUID('facilityCard')"
-                    >
                       <pprf-location-card
+                        v-for="facility in facilities"
+                        :key="getUUID('facilityCard')"
+
                         :name="facility.facility_name"
                         :address="facility.address"
                         :facilityID="facility.id"
@@ -62,7 +61,6 @@
                         :selected="activeCardID === facility.id"
                         :withinZipcode="facility.within_zip_code"
                       />
-                    </div>
                   </pprf-tab>
 
               </pprf-tabs>

@@ -44,7 +44,7 @@
               </p>
             </address>
 
-            <router-link :to="'/location/'+program.location_id">View this location</router-link>
+            <router-link v-if="program.facility_is_published" :to="'/location/'+program.location_id">View this location</router-link>
           </pprf-detail-content-section>
 
 

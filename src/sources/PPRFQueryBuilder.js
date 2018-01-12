@@ -339,6 +339,7 @@ export default class PPRFQuery {
                       program_name_full,
                       program_id,
                       program_description,
+                      facility_is_published,
                       age_low,
                       age_high,
                       fee,
