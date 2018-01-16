@@ -116,7 +116,7 @@ export default {
       }
     },
     /**
-     * Sets local search field state
+     * Sets local search field state, and forces freetext query param to be present.
      * @param  {string} freetextVal user input
      * @return {void}
      *
@@ -124,7 +124,11 @@ export default {
      * @since 0.1.0
      */
     onFreetextInput (freetextVal) {
-      this.search.fields.freetext = freetextVal
+      if (this.search.fields.freetext === '') {
+        this.search.fields.freetext = freetextVal
+      } else {
+        this.search.fields.freetext = ' '
+      }
     },
     /**
      * Validates the address field input as either
