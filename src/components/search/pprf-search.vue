@@ -124,10 +124,10 @@ export default {
      * @since 0.1.0
      */
     onFreetextInput (freetextVal) {
-      if (this.search.fields.freetext === '') {
+      if (freetextVal !== '') {
         this.search.fields.freetext = freetextVal
       } else {
-        this.search.fields.freetext = ' '
+        this.search.fields.freetext = ''
       }
     },
     /**
