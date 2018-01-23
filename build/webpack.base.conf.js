@@ -46,7 +46,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('__tests__')]
+        include: [
+          resolve('src'),
+          resolve('__tests__'),
+          resolve('node_modules/vue-router-back-button')
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
