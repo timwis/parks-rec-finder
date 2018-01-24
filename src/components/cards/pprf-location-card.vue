@@ -11,14 +11,18 @@
       />
 
     <div class="card__info">
+      <div class="card__info-name">
+        <h3 class="text-nopad">
+          <router-link
+            v-if="name"
+            :to="'/location/'+facilityID"
+            class="text-nopad"
+          >
+          {{name}}
+          </router-link>
+        </h3>
+      </div>
 
-        <router-link
-          v-if="name"
-          :to="'/location/'+facilityID"
-          class="card__info-name text-nopad"
-        >
-          <h3 class="text-nopad"> {{name}}</h3>
-        </router-link>
 
 
         <address v-if="address" class="card__info-meta">
