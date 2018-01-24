@@ -191,16 +191,6 @@ export default {
     }
   }
 
-  .pprf-sidebar--category--locations + .pprf-map__container{
-    .svg-icon-path{
-      stroke: #A5097E;
-      fill: #A5097E;
-    }
-    circle{
-      stroke: #A5097E;
-    }
-  }
-
 @include breakpoint (medium down) {
   .loading-overlay{
     position:fixed;

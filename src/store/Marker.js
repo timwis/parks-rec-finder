@@ -22,7 +22,7 @@ class PPRFMarker {
       case 'facility':
         this.type = 'facility'
         this.id = entity.id
-        this.color = '#9400c6'
+        this.color = '#A5097E'
         this.name = entity.long_name
         this.address = entity.address
         this.assetID = entity.pprassets_object_id
