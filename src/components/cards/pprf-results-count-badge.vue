@@ -59,7 +59,7 @@ export default {
         @include rem(font-size, 1.4);
         justify-content: space-around;
         background: color(ghost-gray);
-        border-bottom: 2px solid color(flyers-orange);
+        /*border-bottom: 2px solid #0071D2;*/
         color: $black;
         border-radius: $border-radius;
         padding: 0 10px ;

@@ -173,7 +173,7 @@ export default {
     //bottom: 60px;
     //right: 20px;
     z-index: 1;
-    border: 3px solid color(ben-franklin-blue) !important;
+    border: 3px solid #444 !important;
     color: color(ben-franklin-blue) !important;
     border-radius: 0px !important;
     * { border-radius: 0px !important; }

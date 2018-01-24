@@ -96,7 +96,7 @@ export default {
 
   .card--location__icon{
     margin: 0px 5% 0 5%;
-    color: color(pride-purple);
+    color: #A5097E;
   }
 
 </style>
