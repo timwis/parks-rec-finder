@@ -125,7 +125,7 @@ address{
       font: $font-montserrat;
       font-weight: 700;
       @include rem(font-size, 1.8);
-      @include rem(line-height , 2)
+      @include rem(line-height, 2)
       color: color(dark-ben-franklin);
     }
         text-decoration: none;
@@ -147,9 +147,7 @@ address{
     color: color(medium-gray);
     p{margin:0; padding:0;}
   }
-  .card--nested-parent{
-    .card__info-meta__label{display: none;}
-  }
+
   .card.card--nested,
   .card.card--nested.card--location{
     display: flex;
