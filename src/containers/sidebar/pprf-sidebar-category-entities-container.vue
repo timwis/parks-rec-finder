@@ -38,6 +38,8 @@
                 :fee="program.fee"
                 :feeFreq="program.fee_frequency"
                 :programID="program.id"
+                :location="{ address: program.facility_address, name: program.facility_name, id: program.facility_id }"
+
               />
             </li>
 
