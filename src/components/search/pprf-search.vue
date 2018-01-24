@@ -6,14 +6,14 @@
 
       <phila-text-field
         name="freetext"
-        placeholder="SEARCH BY ACTIVITY TYPE OR LOCATION NAME"
+        placeholder="Search by activity or location name"
         ref="freetextField"
         @input="onFreetextInput"
       ></phila-text-field>
 
       <phila-text-field
         name="address"
-        placeholder="ADDRESS OR ZIP CODE"
+        placeholder="Address or zip code"
         icon="map-marker-alt"
         @input="onAddressInput"
         ref="addressField"
@@ -324,12 +324,10 @@ export default {
 
   #pprf-search__submit{
     min-width: 40px;
-    background: color(ben-franklin-blue);
-    &[disabled] {
-      background: color(sidewalk);
-    }
+    background: color(electric-blue);
     .fa-search{
-      color:$white;
+      color: #444;
+      font-weight: 600;
     }
   }
 

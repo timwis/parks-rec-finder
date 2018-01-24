@@ -196,12 +196,19 @@ export default {
   }
   .pprf-sidebar--category--locations{
     .pprf-sidebar__header--category{
-      background: color(pride-purple);
+      background: #A5097e;
       .pprf-sidebar__title{
         color:$white;
       }
     }
-
+  }
+    .pprf-sidebar--category--activities{
+      .pprf-sidebar__header--category{
+        background: #2176d2;
+        .pprf-sidebar__title{
+          color:$white;
+        }
+      }
   }
 
 
