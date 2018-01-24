@@ -108,6 +108,7 @@ address{
   display: block;
   margin:5px 0 10px 0;
   position: relative;
+  box-shadow: 0;
   // background: color(ghost-gray);
   // border-radius: 3px;
   // padding: 10px;
@@ -144,7 +145,7 @@ address{
     // left:0;
 
     font-family: $font-open-sans;
-    color: color(medium-gray);
+    color: color(dark-gray);
     p{margin:0; padding:0;}
   }
 
