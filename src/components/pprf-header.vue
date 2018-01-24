@@ -31,10 +31,10 @@
             <font-awesome-icon icon="bars" />
         </button>
 
-        <router-link class="app-title" to="/">
+        <a href="#/">
             <h2 class="text-nopad">Finder</h2>
             <h3 class="text-nopad">Search for activities, locations, or zip codes.</h3>
-        </router-link>
+        </a>
 
         <button :disabled="mobile.navOpen" @click.prevent="toggleMobileSearch" class="pprf-header--mobile__search-icon">
             <font-awesome-icon :icon="mobile.searchOpen ? 'times' : 'search' " />
@@ -122,8 +122,8 @@ header.pprf-header{
   align-items: center;
   display:flex;
   justify-content: space-between;
-
   color: $white;
+
   hr{
     height: 70px;
     margin: 0 5%;
@@ -131,7 +131,7 @@ header.pprf-header{
 
   h3.text-nopad {
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: -15px 0 0 0;
     padding:0;
   }
@@ -151,7 +151,7 @@ header.pprf-header{
 }
 
 .pprf-header__search{
-  width: 45%;
+  width: 100%;
 }
 
 @include breakpoint(medium down) {
