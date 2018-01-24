@@ -37,6 +37,7 @@
                         :ages="{high: program.age_high, low: program.age_low}"
                         :gender="program.gender"
                         :fee="program.fee"
+                        :feeFreq="program.fee_frequency"
                         :programID="program.id"
                         :selected="activeCardID === program.id"
                         :location="{ address: program.facility_address, name: program.facility_name, id: program.facility_id }"
