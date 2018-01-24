@@ -30,7 +30,7 @@
               {{facility.address.city}},
               {{facility.address.zip}}
             </address>
-            <a class="program-detail__directions" :href="gmapsLink(facility.latitude, facility.longitude)" target="_blank">Get directions <font-awesome-icon icon="external-link-alt" size="s" /></a>
+            <a class="program-detail__directions" :href="gmapsLink" target="_blank">Get directions <font-awesome-icon icon="external-link-alt" size="s" /></a>
           </pprf-detail-content-section>
 
 
@@ -144,11 +144,11 @@ export default {
     programsListTitle () {
       let activityWord = this.facilityPrograms.length === 1 ? 'activity' : 'activities'
       return `${this.facilityPrograms.length} ${activityWord} offered here`
-    }
-  },
-  methods: {
-    gmapsLink (lat, lng) {
-      return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+    },
+    gmapsLink () {
+      const { street, city, zip } = this.facility.address
+      const fullAddress = [ street, city, zip ].join(', ')
+      return `https://www.google.com/maps/search/?api=1&query=${fullAddress}`
     }
   }
 }
