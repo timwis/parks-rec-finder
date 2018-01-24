@@ -106,6 +106,11 @@ export default {
       display: flex;
       margin-bottom:10px;
       small {margin-right: 5%;}
+      p{
+        @include rem(font-size, 1.218rem);
+        @include rem(line-height, 1.5);
+      }
+
     }
     .fee_frequency{
       font-size: 85%;
