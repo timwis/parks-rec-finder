@@ -131,7 +131,7 @@ header.pprf-header{
 
   h3.text-nopad {
     color: white;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     margin: -15px 0 0 0;
     padding:0;
   }
@@ -229,7 +229,7 @@ header.pprf-header{
 
     .pprf-header--mobile__search-icon{
         display:block;
-        color: blue;
+        color: white;
         position: absolute;
         right: 10px;
         top: 10px;
@@ -238,6 +238,8 @@ header.pprf-header{
             color: color(sidewalk);
         }*/
     }
+
+
 
     .pprf-header__search{
       height:0;
