@@ -108,6 +108,7 @@ address{
   display: block;
   margin:5px 0 10px 0;
   position: relative;
+  box-shadow: none;
   // background: color(ghost-gray);
   // border-radius: 3px;
   // padding: 10px;
@@ -121,18 +122,31 @@ address{
 }
 
  .card__info-name {
+   margin-bottom: 1rem;
     h3{
       font: $font-montserrat;
       font-weight: 700;
       @include rem(font-size, 1.8);
-      @include rem(line-height , 2)
+      @include rem(line-height, 2)
       color: color(dark-ben-franklin);
+      a:link, a:visited{
+        color: color(dark-ben-franklin);
+        font-weight:bold;
+      }
+      a:hover, a:active{
+        color: color(dark-gray);
+      }
     }
         text-decoration: none;
     &:focus,
     &:visited,
     &:active{color: color(dark-ben-fraklin);}
 
+  }
+  .card--location.card--nested{
+    .card__info-name {
+      margin-bottom: 0;
+    }
   }
 
   .card__info-meta {
@@ -144,17 +158,15 @@ address{
     // left:0;
 
     font-family: $font-open-sans;
-    color: color(medium-gray);
+    color: color(dark-gray);
     p{margin:0; padding:0;}
   }
-  .card--nested-parent{
-    .card__info-meta__label{display: none;}
-  }
+
   .card.card--nested,
   .card.card--nested.card--location{
     display: flex;
     border-bottom:none !important;
-    padding:0;
+    padding:0 0 1rem 0;
     margin-left:15px;
     box-shadow: none;
     .card__icon{height: 15px; }

@@ -4,21 +4,23 @@
     :id="'program--'+programID"
   >
     <div class="card__info">
+      <div class="card__info-name">
+        <h3 class="text-nopad">
+          <router-link class="text-nopad" v-if="name"  :to="'/program/'+programID">{{name}}</router-link>
+        </h3>
+      </div>
 
-        <router-link class="card__info-name text-nopad" v-if="name"  :to="'/program/'+programID">
-          <h3 class="text-nopad">{{name}}</h3>
-        </router-link>
 
       <div class="card__info-meta">
-        <small><p v-if="ages">
-            <span class="card__info-meta__label" >Ages:</span>  {{ages.low}}-{{ages.high}}</p>
-        </small>
-        <small><p v-if="gender">
-          <span class="card__info-meta__label">Gender:</span> {{gender}}</p>
-        </small>
-        <small><p v-if="fee">
-          <span class="card__info-meta__label">Cost:</span> {{(fee != "" && fee != "0.00" ) ? '$'+fee : 'Free' }} <span v-if="(fee != '' && fee != '0.00' ) && feeFreq" class="fee_frequency text-lower">{{feeFreq}}</span></p>
-        </small>
+        <p v-if="ages">
+          <span class="card__info-meta__label">Ages:</span> <span>{{ages.low}}-{{ages.high}}</span>
+        </p>
+        <p v-if="gender">
+          <span class="card__info-meta__label">Gender:</span> {{gender}}
+        </p>
+        <p v-if="fee">
+          <span class="card__info-meta__label">Cost:</span> {{(fee != "" && fee != "0.00" ) ? '$'+fee : 'Free' }} <span v-if="(fee != '' && fee != '0.00' ) && feeFreq" class="fee_frequency text-lower">{{feeFreq}}</span>
+        </p>
       </div>
     </div>
 
@@ -105,7 +107,12 @@ export default {
     .card__info-meta{
       display: flex;
       margin-bottom:10px;
-      small {margin-right: 5%;}
+      p{
+        margin-right: 8%;
+        @include rem(font-size, 1.218rem);
+        @include rem(line-height, 1.5);
+      }
+
     }
     .fee_frequency{
       font-size: 85%;
@@ -113,6 +120,12 @@ export default {
 
     .card--location{flex:1;}
 
+  }
+
+  @media screen and (max-width: 39.9375em) {
+    .card.card--location.card--nested{
+      display: none !important;
+    }
   }
 
 </style>
