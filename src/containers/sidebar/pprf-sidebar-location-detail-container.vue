@@ -156,7 +156,7 @@ export default {
 
 <style lang="scss" scoped>
 .entity-detail__header--location{
-  background: color(pride-purple);
+  background: #A5097E;
 }
 .entity-detail__header-icon{
   color: $white;
