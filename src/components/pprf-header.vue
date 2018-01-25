@@ -116,9 +116,9 @@ header.pprf-header{
 }
 
 .pprf-header__branding{
-  width: 55%;
-  max-width: 600px;
-  padding: 10px 5% 10px 0;
+  width: 40%;
+  min-width: 530px;
+  padding: 10px 2rem 10px 0;
   align-items: center;
   display:flex;
   justify-content: space-between;
