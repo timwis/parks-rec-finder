@@ -51,6 +51,19 @@
           </pprf-detail-content-section>
 
           <pprf-detail-content-section
+            v-if="facilitySchedules.length"
+            heading="Regular hours"
+            icon="clock"
+          >
+            <div v-for="schedule in facilitySchedules">
+              <table class="program__schedule">
+                <tr v-for="day in schedule.days"><td>{{day.days_name}}</td> <td>{{schedule.time_from}} - {{schedule.time_to}}</td></tr>
+              </table>
+            </div>
+
+          </pprf-detail-content-section>
+
+          <pprf-detail-content-section
             v-if="facility.facility_description"
             class="program__content-section program-detail__about"
             heading="About this location"
@@ -95,12 +108,14 @@
 
 <script>
 import api from '@/sources/api'
-import {mapState} from 'vuex'
+import _ from 'underscore'
 
+import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import pprfDetailContentSection from '@/components/pprf-detail-content-section'
 import pprfCollapsableContent from '@/components/pprf-collapsable-content'
+import LocalCacheManager from '@/sources/LocalCacheManager'
 
 export default {
   name: 'PPRF-Sidebar-Location-Detail-Container',
@@ -116,20 +131,34 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     api.getFacilityByID(to.params.facility_id)
-        .then(results => {
-          next(vm => {
-            if (results[0].data.rows[0].location_contact_name) {
-              /* eslint-disable no-eval */
-              var parsedJSON = eval('(' + results[0].data.rows[0].location_contact_name + ')')
-              results[0].data.rows[0].location_contact_name = parsedJSON
-            }
+      .then(results => {
+        next(vm => {
+          let facilitySchedules = results[2].data.rows
 
-            vm.$store.dispatch('updateEntities', { facility: results[0].data.rows, program: results[1].data.rows })
-            vm.$store.dispatch('setMapMarkers', { entityType: 'facility' })
-          })
+          // map days to each schedule
+          for (var i = 0; i < facilitySchedules.length; i++) {
+            // find the days records from our cached days table in local storage
+            facilitySchedules[i].days = facilitySchedules[i].days.map(day => _.findWhere(LocalCacheManager.getRow('daysTable'), {id: day}))
+          }
+          vm.facilitySchedules = facilitySchedules
+
+          if (results[0].data.rows[0].location_contact_name) {
+            /* eslint-disable no-eval */
+            var parsedJSON = eval('(' + results[0].data.rows[0].location_contact_name + ')')
+            results[0].data.rows[0].location_contact_name = parsedJSON
+          }
+
+          vm.$store.dispatch('updateEntities', { facility: results[0].data.rows, program: results[1].data.rows })
+          vm.$store.dispatch('setMapMarkers', { entityType: 'facility' })
         })
+      })
   },
 
+  data () {
+    return {
+      facilitySchedules: []
+    }
+  },
   computed: {
     ...mapState({
       facility: state => state.entities.facility[0],
@@ -212,6 +241,18 @@ export default {
   display: flex;
   justify-content: center;
   small {margin-right: 5%;}
+}
+
+.program__schedule{
+  font-family: $font-open-sans;
+  @include rem(font-size, 1.4);
+  margin-bottom: 20px;
+  tr{
+    background: color(ghost-gray);
+  }
+  td{
+    padding: 3px 10px;
+  }
 }
 
 
