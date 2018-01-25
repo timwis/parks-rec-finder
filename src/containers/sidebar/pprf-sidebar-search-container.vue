@@ -29,6 +29,7 @@
                     :count="programs.length"
                     :selected="true"
                    >
+                    <div v-if="programs.length > 0">
                       <pprf-program-card
                         v-if="program.id"
                         v-for="program in programs"
@@ -44,6 +45,10 @@
                         :withinZipcode="program.within_zip_code"
                         :distance="program.distance"
                       />
+                    </div>
+                    <div v-else-if="facilities.length > 0">
+                      No activities were found. Try the <b>Locations</b> tab above.
+                    </div>
 
                   </pprf-tab>
 
@@ -51,6 +56,7 @@
                     name="Locations"
                     :count="facilities.length"
                   >
+                    <div v-if="facilities.length > 0">
                       <pprf-location-card
                         v-for="facility in facilities"
                         :key="getUUID('facilityCard')"
@@ -62,6 +68,10 @@
                         :selected="activeCardID === facility.id"
                         :withinZipcode="facility.within_zip_code"
                       />
+                    </div>
+                    <div v-else-if="programs.length > 0">
+                      No locations were found. Try the <b>Activities</b> tab above.
+                    </div>
                   </pprf-tab>
 
               </pprf-tabs>
