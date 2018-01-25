@@ -191,7 +191,6 @@ export default {
     }
   }
 
-
 @include breakpoint (medium down) {
   .loading-overlay{
     position:fixed;

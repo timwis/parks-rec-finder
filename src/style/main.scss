@@ -51,10 +51,18 @@ body {
      // overflow: auto;
 }
 
-a{
-  &:focus,
-  &:visited,
-  &:active{color: color(dark-ben-franklin);}
+a:link, a:visited{
+  color: color(dark-ben-franklin);
+  font-weight:bold;
+  text-decoration: none;
+}
+a:hover, a:active{
+  color: color(dark-gray);
+  text-decoration: none;
+}
+
+a:link.page-title{
+  color: white;
 }
 
 address{
