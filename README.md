@@ -1,6 +1,6 @@
 # ppr-finder
 
-> Philadelphia Parks & Recreation Finder Application 
+> Philadelphia Parks & Recreation Finder Application
 
 ## Build Setup
 

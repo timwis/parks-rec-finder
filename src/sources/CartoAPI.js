@@ -112,7 +112,7 @@ class CartoAPI {
             .orderByMilesFromZipcode()
     }
 
-    if (freetextValue !== null && freetextValue !== '') {
+    if (freetextValue) {
       // search via user input text value
       this.programs.searchFieldsFor(['program_name', 'program_description'], freetextValue)
     }
@@ -189,7 +189,7 @@ class CartoAPI {
             .orderByMilesFromZipcode()
     }
 
-    if (freetextValue !== null && freetextValue !== '') {
+    if (freetextValue) {
       // search facilites via user input text value
       this.facilities.searchFieldsFor(['facility_description', 'facility_name', 'long_name'], freetextValue)
     }

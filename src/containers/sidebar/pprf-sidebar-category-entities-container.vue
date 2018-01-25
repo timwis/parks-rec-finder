@@ -38,6 +38,8 @@
                 :fee="program.fee"
                 :feeFreq="program.fee_frequency"
                 :programID="program.id"
+                :location="{ address: program.facility_address, name: program.facility_name, id: program.facility_id }"
+
               />
             </li>
 
@@ -196,12 +198,19 @@ export default {
   }
   .pprf-sidebar--category--locations{
     .pprf-sidebar__header--category{
-      background: color(pride-purple);
+      background: #A5097e;
       .pprf-sidebar__title{
         color:$white;
       }
     }
-
+  }
+    .pprf-sidebar--category--activities{
+      .pprf-sidebar__header--category{
+        background: #2176d2;
+        .pprf-sidebar__title{
+          color:$white;
+        }
+      }
   }
 
 

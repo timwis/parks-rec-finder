@@ -32,6 +32,9 @@ import L from 'leaflet'
 import Vue2Leaflet from 'vue2-leaflet'
 import {mapState} from 'vuex'
 import {EventBus} from '@/event-bus'
+import EsriTileLayer from '@/components/map/EsriTileLayer'
+import CircleMarker from '@/components/map/CircleMarker'
+import SVGMarker from '@/components/map/SVGMarker'
 
 /**
  * Leaflet.js MAP component
@@ -48,10 +51,10 @@ export default {
 
   components: {
     'v-map': Vue2Leaflet.Map,
-    'v-tilelayer': Vue2Leaflet.EsriTileLayer,
+    'v-tilelayer': EsriTileLayer,
     'v-popup': Vue2Leaflet.Popup,
-    'v-svg-marker': Vue2Leaflet.SVGMarker,
-    'v-circle-marker': Vue2Leaflet.CircleMarker
+    'v-svg-marker': SVGMarker,
+    'v-circle-marker': CircleMarker
   },
 
   mounted () {
@@ -170,7 +173,7 @@ export default {
     //bottom: 60px;
     //right: 20px;
     z-index: 1;
-    border: 3px solid color(ben-franklin-blue) !important;
+    border: 3px solid #444 !important;
     color: color(ben-franklin-blue) !important;
     border-radius: 0px !important;
     * { border-radius: 0px !important; }
@@ -187,7 +190,6 @@ export default {
       }
     }
   }
-
 
 @include breakpoint (medium down) {
   .loading-overlay{
