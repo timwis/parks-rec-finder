@@ -155,51 +155,51 @@ header.pprf-header{
 }
 
 @include breakpoint(medium down) {
-    .pprf-header__nav-mobile{
-        #ppr-logo{
-            display: block;
-            margin: 0 auto;
-        }
-        display: block;
-        height: 100vh;
-        position: fixed;
-        top: $header-height-mobile;
-        left:0;
-        z-index: 1000000;
-        width: 90vw;
-        background: lighten(color(dark-ben-franklin), 5%);
-        &:after{
-            content: '';
-            position: absolute;
-            top: 0;
-            right:-10vw;
-            height: 100vh;
-            width: 10vw;
-            background: rgba(0,0,0,0.5);
-        }
-        ul {
-            list-style: none;
-            color: $white;
-            margin: 0;
-            padding: 0;
-            border-top: 1px solid rgba($white, 0.5);
-            li {
-                border-bottom: 1px solid rgba($white, 0.5);
-                padding: 0 0 0 30px;
-                a{
-                    color:$white;
-                    text-decoration: none;
-                    font-weight: 700;
-                }
-            }
-        }
-        .app-version{
-            position: absolute;
-            bottom: 58px;
-            left: 20px;
-            color: $white;
-        }
-    }
+  .pprf-header__nav-mobile{
+      #ppr-logo{
+          display: block;
+          margin: 0 auto;
+      }
+      display: block;
+      height: 100vh;
+      position: fixed;
+      top: $header-height-mobile;
+      left:0;
+      z-index: 1000000;
+      width: 90vw;
+      background: lighten(color(dark-ben-franklin), 5%);
+      &:after{
+          content: '';
+          position: absolute;
+          top: 0;
+          right:-10vw;
+          height: 100vh;
+          width: 10vw;
+          background: rgba(0,0,0,0.5);
+      }
+      ul {
+          list-style: none;
+          color: $white;
+          margin: 0;
+          padding: 0;
+          border-top: 1px solid rgba($white, 0.5);
+          li {
+              border-bottom: 1px solid rgba($white, 0.5);
+              padding: 0 0 0 30px;
+              a{
+                  color:$white;
+                  text-decoration: none;
+                  font-weight: 700;
+              }
+          }
+      }
+    .app-version{
+        position: absolute;
+        bottom: 58px;
+        left: 20px;
+        color: $white;
+      }
+  }
 
   header.pprf-header{
     height: 60px;
@@ -210,7 +210,7 @@ header.pprf-header{
 
     .pprf-header__branding {
         width: 100%;
-        max-width: 100%;
+        min-width: 100%;
         align-items: center;
       justify-content: flex-start;
     }
