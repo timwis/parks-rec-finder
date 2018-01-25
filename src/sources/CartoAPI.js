@@ -149,9 +149,20 @@ class CartoAPI {
   getProgramSchedules (programID) {
     return this.runQuery(new PPRFQuery.Builder('programSchedules', {id: programID}))
   }
+
+  /**
+   * given a facility_id get all associated
+   * schedule days for that facility
+   * @param  {string} facilityID facility.facility_id
+   * @return {object}           Promise
+   */
+
+  getFacilitySchedules (facilityID) {
+    return this.runQuery(new PPRFQuery.Builder('facilitySchedules', {id: facilityID}))
+  }
   /**
    * Given a `facility_id` get all programs associated
-   * with that faciity
+   * with that facility
    * @param  {string} facilityID facility.facility_id
    * @return {object}            Promise
    *
