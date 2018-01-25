@@ -113,16 +113,18 @@ class API {
   /**
    * Given a facility id get a facility entity
    * and all the programs at that facility
-   * @param  {string} facilityID faciity entity id
+   * @param  {string} facilityID facility entity id
    *
    * @return {object}            Promise
    *
    * @since 0.1.0
    */
   getFacilityByID (facilityID) {
+    console.log(facilityID)
     let facilityQuery = cartoAPI.getFacilityByID(facilityID)
+    let facilitySchedulesQuery = cartoAPI.getFacilitySchedules(facilityID)
     let facilityProgramsQuery = cartoAPI.getProgramsByFacilityID(facilityID)
-    return Promise.all([facilityQuery, facilityProgramsQuery])
+    return Promise.all([facilityQuery, facilityProgramsQuery, facilitySchedulesQuery])
   }
 }
 

@@ -34,6 +34,7 @@ const DATE_FORMAT = 'Month DD, YYYY'
  */
 export default class PPRFQuery {
   constructor (build) {
+    console.log(build)
     this.queryString = build.query.toString()
   }
 
@@ -58,6 +59,19 @@ export default class PPRFQuery {
           case 'facilityCategories':
           case 'programCategories':
             this.query = new TaxonomyQuery(this)
+            break
+          case 'facilitySchedules':
+            // get current facility schedules
+            this.query = this.postgreSQL
+                             .select()
+                             .field('days')
+                             .field(`to_char(time_from, '${TIME_FORMAT}')`, 'time_from')
+                             .field(`to_char(time_to, '${TIME_FORMAT}')`, 'time_to')
+                             .field(`to_char(date_from, '${DATE_FORMAT}')`, 'start_date')
+                             .field(`to_char(date_to, '${DATE_FORMAT}')`, 'end_date')
+                             .from(this.entity.DBTable)
+                             .where(`facility->>0 = '${this.options.id}'`)
+                             .where('date_to >= now()')
             break
           case 'programSchedules':
             // get current program schedules
