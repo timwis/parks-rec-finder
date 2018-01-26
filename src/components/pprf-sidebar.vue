@@ -70,7 +70,7 @@ export default {
     padding:0;
     .pprf-back-btn{margin-left: 15px;}
     .pprf-sidebar__main{
-      padding: 20px;
+      padding: 0 2rem 2rem 3rem;
     }
   }
     .pprf-sidebar__inner{
