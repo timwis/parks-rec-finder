@@ -2,7 +2,7 @@
   <header class="pprf-header">
     <nav v-if="mobile.navOpen" class="pprf-header__nav-mobile">
         <h1>
-            <a href="https://beta.phila.gov/departments/parks-recreation/">
+            <a href="https://beta.phila.gov/departments/parks-recreation/" class="logo">
               <span class="screen-reader-text">Philadelphia Parks &amp; Recreation - Department Website</span>
               <pprf-logo-svg />
             </a>
@@ -20,7 +20,7 @@
 
     <div class="pprf-header__branding">
       <h1>
-        <a href="https://beta.phila.gov/departments/parks-recreation/">
+        <a href="https://beta.phila.gov/departments/parks-recreation/" class="logo">
           <span class="screen-reader-text">Philadelphia Parks &amp; Recreation - Department Website</span>
           <pprf-logo-svg />
         </a>
@@ -105,6 +105,16 @@ header.pprf-header{
   padding:10px;
 
   background: color(dark-ben-franklin);
+  .logo{
+
+    &:hover{
+      #ppr-logo{
+        fill-opacity: .7;
+        transition: transform 0.5s ease, fill-opacity 0.5s ease, -webkit-transform 0.5s ease;
+
+      }
+    }
+  }
 }
 .app-title h2{
     color:$white;
