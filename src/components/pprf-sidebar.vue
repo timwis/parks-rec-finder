@@ -70,7 +70,7 @@ export default {
     padding:0;
     .pprf-back-btn{margin-left: 15px;}
     .pprf-sidebar__main{
-      padding: 1rem 2rem 2rem 3rem;
+      padding: 0 2rem 2rem 3rem;
     }
   }
     .pprf-sidebar__inner{
@@ -105,6 +105,10 @@ export default {
 
 .pprf-sidebar--mobile-view-btn{
   display: none;
+}
+
+.program--content.scrollable{
+  padding-top:1rem;
 }
 
 /* =======================================================================
