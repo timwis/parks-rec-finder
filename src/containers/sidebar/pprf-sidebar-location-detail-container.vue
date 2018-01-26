@@ -44,10 +44,11 @@
 
           <pprf-detail-content-section
             heading="Site contact"
-            v-if="facility.location_contact_name.first"
+            v-if="facility.location_contact_name"
             icon="user"
           >
-            <p>{{facility.location_contact_name.first}} {{facility.location_contact_name.middle}} {{facility.location_contact_name.last}}</p>
+            <p>{{facility.location_contact_name.first}}
+              {{facility.location_contact_name.middle}} {{facility.location_contact_name.last}}</p>
           </pprf-detail-content-section>
 
           <pprf-detail-content-section
@@ -143,8 +144,7 @@ export default {
           vm.facilitySchedules = facilitySchedules
 
           if (results[0].data.rows[0].location_contact_name) {
-            /* eslint-disable no-eval */
-            var parsedJSON = eval('(' + results[0].data.rows[0].location_contact_name + ')')
+            var parsedJSON = JSON.parse(results[0].data.rows[0].location_contact_name.replace(/'/g, '"'))
             results[0].data.rows[0].location_contact_name = parsedJSON
           }
 
