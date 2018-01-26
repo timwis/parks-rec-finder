@@ -6,7 +6,7 @@
   >
       <h4 class="pprf-category-card__name text-nopad">{{name}}</h4>
       <pprf-results-count-badge
-        type="prgoram"
+        type="program"
         :count="count"
         icon="map-marker-alt"
       />
