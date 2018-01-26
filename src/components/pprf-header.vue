@@ -31,7 +31,7 @@
             <font-awesome-icon icon="bars" />
         </button>
 
-        <a href="/" class="page-title">
+        <a href="/parks-rec-finder/" class="page-title">
             <h2 class="text-nopad">Finder</h2>
             <h3 class="text-nopad">Search for activities, locations, or zip codes.</h3>
         </a>
