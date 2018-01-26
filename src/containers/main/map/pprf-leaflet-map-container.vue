@@ -6,14 +6,6 @@
       <v-tilelayer :url="streets" ></v-tilelayer>
 
       <v-svg-marker
-        v-if="userLocation"
-        :latLng="userLocation"
-        :options="userPinOptions"
-      >
-        <v-popup content="You are here" />
-      </v-svg-marker>
-
-      <v-svg-marker
           v-for="marker in markers"
           @l-click="onMarkerClick(marker)"
           :key="marker.id"
@@ -57,14 +49,6 @@ export default {
     'v-circle-marker': CircleMarker
   },
 
-  mounted () {
-    // get the users current location
-    // and drop a pin
-    navigator.geolocation.getCurrentPosition(position => {
-      this.userLocation = L.latLng(position.coords.latitude, position.coords.longitude)
-    })
-  },
-
   updated () {
     this.fitToMarkerBounds()
   },
@@ -80,7 +64,6 @@ export default {
       center: [39.9523893, -75.1636291],
       basemap: process.env.ESRI.tiledLayers.basemap,
       streets: process.env.ESRI.tiledLayers.streets,
-      userLocation: null,
       userPinOptions: {
         iconOptions: {
           fillOpacity: 1,
