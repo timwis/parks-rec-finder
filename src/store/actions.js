@@ -61,26 +61,34 @@ const actions = {
     let searchTerms = Object.assign({}, {fields: state.search.fields}, {filters: state.search.filters}, serachParams)
     commit(types.SUBMIT_SEARCH, searchTerms)
 
-    api.search(searchTerms)
-      .then(searchResults => {
-        console.log(searchResults)
-        commit(types.RECEIVE_SEARCH_SUCCESS)
-        let facility = searchResults[0].data.rows
-        let program = searchResults[1].data.rows
-        commit(types.UPDATE_PROGRAMS, program)
-        commit(types.UPDATE_FACILITIES, facility)
+    let request
 
-        let marker = {
-          facility: getters.getMarkersFor('facility'),
-          program: getters.getMarkersFor('program')
-        }
-        commit(types.UPDATE_MARKERS, marker)
-        commit(types.SET_MAP_MARKERS, {entityType: state.activeTab})
-      })
-      .catch((err) => {
-        console.log(err)
-        commit(types.RECEIVE_SEARCH_FAILURE, err)
-      })
+    if (searchTerms.fields && searchTerms.fields.address) {
+      request = api.geocodeAddress(searchTerms.fields.address)
+        .then((coords) => api.search(searchTerms, coords))
+    } else {
+      request = api.search(searchTerms)
+    }
+
+    request.then(searchResults => {
+      console.log(searchResults)
+      commit(types.RECEIVE_SEARCH_SUCCESS)
+      let facility = searchResults[0].data.rows
+      let program = searchResults[1].data.rows
+      commit(types.UPDATE_PROGRAMS, program)
+      commit(types.UPDATE_FACILITIES, facility)
+
+      let marker = {
+        facility: getters.getMarkersFor('facility'),
+        program: getters.getMarkersFor('program')
+      }
+      commit(types.UPDATE_MARKERS, marker)
+      commit(types.SET_MAP_MARKERS, {entityType: state.activeTab})
+    })
+    .catch((err) => {
+      console.log(err)
+      commit(types.RECEIVE_SEARCH_FAILURE, err)
+    })
   },
 
   // mobile
