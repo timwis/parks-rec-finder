@@ -34,7 +34,6 @@ const DATE_FORMAT = 'Month DD, YYYY'
  */
 export default class PPRFQuery {
   constructor (build) {
-    console.log(build)
     this.queryString = build.query.toString()
   }
 

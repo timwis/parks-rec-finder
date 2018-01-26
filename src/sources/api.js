@@ -120,7 +120,6 @@ class API {
    * @since 0.1.0
    */
   getFacilityByID (facilityID) {
-    console.log(facilityID)
     let facilityQuery = cartoAPI.getFacilityByID(facilityID)
     let facilitySchedulesQuery = cartoAPI.getFacilitySchedules(facilityID)
     let facilityProgramsQuery = cartoAPI.getProgramsByFacilityID(facilityID)
