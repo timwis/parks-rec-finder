@@ -31,7 +31,7 @@
             <font-awesome-icon icon="bars" />
         </button>
 
-        <a href="/parks-rec-finder/" class="page-title">
+        <a href="/parks-rec-finder/" class="link-dark-bg">
             <h2 class="text-nopad">Finder</h2>
             <h3 class="text-nopad">Search for activities, locations, or zip codes.</h3>
         </a>
@@ -122,7 +122,6 @@ header.pprf-header{
   align-items: center;
   display:flex;
   justify-content: space-between;
-  color: $white;
 
   hr{
     height: 70px;
@@ -130,7 +129,6 @@ header.pprf-header{
   }
 
   h3.text-nopad {
-    color: white;
     font-size: 1.1rem;
     margin: -15px 0 0 0;
     padding:0;
