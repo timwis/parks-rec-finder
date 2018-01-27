@@ -243,6 +243,17 @@ class CartoAPI {
 
     return this.runQuery(categoryEntityQuery.joinPPRAssets())
   }
+
+  getZipCentroid (zip) {
+    return this.runQuery(new PPRFQuery.Builder('zip', {zip}))
+      .then((response) => {
+        const rows = response.data.rows
+        if (rows.length < 1) {
+          throw new Error('No zipcode found')
+        }
+        return rows[0].centroid.coordinates
+      })
+  }
 }
 
 export let cartoAPI = new CartoAPI(axios)

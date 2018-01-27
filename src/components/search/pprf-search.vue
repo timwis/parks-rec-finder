@@ -142,7 +142,7 @@ export default {
      */
     onAddressInput (addressVal) {
       if (this._isValidZip(addressVal)) {
-        this.search.fields.zip = parseInt(addressVal)
+        this.search.fields.zip = addressVal.trim()
         this.search.fields.address = null
       } else {
         this.search.fields.address = addressVal !== '' ? addressVal : null

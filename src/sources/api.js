@@ -26,6 +26,10 @@ class API {
     return aisAPI.getCoordsForAddress(address)
   }
 
+  geocodeZip (zip) {
+    return cartoAPI.getZipCentroid(zip)
+  }
+
   /**
    * Given the reusltsSet and a flickr photo id property
    * return a new results set with the phtotos populated from the flickr api

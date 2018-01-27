@@ -8,6 +8,7 @@ import tables from './CartoDBTables'
 import ProgramsQuery from './ProgramQueries'
 import FacilitiesQuery from './FacilitiesQuery'
 import TaxonomyQuery from './TaxonomyQuery'
+import ZipQuery from './ZipQuery'
 
 const METERS_TO_MILES_RATIO = 0.000621371
 const TIME_FORMAT = 'HH:MI am'
@@ -79,6 +80,9 @@ export default class PPRFQuery {
           case 'days':
             // this is also cached in localStorage on app load
             this.query = this.postgreSQL.select().from(this.entity.DBTable)
+            break
+          case 'zip':
+            this.query = new ZipQuery(this)
             break
         }
 

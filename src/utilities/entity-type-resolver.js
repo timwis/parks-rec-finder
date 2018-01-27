@@ -81,6 +81,11 @@ export default function resolveEntityType (entityType) {
         DBTable: tables.assets
       }
       break
+    case 'zip':
+      entity = {
+        name: 'zip'
+      }
+      break
     default:
       throw new Error(`EntityType '${entityType}' is unable to be resolved, please check src/utilities/entity-type-resolver.js for a list of all entity types`)
   }

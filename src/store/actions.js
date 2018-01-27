@@ -66,6 +66,9 @@ const actions = {
     if (searchTerms.fields && searchTerms.fields.address) {
       request = api.geocodeAddress(searchTerms.fields.address)
         .then((coords) => api.search(searchTerms, coords))
+    } else if (searchTerms.fields && searchTerms.fields.zip) {
+      request = api.geocodeZip(searchTerms.fields.zip)
+        .then((coords) => api.search(searchTerms, coords))
     } else {
       request = api.search(searchTerms)
     }
