@@ -171,7 +171,6 @@ export default {
         top:80px;
         flex:1;
         margin-top:20px;
-        padding-right: 10px;
     }
 
 
