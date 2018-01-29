@@ -6,14 +6,6 @@
       <v-tilelayer :url="streets" ></v-tilelayer>
 
       <v-svg-marker
-        v-if="userLocation"
-        :latLng="userLocation"
-        :options="userPinOptions"
-      >
-        <v-popup content="You are here" />
-      </v-svg-marker>
-
-      <v-svg-marker
           v-for="marker in markers"
           @l-click="onMarkerClick(marker)"
           :key="marker.id"
@@ -57,14 +49,6 @@ export default {
     'v-circle-marker': CircleMarker
   },
 
-  mounted () {
-    // get the users current location
-    // and drop a pin
-    navigator.geolocation.getCurrentPosition(position => {
-      this.userLocation = L.latLng(position.coords.latitude, position.coords.longitude)
-    })
-  },
-
   updated () {
     this.fitToMarkerBounds()
   },
@@ -80,7 +64,6 @@ export default {
       center: [39.9523893, -75.1636291],
       basemap: process.env.ESRI.tiledLayers.basemap,
       streets: process.env.ESRI.tiledLayers.streets,
-      userLocation: null,
       userPinOptions: {
         iconOptions: {
           fillOpacity: 1,
@@ -164,8 +147,11 @@ export default {
     display: block;
     height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
   }
-  .pprf-map__container.pprf-map__container--mobile{
-    display: none;
+  @include breakpoint(medium up) {
+    //hide the mobile map
+    .pprf-map__container.pprf-map__container--mobile{
+      display: none;
+    }
   }
 
   .leaflet-control-zoom{
@@ -204,18 +190,24 @@ export default {
   .pprf-app--mobile-filters-open {
     .loading-overlay,
     .pprf-map__container.pprf-map__container--mobile{
-      display: none;
+      display: block;
     }
   }
 
  .pprf-sidebar .pprf-map__container.pprf-map__container--mobile{
     flex:.999;
-    height: auto;
-    position: relative;
-    top:auto;
+    height: calc(100vh - 60px - 148px - 40px);
+    position: absolute;
+    top:0;
+    overflow: auto;
+    opacity: 0;
+    z-index: -10;
   }
 .pprf-sidebar .pprf-map__container.pprf-map__container--open-mobile{
     display: block;
+    position: relative;
+    opacity:1;
+    z-index: 20;
   }
 }
 </style>

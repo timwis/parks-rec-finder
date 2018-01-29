@@ -108,6 +108,11 @@ export default {
 
 
   @include breakpoint(medium down) {
+
+    #pprf-app__container{
+      overflow: hidden;
+    }
+
     .pprf-app__main {
       flex-direction: column;
     }
@@ -129,8 +134,8 @@ export default {
     // map open
     .pprf-app--mobile-map-view{
       .pprf-map__container{
-        z-index: 1000;
-        top:212px;
+        z-index: 100;
+        top:201px;
         height:calc(#{$max-app-height} - #{$header-height-mobile} - 148px - 40px);
       }
       .pprf-sidebar__main {

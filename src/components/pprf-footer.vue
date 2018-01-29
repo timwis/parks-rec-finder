@@ -1,8 +1,8 @@
 <template>
   <footer class="pprf-footer">
-    <a class="text-upper" href="http://beta.phila.gov">City of Philadelphia</a> |
-    <a @click.prevent="toggleModal('about')" class="text-upper" href="">How to use</a> |
-    <a class="text-upper" href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))">
+    <a class="link-dark-bg text-upper" href="http://beta.phila.gov">City of Philadelphia</a> |
+    <a @click.prevent="toggleModal('about')" class="link-dark-bg text-upper" href="">How to use</a> |
+    <a class="link-dark-bg text-upper" href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))">
       Feedback
     </a>
     <small id="versionNumber" class="text-nopad">v{{version}}</small>
@@ -42,13 +42,13 @@ export default {
   position: fixed;
   bottom: 0;
   left:0;
-  z-index: 1000;
+  z-index: 50000;
   justify-content: space-around;
   align-items: baseline;
   background: color(dark-ben-franklin);
   color: $white;
+  font-size:1.3rem;
   a{
-    color: $white !important;
     text-decoration: none;
     font-weight: 700;
     padding: 0 10px;

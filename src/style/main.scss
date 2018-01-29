@@ -61,8 +61,11 @@ a:hover, a:active{
   text-decoration: none;
 }
 
-a:link.page-title, a:visited.page-title{
-  color: white;
+a:link.link-dark-bg, a:visited.link-dark-bg{
+  color: $white;
+}
+a:hover.link-dark-bg, a:active.link-dark-bg{
+  color:#25cef7;
 }
 
 address{
