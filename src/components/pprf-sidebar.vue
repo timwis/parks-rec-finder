@@ -59,9 +59,6 @@ export default {
       }
     }
   }
-  .pprf-map__container{
-    display: none;
-  }
   .pprf-sidebar{
     flex: 1;
     height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
