@@ -52,18 +52,29 @@ export default {
 
 <style lang="scss">
 
-  .pprf-sidebar{
-      flex: 1;
-      height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
-      max-width: $sidebar-width;
-      padding: 15px 20px 0 20px;
-      color: color(dark-ben-franklin);
-      border-right: 1px solid color(ghost-gray);
-      overflow: hidden;
-
-      .pprf-map__container{
-        display: none;
+  @include breakpoint(small only) {
+    .pprf-sidebar--category {
+      .pprf-map__container.pprf-map__container--mobile{
+        display: block;
       }
+    }
+  }
+  .pprf-map__container{
+    display: none;
+  }
+  .pprf-sidebar{
+    flex: 1;
+    height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
+    max-width: $sidebar-width;
+    padding: 15px 20px 0 20px;
+    color: color(dark-ben-franklin);
+    border-right: 1px solid color(ghost-gray);
+    overflow: hidden;
+  }
+  .pprf-sidebar__main{
+    display: block;
+    height: 100vh;
+    z-index: 90;
   }
 
   .pprf-sidebar--nopad {
@@ -169,13 +180,20 @@ Entity Detail
   }
 
   .pprf-sidebar.pprf-sidebar--nopad{
-    .pprf-sidebar__header{ padding: 0;}
+    .pprf-sidebar__header{
+      padding: 0;
+      z-index:50000;
+    }
   }
   .pprf-sidebar__header{
     padding: 15px;
   }
-
-
+  .pprf-sidebar__footer{
+    z-index: 10000;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
 
 }
 
