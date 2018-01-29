@@ -77,6 +77,11 @@ const mutations = {
     state.search.error = err
   },
 
+  [types.RECEIVE_SEARCH_LOCATION] (state, coords) {
+    console.log('Setting search location', coords)
+    state.searchLocation = coords
+  },
+
   // MOBILE
   [types.TOGGLE_MOBILE_SEARCH] (state, {open}) {
     /* eslint-disable  space-unary-ops */

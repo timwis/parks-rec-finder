@@ -61,14 +61,20 @@ const actions = {
     let searchTerms = Object.assign({}, {fields: state.search.fields}, {filters: state.search.filters}, serachParams)
     commit(types.SUBMIT_SEARCH, searchTerms)
 
-    let request
+    let request, coords
 
     if (searchTerms.fields && searchTerms.fields.address) {
       request = api.geocodeAddress(searchTerms.fields.address)
-        .then((coords) => api.search(searchTerms, coords))
+        .then((geocodeResult) => {
+          coords = geocodeResult
+          return api.search(searchTerms, coords)
+        })
     } else if (searchTerms.fields && searchTerms.fields.zip) {
       request = api.geocodeZip(searchTerms.fields.zip)
-        .then((coords) => api.search(searchTerms, coords))
+        .then((geocodeResult) => {
+          coords = geocodeResult
+          return api.search(searchTerms, coords)
+        })
     } else {
       request = api.search(searchTerms)
     }
@@ -80,6 +86,7 @@ const actions = {
       let program = searchResults[1].data.rows
       commit(types.UPDATE_PROGRAMS, program)
       commit(types.UPDATE_FACILITIES, facility)
+      commit(types.RECEIVE_SEARCH_LOCATION, coords)
 
       let marker = {
         facility: getters.getMarkersFor('facility'),
