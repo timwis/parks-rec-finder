@@ -108,6 +108,11 @@ export default {
 
 
   @include breakpoint(medium down) {
+
+    #pprf-app__container{
+      overflow: hidden;
+    }
+
     .pprf-app__main {
       flex-direction: column;
     }

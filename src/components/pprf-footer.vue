@@ -42,7 +42,7 @@ export default {
   position: fixed;
   bottom: 0;
   left:0;
-  z-index: 1000;
+  z-index: 50000;
   justify-content: space-around;
   align-items: baseline;
   background: color(dark-ben-franklin);
