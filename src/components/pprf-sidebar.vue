@@ -62,7 +62,7 @@ export default {
   .pprf-map__container{
     display: none;
   }
-.pprf-sidebar{
+  .pprf-sidebar{
     flex: 1;
     height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
     max-width: $sidebar-width;
@@ -74,7 +74,7 @@ export default {
   .pprf-sidebar__main{
     display: block;
     height: 100vh;
-    z-index: 9999;
+    z-index: 90;
   }
 
   .pprf-sidebar--nopad {
@@ -176,7 +176,10 @@ Entity Detail
   }
 
   .pprf-sidebar.pprf-sidebar--nopad{
-    .pprf-sidebar__header{ padding: 0;}
+    .pprf-sidebar__header{
+      padding: 0;
+      z-index:50000;
+    }
   }
   .pprf-sidebar__header{
     padding: 15px;

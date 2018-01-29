@@ -573,7 +573,7 @@ export default {
   color: $black;
   display: block;
   position:relative;
-  z-index:50000;
+  z-index:100000;
   background: lighten(color(light-ben-franklin), 10%);
   border-top: 1px solid $white;
   &:hover{ cursor: pointer; cursor: hand; }
@@ -677,7 +677,7 @@ export default {
     position:absolute;
     height: calc(100vh - 300px);
     overflow:scroll;
-    padding-bottom: 50px;
+    padding-bottom: 80px;
   }
 }
 

@@ -218,11 +218,13 @@ export default {
     top:0;
     overflow: auto;
     opacity: 0;
+    z-index: -10;
   }
 .pprf-sidebar .pprf-map__container.pprf-map__container--open-mobile{
     display: block;
     position: relative;
     opacity:1;
+    z-index: 20;
   }
 }
 </style>
