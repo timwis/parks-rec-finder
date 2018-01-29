@@ -203,6 +203,7 @@ header.pprf-header{
 
   header.pprf-header{
     height: 60px;
+    z-index: 50000;
     padding:0;
     flex-direction: column;
     &.pprf-header--mobile-open{ height: 120px; }
