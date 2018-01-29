@@ -103,4 +103,24 @@ export default {
     color: #A5097E;
   }
 
+  @media screen and (max-width: 39.9375em) {
+    .card.card--nested,
+    .card.card--nested.card--location{
+      margin:0;
+      padding:0;
+    }
+    
+    .card.card--nested .card__info,
+    .card.card--nested.card--location .card__info,
+    .card.card--location .card__info{
+        height:auto !important;
+        min-height:0 !important;
+    }
+    .card.card--nested{
+      .card__info-meta{
+        display: none;
+      }
+    }
+  }
+
 </style>

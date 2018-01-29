@@ -123,9 +123,10 @@ export default {
   }
 
   @media screen and (max-width: 39.9375em) {
-    .card.card--location.card--nested{
-      display: none !important;
+    .card.card--program{
+      flex-direction: column;
     }
+
   }
 
 </style>
