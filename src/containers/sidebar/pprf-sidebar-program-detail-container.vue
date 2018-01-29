@@ -79,7 +79,13 @@
             heading="Registration Information"
             icon="info-circle"
           >
+          <div v-if="program.registration_form_link.url">
+            To sign up visit <a v-bind:href="program.registration_form_link.url">{{program.registration_form_link.url}} <font-awesome-icon icon="external-link-alt" size="xs" /></a>
+          </div>
+          <div v-else>
             <p>To sign up or learn more, use the information listed above!</p>
+          </div>
+
           </pprf-detail-content-section>
 
         </div>
@@ -93,6 +99,7 @@ import _ from 'underscore'
 
 import {mapState} from 'vuex'
 import pprfSidebar from '@/components/pprf-sidebar'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import pprfDetailContentSection from '@/components/pprf-detail-content-section'
 import LocalCacheManager from '@/sources/LocalCacheManager'
 
@@ -103,6 +110,7 @@ export default {
 
   components: {
     pprfSidebar,
+    FontAwesomeIcon,
     pprfDetailContentSection
   },
 
@@ -116,6 +124,11 @@ export default {
               // find the days records from our cached days table in local storage
               schedules[i].days = schedules[i].days.map(day => _.findWhere(LocalCacheManager.getRow('daysTable'), {id: day}))
             }
+            if (results[0].data.rows[0].registration_form_link) {
+              var parsedJSON =
+                results[0].data.rows[0].registration_form_link.replace(/'/g, '"')
+              results[0].data.rows[0].registration_form_link = JSON.parse(parsedJSON)
+            }
             vm.schedules = schedules
             vm.$store.dispatch('updateEntities', { program: results[0].data.rows })
             vm.$store.dispatch('setMapMarkers', { entityType: 'program' })
@@ -125,7 +138,8 @@ export default {
 
   data () {
     return {
-      schedules: []
+      schedules: [],
+      programs: []
     }
   },
 
@@ -144,6 +158,7 @@ export default {
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
+  line-height: 1.2;
   font-weight: 700;
   padding: 20px 0;
   margin:0;
