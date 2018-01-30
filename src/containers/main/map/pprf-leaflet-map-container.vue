@@ -27,6 +27,7 @@ import {EventBus} from '@/event-bus'
 import EsriTileLayer from '@/components/map/EsriTileLayer'
 import CircleMarker from '@/components/map/CircleMarker'
 import SVGMarker from '@/components/map/SVGMarker'
+import _ from 'underscore'
 
 /**
  * Leaflet.js MAP component
@@ -99,7 +100,7 @@ export default {
     fitToMarkerBounds () {
       const isSearchLocationSet = (this.searchLocation && this.searchLocation.length > 0)
       const markers = (isSearchLocationSet)
-        ? this.markers.slice(0, 3)
+        ? _.uniq(this.markers, getLocationString).slice(0, 3)
         : this.markers
 
       if (markers.length > 0) {
@@ -125,6 +126,13 @@ export default {
       this.fitToMarkerBounds()
     }
   }
+}
+
+// Returns a string of a marker's location, used
+// to get a distinct list of locations by basic
+// string comparison
+function getLocationString (marker) {
+  return marker.lat + ',' + marker.lng
 }
 </script>
 
