@@ -95,9 +95,11 @@ export default {
       margin-bottom: 10px;
       small {margin-right: 5%;}
     }
-
   }
 
+  .card__info-meta__label{
+    display: block;
+  }
   .card--location__icon{
     margin: 0px 5% 0 5%;
     color: #A5097E;
@@ -109,7 +111,7 @@ export default {
       margin:0;
       padding:0;
     }
-    
+
     .card.card--nested .card__info,
     .card.card--nested.card--location .card__info,
     .card.card--location .card__info{
@@ -120,6 +122,9 @@ export default {
       .card__info-meta{
         display: none;
       }
+    }
+    .card.card--nested, .card.card--nested.card--location{
+      min-height:20px;
     }
   }
 
