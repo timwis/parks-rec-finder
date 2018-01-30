@@ -5,15 +5,17 @@
       <v-tilelayer :url="basemap" ></v-tilelayer>
       <v-tilelayer :url="streets" ></v-tilelayer>
 
-      <v-svg-marker
-          v-for="marker in markers"
-          @l-click="onMarkerClick(marker)"
-          :key="marker.id"
-          :latLng="[marker.lat, marker.lng]"
-          :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity, circleFillOpacity: marker.opacity, circleOpacity: marker.opacity}}"
-      >
-        <v-popup :content="marker.content()" />
-      </v-svg-marker>
+      <v-marker-cluster>
+        <v-svg-marker
+            v-for="marker in markers"
+            @l-click="onMarkerClick(marker)"
+            :key="marker.id"
+            :latLng="{lat: marker.lat, lng: marker.lng}"
+            :options="{iconOptions:{color: marker.color, opacity: marker.opacity, iconSize: marker.size, fillOpacity: marker.opacity, circleFillOpacity: marker.opacity, circleOpacity: marker.opacity}}"
+        >
+          <v-popup :content="marker.content()" />
+        </v-svg-marker>
+      </v-marker-cluster>
     </v-map>
     <div v-show="loading" class="loading-overlay"></div>
  </div>
@@ -24,6 +26,9 @@ import L from 'leaflet'
 import Vue2Leaflet from 'vue2-leaflet'
 import {mapState} from 'vuex'
 import {EventBus} from '@/event-bus'
+import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import EsriTileLayer from '@/components/map/EsriTileLayer'
 import CircleMarker from '@/components/map/CircleMarker'
 import SVGMarker from '@/components/map/SVGMarker'
@@ -47,7 +52,8 @@ export default {
     'v-tilelayer': EsriTileLayer,
     'v-popup': Vue2Leaflet.Popup,
     'v-svg-marker': SVGMarker,
-    'v-circle-marker': CircleMarker
+    'v-circle-marker': CircleMarker,
+    'v-marker-cluster': Vue2LeafletMarkerCluster
   },
 
   data () {
