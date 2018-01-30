@@ -66,11 +66,8 @@ export default class PPRFQuery {
                              .field('days')
                              .field(`to_char(time_from, '${TIME_FORMAT}')`, 'time_from')
                              .field(`to_char(time_to, '${TIME_FORMAT}')`, 'time_to')
-                             .field(`to_char(date_from, '${DATE_FORMAT}')`, 'start_date')
-                             .field(`to_char(date_to, '${DATE_FORMAT}')`, 'end_date')
                              .from(this.entity.DBTable)
                              .where(`facility->>0 = '${this.options.id}'`)
-                             .where('date_to >= now()')
             break
           case 'programSchedules':
             // get current program schedules
