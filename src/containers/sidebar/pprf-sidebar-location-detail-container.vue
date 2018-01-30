@@ -44,7 +44,7 @@
 
           <pprf-detail-content-section
             heading="Site contact"
-            v-if="facility.location_contact_name"
+            v-if="facility.location_contact_name.first"
             icon="user"
           >
             <p>{{facility.location_contact_name.first}}
@@ -143,11 +143,12 @@ export default {
           }
           vm.facilitySchedules = facilitySchedules
 
-          if (results[0].data.rows[0].location_contact_name) {
-            var parsedJSON = JSON.parse(results[0].data.rows[0].location_contact_name.replace(/'/g, '"'))
-            results[0].data.rows[0].location_contact_name = parsedJSON
+          try {
+            var locationContact = results[0].data.rows[0].location_contact_name.replace(/'/g, '"')
+            results[0].data.rows[0].location_contact_name = JSON.parse(locationContact)
+          } catch (e) {
+            results[0].data.rows[0].location_contact_name = ''
           }
-
           vm.$store.dispatch('updateEntities', { facility: results[0].data.rows, program: results[1].data.rows })
           vm.$store.dispatch('setMapMarkers', { entityType: 'facility' })
         })
