@@ -55,6 +55,14 @@ export default function resolveEntityType (entityType) {
         DBTable: tables.facilities
       }
       break
+    case 'facilitySchedules':
+    case 'facilitySchedule':
+    case 'facilityDays':
+      entity = {
+        name: 'facilitySchedules',
+        DBTable: tables.facilitySchedules
+      }
+      break
     case 'locationsCategories':
     case 'locationCategories':
     case 'facilitiesCategories':

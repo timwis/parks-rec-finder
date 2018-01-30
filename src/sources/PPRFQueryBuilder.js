@@ -60,6 +60,16 @@ export default class PPRFQuery {
           case 'programCategories':
             this.query = new TaxonomyQuery(this)
             break
+          case 'facilitySchedules':
+            // get current facility schedules
+            this.query = this.postgreSQL
+                             .select()
+                             .field('days')
+                             .field(`to_char(time_from, '${TIME_FORMAT}')`, 'time_from')
+                             .field(`to_char(time_to, '${TIME_FORMAT}')`, 'time_to')
+                             .from(this.entity.DBTable)
+                             .where(`facility->>0 = '${this.options.id}'`)
+            break
           case 'programSchedules':
             // get current program schedules
             this.query = this.postgreSQL
