@@ -22,14 +22,6 @@
           class="program--content scrollable"
           v-if="program"
         >
-         <pprf-detail-content-section
-            v-if="program.desc_short"
-            class="program__content-section program-detail__about"
-            heading="About this program"
-           >
-            <p>{{program.desc_short}}</p>
-          </pprf-detail-content-section>
-
           <pprf-detail-content-section
             v-if="program.address"
             heading="Location"
@@ -47,9 +39,21 @@
             <router-link v-if="program.facility_is_published" :to="'/location/'+program.location_id">View this location</router-link>
           </pprf-detail-content-section>
 
+          <pprf-detail-content-section
+            v-if="program.contact"
+            class="program__content-section"
+          >
+            <h4 class="program__content-section__heading">Contact</h4>
+            <p>{{program.contact.phone}}</p>
+          </pprf-detail-content-section>
 
-
-
+         <pprf-detail-content-section
+            v-if="program.desc_short"
+            class="program__content-section program-detail__about"
+            heading="About this program"
+           >
+            <p>{{program.desc_short}}</p>
+          </pprf-detail-content-section>
 
           <pprf-detail-content-section
             v-if="schedules.length"
@@ -65,15 +69,6 @@
             </div>
 
           </pprf-detail-content-section>
-
-
-           <section
-            v-if="program.contact"
-            class="program__content-section"
-          >
-            <h4 class="program__content-section__heading">Contact</h4>
-            <p>{{program.contact.phone}}</p>
-          </section>
 
           <pprf-detail-content-section
             heading="Registration Information"
