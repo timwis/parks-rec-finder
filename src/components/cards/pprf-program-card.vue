@@ -108,6 +108,9 @@ export default {
       }
 
     }
+    .card__info-meta__label{
+      display: block;
+    }
     .fee_frequency{
       font-size: 85%;
     }
@@ -117,9 +120,10 @@ export default {
   }
 
   @media screen and (max-width: 39.9375em) {
-    .card.card--location.card--nested{
-      display: none !important;
+    .card.card--program{
+      flex-direction: column;
     }
+
   }
 
 </style>
