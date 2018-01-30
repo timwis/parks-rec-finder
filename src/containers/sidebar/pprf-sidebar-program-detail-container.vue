@@ -84,7 +84,7 @@
             :href="program.registration_form_link.url">{{program.registration_form_link.url}} <font-awesome-icon icon="external-link-alt" size="xs" /></a>
           </div>
           <div v-else>
-            <p>To sign up or learn more, use the information listed above!</p>
+            <p>To sign up or learn more use the contact information above.</p>
           </div>
 
           </pprf-detail-content-section>
