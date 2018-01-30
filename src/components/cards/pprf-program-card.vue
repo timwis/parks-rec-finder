@@ -114,6 +114,9 @@ export default {
       }
 
     }
+    .card__info-meta__label{
+      display: block;
+    }
     .fee_frequency{
       font-size: 85%;
     }

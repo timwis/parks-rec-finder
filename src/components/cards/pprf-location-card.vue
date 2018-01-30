@@ -97,9 +97,6 @@ export default {
     }
   }
 
-  .card__info-meta__label{
-    display: block;
-  }
   .card--location__icon{
     margin: 0px 5% 0 5%;
     color: #A5097E;
