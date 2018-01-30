@@ -291,7 +291,7 @@ export default class PPRFQuery {
 
           // FILTER: GENDER <string>
           if (filterKey === 'gender') {
-            filterQuery.where(`gender->>0 = '${filters[filterKey]}'`)
+            filterQuery.where(`gender->>0 = '${filters[filterKey]}' OR gender->>0 = 'M/F'`)
           }
 
           // FILTER: DATE RANGE <iso-date-string>
