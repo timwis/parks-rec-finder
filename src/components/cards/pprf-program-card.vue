@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['card', 'card--program', {'card--selected': selected, 'card--nested-parent': location, 'card--within-zip': withinZipcode !== 'undefined' && withinZipcode, 'card--outside-zip': withinZipcode !== 'undefined' && !withinZipcode}]"
+    :class="['card', 'card--program', {'card--selected': selected, 'card--nested-parent': location}]"
     :id="'program--'+programID"
   >
     <div class="card__info">
@@ -31,9 +31,6 @@
       :address="location.address"
       :facilityID="location.id"
     />
-    <div v-if="withinZipcode !== 'undefined'"  class="card__in-zipcode-bar">
-        <h5> {{withinZipcode ? 'within' : 'near'}} zip code</h5>
-    </div>
   </div>
 </template>
 
@@ -70,9 +67,6 @@ export default {
     },
     location: {
       type: Object
-    },
-    withinZipcode: {
-      default: 'undefined'
     },
     selected: {
       type: Boolean,
@@ -114,6 +108,9 @@ export default {
       }
 
     }
+    .card__info-meta__label{
+      display: block;
+    }
     .fee_frequency{
       font-size: 85%;
     }
@@ -123,9 +120,10 @@ export default {
   }
 
   @media screen and (max-width: 39.9375em) {
-    .card.card--location.card--nested{
-      display: none !important;
+    .card.card--program{
+      flex-direction: column;
     }
+
   }
 
 </style>

@@ -28,13 +28,6 @@ class PPRFMarker {
         this.assetID = entity.pprassets_object_id
         break
     }
-
-    if (entity.hasOwnProperty('within_zip_code')) {
-      // this.opacity = entity.within_zip_code ? 1 : 0
-      // this.color = entity.within_zip_code ? this.color : '#25cef7'
-      this.size = entity.within_zip_code ? [20, 28] : [10, 14]
-      this.within_zip_code = entity.within_zip_code
-    }
   }
 
   _formatAddress () {

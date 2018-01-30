@@ -2,6 +2,7 @@ const tables = {
   assets: 'ppr_website_locatorpoints',
 
   facilities: 'ppr_facilities',
+  facilitySchedules: 'ppr_facility_schedules',
   locationCategories: 'ppr_location_types',
 
   programs: 'ppr_programs',

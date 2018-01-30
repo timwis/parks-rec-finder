@@ -64,7 +64,7 @@ export default {
     height:calc(#{$max-app-height} - #{$header-height} - #{$footer-height} + 20px);
     max-width: $sidebar-width;
     padding: 15px 20px 0 20px;
-    color: color(dark-ben-franklin);
+    color: color(dark-gray);
     border-right: 1px solid color(ghost-gray);
     overflow: hidden;
   }
@@ -187,7 +187,7 @@ Entity Detail
   }
   .pprf-sidebar__footer{
     z-index: 10000;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
   }

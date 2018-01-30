@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {isValidZipcode} from '@/utilities/utils'
 import resolveEntityType from '@/utilities/entity-type-resolver'
 import PPRFQuery from './PPRFQueryBuilder'
 import tables from './CartoDBTables'
@@ -69,8 +68,8 @@ class CartoAPI {
    * @since 0.1.0
  */
   search (searchParams, coords) {
-    let facilitiesSearchQuery = this.getFacilities(searchParams.fields.freetext, coords, searchParams.fields.zip)
-    let programsSearchQuery = this.getPrograms(searchParams.fields.freetext, coords, searchParams.fields.zip, searchParams.filters)
+    let facilitiesSearchQuery = this.getFacilities(searchParams.fields.freetext, coords)
+    let programsSearchQuery = this.getPrograms(searchParams.fields.freetext, coords, searchParams.filters)
     return Promise.all([facilitiesSearchQuery, programsSearchQuery])
   }
 
@@ -93,23 +92,17 @@ class CartoAPI {
    *
    * @since 0.1.0
    */
-  getPrograms (freetextValue, coords = null, zipcode = null, filters = null) {
+  getPrograms (freetextValue, coords = null, filters = null) {
     this.programs = new PPRFQuery.Builder('programs')
                                    .fields(this.programFields)
                                    .joinPPRAssets()
 
-    if (!zipcode) {
-      this.programs.order('lower(program_name)')
-    }
     // get facilites and assets with latitude and longitude values
-    if (coords && !zipcode) {
+    if (coords) {
       this.programs.addDistanceFieldFromCoordinates(coords)
-    }
-
-    if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      this.programs
-            .addWithinZipCodeField(zipcode)
-            .orderByMilesFromZipcode()
+      this.programs.order('distance, lower(program_name)')
+    } else {
+      this.programs.order('lower(program_name)')
     }
 
     if (freetextValue) {
@@ -149,9 +142,20 @@ class CartoAPI {
   getProgramSchedules (programID) {
     return this.runQuery(new PPRFQuery.Builder('programSchedules', {id: programID}))
   }
+
+  /**
+   * given a facility_id get all associated
+   * schedule days for that facility
+   * @param  {string} facilityID facility.facility_id
+   * @return {object}           Promise
+   */
+
+  getFacilitySchedules (facilityID) {
+    return this.runQuery(new PPRFQuery.Builder('facilitySchedules', {id: facilityID}))
+  }
   /**
    * Given a `facility_id` get all programs associated
-   * with that faciity
+   * with that facility
    * @param  {string} facilityID facility.facility_id
    * @return {object}            Promise
    *
@@ -172,21 +176,15 @@ class CartoAPI {
    *
    * @since 0.1.0
    */
-  getFacilities (freetextValue, coords = null, zipcode = null) {
+  getFacilities (freetextValue, coords = null) {
     this.facilities = new PPRFQuery.Builder('facilities')
                                    .joinPPRAssets()
-    if (!zipcode) {
-      this.facilities.order('lower(facility_name)')
-    }
 
-    if (coords && !zipcode) {
+    if (coords) {
       this.facilities.addDistanceFieldFromCoordinates(coords)
-    }
-
-    if ((zipcode && isValidZipcode(zipcode)) && !coords) {
-      this.facilities
-            .addWithinZipCodeField(zipcode)
-            .orderByMilesFromZipcode()
+      this.facilities.order('distance, lower(facility_name)')
+    } else {
+      this.facilities.order('lower(facility_name)')
     }
 
     if (freetextValue) {
@@ -255,6 +253,17 @@ class CartoAPI {
     }
 
     return this.runQuery(categoryEntityQuery.joinPPRAssets())
+  }
+
+  getZipCentroid (zip) {
+    return this.runQuery(new PPRFQuery.Builder('zip', {zip}))
+      .then((response) => {
+        const rows = response.data.rows
+        if (rows.length < 1) {
+          throw new Error('No zipcode found')
+        }
+        return rows[0].centroid.coordinates
+      })
   }
 }
 
