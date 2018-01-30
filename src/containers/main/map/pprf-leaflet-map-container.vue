@@ -27,6 +27,7 @@ import {EventBus} from '@/event-bus'
 import EsriTileLayer from '@/components/map/EsriTileLayer'
 import CircleMarker from '@/components/map/CircleMarker'
 import SVGMarker from '@/components/map/SVGMarker'
+import _ from 'underscore'
 
 /**
  * Leaflet.js MAP component
@@ -47,10 +48,6 @@ export default {
     'v-popup': Vue2Leaflet.Popup,
     'v-svg-marker': SVGMarker,
     'v-circle-marker': CircleMarker
-  },
-
-  updated () {
-    this.fitToMarkerBounds()
   },
 
   data () {
@@ -76,10 +73,10 @@ export default {
   computed: {
     ...mapState({
       markers: state => state.mapMarkers,
-      zipcodeSearched: state => state.search.fields.zip,
       loading: state => state.loading,
       mobileOpen: state => !state.mobile.listView,
-      modals: state => state.modals
+      modals: state => state.modals,
+      searchLocation: state => state.searchLocation
     }),
     activeEntity () {
       let entityTypeParam = this.$store.state.route.params.entityType
@@ -101,16 +98,15 @@ export default {
      * @since 0.1.1
      */
     fitToMarkerBounds () {
-      let _markers = this.markers
-      // @TODO: don't add zipcode zoom until polygons are added
-      // if (this.zipcodeSearched) {
-      //   _markers = this.markers.filter(marker => marker.within_zip_code)
-      // }
-      if (_markers && _markers.length) {
-        let markersLatLng = _markers.map(marker => L.latLng(marker.lat, marker.lng))
-        /* eslint-disable new-cap */
-        let {_southWest, _northEast} = L.latLngBounds(markersLatLng)
-        this.$refs.leafletMap.fitBounds([[_southWest.lat, _southWest.lng], [_northEast.lat, _northEast.lng]])
+      const isSearchLocationSet = (this.searchLocation && this.searchLocation.length > 0)
+      const markers = (isSearchLocationSet)
+        ? _.uniq(this.markers, getLocationString).slice(0, 3)
+        : this.markers
+
+      if (markers.length > 0) {
+        const locations = markers.map(marker => L.latLng(marker.lat, marker.lng))
+        const bounds = L.latLngBounds(locations)
+        this.$refs.leafletMap.fitBounds(bounds)
       }
     },
     /**
@@ -124,7 +120,19 @@ export default {
     onMarkerClick (marker) {
       EventBus.$emit('map:markerClick', marker)
     }
+  },
+  watch: {
+    markers (value, oldValue) {
+      this.fitToMarkerBounds()
+    }
   }
+}
+
+// Returns a string of a marker's location, used
+// to get a distinct list of locations by basic
+// string comparison
+function getLocationString (marker) {
+  return marker.lat + ',' + marker.lng
 }
 </script>
 

@@ -11,20 +11,23 @@ import {flickrAPI} from './FlickrAPI'
  */
 class API {
   /**
- * Address search implemented using the AIS and Carto APIs
+ * Execute search on Carto tables
  * @param  {object} searchParams - UI search fields key value pairs
+ * @param  {array?} coords - longitude, latitude
  * @return {object}              Promise resolving with query results
  *
  * @since 0.1.0
  */
-  search (serachParams) {
-    let {fields} = serachParams
-    if (fields && (fields.address && fields.address !== null && fields.address !== '')) {
-      return aisAPI.getCoordsForAddress(fields.address)
-                   .then(cartoAPI.search.bind(cartoAPI, serachParams))
-    } else {
-      return cartoAPI.search(serachParams, null)
-    }
+  search (searchParams, coords) {
+    return cartoAPI.search(searchParams, coords)
+  }
+
+  geocodeAddress (address) {
+    return aisAPI.getCoordsForAddress(address)
+  }
+
+  geocodeZip (zip) {
+    return cartoAPI.getZipCentroid(zip)
   }
 
   /**

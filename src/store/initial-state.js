@@ -49,7 +49,9 @@ const state = {
       startDate: null,
       endDate: null
     }
-  }
+  },
+
+  searchLocation: [] // result of zip or address geocode
 }
 
 export default state

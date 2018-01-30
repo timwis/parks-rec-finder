@@ -197,36 +197,6 @@ address{
     }
   }
 
-.card.card--within-zip:first-child{
-  margin-top: 40px !important;
-      &:before{
-        width: 100%;
-        text-align: center;
-        content: 'within zip code';
-        position: absolute;
-        top:-40px;
-        color: $black;
-      }
-}
-
-.card--within-zip + .card--outside-zip,
-.pprf-tab-panel .card--outside-zip:first-child{
-      margin-top: 40px !important;
-      &:before{
-        width: 100%;
-        text-align: center;
-        content: 'near zip code';
-        position: absolute;
-        top:-40px;
-        color: $black;
-      }
-  }
-
-  .card--outside-zip{
-    transform: scale(0.95);
-    // opacity: 0.75;
-  }
-
   .card--selected .card__in-zipcode-bar{
     display: block;
   }
