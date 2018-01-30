@@ -58,7 +58,8 @@
           >
             <div v-for="schedule in facilitySchedules">
               <table class="program__schedule">
-                <tr v-for="day in schedule.days"><td>{{day.days_name}}</td> <td>{{schedule.time_from}} - {{schedule.time_to}}</td></tr>
+                <tr v-for="day in schedule.days"
+                :key="day.weekday_number"><td width="50%">{{day.days_name}}</td> <td>{{schedule.time_from}} - {{schedule.time_to}}</td></tr>
               </table>
             </div>
 
@@ -140,7 +141,12 @@ export default {
           for (var i = 0; i < facilitySchedules.length; i++) {
             // find the days records from our cached days table in local storage
             facilitySchedules[i].days = facilitySchedules[i].days.map(day => _.findWhere(LocalCacheManager.getRow('daysTable'), {id: day}))
+
+            facilitySchedules[i].days.sort(function (a, b) {
+              return a.weekday_number - b.weekday_number
+            })
           }
+
           vm.facilitySchedules = facilitySchedules
 
           try {
@@ -247,7 +253,6 @@ export default {
 .program__schedule{
   font-family: $font-open-sans;
   @include rem(font-size, 1.4);
-  margin-bottom: 20px;
   tr{
     background: color(ghost-gray);
   }
