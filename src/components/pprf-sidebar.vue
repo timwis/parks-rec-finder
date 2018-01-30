@@ -187,7 +187,7 @@ Entity Detail
   }
   .pprf-sidebar__footer{
     z-index: 10000;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
   }
