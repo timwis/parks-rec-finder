@@ -299,13 +299,13 @@ export default class PPRFQuery {
             let ages = filters[filterKey].split('-')
             let filterAgeLow = ages[0]
             let filterAgeHigh = ages[1]
-            // filterQuery.where(`(age_low >= ${filterAgeLow} AND age_low <= ${filterAgeHigh})`).order('age_low')
-            filterQuery.where(`(age_high <= ${filterAgeHigh} AND age_high >= ${filterAgeLow}) OR (age_low >= ${filterAgeLow} AND age_low < ${filterAgeHigh})`)
+            filterQuery.where(`(age_low >= ${filterAgeLow} AND age_low <= ${filterAgeHigh})`).order('age_low')
+            // filterQuery.where(`(age_high <= ${filterAgeHigh} AND age_high >= ${filterAgeLow}) OR (age_low >= ${filterAgeLow} AND age_low < ${filterAgeHigh})`)
           }
 
           // FILTER: GENDER <string>
           if (filterKey === 'gender') {
-            filterQuery.where(`gender->>0 = '${filters[filterKey]}'`)
+            filterQuery.where(`gender->>0 = '${filters[filterKey]}' OR gender->>0 = 'M/F'`)
           }
 
           // FILTER: DATE RANGE <iso-date-string>
