@@ -75,7 +75,7 @@
             heading="Registration Information"
             icon="info-circle"
           >
-          <div v-if="program.registration_form_link.url">
+          <div v-if="program.registration_form_link">
             To sign up visit <a
             :href="program.registration_form_link.url">{{program.registration_form_link.url}} <font-awesome-icon icon="external-link-alt" size="xs" /></a>
           </div>
