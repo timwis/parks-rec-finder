@@ -13,7 +13,6 @@
               <small><p>Gender: {{program.gender}}</p></small>
               <small><p>Cost: {{(program.fee != "" && program.fee != "0.00" ) ? '$'+program.fee : 'Free' }} <span v-if="(program.fee != '' && program.fee != '0.00' ) && program.fee_frequency" class="entity-detail__fee-frequency text-lower">{{program.fee_frequency}}</span></p></small>
             </div>
-            <p class="entity-detail__reg-status nomargin"><b>Registration - </b> {{program.registration_status}}</p>
         </div>
 
 
@@ -22,6 +21,8 @@
           class="program--content scrollable"
           v-if="program"
         >
+        <p class="entity-detail__reg-status"><b>Registration - </b> {{program.registration_status}}</p>
+
           <pprf-detail-content-section
             v-if="program.address"
             heading="Location"
@@ -153,9 +154,6 @@ export default {
 .entity-detail__header--program{
   background: color(ben-franklin-blue);
 }
-.program--content{
-  padding-top: 20px;
-}
 .entity-detail__header-meta{
   color: $white;
   padding-bottom:1rem;
@@ -165,7 +163,7 @@ export default {
   @include rem(font-size, 2.4);
   line-height: 1.2;
   font-weight: 700;
-  padding: 20px 0;
+  padding: 20px;
   margin:0;
 }
 
@@ -177,6 +175,7 @@ export default {
   background: $white;
   color: color(dark-gray);
   padding: 10px 0;
+  text-align: center;
 }
 
 .entity-detail__header-meta{

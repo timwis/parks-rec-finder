@@ -208,7 +208,7 @@ export default {
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
-  padding: 20px 0;
+  padding: 20px;
   margin:0;
 }
 
