@@ -40,11 +40,12 @@
           </pprf-detail-content-section>
 
           <pprf-detail-content-section
-            v-if="program.contact"
+            v-if="program.contact_phone"
             class="program__content-section"
+            icon="phone"
+            heading="Contact"
           >
-            <h4 class="program__content-section__heading">Contact</h4>
-            <p>{{program.contact.phone}}</p>
+            <a class="program-detail__phone" :href="'tel:'+program.contact_phone">{{program.contact_phone}}</a>
           </pprf-detail-content-section>
 
          <pprf-detail-content-section
@@ -152,7 +153,9 @@ export default {
 .entity-detail__header--program{
   background: color(ben-franklin-blue);
 }
-.program--content{padding-top: 20px;}
+.program--content{
+  padding-top: 20px;
+}
 .entity-detail__header-meta{color: $white;}
 .pprf-sidebar__title--detail{
   color: $white;

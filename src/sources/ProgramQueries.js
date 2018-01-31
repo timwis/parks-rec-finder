@@ -41,6 +41,7 @@ export default class ProgramsQuery extends QueryInterface {
                 .field('programdescriptionshort', 'desc_short')
                 .field('registration_status->>0', 'registration_status')
                 .field('ppr_programs.registration_form_link', 'registration_form_link')
+                .field('contact_phone')
                 // .field(`to_char(date_from, 'Month DD, YYYY')`, 'start_date')
                 // .field(`to_char(date_to, 'Month DD, YYYY')`, 'end_date')
                 .field(`${tables.facilities}.id`, 'location_id')
