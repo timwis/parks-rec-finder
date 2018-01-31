@@ -202,14 +202,6 @@ export default {
 .program-detail__directions{
   .svg-inline--fa{vertical-align: 0%; margin-left: 3px;}
 }
-.pprf-detail-section a.program-detail__phone{
-  @include rem(font-size, 1.4);
-
-  color: $black;
-  text-decoration: none;
-  font-family: $font-montserrat;
-  font-weight: 100;
-}
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
