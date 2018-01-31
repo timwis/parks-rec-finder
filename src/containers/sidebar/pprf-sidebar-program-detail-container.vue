@@ -59,7 +59,7 @@
           <pprf-detail-content-section
             v-if="schedules.length"
             heading="Program Schedule(s)"
-            icon="calendar-alt"
+            :icon="['far', 'calendar-alt']"
           >
             <div v-for="schedule in schedules">
               <p class="text-nopad" ><b>Start Date:</b> {{schedule.start_date}}</p>

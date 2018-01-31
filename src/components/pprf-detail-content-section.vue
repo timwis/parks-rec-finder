@@ -63,7 +63,7 @@ export default {
     padding-bottom:5px;
   }
   .pprf-detail-section__heading-icon{
-    color: $black;
+    color: color(dark-gray);
     margin: 0px 10px 0 0;
     @include rem(font-size, 1.25);
   }
