@@ -12,6 +12,7 @@
             size="3x"
             icon="map-marker-alt"
             class="entity-detail__header-icon"
+            fixed-width
           />
           <h3 class="pprf-sidebar__title pprf-sidebar__title--detail text-center">{{facility.long_name}}</h3>
         </div>
@@ -95,6 +96,7 @@
                 <font-awesome-icon
                   v-if="previousProgramID == program.id"
                   icon="chevron-left"
+                  fixed-width
                 />
                   {{program.program_name}}
                 </router-link>
