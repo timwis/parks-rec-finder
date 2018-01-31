@@ -45,9 +45,8 @@ export default {
       font-style: normal;
     }
     a{
-      font-family: $font-montserrat;
       font-weight: 700;
-      @include rem(font-size, 1.2);
+      @include rem(font-size, 1.4);
     }
     p{
       color: $black;
