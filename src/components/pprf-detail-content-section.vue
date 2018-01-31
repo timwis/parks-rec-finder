@@ -48,7 +48,6 @@ export default {
       font-style: normal;
     }
     a{
-      font-family: $font-montserrat;
       font-weight: 700;
       @include rem(font-size, 1.4);
     }
@@ -71,5 +70,6 @@ export default {
   }
   .pprf-detail-section__body{
     padding-left:1.9rem;
+    line-height: 1.4;
   }
 </style>
