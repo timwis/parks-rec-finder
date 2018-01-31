@@ -1,6 +1,6 @@
 <template>
   <section :class="['pprf-about' ,'pprf-modal', {'pprf-modal--open': modals.about.open}]">
-    <button @click="closeModal" class="pprf-modal-close pprf-btn"><font-awesome-icon size="l" icon="times"/></button>
+    <button @click="closeModal" class="pprf-modal-close pprf-btn"><font-awesome-icon size="lg" icon="times"/></button>
     <h2 class="text-center ">How to use the finder</h2>
     <div class="pprf-modal-content">
       <p>There are two ways to use the finder.</p>
