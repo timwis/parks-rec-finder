@@ -156,10 +156,6 @@ export default {
 .program--content{
   padding-top: 20px;
 }
-a.program-detail__phone{
-  color: $black;
-  text-decoration: none;
-}
 .entity-detail__header-meta{color: $white;}
 .pprf-sidebar__title--detail{
   color: $white;
