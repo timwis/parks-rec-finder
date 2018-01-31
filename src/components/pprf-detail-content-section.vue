@@ -57,7 +57,7 @@ export default {
   .pprf-detail-section__heading{
     display: flex;
     align-items: center;
-    color: color(medium-gray);
+    color: color(dark-gray);
     @include rem(font-size, 1.5);
     @include rem(line-height, 1.25);
     padding-bottom:5px;
