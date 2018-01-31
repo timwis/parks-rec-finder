@@ -8,11 +8,14 @@
             </a>
         </h1>
         <ul>
+          <li>
+            <a class="text-upper link-dark-bg" href="http://beta.phila.gov">City of Philadelphia</a>
+          </li>
             <li>
-                <a @click.prevent="openModal('about')" class="text-upper" href="">How to use</a>
+                <a @click.prevent="openModal('about')" class="text-upper link-dark-bg" href="">How to use</a>
             </li>
             <li>
-                <a class="text-upper" href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))">Feedback</a>
+                <a class="text-upper link-dark-bg" href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))">Feedback</a>
             </li>
         </ul>
         <small class="app-version text-nopad">v{{version}}</small>

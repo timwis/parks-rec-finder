@@ -12,6 +12,7 @@
             size="3x"
             icon="map-marker-alt"
             class="entity-detail__header-icon"
+            fixed-width
           />
           <h3 class="pprf-sidebar__title pprf-sidebar__title--detail text-center">{{facility.long_name}}</h3>
         </div>
@@ -45,7 +46,7 @@
           <pprf-detail-content-section
             heading="Site contact"
             v-if="facility.location_contact_name.first"
-            icon="user"
+            :icon="['far','user']"
           >
             <p>{{facility.location_contact_name.first}}
               {{facility.location_contact_name.middle}} {{facility.location_contact_name.last}}</p>
@@ -54,7 +55,7 @@
           <pprf-detail-content-section
             v-if="facilitySchedules.length"
             heading="Regular hours"
-            icon="clock"
+            :icon="['far','clock']"
           >
             <div v-for="schedule in facilitySchedules">
               <table class="program__schedule">
@@ -69,6 +70,7 @@
             v-if="facility.facility_description"
             class="program__content-section program-detail__about"
             heading="About this location"
+            :icon="['far', 'file']"
            >
             <p>{{facility.facility_description}}</p>
           </pprf-detail-content-section>
@@ -95,6 +97,7 @@
                 <font-awesome-icon
                   v-if="previousProgramID == program.id"
                   icon="chevron-left"
+                  fixed-width
                 />
                   {{program.program_name}}
                 </router-link>
@@ -205,7 +208,7 @@ export default {
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
-  padding: 20px 0;
+  padding: 20px;
   margin:0;
 }
 
@@ -249,7 +252,7 @@ export default {
     background: color(ghost-gray);
   }
   td{
-    padding: 3px 10px;
+    padding: 1rem;
   }
 }
 
