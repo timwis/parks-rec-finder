@@ -4,11 +4,15 @@
       <font-awesome-icon
         v-if="icon"
         :icon="icon"
+        fixed-width
+        size="xs"
         class="pprf-detail-section__heading-icon"
       />
       <span>{{heading}}</span>
     </h4>
-    <slot></slot>
+    <div class="pprf-detail-section__body">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -30,7 +34,6 @@ export default {
       type: String
     },
     icon: {
-      type: String
     }
   }
 
@@ -45,9 +48,8 @@ export default {
       font-style: normal;
     }
     a{
-      font-family: $font-montserrat;
       font-weight: 700;
-      @include rem(font-size, 1.2);
+      @include rem(font-size, 1.4);
     }
     p{
       color: $black;
@@ -57,14 +59,17 @@ export default {
   .pprf-detail-section__heading{
     display: flex;
     align-items: center;
-    color: color(medium-gray);
+    color: color(dark-gray);
     @include rem(font-size, 1.5);
     @include rem(line-height, 1.25);
     padding-bottom:5px;
   }
   .pprf-detail-section__heading-icon{
-    color: $black;
-    margin: 0px 10px 0 0;
-    @include rem(font-size, 1.25);
+    color: color(dark-gray);
+    margin: 0px 5px 0 0;
+  }
+  .pprf-detail-section__body{
+    padding-left:1.9rem;
+    line-height: 1.4;
   }
 </style>

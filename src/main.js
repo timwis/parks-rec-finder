@@ -11,9 +11,10 @@ import router from './router'
 import VueProgressBar from 'vue-progressbar'
 import fontawesome from '@fortawesome/fontawesome'
 import * as freeSolid from '@fortawesome/fontawesome-free-solid'
+import * as freeRegular from '@fortawesome/fontawesome-free-regular'
 import VueScrollTo from 'vue-scrollto'
 
-fontawesome.library.add(freeSolid)
+fontawesome.library.add(freeSolid, freeRegular)
 
 sync(store, router)
 Vue.use(Vuex)

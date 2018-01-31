@@ -13,7 +13,7 @@
         v-show="!open && filtersApplied"
         class="pprf-filter-bar-tags-bar"
       >
-        <h5 class="screen-reader-text">Applied Search Filters:</h5>
+        <h5 class="screen-reader-text">Applied search filters:</h5>
         <ul class="pprf-filter-bar-tags">
          <li v-for="(value, key) in tags" >
             <button
@@ -66,7 +66,7 @@
 
       <fieldset class="pprf-filter-bar-form--fieldset">
 
-        <legend>Age Range</legend>
+        <legend>Age range</legend>
 
           <v-checkbox
             class="field field--inline field--inline-half"
@@ -106,7 +106,7 @@
         v-if="days.length"
         class="pprf-filter-bar-form--fieldset"
       >
-        <legend>Day of week</legend>
+        <legend>Show programs on these days</legend>
         <v-checkbox
             v-for="day in days"
             class="field field--inline field--inline-quarter"
@@ -201,7 +201,7 @@
         </phila-button>
 
         <phila-button class="pprf-filters--apply" :disabled="!isDirty">
-          Apply Filters
+          Apply filters
         </phila-button>
 
       </footer>

@@ -77,16 +77,16 @@ textarea{
 
   // placholder text sytles
   &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: color(sidewalk);
+    color: color(medium-gray);
   }
   &::-moz-placeholder { /* Firefox 19+ */
-    color: color(sidewalk);
+    color: color(medium-gray);
   }
   &:-ms-input-placeholder { /* IE 10+ */
-    color: color(sidewalk);
+    color: color(medium-gray);
   }
   &:-moz-placeholder { /* Firefox 18- */
-    color: color(sidewalk);
+    color: color(medium-gray);
   }
 
 

@@ -8,6 +8,7 @@
         icon="map-marker-alt"
         size="3x"
         class="card__icon card--location__icon"
+        fixed-width
       />
 
     <div class="card__info">
@@ -92,7 +93,6 @@ export default {
   }
 
   .card--location__icon{
-    margin: 0px 5% 0 5%;
     color: #A5097E;
   }
 

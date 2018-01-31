@@ -13,7 +13,6 @@
               <small><p>Gender: {{program.gender}}</p></small>
               <small><p>Cost: {{(program.fee != "" && program.fee != "0.00" ) ? '$'+program.fee : 'Free' }} <span v-if="(program.fee != '' && program.fee != '0.00' ) && program.fee_frequency" class="entity-detail__fee-frequency text-lower">{{program.fee_frequency}}</span></p></small>
             </div>
-            <p class="entity-detail__reg-status nomargin"><b>Registration - </b> {{program.registration_status}}</p>
         </div>
 
 
@@ -22,6 +21,8 @@
           class="program--content scrollable"
           v-if="program"
         >
+        <p class="entity-detail__reg-status"><b>Registration - </b> {{program.registration_status}}</p>
+
           <pprf-detail-content-section
             v-if="program.address"
             heading="Location"
@@ -40,16 +41,18 @@
           </pprf-detail-content-section>
 
           <pprf-detail-content-section
-            v-if="program.contact"
+            v-if="program.contact_phone"
             class="program__content-section"
+            icon="phone"
+            heading="Contact"
           >
-            <h4 class="program__content-section__heading">Contact</h4>
-            <p>{{program.contact.phone}}</p>
+            <a class="program-detail__phone" :href="'tel:'+program.contact_phone">{{program.contact_phone}}</a>
           </pprf-detail-content-section>
 
          <pprf-detail-content-section
             v-if="program.desc_short"
             class="program__content-section program-detail__about"
+            :icon="['far','file']"
             heading="About this program"
            >
             <p>{{program.desc_short}}</p>
@@ -58,7 +61,7 @@
           <pprf-detail-content-section
             v-if="schedules.length"
             heading="Program Schedule(s)"
-            icon="calendar-alt"
+            :icon="['far', 'calendar-alt']"
           >
             <div v-for="schedule in schedules">
               <p class="text-nopad" ><b>Start Date:</b> {{schedule.start_date}}</p>
@@ -74,12 +77,12 @@
             heading="Registration Information"
             icon="info-circle"
           >
-          <div v-if="program.registration_form_link.url">
+          <div v-if="program.registration_form_link">
             To sign up visit <a
             :href="program.registration_form_link.url">{{program.registration_form_link.url}} <font-awesome-icon icon="external-link-alt" size="xs" /></a>
           </div>
           <div v-else>
-            <p>To sign up or learn more use the contact information above.</p>
+            <p>To sign up or learn more, use the contact information above.</p>
           </div>
 
           </pprf-detail-content-section>
@@ -152,14 +155,16 @@ export default {
 .entity-detail__header--program{
   background: color(ben-franklin-blue);
 }
-.program--content{padding-top: 20px;}
-.entity-detail__header-meta{color: $white;}
+.entity-detail__header-meta{
+  color: $white;
+  padding-bottom:20px;
+}
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
   line-height: 1.2;
   font-weight: 700;
-  padding: 20px 0;
+  padding: 20px;
   margin:0;
 }
 
@@ -171,6 +176,7 @@ export default {
   background: $white;
   color: color(dark-gray);
   padding: 10px 0;
+  text-align: center;
 }
 
 .entity-detail__header-meta{
@@ -188,7 +194,7 @@ export default {
     background: color(ghost-gray);
   }
   td{
-    padding: 3px 10px;
+    padding: 1rem;
   }
 }
 
