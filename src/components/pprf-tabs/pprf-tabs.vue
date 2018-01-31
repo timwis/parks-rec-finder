@@ -163,14 +163,14 @@ export default {
 
 
     .pprf-tabs__panels{
-        width:100%;
-        height: calc(100% - 80px);
-        max-height: 100%;
-        position: absolute;
-        z-index:1;
-        top:80px;
-        flex:1;
-        margin-top:20px;
+      width:100%;
+      height: calc(100% - 80px);
+      max-height: 100%;
+      position: absolute;
+      z-index:1;
+      top:80px;
+      flex:1;
+      margin-top:20px;
     }
 
 
