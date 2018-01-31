@@ -194,7 +194,7 @@ export default {
     background: color(ghost-gray);
   }
   td{
-    padding: 3px 10px;
+    padding: 1rem;
   }
 }
 
