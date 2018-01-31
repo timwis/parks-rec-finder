@@ -46,7 +46,7 @@
           <pprf-detail-content-section
             heading="Site contact"
             v-if="facility.location_contact_name.first"
-            icon="user"
+            :icon="['far','user']"
           >
             <p>{{facility.location_contact_name.first}}
               {{facility.location_contact_name.middle}} {{facility.location_contact_name.last}}</p>
@@ -55,7 +55,7 @@
           <pprf-detail-content-section
             v-if="facilitySchedules.length"
             heading="Regular hours"
-            icon="clock"
+            :icon="['far','clock']"
           >
             <div v-for="schedule in facilitySchedules">
               <table class="program__schedule">
@@ -70,6 +70,7 @@
             v-if="facility.facility_description"
             class="program__content-section program-detail__about"
             heading="About this location"
+            :icon="['far', 'file']"
            >
             <p>{{facility.facility_description}}</p>
           </pprf-detail-content-section>
