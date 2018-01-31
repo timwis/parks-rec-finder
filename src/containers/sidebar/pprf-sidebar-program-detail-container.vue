@@ -80,7 +80,7 @@
             :href="program.registration_form_link.url">{{program.registration_form_link.url}} <font-awesome-icon icon="external-link-alt" size="xs" /></a>
           </div>
           <div v-else>
-            <p>To sign up or learn more use the contact information above.</p>
+            <p>To sign up or learn more, use the contact information above.</p>
           </div>
 
           </pprf-detail-content-section>
@@ -156,7 +156,10 @@ export default {
 .program--content{
   padding-top: 20px;
 }
-.entity-detail__header-meta{color: $white;}
+.entity-detail__header-meta{
+  color: $white;
+  padding-bottom:1rem;
+}
 .pprf-sidebar__title--detail{
   color: $white;
   @include rem(font-size, 2.4);
