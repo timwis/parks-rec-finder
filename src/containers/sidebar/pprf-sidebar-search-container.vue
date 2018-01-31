@@ -148,6 +148,10 @@ export default {
     .pprf-tabs__nav,
     .pprf-tabs__panels{
       padding: 0 20px !important;
+      &.scrollable{
+        padding-bottom:3rem !important;
+
+      }
     }
     .pprf-sidebar__main{
       padding:0 !important;
@@ -158,9 +162,6 @@ export default {
       //margin-top: 50px !important;
     //}
   }
-
-
-
 
   @include breakpoint(medium down) {
     .pprf-sidebar--search {
