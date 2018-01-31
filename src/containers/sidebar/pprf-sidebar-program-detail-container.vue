@@ -52,6 +52,7 @@
          <pprf-detail-content-section
             v-if="program.desc_short"
             class="program__content-section program-detail__about"
+            :icon="['far','file']"
             heading="About this program"
            >
             <p>{{program.desc_short}}</p>
