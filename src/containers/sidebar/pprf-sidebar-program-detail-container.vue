@@ -157,7 +157,7 @@ export default {
 }
 .entity-detail__header-meta{
   color: $white;
-  padding-bottom:1rem;
+  padding-bottom:20px;
 }
 .pprf-sidebar__title--detail{
   color: $white;
