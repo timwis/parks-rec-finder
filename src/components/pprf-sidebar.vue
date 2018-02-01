@@ -123,14 +123,6 @@ export default {
 Single Category Sidebar
 ========================================================================== */
 
-.pprf-sidebar.pprf-sidebar--category{
-  .pprf-filter-bar-form__open{
-    .scrollable{
-      height: calc(100vh - 220px);
-    }
-  }
-
-}
 .pprf-sidebar__header--category{
     padding-top: 20px;
     background: lighten(color(light-ben-franklin), 10%);
