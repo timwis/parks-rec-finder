@@ -105,6 +105,9 @@ export default {
         margin-right: 8%;
         @include rem(font-size, 1.218rem);
         @include rem(line-height, 1.5);
+        &:last-of-type{
+          margin-right:0;
+        }
       }
 
     }
