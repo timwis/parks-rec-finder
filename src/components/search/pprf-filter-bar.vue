@@ -675,6 +675,7 @@ export default {
 
   .scrollable{
     position:absolute;
+    height:800px;
     height: calc(100vh - 300px);
     overflow:scroll;
     padding-bottom: 80px;
