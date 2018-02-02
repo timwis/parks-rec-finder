@@ -145,6 +145,11 @@ export default {
 </script>
 
 <style lang="scss" >
+.category-list{
+  list-style: none;
+  margin:0;
+  padding:0;
+}
 .pprf-sidebar.pprf-sidebar--nopad.pprf-sidebar--search{
   padding:0 ;
     .pprf-back-btn{margin-left:0;}
@@ -153,7 +158,7 @@ export default {
     .pprf-tabs__panels{
       padding: 0 20px !important;
       &.scrollable{
-        padding-bottom:3rem !important;
+        padding-bottom:4rem !important;
 
       }
     }
@@ -175,5 +180,6 @@ export default {
       }
     }
   }
+
 
 </style>
