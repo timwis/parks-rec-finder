@@ -78,7 +78,7 @@ export default {
     padding:0;
     .pprf-back-btn{margin-left: 15px;}
     .pprf-sidebar__main{
-      padding: 0 2rem 2rem 3rem;
+      padding: 0 2rem 3rem 2rem;
     }
   }
     .pprf-sidebar__inner{

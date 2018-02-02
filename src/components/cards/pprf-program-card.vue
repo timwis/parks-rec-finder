@@ -83,7 +83,7 @@ export default {
 <style lang="scss" scoped>
   .card.card--program{
     display: flex;
-    padding: 10px;
+    padding: 5px;
     border-bottom: 1px solid color(dark-gray);
     position: relative;
     padding-bottom: 0;
