@@ -168,7 +168,6 @@ export default {
       max-height: 100%;
       position: absolute;
       z-index:1;
-      top:80px;
       flex:1;
     }
 
