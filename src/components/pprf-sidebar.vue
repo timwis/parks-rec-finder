@@ -78,7 +78,7 @@ export default {
     padding:0;
     .pprf-back-btn{margin-left: 15px;}
     .pprf-sidebar__main{
-      padding: 0 2rem 2rem 3rem;
+      padding: 0 2rem 3rem 2rem;
     }
   }
     .pprf-sidebar__inner{
@@ -123,14 +123,6 @@ export default {
 Single Category Sidebar
 ========================================================================== */
 
-.pprf-sidebar.pprf-sidebar--category{
-  .pprf-filter-bar-form__open{
-    .scrollable{
-      height: calc(100vh - 220px);
-    }
-  }
-
-}
 .pprf-sidebar__header--category{
     padding-top: 20px;
     background: lighten(color(light-ben-franklin), 10%);

@@ -29,7 +29,8 @@
                     :count="programs.length"
                     :selected="true"
                    >
-                    <div v-if="programs.length > 0">
+                    <ul class="category-list">
+                    <li v-if="programs.length > 0">
                       <pprf-program-card
                         v-if="program.id"
                         v-for="program in programs"
@@ -44,18 +45,20 @@
                         :location="{ address: program.facility_address, name: program.facility_name, id: program.facility_id }"
                         :distance="program.distance"
                       />
-                    </div>
-                    <div v-else-if="facilities.length > 0">
-                      No activities were found. Try the <b>Locations</b> tab above.
-                    </div>
 
+                    <li v-else-if="facilities.length > 0">
+                      No activities were found. Try the <b>Locations</b> tab above.
+                    </li>
+                  </li>
+                </ul>
                   </pprf-tab>
 
                   <pprf-tab
                     name="Locations"
                     :count="facilities.length"
                   >
-                    <div v-if="facilities.length > 0">
+                  <ul class="category-list">
+                    <li v-if="facilities.length > 0">
                       <pprf-location-card
                         v-for="facility in facilities"
                         :key="getUUID('facilityCard')"
@@ -66,10 +69,11 @@
                         :distance="facility.distance"
                         :selected="activeCardID === facility.id"
                       />
-                    </div>
-                    <div v-else-if="programs.length > 0">
+                    </li>
+                    <li v-else-if="programs.length > 0">
                       No locations were found. Try the <b>Activities</b> tab above.
-                    </div>
+                    </li>
+                  </ul>
                   </pprf-tab>
 
               </pprf-tabs>
@@ -141,6 +145,11 @@ export default {
 </script>
 
 <style lang="scss" >
+.category-list{
+  list-style: none;
+  margin:0;
+  padding:0;
+}
 .pprf-sidebar.pprf-sidebar--nopad.pprf-sidebar--search{
   padding:0 ;
     .pprf-back-btn{margin-left:0;}
@@ -149,7 +158,7 @@ export default {
     .pprf-tabs__panels{
       padding: 0 20px !important;
       &.scrollable{
-        padding-bottom:3rem !important;
+        padding-bottom:4rem !important;
 
       }
     }
@@ -171,5 +180,6 @@ export default {
       }
     }
   }
+
 
 </style>

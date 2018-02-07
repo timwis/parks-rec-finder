@@ -258,7 +258,7 @@ export default {
         },
         {
           name: 'Senior (56+)',
-          range: [56, 99]
+          range: [56, 100]
         }
       ],
 
@@ -675,6 +675,7 @@ export default {
 
   .scrollable{
     position:absolute;
+    height:800px;
     height: calc(100vh - 300px);
     overflow:scroll;
     padding-bottom: 80px;

@@ -35,6 +35,8 @@ export default {
         return deSlugify(previousRoute.params.entityTerm)
       } else if (_.has(previousRoute.params, 'entityType')) {
         return previousRoute.params.entityType
+      } else if (previousRoute.query.freetext === 'undefined' || previousRoute.query.freetext === ' ') {
+        return 'Back'
       } else if (previousRoute.name === 'Search') {
         return `Search results for ${previousRoute.query.freetext}`
       } else {
