@@ -77,7 +77,7 @@ export default {
     padding-bottom: 0;
 
     .card__info{
-      height: 80px;
+      min-height: 80px;
       display:flex;
       flex-direction:column;
     }
