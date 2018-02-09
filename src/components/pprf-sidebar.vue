@@ -67,6 +67,7 @@ export default {
     color: color(dark-gray);
     border-right: 1px solid color(ghost-gray);
     overflow: hidden;
+    position: relative;
   }
   .pprf-sidebar__main{
     display: block;
