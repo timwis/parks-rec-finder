@@ -14,8 +14,6 @@
             </p>
           </div>
       </div>
-
-
           <pprf-tabs
             slot="sidebar-main"
           >
@@ -24,6 +22,12 @@
                   slot="beforePanes"
                 ></pprf-filter-bar>
 
+              <div
+              class="pprf-error"
+              v-if="resultsCount === 0">
+                <p>Sorry, there are no results for this search.</p>
+                <p>Please try different search terms or another location.</p>
+              </div >
                 <pprf-tab
                     name="Activities"
                     :count="programs.length"
@@ -128,12 +132,10 @@ export default {
       facilities: state => state.entities.facility,
       activeTab: state => state.activeTab
     }),
-
     resultsCount () {
       return isNaN(this.programs.length + this.facilities.length) ? 0 : (this.programs.length + this.facilities.length)
     }
   },
-
   methods: {
     // generate ids for our cards because our data isn't clean enough
     //
@@ -149,6 +151,11 @@ export default {
   list-style: none;
   margin:0;
   padding:0;
+}
+.pprf-error p{
+  font-size:2rem;
+  font-weight:bold;
+  padding:0 1rem;
 }
 .pprf-sidebar.pprf-sidebar--nopad.pprf-sidebar--search{
   padding:0 ;
