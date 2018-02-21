@@ -2,32 +2,36 @@
   <pprf-sidebar
     class="pprf-sidebar--nopad pprf-sidebar--search"
   >
-
-      <div slot="sidebar-header">
-          <h2 class="pprf-sidebar__title text-nopad">Search results</h2>
+    <div slot="sidebar-header">
+      <div v-if="loading === false">
+        <h2 class="pprf-sidebar__title text-nopad">Search results</h2>
           <div class="pprf-sidebar__desc">
             <p>
-                Showing {{resultsCount}} results
-                <span v-show="search.fields.freetext">for <b>{{search.fields.freetext}}</b></span>
-                <span v-show="search.fields.address"> near {{search.fields.address}}</span>
-                <span v-show="search.fields.zip" >around {{search.fields.zip}}</span>
-            </p>
-          </div>
+            Showing {{resultsCount}} results
+            <span v-show="search.fields.freetext">for <b>{{search.fields.freetext}}</b></span>
+            <span v-show="search.fields.address"> near {{search.fields.address}}</span>
+            <span v-show="search.fields.zip" >around {{search.fields.zip}}</span>
+          </p>
+        </div>
       </div>
+      <div v-else>
+        <font-awesome-icon icon="spinner" spin />
+      </div>
+    </div>
+
           <pprf-tabs
             slot="sidebar-main"
           >
+            <div
+            class="pprf-error"
+            v-if="resultsCount === 0 && loading === false">
+              <p>Sorry, there are no results for this search.</p>
+              <p>Please try different search terms or another location.</p>
+            </div>
+            <pprf-filter-bar
+              slot="beforePanes"
+            ></pprf-filter-bar>
 
-                <pprf-filter-bar
-                  slot="beforePanes"
-                ></pprf-filter-bar>
-
-              <div
-              class="pprf-error"
-              v-if="resultsCount === 0">
-                <p>Sorry, there are no results for this search.</p>
-                <p>Please try different search terms or another location.</p>
-              </div >
                 <pprf-tab
                     name="Activities"
                     :count="programs.length"
@@ -36,7 +40,7 @@
                     <ul class="category-list">
                     <li v-if="programs.length > 0">
                       <pprf-program-card
-                        v-if="program.id"
+                        v-if="program.id && loading === false"
                         v-for="program in programs"
                         :key="getUUID('programCard')"
                         :name="program.program_name"
@@ -62,7 +66,7 @@
                     :count="facilities.length"
                   >
                   <ul class="category-list">
-                    <li v-if="facilities.length > 0">
+                    <li v-if="facilities.length > 0 && loading === false">
                       <pprf-location-card
                         v-for="facility in facilities"
                         :key="getUUID('facilityCard')"
@@ -74,7 +78,7 @@
                         :selected="activeCardID === facility.id"
                       />
                     </li>
-                    <li v-else-if="programs.length > 0">
+                    <li v-else-if="programs.length > 0 && loading === false">
                       No locations were found. Try the <b>Activities</b> tab above.
                     </li>
                   </ul>
@@ -94,6 +98,7 @@ import pprfFilterBar from '@/components/search/pprf-filter-bar'
 import pprfProgramCard from '@/components/cards/pprf-program-card'
 import pprfLocationCard from '@/components/cards/pprf-location-card'
 import {pprfTabs, pprfTab} from '@/components/pprf-tabs/'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 /**
  * SEARCH RESULTS SIDEBAR STATE CONTAINER
@@ -114,7 +119,8 @@ export default {
     pprfTab,
     pprfFilterBar,
     pprfProgramCard,
-    pprfLocationCard
+    pprfLocationCard,
+    FontAwesomeIcon
   },
 
   data () {
@@ -127,6 +133,7 @@ export default {
 
   computed: {
     ...mapState({
+      loading: state => state.loading,
       search: state => state.search,
       programs: state => state.entities.program,
       facilities: state => state.entities.facility,
@@ -152,10 +159,13 @@ export default {
   margin:0;
   padding:0;
 }
-.pprf-error p{
-  font-size:2rem;
-  font-weight:bold;
-  padding:0 1rem;
+.pprf-error  {
+  padding:2rem 0;
+  p{
+    font-size:2rem;
+    font-weight:bold;
+    padding:0 1rem;
+  }
 }
 .pprf-sidebar.pprf-sidebar--nopad.pprf-sidebar--search{
   padding:0 ;
