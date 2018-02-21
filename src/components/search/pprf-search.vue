@@ -265,10 +265,6 @@ export default {
      * @since 0.3.7
      */
     '$route.query': function (val) {
-      if (_.difference([val.freetext], [this.$store.state.search.fields.freetext]).length) {
-        val.zip = null
-        val.address = null
-      }
       this.searchFromRoute(val)
     }
   }
