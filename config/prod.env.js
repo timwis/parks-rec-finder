@@ -7,7 +7,7 @@ NODE_ENV: '"development"',
   },
   AIS_API:{
     BASE: '"https://api.phila.gov/ais/v1/"',
-    KEY: '"6ba4de64d6ca99aa4db3b9194e37adbf"'
+    KEY: '"aeec9db5c3d2033149545595dd31c4bf"'
   },
   ESRI: {
     tiledLayers: {
