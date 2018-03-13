@@ -1,12 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import ActivityCategories from '~/pages/ActivityCategories'
+
 Vue.use(VueRouter)
 
-const routes = []
+const routes = [
+  {
+    path: '/activities',
+    alias: '/',
+    name: 'activityCategories',
+    component: ActivityCategories
+  }
+]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   routes
 })
 
