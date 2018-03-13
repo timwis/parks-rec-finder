@@ -1,10 +1,10 @@
 <template lang="pug">
   div#application
     SiteHeader(title='Finder')
-    div.row
-      div.columns.medium-6
-        p List
-      div.columns.medium-18
+    main
+      aside.list
+        router-view
+      section.map
         p Map
 </template>
 
@@ -21,3 +21,16 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+main
+  display: grid
+  grid-template-columns: minmax(200px, 3fr) 9fr
+  grid-template-areas: "list map"
+
+  .list
+    grid-area: list
+
+  .map
+    grid-area: map
+</style>
