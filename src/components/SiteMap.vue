@@ -7,6 +7,7 @@
       :key="location.id"
       :lat-lng="getLatLng(location.geometry)"
       :title="location.name"
+      :icon="svgIcon"
     >
       <LeafletPopup :content="getPopupContent(location)"/>
     </LeafletMarker>
@@ -21,6 +22,8 @@ import {
   Popup as LeafletPopup
 } from 'vue2-leaflet'
 import EsriTileLayer from '~/components/EsriTileLayer'
+import L from 'leaflet'
+import 'leaflet-svgicon'
 
 // TODO: Think of a better name for this component...
 // Map conflicts with the component used within, but
@@ -40,7 +43,12 @@ export default {
       defaultZoom: 13,
       defaultCenter: [39.9523893, -75.1636291],
       basemap: 'https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityBasemap/MapServer',
-      labels: 'https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityBasemap_Labels/MapServer'
+      labels: 'https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityBasemap_Labels/MapServer',
+      svgIcon: new L.DivIcon.SVGIcon({
+        color: '#A5097E',
+        fillOpacity: 1,
+        iconSize: [20, 28]
+      })
     }
   },
   methods: {
