@@ -7,3 +7,8 @@ export async function getActivityCategories ({ commit }) {
   const activityCategories = await carto.getActivityCategories()
   commit('SET_ACTIVITY_CATEGORIES', activityCategories)
 }
+
+export async function getLocationCategories ({ commit }) {
+  const locationCategories = await carto.getLocationCategories()
+  commit('SET_LOCATION_CATEGORIES', locationCategories)
+}
