@@ -71,8 +71,7 @@ import {deSlugify} from '@/utilities/utils'
 import resolveEntityType from '@/utilities/entity-type-resolver'
 
 // state
-import api from '@/sources/api'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 // mixins
 import scrollListToMapPinMixin from '@/mixins/scroll-list-to-map-pin'
 
@@ -129,14 +128,10 @@ export default {
   /*
    * @see [Vue Router Data Fetching](https://router.vuejs.org/en/advanced/data-fetching.html)
    */
-  beforeRouteEnter (to, from, next) {
-    api.getTaxonomyTermEntities(to.params, to.query).then(results => {
-      next(vm => {
-        let entity = resolveEntityType(to.params.entityType).name
-        vm.$store.dispatch('updateEntities', {[entity]: results.data.rows})
-        vm.$store.dispatch('setMapMarkers', {entityType: entity})
-      })
-    })
+  created () {
+    const { params, query } = this.$route
+    this.resetEntities()
+    this.getEntities({ params, query })
   },
 
   methods: {
@@ -147,17 +142,18 @@ export default {
      * @since 0.1.0
      */
     filterEntities (filters) {
-      api.getTaxonomyTermEntities(this.$store.state.route.params, filters)
-          .then(results => {
-            let entity = resolveEntityType(this.entityType).name
-            this.$store.dispatch('updateEntities', { [entity]: results.data.rows })
-            this.$store.dispatch('setMapMarkers', {entityType: entity})
-          })
+      const params = this.$route.params
+      this.getEntities({ params, filters })
     },
 
     getUUID (entityType) {
       return _.uniqueId(`${entityType}-`)
-    }
+    },
+
+    ...mapActions([
+      'resetEntities',
+      'getEntities'
+    ])
   },
 
   computed: {

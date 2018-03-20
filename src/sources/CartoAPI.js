@@ -230,28 +230,32 @@ class CartoAPI {
    * @since 0.1.0
    */
   getTaxonomyTermEntities (entity, filters) {
-    let _entity = resolveEntityType(entity.entityType)
-    let taxonomyTerm = entity.entityTerm.replace(/(-)/ig, ' ')
+    let _entity = resolveEntityType(entity.type)
 
-    let categoryEntityQuery = new PPRFQuery.Builder(`${_entity.name}Category`, {term: taxonomyTerm})
+    let categoryEntityQuery = new PPRFQuery.Builder(`${_entity.name}Category`)
 
     if (_entity.name === 'program') {
       categoryEntityQuery
         .fields(['program_name_full', `id`, 'program_id', 'activity_type', 'program_name', 'program_description', 'age_low', 'age_high', 'fee', {'gender->>0': 'gender'}], _entity.DBTable)
         .field('lower(activity_category_name) as activity_category_name')
         .join(tables.programCategories, 'category', `category.id = ${_entity.DBTable}.activity_category->>0`)
-        .where(`lower(category.activity_category_name) = '${taxonomyTerm}'`)
+        .where(`activity_category ? '${entity.termId}'`)
 
       if (filters) {
         categoryEntityQuery
           .addFilters(filters)
       }
     } else if (_entity.name === 'facility') {
-      // noop -- done in FacilitiesQuery
-      console.log('called anyway')
+      categoryEntityQuery
+        .where(`location_type ? '${entity.termId}'`)
     }
 
     return this.runQuery(categoryEntityQuery.joinPPRAssets())
+  }
+
+  getTaxonomyTermId (entityType, entityTerm) {
+    const query = new PPRFQuery.Builder(`${entityType}CategoryId`, {entityTerm})
+    return this.runQuery(query)
   }
 
   getZipCentroid (zip) {

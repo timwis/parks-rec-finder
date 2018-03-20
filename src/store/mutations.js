@@ -22,6 +22,9 @@ const mutations = {
   [types.UPDATE_PROGRAM_CATEGORIES] (state, programCategories) {
     state.entities.category.program = programCategories
   },
+  [types.RESET_PROGRAMS] (state) {
+    state.entities.program = []
+  },
 
   // ENTITY: FACILITIES
   [types.UPDATE_FACILITIES] (state, facilities) {
@@ -29,6 +32,9 @@ const mutations = {
   },
   [types.UPDATE_FACILITY_CATEGORIES] (state, facilityCategories) {
     state.entities.category.facility = facilityCategories
+  },
+  [types.RESET_FACILITIES] (state) {
+    state.entities.facility = []
   },
 
   // ENTITY: MARKERS

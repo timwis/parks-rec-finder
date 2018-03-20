@@ -56,6 +56,24 @@ export default class PPRFQuery {
           case 'programCategory':
             this.query = new ProgramsQuery(this)
             break
+          case 'programCategoryId': {
+            const term = this.options.entityTerm.replace(/-/g, ' ')
+            this.query = this.postgreSQL
+                          .select()
+                          .field('id')
+                          .from('ppr_activity_categories')
+                          .where('lower(activity_category_name) = ?', term)
+            break
+          }
+          case 'facilityCategoryId': {
+            const term = this.options.entityTerm.replace(/-/g, ' ')
+            this.query = this.postgreSQL
+                          .select()
+                          .field('id')
+                          .from('ppr_location_types')
+                          .where('lower(location_type_name) = ?', term)
+            break
+          }
           case 'facilityCategories':
           case 'programCategories':
             this.query = new TaxonomyQuery(this)

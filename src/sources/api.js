@@ -97,6 +97,11 @@ class API {
     return cartoAPI.getTaxonomyTermEntities(entity, filters)
   }
 
+  // entityType is program or facility. entityTerm is the category
+  getTaxonomyTermId (entityType, entityTerm) {
+    return cartoAPI.getTaxonomyTermId(entityType, entityTerm)
+  }
+
   /**
    * Given a program.id return the program entity
    * and it's associated program schedule

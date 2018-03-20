@@ -51,9 +51,29 @@ const actions = {
 
   getTerms ({commit, state}, entityType) {
     api.getTerms(entityType).then(results => {
-      // console.log(results.data.rows)
       commit(types.UPDATE_ENTITIES, {entities: {activity_type: results.data.rows}})
     })
+  },
+
+  // ENTITIES
+  getEntities ({dispatch, state}, {params, query}) {
+    const entity = {
+      type: resolveEntityType(params.entityType).name,
+      term: params.entityTerm
+    }
+    api.getTaxonomyTermId(entity.type, entity.term).then(termIdResults => {
+      entity.termId = termIdResults.data.rows[0].id
+      api.getTaxonomyTermEntities(entity, query).then(results => {
+        dispatch('updateEntities', {[entity.type]: results.data.rows})
+        dispatch('setMapMarkers', {entityType: entity.type})
+      })
+    })
+  },
+
+  resetEntities ({commit}) {
+    commit(types.RESET_PROGRAMS)
+    commit(types.RESET_FACILITIES)
+    commit(types.RESET_MARKERS)
   },
 
   // SEARCH

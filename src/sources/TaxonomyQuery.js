@@ -18,20 +18,25 @@ export default class TaxonomyQuery extends QueryInterface {
     switch (this.build.entity.name) {
       case 'programCategories':
         this.query
-            .field('count(*)', 'count')
-            .field(`${this.tableAlias}.activity_category_name`)
-            .field(`${this.tableAlias}.activity_category_description`)
-            .field(`${this.tableAlias}.activity_category_photo`)
-            .from(this.build.entity.DBTable, this.tableAlias)
-            .where('activity_category_is_published')
-            .join(tables.programs, null, `${tables.programs}.activity_category->>0 = ${this.tableAlias}.id`)
-        this.query = ProgramsQuery.joinWithAggregateData(this.query)
-        this.query = ProgramsQuery.isPublished(this.query)
-            .join(tables.assets, null, `${tables.facilities}.website_locator_points_link_id = ${tables.assets}.linkid`)
-            .group(`${this.tableAlias}.activity_category_name, ${this.tableAlias}.activity_category_description, ${this.tableAlias}.activity_category_photo, ${tables.facilities}.facility_is_published`)
-            .order('count', false)
-            .order('activity_category_name')
-
+          .with(`activity_categories_tmp`, squel.useFlavour('postgres')
+            .select()
+            .field(`jsonb_array_elements(activity_category)->>0 as activity_category`)
+            .from(`ppr_programs`)
+            .where(`program_is_public`)
+            .where(`program_is_approved`)
+            .where(`program_is_active`)
+          )
+          .field(`count(*)`, `count`)
+          .field(`activity_category_name`)
+          .field(`activity_category_description`)
+          .field(`activity_category_photo`)
+          .from(`activity_categories_tmp`)
+          .left_join(`ppr_activity_categories`, null, `ppr_activity_categories.id = activity_categories_tmp.activity_category`)
+          .where(`activity_category_is_published`)
+          .group(`activity_category_name,
+                  activity_category_description,
+                  activity_category_photo`)
+          .order(`count`, false)
         break
       case 'facilityCategories':
         this.query
