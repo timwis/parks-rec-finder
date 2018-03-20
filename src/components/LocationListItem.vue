@@ -16,7 +16,7 @@ export default {
       const { street, street2, city, state, zip } = this.address
       const order = [ street, street2, city, state, zip ]
       return order
-        .filter((part) => part.length > 0)
+        .filter((part) => part && part.length > 0)
         .join(', ')
     }
   }
