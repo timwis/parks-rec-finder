@@ -10,7 +10,9 @@ const store = new Vuex.Store({
   strict: (process.env.NODE_ENV !== 'production'),
   state: {
     activityCategories: [],
-    locationCategories: []
+    locationCategories: [],
+    locationCategoryDetails: {},
+    locations: []
   },
   mutations,
   actions

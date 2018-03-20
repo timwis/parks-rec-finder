@@ -64,4 +64,38 @@ export default class Carto {
     return this.client({ params })
       .then((res) => res.data.rows)
   }
+
+  getLocationCategoryDetails (category) {
+    const query = squel.useFlavour('postgres')
+      .select()
+      .fields({
+        'id': 'id',
+        'location_type_name': 'name'
+      })
+      .from('ppr_location_types')
+      .where(`regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-') = ?`, category)
+      .where('location_type_is_published = true')
+      .toString()
+    const params = { q: query }
+    return this.client({ params })
+      .then((res) => res.data.rows[0])
+  }
+
+  getLocations ({ categoryId }) {
+    const query = squel.useFlavour('postgres')
+      .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
+      .fields({
+        'ppr_facilities.id': 'id',
+        'ppr_facilities.facility_name': 'name',
+        'ppr_facilities.address': 'address'
+      })
+      .field('ST_AsGeoJSON(ST_Centroid(ppr_website_locatorpoints.the_geom))::json', 'geometry')
+      .from('ppr_facilities')
+      .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
+      .where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
+      .toString()
+    const params = { q: query }
+    return this.client({ params })
+      .then((res) => res.data.rows)
+  }
 }
