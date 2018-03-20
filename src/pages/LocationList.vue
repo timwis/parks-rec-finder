@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import LocationListItem from '~/components/LocationListItem'
 
 export default {
@@ -37,9 +37,22 @@ export default {
   created () {
     this.getLocations({ category: this.category })
   },
-  methods: mapActions([
-    'getLocations'
-  ])
+  destroyed () {
+    this.resetLocations()
+  },
+  watch: {
+    category (newCategory) {
+      this.getLocations({ category: newCategory })
+    }
+  },
+  methods: {
+    ...mapActions([
+      'getLocations'
+    ]),
+    ...mapMutations({
+      resetLocations: 'RESET_LOCATIONS'
+    })
+  }
 }
 </script>
 
