@@ -73,7 +73,7 @@ export default class Carto {
         'location_type_name': 'name'
       })
       .from('ppr_location_types')
-      .where(`regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-') = ?`, category)
+      .where(`regexp_replace(regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
       .where('location_type_is_published = true')
       .toString()
     const params = { q: query }
