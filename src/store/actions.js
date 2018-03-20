@@ -12,3 +12,13 @@ export async function getLocationCategories ({ commit }) {
   const locationCategories = await carto.getLocationCategories()
   commit('SET_LOCATION_CATEGORIES', locationCategories)
 }
+
+export async function getLocations ({ commit }, { category }) {
+  commit('RESET_LOCATION_CATEGORY_DETAILS')
+  commit('RESET_LOCATIONS')
+  const locationCategoryDetails = await carto.getLocationCategoryDetails(category)
+  const categoryId = locationCategoryDetails.id
+  const locations = await carto.getLocations({ categoryId })
+  commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
+  commit('SET_LOCATIONS', locations)
+}
