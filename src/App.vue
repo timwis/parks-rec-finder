@@ -6,7 +6,7 @@
         <router-view/>
       </aside>
       <section class="map">
-        <SiteMap/>
+        <SiteMap :locations="locations" />
       </section>
     </main>
   </div>
@@ -14,6 +14,7 @@
 
 
 <script>
+import { mapState } from 'vuex'
 import 'phila-standards/dist/css/phila-app.min.css'
 
 import SiteHeader from './components/SiteHeader'
@@ -24,7 +25,10 @@ export default {
   components: {
     SiteHeader,
     SiteMap
-  }
+  },
+  computed: mapState([
+    'locations'
+  ])
 }
 </script>
 
