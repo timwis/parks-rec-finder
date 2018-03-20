@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import ActivityCategories from '~/pages/ActivityCategories'
+import Categories from '~/pages/Categories'
 
 Vue.use(VueRouter)
 
@@ -10,7 +10,14 @@ const routes = [
     path: '/activities',
     alias: '/',
     name: 'activityCategories',
-    component: ActivityCategories
+    component: Categories,
+    props: { activeTab: 'activities' }
+  },
+  {
+    path: '/locations',
+    name: 'locationCategories',
+    component: Categories,
+    props: { activeTab: 'locations' }
   }
 ]
 

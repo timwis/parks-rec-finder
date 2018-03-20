@@ -1,11 +1,15 @@
-<template lang="pug">
-  div#application
-    SiteHeader(title='Finder')
-    main
-      aside.list
-        router-view
-      section.map
-        Map
+<template>
+  <div id="application">
+    <SiteHeader title="Finder"/>
+    <main>
+      <aside class="list">
+        <router-view/>
+      </aside>
+      <section class="map">
+        <SiteMap/>
+      </section>
+    </main>
+  </div>
 </template>
 
 
@@ -13,13 +17,13 @@
 import 'phila-standards/dist/css/phila-app.min.css'
 
 import SiteHeader from './components/SiteHeader'
-import Map from '~/components/Map'
+import SiteMap from '~/components/SiteMap'
 
 export default {
   name: 'app',
   components: {
     SiteHeader,
-    Map
+    SiteMap
   }
 }
 </script>
