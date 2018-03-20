@@ -35,12 +35,14 @@ export default {
 <style lang="sass">
 main
   display: grid
-  grid-template-columns: minmax(200px, 3fr) 9fr
+  grid-template-columns: minmax(300px, 3fr) 9fr
   grid-template-rows: calc(100vh - 73px)
   grid-template-areas: "list map"
 
   .list
     grid-area: list
+    overflow-y: auto
+    padding: 0 10px
 
   .map
     grid-area: map
