@@ -1,6 +1,6 @@
 <template>
   <div id="application">
-    <SiteHeader @search="onSearch"/>
+    <SiteHeader :term="term" @search="onSearch"/>
     <main>
       <aside class="list">
         <router-view/>
@@ -44,6 +44,11 @@ export default {
       // couldn't think of a better way to do this, and
       // multiple <router-view>s seems overkill.
       return this.$route.meta.mapShows
+    },
+    term () {
+      // This is also not ideal, but I can't think of a
+      // better way.
+      return this.$route.query.term
     }
   },
   methods: {

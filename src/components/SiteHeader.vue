@@ -28,6 +28,7 @@
                 placeholder="Search by activity or location name"
                 name="term"
                 ref="term"
+                :value="term"
               />
               <input type="submit" class="search-submit"/>
             </div>
@@ -40,6 +41,9 @@
 
 <script>
 export default {
+  props: {
+    term: String
+  },
   methods: {
     onSubmit (event) {
       const term = this.$refs.term.value
