@@ -169,4 +169,30 @@ export default class Carto {
       .then((res) => res.data.rows[0])
       .then(camelcaseKeys)
   }
+
+  getActivity (id) {
+    const query = squel.useFlavour('postgres')
+      .select()
+      .fields({
+        'ppr_programs.id': 'id',
+        'ppr_programs.program_name': 'name',
+        'ppr_programs.age_low': 'age_low',
+        'ppr_programs.age_high': 'age_high',
+        'ppr_programs.fee': 'fee',
+        'ppr_programs.fee_frequency->>0': 'fee_frequency',
+        'ppr_programs.gender->>0': 'gender',
+        'ppr_facilities.facility_name': 'facility_name',
+        'ppr_facilities.address': 'facility_address'
+      })
+      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'facility_geometry')
+      .from('ppr_programs')
+      .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
+      .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
+      .where('ppr_programs.id = ?', id)
+      .toString()
+    const params = { q: query }
+    return this.client({ params })
+      .then((res) => res.data.rows[0])
+      .then(camelcaseKeys)
+  }
 }

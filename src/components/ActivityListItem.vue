@@ -1,6 +1,10 @@
 <template>
   <li>
-    <h3>{{ name }}</h3>
+    <h3>
+      <router-link :to="url">
+        {{ name }}
+      </router-link>
+    </h3>
     <p>{{ facilityName }}</p>
     <p>{{ fullAddress }}</p>
     <p v-if="ageRange">Ages: {{ ageRange }}</p>
@@ -14,6 +18,7 @@ import { concatAddress } from '~/util'
 
 export default {
   props: {
+    id: String,
     name: String,
     fee: String,
     feeFrequency: String,
@@ -24,6 +29,9 @@ export default {
     facilityAddress: Object
   },
   computed: {
+    url () {
+      return `/activity/${this.id}`
+    },
     fullAddress () {
       return concatAddress(this.facilityAddress)
     },

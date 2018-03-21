@@ -28,6 +28,12 @@
     </LeafletMarker>
 
     <LeafletMarker
+      v-if="activity.facilityGeometry"
+      :lat-lng="activity.facilityGeometry"
+      :icon="activityIcon"
+    />
+
+    <LeafletMarker
       v-if="location.geometry"
       :lat-lng="location.geometry"
       :icon="locationIcon"
@@ -54,6 +60,7 @@ export default {
   props: {
     activities: Array,
     locations: Array,
+    activity: Object,
     location: Object
   },
   components: {
@@ -81,6 +88,12 @@ export default {
     }
   },
   watch: {
+    activity () {
+      if (this.activity.facilityGeometry) {
+        const map = this.$refs.map
+        map.setCenter(this.activity.facilityGeometry)
+      }
+    },
     location () {
       if (this.location.geometry) {
         const map = this.$refs.map

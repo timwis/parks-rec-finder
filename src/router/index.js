@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Categories from '~/pages/Categories'
 import ActivityList from '~/pages/ActivityList'
 import LocationList from '~/pages/LocationList'
+import ActivityDetail from '~/pages/ActivityDetail'
 import LocationDetail from '~/pages/LocationDetail'
 
 Vue.use(VueRouter)
@@ -32,6 +33,13 @@ const routes = [
     path: '/locations/:category',
     name: 'locationList',
     component: LocationList,
+    props: true
+  },
+  {
+    path: '/activity/:id',
+    alias: '/program/:id',
+    name: 'activityDetail',
+    component: ActivityDetail,
     props: true
   },
   {
