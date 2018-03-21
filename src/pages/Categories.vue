@@ -24,10 +24,11 @@
       <CategoryListItem
         v-for="category in activityCategories"
         :key="category.id"
-        url-prefix="activities"
         :name="category.name"
         :count="category.count"
         :photo="category.photo"
+        url-prefix="activities"
+        :slug="category.slug"
       />
     </ul>
 
@@ -35,10 +36,11 @@
       <CategoryListItem
         v-for="category in locationCategories"
         :key="category.id"
-        url-prefix="locations"
         :name="category.name"
         :count="category.count"
         :photo="category.photo"
+        url-prefix="locations"
+        :slug="category.slug"
       />
     </ul>
 
