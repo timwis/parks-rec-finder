@@ -9,7 +9,7 @@
 
     <LeafletMarker
       v-for="activity in activities"
-      v-if="activity.facilityGeometry"
+      v-if="show === 'activities' && activity.facilityGeometry"
       :key="activity.id"
       :lat-lng="activity.facilityGeometry"
       :icon="activityIcon"
@@ -19,7 +19,7 @@
 
     <LeafletMarker
       v-for="location in locations"
-      v-if="location.geometry"
+      v-if="show === 'locations' && location.geometry"
       :key="location.id"
       :lat-lng="location.geometry"
       :icon="locationIcon"
@@ -28,13 +28,13 @@
     </LeafletMarker>
 
     <LeafletMarker
-      v-if="activity.facilityGeometry"
+      v-if="show === 'activity' && activity.facilityGeometry"
       :lat-lng="activity.facilityGeometry"
       :icon="activityIcon"
     />
 
     <LeafletMarker
-      v-if="location.geometry"
+      v-if="show === 'location' && location.geometry"
       :lat-lng="location.geometry"
       :icon="locationIcon"
     />
@@ -61,7 +61,8 @@ export default {
     activities: Array,
     locations: Array,
     activity: Object,
-    location: Object
+    location: Object,
+    show: String
   },
   components: {
     LeafletMap, 

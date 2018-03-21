@@ -11,6 +11,7 @@
           :locations="locations"
           :activity="activity"
           :location="location"
+          :show="mapShows"
         />
       </section>
     </main>
@@ -31,17 +32,24 @@ export default {
     SiteHeader,
     SiteMap
   },
-  computed: mapState([
-    'activities',
-    'locations',
-    'activity',
-    'location'
-  ]),
+  computed: {
+    ...mapState([
+      'activities',
+      'locations',
+      'activity',
+      'location'
+    ]),
+    mapShows () {
+      // Ideally we'd use props over this.$route but I
+      // couldn't think of a better way to do this, and
+      // multiple <router-view>s seems overkill.
+      return this.$route.meta.mapShows
+    }
+  },
   methods: {
     onSearch ({ term }) {
       this.$router.push({
-        name: 'searchResults',
-        params: { activeTab: 'activities' },
+        name: 'activitiesSearchResults',
         query: { term }
       })
     }
