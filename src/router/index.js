@@ -16,48 +16,66 @@ const routes = [
     alias: '/',
     name: 'activityCategories',
     component: Categories,
-    props: { activeTab: 'activities' }
+    props: { activeTab: 'activities' },
+    meta: { mapShows: null}
   },
   {
     path: '/locations',
     name: 'locationCategories',
     component: Categories,
-    props: { activeTab: 'locations' }
+    props: { activeTab: 'locations' },
+    meta: { mapShows: null }
   },
   {
     path: '/activities/:categorySlug',
     name: 'activityList',
     component: ActivityList,
-    props: true
+    props: true,
+    meta: { mapShows: 'activities' }
   },
   {
     path: '/locations/:categorySlug',
     name: 'locationList',
     component: LocationList,
-    props: true
+    props: true,
+    meta: { mapShows: 'locations' }
   },
   {
     path: '/activity/:id',
     alias: '/program/:id',
     name: 'activityDetail',
     component: ActivityDetail,
-    props: true
+    props: true,
+    meta: { mapShows: 'activity' }
   },
   {
     path: '/location/:id',
     name: 'locationDetail',
     component: LocationDetail,
-    props: true
+    props: true,
+    meta: { mapShows: 'location' }
   },
   {
-    path: '/search/:activeTab',
+    path: '/search/activities',
     alias: '/search',
-    name: 'searchResults',
+    name: 'activitiesSearchResults',
     component: SearchResults,
     props: (route) => ({
-      ...route.query,
-      ...route.params
-    })
+      activeTab: 'activities',
+      ...route.query
+    }),
+    meta: { mapShows: 'activities' }
+  },
+  {
+    path: '/search/locations',
+    alias: '/search',
+    name: 'locationsSearchResults',
+    component: SearchResults,
+    props: (route) => ({
+      activeTab: 'locations',
+      ...route.query
+    }),
+    meta: { mapShows: 'locations' }
   }
 ]
 
