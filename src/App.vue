@@ -1,6 +1,10 @@
 <template>
   <div id="application">
-    <SiteHeader :term="term" @search="onSearch"/>
+    <SiteHeader
+      :search-term="searchTerm"
+      :search-location="searchLocation"
+      @search="onSearch"
+    />
     <main>
       <aside class="list">
         <router-view/>
@@ -45,17 +49,23 @@ export default {
       // multiple <router-view>s seems overkill.
       return this.$route.meta.mapShows
     },
-    term () {
+    searchTerm () {
       // This is also not ideal, but I can't think of a
       // better way.
       return this.$route.query.term
+    },
+    searchLocation () {
+      return this.$route.query.location
     }
   },
   methods: {
-    onSearch ({ term }) {
+    onSearch ({ searchTerm, searchLocation }) {
+      const query = {}
+      if (searchTerm) query.term = searchTerm
+      if (searchLocation) query.location = searchLocation
       this.$router.push({
         name: 'activitiesSearchResults',
-        query: { term }
+        query
       })
     }
   }

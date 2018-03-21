@@ -26,9 +26,15 @@
                 class="search-field"
                 type="text"
                 placeholder="Search by activity or location name"
-                name="term"
-                ref="term"
-                :value="term"
+                ref="searchTerm"
+                :value="searchTerm"
+              />
+              <input
+                class="search-field"
+                type="text"
+                placeholder="Address or zip code"
+                ref="searchLocation"
+                :value="searchLocation"
               />
               <input type="submit" class="search-submit"/>
             </div>
@@ -42,13 +48,16 @@
 <script>
 export default {
   props: {
-    term: String
+    searchTerm: String,
+    searchLocation: String
   },
   methods: {
     onSubmit (event) {
-      const term = this.$refs.term.value
-      if (term.length > 0) {
-        this.$emit('search', { term })
+      const searchTerm = this.$refs.searchTerm.value
+      const searchLocation = this.$refs.searchLocation.value
+      const isSearchValid = (searchTerm.length > 0 || searchLocation.length > 0)
+      if (isSearchValid) {
+        this.$emit('search', { searchTerm, searchLocation })
       }
     }
   }
