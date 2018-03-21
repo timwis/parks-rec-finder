@@ -6,6 +6,7 @@ import ActivityList from '~/pages/ActivityList'
 import LocationList from '~/pages/LocationList'
 import ActivityDetail from '~/pages/ActivityDetail'
 import LocationDetail from '~/pages/LocationDetail'
+import SearchResults from '~/pages/SearchResults'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,12 @@ const routes = [
     name: 'locationDetail',
     component: LocationDetail,
     props: true
+  },
+  {
+    path: '/search',
+    name: 'searchResults',
+    component: SearchResults,
+    props: (route) => route.query
   }
 ]
 

@@ -25,15 +25,15 @@ export async function getLocationCategoryDetails ({ commit }, categorySlug) {
   commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
 }
 
-export async function getActivities ({ commit }, { categoryId }) {
+export async function getActivities ({ commit }, { categoryId, term }) {
   commit('RESET_ACTIVITIES')
-  const activities = await carto.getActivities({ categoryId })
+  const activities = await carto.getActivities({ categoryId, term })
   commit('SET_ACTIVITIES', activities)
 }
 
-export async function getLocations ({ commit }, { categoryId }) {
+export async function getLocations ({ commit }, { categoryId, term }) {
   commit('RESET_LOCATIONS')
-  const locations = await carto.getLocations({ categoryId })
+  const locations = await carto.getLocations({ categoryId, term })
   commit('SET_LOCATIONS', locations)
 }
 

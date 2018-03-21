@@ -87,7 +87,7 @@ export default class Carto {
       .then((res) => res.data.rows[0])
   }
 
-  getLocations ({ categoryId }) {
+  getLocations ({ categoryId, term }) {
     const query = squel.useFlavour('postgres')
       .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
       .fields({
@@ -98,9 +98,21 @@ export default class Carto {
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
-      .where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
-      .toString()
-    const params = { q: query }
+
+    if (categoryId) {
+      query.where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
+    }
+    if (term) {
+      query.where(
+        squel.expr()
+          .and('ppr_facilities.facility_name ILIKE ?', `%${term}%`)
+          .or('ppr_facilities.long_name ILIKE ?', `%${term}%`)
+          .or('ppr_facilities.facility_description ILIKE ?', `%${term}%`)
+      )
+    }
+
+    const sql = query.toString()
+    const params = { q: sql }
     return this.client({ params })
       .then((res) => res.data.rows)
   }
@@ -120,7 +132,7 @@ export default class Carto {
       .then((res) => res.data.rows[0])
   }
 
-  getActivities ({ categoryId }) {
+  getActivities ({ categoryId, term }) {
     const query = squel.useFlavour('postgres')
       .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
       .fields({
@@ -138,12 +150,23 @@ export default class Carto {
       .from('ppr_programs')
       .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
-      .where('ppr_programs.activity_category ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
       .where('ppr_programs.program_is_public')
       .where('ppr_programs.program_is_approved')
       .where('ppr_programs.program_is_active')
-      .toString()
-    const params = { q: query }
+
+    if (categoryId) {
+      query.where('ppr_programs.activity_category ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
+    }
+    if (term) {
+      query.where(
+        squel.expr()
+          .and('ppr_programs.program_name ILIKE ?', `%${term}%`)
+          .or('ppr_programs.program_description ILIKE ?', `%${term}%`)
+      )
+    }
+
+    const sql = query.toString()
+    const params = { q: sql }
     return this.client({ params })
       .then((res) => res.data.rows)
       .then(camelcaseKeys)

@@ -1,6 +1,6 @@
 <template>
   <div id="application">
-    <SiteHeader title="Finder"/>
+    <SiteHeader @search="onSearch"/>
     <main>
       <aside class="list">
         <router-view/>
@@ -36,7 +36,15 @@ export default {
     'locations',
     'activity',
     'location'
-  ])
+  ]),
+  methods: {
+    onSearch ({ term }) {
+      this.$router.push({
+        name: 'searchResults',
+        query: { term }
+      })
+    }
+  }
 }
 </script>
 
