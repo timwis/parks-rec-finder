@@ -50,10 +50,14 @@ const routes = [
     props: true
   },
   {
-    path: '/search',
+    path: '/search/:activeTab',
+    alias: '/search',
     name: 'searchResults',
     component: SearchResults,
-    props: (route) => route.query
+    props: (route) => ({
+      ...route.query,
+      ...route.params
+    })
   }
 ]
 

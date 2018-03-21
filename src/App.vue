@@ -41,6 +41,7 @@ export default {
     onSearch ({ term }) {
       this.$router.push({
         name: 'searchResults',
+        params: { activeTab: 'activities' },
         query: { term }
       })
     }
