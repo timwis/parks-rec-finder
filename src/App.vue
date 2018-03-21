@@ -9,6 +9,7 @@
         <SiteMap
           :activities="activities"
           :locations="locations"
+          :activity="activity"
           :location="location"
         />
       </section>
@@ -33,6 +34,7 @@ export default {
   computed: mapState([
     'activities',
     'locations',
+    'activity',
     'location'
   ])
 }

@@ -7,6 +7,7 @@
       <ActivityListItem
         v-for="activity in activities"
         :key="activity.id"
+        :id="activity.id"
         :name="activity.name"
         :fee="activity.fee"
         :fee-frequency="activity.feeFrequency"

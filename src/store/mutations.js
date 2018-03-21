@@ -45,3 +45,11 @@ export function SET_LOCATION (state, location) {
 export function RESET_LOCATION (state) {
   state.location = {}
 }
+
+export function SET_ACTIVITY (state, activity) {
+  state.activity = activity
+}
+
+export function RESET_ACTIVITY (state) {
+  state.activity = {}
+}
