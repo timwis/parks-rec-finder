@@ -11,15 +11,13 @@ import { slugify } from '~/util'
 
 export default {
   props: {
-    urlPrefix: String, // locations or activities
     name: String,
     count: Number,
-    photo: String
+    photo: String,
+    urlPrefix: String, // locations or activities
+    slug: String
   },
   computed: {
-    slug () {
-      return slugify(this.name)
-    },
     url () {
       return `/${this.urlPrefix}/${this.slug}`
     }

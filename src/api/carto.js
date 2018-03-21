@@ -23,7 +23,8 @@ export default class Carto {
         'activity_category_id': 'id',
         'activity_category_name': 'name',
         'activity_category_description': 'description',
-        'activity_category_photo': 'photo'
+        'activity_category_photo': 'photo',
+        "regexp_replace(regexp_replace(lower(trim(activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
       .from('program_activity_categories_tmp')
       .left_join('ppr_activity_categories', null, 'program_activity_categories_tmp.exploded_activity_category = ppr_activity_categories.id')
@@ -53,7 +54,8 @@ export default class Carto {
         'location_type_id': 'id',
         'location_type_name': 'name',
         'location_type_description': 'description',
-        'location_type_photo': 'photo'
+        'location_type_photo': 'photo',
+        "regexp_replace(regexp_replace(lower(trim(location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
       .from('facility_location_types_tmp')
       .left_join('ppr_location_types', null, 'facility_location_types_tmp.exploded_location_type = ppr_location_types.id')
