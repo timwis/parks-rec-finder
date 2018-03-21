@@ -13,23 +13,27 @@ export async function getLocationCategories ({ commit }) {
   commit('SET_LOCATION_CATEGORIES', locationCategories)
 }
 
-export async function getActivities ({ commit }, { category }) {
+export async function getActivityCategoryDetails ({ commit }, categorySlug) {
   commit('RESET_ACTIVITY_CATEGORY_DETAILS')
-  commit('RESET_ACTIVITIES')
-  const activityCategoryDetails = await carto.getActivityCategoryDetails(category)
-  const categoryId = activityCategoryDetails.id
-  const activities = await carto.getActivities({ categoryId })
+  const activityCategoryDetails = await carto.getActivityCategoryDetails(categorySlug)
   commit('SET_ACTIVITY_CATEGORY_DETAILS', activityCategoryDetails)
+}
+
+export async function getLocationCategoryDetails ({ commit }, categorySlug) {
+  commit('RESET_LOCATION_CATEGORY_DETAILS')
+  const locationCategoryDetails = await carto.getLocationCategoryDetails(categorySlug)
+  commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
+}
+
+export async function getActivities ({ commit }, { categoryId }) {
+  commit('RESET_ACTIVITIES')
+  const activities = await carto.getActivities({ categoryId })
   commit('SET_ACTIVITIES', activities)
 }
 
-export async function getLocations ({ commit }, { category }) {
-  commit('RESET_LOCATION_CATEGORY_DETAILS')
+export async function getLocations ({ commit }, { categoryId }) {
   commit('RESET_LOCATIONS')
-  const locationCategoryDetails = await carto.getLocationCategoryDetails(category)
-  const categoryId = locationCategoryDetails.id
   const locations = await carto.getLocations({ categoryId })
-  commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
   commit('SET_LOCATIONS', locations)
 }
 

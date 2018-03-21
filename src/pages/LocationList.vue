@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{ locationCategoryDetails.name }}</h2>
+    <h2>{{ categoryName }}</h2>
     <p>({{ count }})</p>
 
     <ul>
@@ -21,36 +21,42 @@ import LocationListItem from '~/components/LocationListItem'
 
 export default {
   props: {
-    category: String
+    categorySlug: String
   },
   components: {
     LocationListItem
   },
   computed: {
-    ...mapState([
-      'locations',
-      'locationCategoryDetails'
-    ]),
+    ...mapState({
+      locations: (state) => state.locations,
+      categoryId: (state) => state.locationCategoryDetails.id,
+      categoryName: (state) => state.locationCategoryDetails.name
+    }),
     count () {
       return this.locations.length
     }
   },
-  created () {
-    this.getLocations({ category: this.category })
+  async created () {
+    await this.getLocationCategoryDetails(this.categorySlug)
+    this.getLocations({ categoryId: this.categoryId })
   },
   destroyed () {
+    this.resetLocationCategoryDetails()
     this.resetLocations()
   },
   watch: {
-    category (newCategory) {
-      this.getLocations({ category: newCategory })
+    async categorySlug () {
+      await this.getLocationCategoryDetails(this.categorySlug)
+      this.getLocations({ categoryId: this.categoryId })
     }
   },
   methods: {
     ...mapActions([
+      'getLocationCategoryDetails',
       'getLocations'
     ]),
     ...mapMutations({
+      resetLocationCategoryDetails: 'RESET_LOCATION_CATEGORY_DETAILS',
       resetLocations: 'RESET_LOCATIONS'
     })
   }

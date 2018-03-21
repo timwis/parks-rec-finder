@@ -24,13 +24,13 @@ const routes = [
     props: { activeTab: 'locations' }
   },
   {
-    path: '/activities/:category',
+    path: '/activities/:categorySlug',
     name: 'activityList',
     component: ActivityList,
     props: true
   },
   {
-    path: '/locations/:category',
+    path: '/locations/:categorySlug',
     name: 'locationList',
     component: LocationList,
     props: true
