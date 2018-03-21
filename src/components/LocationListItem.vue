@@ -1,23 +1,29 @@
 <template>
   <li>
-    <h3>{{ name }}</h3>
+    <h3>
+      <router-link :to="url">
+        {{ name }}
+      </router-link>
+    </h3>
     <p>{{ fullAddress }}</p>
   </li>
 </template>
 
 <script>
+import { concatAddress } from '~/util'
+
 export default {
   props: {
+    id: String,
     name: String,
     address: Object
   },
   computed: {
     fullAddress () {
-      const { street, street2, city, state, zip } = this.address
-      const order = [ street, street2, city, state, zip ]
-      return order
-        .filter((part) => part && part.length > 0)
-        .join(', ')
+      return concatAddress(this.address)
+    },
+    url () {
+      return `/location/${this.id}`
     }
   }
 }

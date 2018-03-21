@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Categories from '~/pages/Categories'
 import ActivityList from '~/pages/ActivityList'
 import LocationList from '~/pages/LocationList'
+import LocationDetail from '~/pages/LocationDetail'
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,12 @@ const routes = [
     path: '/locations/:category',
     name: 'locationList',
     component: LocationList,
+    props: true
+  },
+  {
+    path: '/location/:id',
+    name: 'locationDetail',
+    component: LocationDetail,
     props: true
   }
 ]

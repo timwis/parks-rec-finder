@@ -93,7 +93,7 @@ export default class Carto {
         'ppr_facilities.facility_name': 'name',
         'ppr_facilities.address': 'address'
       })
-      .field('ST_AsGeoJSON(ST_Centroid(ppr_website_locatorpoints.the_geom))::json', 'geometry')
+      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
       .where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
@@ -132,7 +132,7 @@ export default class Carto {
         'ppr_facilities.facility_name': 'facility_name',
         'ppr_facilities.address': 'facility_address'
       })
-      .field('ST_AsGeoJSON(ST_Centroid(ppr_website_locatorpoints.the_geom))::json', 'facility_geometry')
+      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'facility_geometry')
       .from('ppr_programs')
       .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
@@ -144,6 +144,27 @@ export default class Carto {
     const params = { q: query }
     return this.client({ params })
       .then((res) => res.data.rows)
+      .then(camelcaseKeys)
+  }
+
+  getLocation (id) {
+    const query = squel.useFlavour('postgres')
+      .select()
+      .fields({
+        'ppr_facilities.facility_name': 'name',
+        'ppr_facilities.facility_description': 'description',
+        'ppr_facilities.address': 'address',
+        'ppr_facilities.contact_phone': 'phone',
+        'ppr_facilities.location_contact_name': 'site_contact'
+      })
+      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
+      .from('ppr_facilities')
+      .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
+      .where('ppr_facilities.id = ?', id)
+      .toString()
+    const params = { q: query }
+    return this.client({ params })
+      .then((res) => res.data.rows[0])
       .then(camelcaseKeys)
   }
 }

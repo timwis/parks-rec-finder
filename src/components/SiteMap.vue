@@ -1,13 +1,17 @@
 <template>
-  <LeafletMap :zoom=13 :center="defaultCenter">
-
+  <LeafletMap
+    ref="map"
+    :zoom="defaultZoom"
+    :center="defaultCenter"
+  >
     <EsriTileLayer :url="basemap"/>
     <EsriTileLayer :url="labels"/>
 
     <LeafletMarker
       v-for="activity in activities"
+      v-if="activity.facilityGeometry"
       :key="activity.id"
-      :lat-lng="getLatLng(activity.facilityGeometry)"
+      :lat-lng="activity.facilityGeometry"
       :icon="activityIcon"
     >
       <LeafletPopup :content="getActivityPopupContent(activity)"/>
@@ -15,12 +19,19 @@
 
     <LeafletMarker
       v-for="location in locations"
+      v-if="location.geometry"
       :key="location.id"
-      :lat-lng="getLatLng(location.geometry)"
+      :lat-lng="location.geometry"
       :icon="locationIcon"
     >
       <LeafletPopup :content="getLocationPopupContent(location)"/>
     </LeafletMarker>
+
+    <LeafletMarker
+      v-if="location.geometry"
+      :lat-lng="location.geometry"
+      :icon="locationIcon"
+    />
 
   </LeafletMap>
 </template>
@@ -42,7 +53,8 @@ import 'leaflet-svgicon'
 export default {
   props: {
     activities: Array,
-    locations: Array
+    locations: Array,
+    location: Object
   },
   components: {
     LeafletMap, 
@@ -68,13 +80,29 @@ export default {
       })
     }
   },
-  methods: {
-    getLatLng (geojson) {
-      return [
-        geojson.coordinates[1],
-        geojson.coordinates[0]
-      ]
+  watch: {
+    location () {
+      if (this.location.geometry) {
+        const map = this.$refs.map
+        map.setCenter(this.location.geometry)
+      }
     },
+    activities () {
+      if (this.activities.length > 0) {
+        const geometries = this.activities.map((activity) => activity.facilityGeometry)
+        const map = this.$refs.map
+        map.fitBounds(geometries)
+      }
+    },
+    locations () {
+      if (this.locations.length > 0) {
+        const geometries = this.locations.map((location) => location.geometry)
+        const map = this.$refs.map
+        map.fitBounds(geometries)
+      }
+    }
+  },
+  methods: {
     getActivityPopupContent ({ name }) {
       return `
         <h3>${name}</h3>
