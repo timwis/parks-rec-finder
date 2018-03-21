@@ -14,7 +14,8 @@ const store = new Vuex.Store({
     locationCategoryDetails: {},
     locations: [],
     activityCategoryDetails: {},
-    activities: []
+    activities: [],
+    location: {}
   },
   mutations,
   actions

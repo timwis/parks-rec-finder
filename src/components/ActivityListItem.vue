@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { concatAddress } from '~/util'
+
 export default {
   props: {
     name: String,
@@ -23,11 +25,7 @@ export default {
   },
   computed: {
     fullAddress () {
-      const { street, street2, city, state, zip } = this.facilityAddress
-      const order = [ street, street2, city, state, zip ]
-      return order
-        .filter((part) => part && part.length > 0)
-        .join(', ')
+      return concatAddress(this.facilityAddress)
     },
     ageRange () {
       return [

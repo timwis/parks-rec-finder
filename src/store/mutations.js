@@ -37,3 +37,11 @@ export function RESET_ACTIVITY_CATEGORY_DETAILS (state) {
 export function RESET_ACTIVITIES (state) {
   state.activities = []
 }
+
+export function SET_LOCATION (state, location) {
+  state.location = location
+}
+
+export function RESET_LOCATION (state) {
+  state.location = {}
+}

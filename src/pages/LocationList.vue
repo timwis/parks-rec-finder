@@ -7,6 +7,7 @@
       <LocationListItem
         v-for="location in locations"
         :key="location.id"
+        :id="location.id"
         :name="location.name"
         :address="location.address"
       />
