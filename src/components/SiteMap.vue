@@ -1,16 +1,27 @@
 <template>
   <LeafletMap :zoom=13 :center="defaultCenter">
+
     <EsriTileLayer :url="basemap"/>
     <EsriTileLayer :url="labels"/>
+
+    <LeafletMarker
+      v-for="activity in activities"
+      :key="activity.id"
+      :lat-lng="getLatLng(activity.facilityGeometry)"
+      :icon="activityIcon"
+    >
+      <LeafletPopup :content="getActivityPopupContent(activity)"/>
+    </LeafletMarker>
+
     <LeafletMarker
       v-for="location in locations"
       :key="location.id"
       :lat-lng="getLatLng(location.geometry)"
-      :title="location.name"
-      :icon="svgIcon"
+      :icon="locationIcon"
     >
-      <LeafletPopup :content="getPopupContent(location)"/>
+      <LeafletPopup :content="getLocationPopupContent(location)"/>
     </LeafletMarker>
+
   </LeafletMap>
 </template>
 
@@ -30,6 +41,7 @@ import 'leaflet-svgicon'
 // SiteMap has a different meaning normally
 export default {
   props: {
+    activities: Array,
     locations: Array
   },
   components: {
@@ -44,7 +56,12 @@ export default {
       defaultCenter: [39.9523893, -75.1636291],
       basemap: 'https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityBasemap/MapServer',
       labels: 'https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityBasemap_Labels/MapServer',
-      svgIcon: new L.DivIcon.SVGIcon({
+      activityIcon: new L.DivIcon.SVGIcon({
+        color: '#2176D2',
+        fillOpacity: 1,
+        iconSize: [20, 28]
+      }),
+      locationIcon: new L.DivIcon.SVGIcon({
         color: '#A5097E',
         fillOpacity: 1,
         iconSize: [20, 28]
@@ -58,7 +75,12 @@ export default {
         geojson.coordinates[0]
       ]
     },
-    getPopupContent ({ name, address }) {
+    getActivityPopupContent ({ name }) {
+      return `
+        <h3>${name}</h3>
+      `
+    },
+    getLocationPopupContent ({ name, address }) {
       return `
         <h3>${name}</h3>
       `
