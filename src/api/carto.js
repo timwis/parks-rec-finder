@@ -2,6 +2,8 @@ import axios from 'axios'
 import squel from 'squel'
 import camelcaseKeys from 'camelcase-keys'
 
+const METERS_TO_MILES_RATIO = 0.000621371
+
 export default class Carto {
   constructor (baseURL) {
     this.client = axios.create({ baseURL })
@@ -87,7 +89,7 @@ export default class Carto {
       .then((res) => res.data.rows[0])
   }
 
-  getLocations ({ categoryId, term }) {
+  getLocations ({ categoryId, searchTerm, searchLocationGeometry }) {
     const query = squel.useFlavour('postgres')
       .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
       .fields({
@@ -102,13 +104,26 @@ export default class Carto {
     if (categoryId) {
       query.where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
     }
-    if (term) {
+    if (searchTerm) {
       query.where(
         squel.expr()
-          .and('ppr_facilities.facility_name ILIKE ?', `%${term}%`)
-          .or('ppr_facilities.long_name ILIKE ?', `%${term}%`)
-          .or('ppr_facilities.facility_description ILIKE ?', `%${term}%`)
+          .and('ppr_facilities.facility_name ILIKE ?', `%${searchTerm}%`)
+          .or('ppr_facilities.long_name ILIKE ?', `%${searchTerm}%`)
+          .or('ppr_facilities.facility_description ILIKE ?', `%${searchTerm}%`)
       )
+    }
+    if (searchLocationGeometry) {
+      const geometryString = `${searchLocationGeometry[1]},${searchLocationGeometry[0]}`
+      query.field(`
+        ST_Distance(
+          ST_Centroid(ppr_website_locatorpoints.the_geom),
+          ST_SetSRID(
+            ST_Point(${geometryString}),
+            4326
+          )::geography
+        ) * ${METERS_TO_MILES_RATIO}
+      `, 'distance')
+      query.order('distance')
     }
 
     const sql = query.toString()
@@ -132,7 +147,7 @@ export default class Carto {
       .then((res) => res.data.rows[0])
   }
 
-  getActivities ({ categoryId, term }) {
+  getActivities ({ categoryId, searchTerm, searchLocationGeometry }) {
     const query = squel.useFlavour('postgres')
       .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
       .fields({
@@ -157,12 +172,25 @@ export default class Carto {
     if (categoryId) {
       query.where('ppr_programs.activity_category ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
     }
-    if (term) {
+    if (searchTerm) {
       query.where(
         squel.expr()
-          .and('ppr_programs.program_name ILIKE ?', `%${term}%`)
-          .or('ppr_programs.program_description ILIKE ?', `%${term}%`)
+          .and('ppr_programs.program_name ILIKE ?', `%${searchTerm}%`)
+          .or('ppr_programs.program_description ILIKE ?', `%${searchTerm}%`)
       )
+    }
+    if (searchLocationGeometry) {
+      const geometryString = `${searchLocationGeometry[1]},${searchLocationGeometry[0]}`
+      query.field(`
+        ST_Distance(
+          ST_Centroid(ppr_website_locatorpoints.the_geom),
+          ST_SetSRID(
+            ST_Point(${geometryString}),
+            4326
+          )::geography
+        ) * ${METERS_TO_MILES_RATIO}
+      `, 'distance')
+      query.order('distance')
     }
 
     const sql = query.toString()
@@ -217,5 +245,17 @@ export default class Carto {
     return this.client({ params })
       .then((res) => res.data.rows[0])
       .then(camelcaseKeys)
+  }
+
+  getZipcodeGeometry (zipcode) {
+    const query = squel.useFlavour('postgres')
+      .select()
+      .field('json_build_array(ST_Y(ST_Centroid(the_geom)), ST_X(ST_Centroid(the_geom)))', 'centroid')
+      .from('zip_codes')
+      .where('code = ?', zipcode)
+      .toString()
+    const params = { q: query }
+    return this.client({ params })
+      .then((res) => res.data.rows[0].centroid)
   }
 }

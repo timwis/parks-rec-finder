@@ -53,3 +53,11 @@ export function SET_ACTIVITY (state, activity) {
 export function RESET_ACTIVITY (state) {
   state.activity = {}
 }
+
+export function SET_SEARCH_LOCATION_GEOMETRY (state, geometry) {
+  state.searchLocationGeometry = geometry
+}
+
+export function RESET_SEARCH_LOCATION_GEOMETRY (state) {
+  state.searchLocationGeometry = null
+}

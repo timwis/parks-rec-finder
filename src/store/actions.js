@@ -25,15 +25,15 @@ export async function getLocationCategoryDetails ({ commit }, categorySlug) {
   commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
 }
 
-export async function getActivities ({ commit }, { categoryId, term }) {
+export async function getActivities ({ commit }, filters) {
   commit('RESET_ACTIVITIES')
-  const activities = await carto.getActivities({ categoryId, term })
+  const activities = await carto.getActivities(filters)
   commit('SET_ACTIVITIES', activities)
 }
 
-export async function getLocations ({ commit }, { categoryId, term }) {
+export async function getLocations ({ commit }, filters) {
   commit('RESET_LOCATIONS')
-  const locations = await carto.getLocations({ categoryId, term })
+  const locations = await carto.getLocations(filters)
   commit('SET_LOCATIONS', locations)
 }
 
@@ -47,4 +47,11 @@ export async function getLocation ({ commit }, id) {
   commit('RESET_LOCATION')
   const location = await carto.getLocation(id)
   commit('SET_LOCATION', location)
+}
+
+export async function getZipcodeGeometry ({ commit }, zipcode) {
+  commit('RESET_SEARCH_LOCATION_GEOMETRY')
+  const geometry = await carto.getZipcodeGeometry(zipcode)
+  commit('SET_SEARCH_LOCATION_GEOMETRY', geometry)
+  return geometry
 }

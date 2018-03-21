@@ -3,17 +3,17 @@
     <h2>Search results</h2>
     <p>
       Showing {{ count }} results
-      for {{ term }}
+      for {{ searchTerm }}
     </p>
 
     <ul>
       <li>
-        <router-link :to="{ path: '/search/activities', query: { term } }">
+        <router-link :to="{ path: '/search/activities', query }">
           Activities ({{ activities.length }})
         </router-link>
       </li>
       <li>
-        <router-link :to="{ path: '/search/locations', query: { term } }">
+        <router-link :to="{ path: '/search/locations', query }">
           Locations ({{ locations.length }})
         </router-link>
       </li>
@@ -58,7 +58,8 @@ export default {
       type: String, // activities or programs
       default: 'activities'
     },
-    term: String
+    searchTerm: String,
+    searchLocation: String
   },
   components: {
     ActivityListItem,
@@ -67,42 +68,68 @@ export default {
   computed: {
     ...mapState([
       'activities',
-      'locations'
+      'locations',
+      'searchLocationGeometry'
     ]),
     count () {
       return this.activities.length + this.locations.length
+    },
+    query () {
+      return {
+        term: this.searchTerm,
+        location: this.searchLocation
+      }
     }
   },
   created () {
-    const term = this.term
-    if (!term) {
-      this.$router.push('/')
-      return
-    }
-    this.getActivities({ term })
-    this.getLocations({ term })
+    this.search()
   },
   destroyed () {
     this.resetActivities()
     this.resetLocations()
   },
   watch: {
-    term () {
-      const term = this.term
-      this.getActivities({ term })
-      this.getLocations({ term })
+    searchTerm () {
+      this.search()
+    },
+    searchLocation () {
+      this.search()
     }
   },
   methods: {
     ...mapActions([
       'getActivities',
-      'getLocations'
+      'getLocations',
+      'getZipcodeGeometry',
+      'getAddressGeometry'
     ]),
     ...mapMutations({
       'resetActivities': 'RESET_ACTIVITIES',
       'resetLocations': 'RESET_LOCATIONS'
-    })
+    }),
+    async search () {
+      if (!this.searchTerm && !this.searchLocation) return
+
+      if (this.searchLocation) {
+        if (isZipcode(this.searchLocation)) {
+          await this.getZipcodeGeometry(this.searchLocation) // sets state
+        } else {
+          await this.getAddressGeometry(this.searchLocation) // sets state
+        }
+      }
+
+      const filters = {
+        searchTerm: this.searchTerm,
+        searchLocationGeometry: this.searchLocationGeometry
+      }
+      this.getActivities(filters)
+      this.getLocations(filters)
+    }
   }
+}
+
+function isZipcode (value) {
+  return /^\d{5}$/.test(value)
 }
 </script>
 

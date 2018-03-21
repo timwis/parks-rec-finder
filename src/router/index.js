@@ -62,7 +62,8 @@ const routes = [
     component: SearchResults,
     props: (route) => ({
       activeTab: 'activities',
-      ...route.query
+      searchTerm: route.query.term,
+      searchLocation: route.query.location
     }),
     meta: { mapShows: 'activities' }
   },
@@ -73,7 +74,8 @@ const routes = [
     component: SearchResults,
     props: (route) => ({
       activeTab: 'locations',
-      ...route.query
+      searchTerm: route.query.term,
+      searchLocation: route.query.location
     }),
     meta: { mapShows: 'locations' }
   }
