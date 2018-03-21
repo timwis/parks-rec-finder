@@ -21,3 +21,19 @@ export function RESET_LOCATION_CATEGORY_DETAILS (state) {
 export function RESET_LOCATIONS (state) {
   state.locations = []
 }
+
+export function SET_ACTIVITY_CATEGORY_DETAILS (state, activityCategoryDetails) {
+  state.activityCategoryDetails = activityCategoryDetails
+}
+
+export function SET_ACTIVITIES (state, activities) {
+  state.activities = activities
+}
+
+export function RESET_ACTIVITY_CATEGORY_DETAILS (state) {
+  state.activityCategoryDetails = {}
+}
+
+export function RESET_ACTIVITIES (state) {
+  state.activities = []
+}

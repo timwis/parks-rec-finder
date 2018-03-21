@@ -6,7 +6,7 @@
         <router-view/>
       </aside>
       <section class="map">
-        <SiteMap :locations="locations" />
+        <SiteMap :activities="activities" :locations="locations" />
       </section>
     </main>
   </div>
@@ -27,6 +27,7 @@ export default {
     SiteMap
   },
   computed: mapState([
+    'activities',
     'locations'
   ])
 }

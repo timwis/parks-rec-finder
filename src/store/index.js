@@ -12,7 +12,9 @@ const store = new Vuex.Store({
     activityCategories: [],
     locationCategories: [],
     locationCategoryDetails: {},
-    locations: []
+    locations: [],
+    activityCategoryDetails: {},
+    activities: []
   },
   mutations,
   actions
