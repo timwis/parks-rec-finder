@@ -39,6 +39,12 @@
       :icon="locationIcon"
     />
 
+    <LeafletMarker
+      v-if="searchLocationGeometry"
+      :lat-lng="searchLocationGeometry"
+      :icon="searchLocationIcon"
+    />
+
   </LeafletMap>
 </template>
 
@@ -62,7 +68,8 @@ export default {
     locations: Array,
     activity: Object,
     location: Object,
-    show: String
+    show: String,
+    searchLocationGeometry: Array
   },
   components: {
     LeafletMap, 
@@ -85,6 +92,9 @@ export default {
         color: '#A5097E',
         fillOpacity: 1,
         iconSize: [20, 28]
+      }),
+      searchLocationIcon: new L.DivIcon.SVGIcon({
+        color: 'orange'
       })
     }
   },

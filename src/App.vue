@@ -16,6 +16,7 @@
           :activity="activity"
           :location="location"
           :show="mapShows"
+          :search-location-geometry="searchLocationGeometry"
         />
       </section>
     </main>
@@ -41,7 +42,8 @@ export default {
       'activities',
       'locations',
       'activity',
-      'location'
+      'location',
+      'searchLocationGeometry'
     ]),
     mapShows () {
       // Ideally we'd use props over this.$route but I
