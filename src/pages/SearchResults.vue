@@ -49,6 +49,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import pick from 'lodash/pick'
 import ActivityListItem from '~/components/ActivityListItem'
 import LocationListItem from '~/components/LocationListItem'
 
@@ -98,38 +99,19 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getActivities',
-      'getLocations',
-      'getZipcodeGeometry',
-      'getAddressGeometry'
+      'searchActivitiesAndLocations'
     ]),
     ...mapMutations({
       'resetActivities': 'RESET_ACTIVITIES',
       'resetLocations': 'RESET_LOCATIONS'
     }),
-    async search () {
-      if (!this.searchTerm && !this.searchLocation) return
-
-      if (this.searchLocation) {
-        if (isZipcode(this.searchLocation)) {
-          await this.getZipcodeGeometry(this.searchLocation) // sets state
-        } else {
-          await this.getAddressGeometry(this.searchLocation) // sets state
-        }
+    search () {
+      if (this.searchTerm || this.searchLocation) {
+        const filters = pick(this, ['searchTerm', 'searchLocation'])
+        this.searchActivitiesAndLocations(filters)
       }
-
-      const filters = {
-        searchTerm: this.searchTerm,
-        searchLocationGeometry: this.searchLocationGeometry
-      }
-      this.getActivities(filters)
-      this.getLocations(filters)
     }
   }
-}
-
-function isZipcode (value) {
-  return /^\d{5}$/.test(value)
 }
 </script>
 
