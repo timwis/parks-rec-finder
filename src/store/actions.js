@@ -1,7 +1,12 @@
 import Carto from '~/api/carto'
+import AIS from '~/api/ais'
 
-const CARTO_ENDPOINT = `https://phl.carto.com/api/v2/sql`
+const CARTO_ENDPOINT = 'https://phl.carto.com/api/v2/sql'
 const carto = new Carto(CARTO_ENDPOINT)
+
+const AIS_ENDPOINT = 'https://api.phila.gov/ais/v1/'
+const AIS_KEY = 'aeec9db5c3d2033149545595dd31c4bf'
+const ais = new AIS(AIS_ENDPOINT, AIS_KEY)
 
 export async function getActivityCategories ({ commit }) {
   const activityCategories = await carto.getActivityCategories()
@@ -62,7 +67,7 @@ export async function searchActivitiesAndLocations ({ commit, dispatch }, filter
 
     filters.searchLocationGeometry = (isZipcode(filters.searchLocation))
       ? await carto.getZipcodeGeometry(filters.searchLocation)
-      : await carto.getAddressGeometry(filters.searchLocation)
+      : await ais.getAddressGeometry(filters.searchLocation)
 
     commit('SET_SEARCH_LOCATION_GEOMETRY', filters.searchLocationGeometry)
   }
