@@ -42,24 +42,21 @@ export default {
       return this.activities.length
     }
   },
-  async created () {
-    await this.getActivityCategoryDetails(this.categorySlug)
-    this.getActivities({ categoryId: this.categoryId })
+  created () {
+    this.getActivitiesByCategorySlug(this.categorySlug)
   },
   destroyed () {
     this.resetActivityCategoryDetails()
     this.resetActivities()
   },
   watch: {
-    async categorySlug () {
-      await this.getActivityCategoryDetails(this.categorySlug)
-      this.getActivities({ categoryId: this.categoryId })
+    categorySlug () {
+      this.getActivitiesByCategorySlug(this.categorySlug)
     }
   },
   methods: {
     ...mapActions([
-      'getActivityCategoryDetails',
-      'getActivities'
+      'getActivitiesByCategorySlug'
     ]),
     ...mapMutations({
       resetActivityCategoryDetails: 'RESET_ACTIVITY_CATEGORY_DETAILS',

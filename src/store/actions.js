@@ -13,16 +13,22 @@ export async function getLocationCategories ({ commit }) {
   commit('SET_LOCATION_CATEGORIES', locationCategories)
 }
 
-export async function getActivityCategoryDetails ({ commit }, categorySlug) {
+export async function getActivitiesByCategorySlug ({ commit, dispatch }, categorySlug) {
   commit('RESET_ACTIVITY_CATEGORY_DETAILS')
   const activityCategoryDetails = await carto.getActivityCategoryDetails(categorySlug)
   commit('SET_ACTIVITY_CATEGORY_DETAILS', activityCategoryDetails)
+
+  const categoryId = activityCategoryDetails.id
+  dispatch('getActivities', { categoryId })
 }
 
-export async function getLocationCategoryDetails ({ commit }, categorySlug) {
+export async function getLocationsByCategorySlug ({ commit, dispatch }, categorySlug) {
   commit('RESET_LOCATION_CATEGORY_DETAILS')
   const locationCategoryDetails = await carto.getLocationCategoryDetails(categorySlug)
   commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
+
+  const categoryId = locationCategoryDetails.id
+  dispatch('getLocations', { categoryId })
 }
 
 export async function getActivities ({ commit }, filters) {
@@ -49,9 +55,22 @@ export async function getLocation ({ commit }, id) {
   commit('SET_LOCATION', location)
 }
 
-export async function getZipcodeGeometry ({ commit }, zipcode) {
-  commit('RESET_SEARCH_LOCATION_GEOMETRY')
-  const geometry = await carto.getZipcodeGeometry(zipcode)
-  commit('SET_SEARCH_LOCATION_GEOMETRY', geometry)
-  return geometry
+// Combined function to share the results of zipcode and address lookups
+export async function searchActivitiesAndLocations ({ commit, dispatch }, filters) {
+  if (filters.searchLocation) {
+    commit('RESET_SEARCH_LOCATION_GEOMETRY')
+
+    filters.searchLocationGeometry = (isZipcode(filters.searchLocation))
+      ? await carto.getZipcodeGeometry(filters.searchLocation)
+      : await carto.getAddressGeometry(filters.searchLocation)
+
+    commit('SET_SEARCH_LOCATION_GEOMETRY', filters.searchLocationGeometry)
+  }
+
+  dispatch('getActivities', filters)
+  dispatch('getLocations', filters)
+}
+
+function isZipcode (value) {
+  return /^\d{5}$/.test(value)
 }

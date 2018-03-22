@@ -36,24 +36,21 @@ export default {
       return this.locations.length
     }
   },
-  async created () {
-    await this.getLocationCategoryDetails(this.categorySlug)
-    this.getLocations({ categoryId: this.categoryId })
+  created () {
+    this.getLocationsByCategorySlug(this.categorySlug)
   },
   destroyed () {
     this.resetLocationCategoryDetails()
     this.resetLocations()
   },
   watch: {
-    async categorySlug () {
-      await this.getLocationCategoryDetails(this.categorySlug)
-      this.getLocations({ categoryId: this.categoryId })
+    categorySlug () {
+      this.getLocationsByCategorySlug(this.categorySlug)
     }
   },
   methods: {
     ...mapActions([
-      'getLocationCategoryDetails',
-      'getLocations'
+      'getLocationsByCategorySlug'
     ]),
     ...mapMutations({
       resetLocationCategoryDetails: 'RESET_LOCATION_CATEGORY_DETAILS',
