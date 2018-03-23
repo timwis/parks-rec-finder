@@ -17,7 +17,7 @@ const routes = [
     name: 'activityCategories',
     component: Categories,
     props: { activeTab: 'activities' },
-    meta: { mapShows: null}
+    meta: { mapShows: null }
   },
   {
     path: '/locations',
