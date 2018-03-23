@@ -98,35 +98,39 @@ export default {
       })
     }
   },
-  watch: {
-    activity () {
-      if (this.activity.facilityGeometry) {
-        const map = this.$refs.map
-        map.setCenter(this.activity.facilityGeometry)
-      }
-    },
-    location () {
-      if (this.location.geometry) {
-        const map = this.$refs.map
-        map.setCenter(this.location.geometry)
-      }
-    },
-    activities () {
-      if (this.activities.length > 0) {
-        const geometries = this.activities.map((activity) => activity.facilityGeometry)
-        const map = this.$refs.map
-        map.fitBounds(geometries)
-      }
-    },
-    locations () {
-      if (this.locations.length > 0) {
-        const geometries = this.locations.map((location) => location.geometry)
-        const map = this.$refs.map
-        map.fitBounds(geometries)
-      }
-    }
+  updated () {
+    this.fitMarkersInMap()
   },
   methods: {
+    // Is there a more efficient way to handle this logic?
+    fitMarkersInMap () {
+      const { show, activities, locations, activity, location, searchLocationGeometry } = this
+      const map = this.$refs.map
+
+      if (show === 'activities' && activities.length > 0) {
+        const geometries = activities.map((activity) => activity.facilityGeometry)
+        if (searchLocationGeometry) {
+          const zoomedGeometries = geometries.slice(0, 3)
+          zoomedGeometries.push(searchLocationGeometry)
+          map.fitBounds(zoomedGeometries)
+        } else {
+          map.fitBounds(geometries)
+        }
+      } else if (show === 'locations' && locations.length > 0) {
+        const geometries = locations.map((location) => location.geometry)
+        if (searchLocationGeometry) {
+          const zoomedGeometries = geometries.slice(0, 3)
+          zoomedGeometries.push(searchLocationGeometry)
+          map.fitBounds(zoomedGeometries)
+        } else {
+          map.fitBounds(geometries)
+        }
+      } else if (show === 'activity' && activity.facilityGeometry) {
+        map.setCenter(activity.facilityGeometry)
+      } else if (show === 'location' && location.geometry) {
+        map.setCenter(location.geometry)
+      }
+    },
     getActivityPopupContent ({ name }) {
       return `
         <h3>${name}</h3>
