@@ -88,6 +88,7 @@ export default {
   destroyed () {
     this.resetActivities()
     this.resetLocations()
+    this.resetSearchLocationGeometry()
   },
   watch: {
     searchTerm () {
@@ -103,7 +104,8 @@ export default {
     ]),
     ...mapMutations({
       'resetActivities': 'RESET_ACTIVITIES',
-      'resetLocations': 'RESET_LOCATIONS'
+      'resetLocations': 'RESET_LOCATIONS',
+      'resetSearchLocationGeometry': 'RESET_SEARCH_LOCATION_GEOMETRY'
     }),
     search () {
       if (this.searchTerm || this.searchLocation) {
