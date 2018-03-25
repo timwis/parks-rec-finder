@@ -13,7 +13,7 @@
     "axios": "^0.18.0",
     "camelcase-keys": "^4.2.0",
     "esri-leaflet": "^2.1.4",
-    "leaflet-svgicon": "github:timwis/leaflet-svgicon#add-package-json",
+    "leaflet-svgicon": "timwis/leaflet-svgicon#add-package-json",
     "phila-standards": "^0.12.0",
     "squel": "^5.12.0",
     "vue": "^2.5.11",
