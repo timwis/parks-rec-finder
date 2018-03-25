@@ -1,22 +1,28 @@
 <template>
-  <div>
-    <h2>{{ categoryName }}</h2>
-    <p>({{ count }})</p>
+  <main>
+    <aside class="list">
+      <h2>{{ categoryName }}</h2>
+      <p>({{ count }})</p>
 
-    <ul>
-      <LocationListItem
-        v-for="location in locations"
-        :key="location.id"
-        :id="location.id"
-        :name="location.name"
-        :address="location.address"
-      />
-    </ul>
-  </div>
+      <ul>
+        <LocationListItem
+          v-for="location in locations"
+          :key="location.id"
+          :id="location.id"
+          :name="location.name"
+          :address="location.address"
+        />
+      </ul>
+    </aside>
+    <section class="map">
+      <SiteMap :locations="locations"/>
+    </section>
+  </main>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import SiteMap from '~/components/SiteMap'
 import LocationListItem from '~/components/LocationListItem'
 
 export default {
@@ -24,6 +30,7 @@ export default {
     categorySlug: String
   },
   components: {
+    SiteMap,
     LocationListItem
   },
   computed: {

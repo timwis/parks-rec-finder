@@ -1,28 +1,34 @@
 <template>
-  <div>
-    <h2>{{ categoryName }}</h2>
-    <p>({{ count }})</p>
+  <main>
+    <aside class="list">
+      <h2>{{ categoryName }}</h2>
+      <p>({{ count }})</p>
 
-    <ul>
-      <ActivityListItem
-        v-for="activity in activities"
-        :key="activity.id"
-        :id="activity.id"
-        :name="activity.name"
-        :fee="activity.fee"
-        :fee-frequency="activity.feeFrequency"
-        :gender="activity.gender"
-        :age-low="activity.ageLow"
-        :age-high="activity.ageHigh"
-        :facility-name="activity.facilityName"
-        :facility-address="activity.facilityAddress"
-      />
-    </ul>
-  </div>
+      <ul>
+        <ActivityListItem
+          v-for="activity in activities"
+          :key="activity.id"
+          :id="activity.id"
+          :name="activity.name"
+          :fee="activity.fee"
+          :fee-frequency="activity.feeFrequency"
+          :gender="activity.gender"
+          :age-low="activity.ageLow"
+          :age-high="activity.ageHigh"
+          :facility-name="activity.facilityName"
+          :facility-address="activity.facilityAddress"
+        />
+      </ul>
+    </aside>
+    <section class="map">
+      <SiteMap :activities="activities"/>
+    </section>
+  </main>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import SiteMap from '~/components/SiteMap'
 import ActivityListItem from '~/components/ActivityListItem'
 
 export default {
@@ -30,6 +36,7 @@ export default {
     categorySlug: String
   },
   components: {
+    SiteMap,
     ActivityListItem
   },
   computed: {

@@ -16,44 +16,38 @@ const routes = [
     alias: '/',
     name: 'activityCategories',
     component: Categories,
-    props: { activeTab: 'activities' },
-    meta: { mapShows: null }
+    props: { activeTab: 'activities' }
   },
   {
     path: '/locations',
     name: 'locationCategories',
     component: Categories,
-    props: { activeTab: 'locations' },
-    meta: { mapShows: null }
+    props: { activeTab: 'locations' }
   },
   {
     path: '/activities/:categorySlug',
     name: 'activityList',
     component: ActivityList,
-    props: true,
-    meta: { mapShows: 'activities' }
+    props: true
   },
   {
     path: '/locations/:categorySlug',
     name: 'locationList',
     component: LocationList,
-    props: true,
-    meta: { mapShows: 'locations' }
+    props: true
   },
   {
     path: '/activity/:id',
     alias: '/program/:id',
     name: 'activityDetail',
     component: ActivityDetail,
-    props: true,
-    meta: { mapShows: 'activity' }
+    props: true
   },
   {
     path: '/location/:id',
     name: 'locationDetail',
     component: LocationDetail,
-    props: true,
-    meta: { mapShows: 'location' }
+    props: true
   },
   {
     path: '/search/activities',
@@ -64,8 +58,7 @@ const routes = [
       activeTab: 'activities',
       searchTerm: route.query.term,
       searchLocation: route.query.location
-    }),
-    meta: { mapShows: 'activities' }
+    })
   },
   {
     path: '/search/locations',
@@ -76,8 +69,7 @@ const routes = [
       activeTab: 'locations',
       searchTerm: route.query.term,
       searchLocation: route.query.location
-    }),
-    meta: { mapShows: 'locations' }
+    })
   }
 ]
 

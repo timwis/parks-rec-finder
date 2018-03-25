@@ -1,55 +1,70 @@
 <template>
-  <div>
-    <h2>Search results</h2>
-    <p>
-      Showing {{ count }} results
-      for {{ searchTerm }}
-    </p>
+  <main>
+    <aside class="list">
+      <h2>Search results</h2>
+      <p>
+        Showing {{ count }} results
+        for {{ searchTerm }}
+      </p>
 
-    <ul>
-      <li>
-        <router-link :to="{ path: '/search/activities', query }">
-          Activities ({{ activities.length }})
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{ path: '/search/locations', query }">
-          Locations ({{ locations.length }})
-        </router-link>
-      </li>
-    </ul>
+      <ul>
+        <li>
+          <router-link :to="{ path: '/search/activities', query }">
+            Activities ({{ activities.length }})
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{ path: '/search/locations', query }">
+            Locations ({{ locations.length }})
+          </router-link>
+        </li>
+      </ul>
 
-    <ul v-if="activeTab === 'activities'">
-      <ActivityListItem
-        v-for="activity in activities"
-        :key="activity.id"
-        :id="activity.id"
-        :name="activity.name"
-        :fee="activity.fee"
-        :fee-frequency="activity.feeFrequency"
-        :gender="activity.gender"
-        :age-low="activity.ageLow"
-        :age-high="activity.ageHigh"
-        :facility-name="activity.facilityName"
-        :facility-address="activity.facilityAddress"
+      <ul v-if="activeTab === 'activities'">
+        <ActivityListItem
+          v-for="activity in activities"
+          :key="activity.id"
+          :id="activity.id"
+          :name="activity.name"
+          :fee="activity.fee"
+          :fee-frequency="activity.feeFrequency"
+          :gender="activity.gender"
+          :age-low="activity.ageLow"
+          :age-high="activity.ageHigh"
+          :facility-name="activity.facilityName"
+          :facility-address="activity.facilityAddress"
+        />
+      </ul>
+
+      <ul v-else-if="activeTab === 'locations'">
+        <LocationListItem
+          v-for="location in locations"
+          :key="location.id"
+          :id="location.id"
+          :name="location.name"
+          :address="location.address"
+        />
+      </ul>
+    </aside>
+    <section class="map">
+      <SiteMap
+        v-if="activeTab === 'activities'"
+        :activities="activities"
+        :search-location-geometry="searchLocationGeometry"
       />
-    </ul>
-
-    <ul v-else-if="activeTab === 'locations'">
-      <LocationListItem
-        v-for="location in locations"
-        :key="location.id"
-        :id="location.id"
-        :name="location.name"
-        :address="location.address"
+      <SiteMap
+        v-else-if="activeTab === 'locations'"
+        :locations="locations"
+        :search-location-geometry="searchLocationGeometry"
       />
-    </ul>
-  </div>
+    </section>
+  </main>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import pick from 'lodash/pick'
+import SiteMap from '~/components/SiteMap'
 import ActivityListItem from '~/components/ActivityListItem'
 import LocationListItem from '~/components/LocationListItem'
 
@@ -63,6 +78,7 @@ export default {
     searchLocation: String
   },
   components: {
+    SiteMap,
     ActivityListItem,
     LocationListItem
   },

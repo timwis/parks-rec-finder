@@ -9,7 +9,7 @@
 
     <LeafletMarker
       v-for="activity in activities"
-      v-if="show === 'activities' && activity.facilityGeometry"
+      v-if="activity.facilityGeometry"
       :key="activity.id"
       :lat-lng="activity.facilityGeometry"
       :icon="activityIcon"
@@ -19,7 +19,7 @@
 
     <LeafletMarker
       v-for="location in locations"
-      v-if="show === 'locations' && location.geometry"
+      v-if="location.geometry"
       :key="location.id"
       :lat-lng="location.geometry"
       :icon="locationIcon"
@@ -28,13 +28,13 @@
     </LeafletMarker>
 
     <LeafletMarker
-      v-if="show === 'activity' && activity.facilityGeometry"
+      v-if="activity && activity.facilityGeometry"
       :lat-lng="activity.facilityGeometry"
       :icon="activityIcon"
     />
 
     <LeafletMarker
-      v-if="show === 'location' && location.geometry"
+      v-if="location && location.geometry"
       :lat-lng="location.geometry"
       :icon="locationIcon"
     />
@@ -55,6 +55,7 @@ import {
   Marker as LeafletMarker,
   Popup as LeafletPopup
 } from 'vue2-leaflet'
+import map from 'lodash/map'
 import EsriTileLayer from '~/components/EsriTileLayer'
 import L from 'leaflet'
 import 'leaflet-svgicon'
@@ -68,7 +69,6 @@ export default {
     locations: Array,
     activity: Object,
     location: Object,
-    show: String,
     searchLocationGeometry: Array
   },
   components: {
@@ -98,37 +98,41 @@ export default {
       })
     }
   },
-  updated () {
-    this.fitMarkersInMap()
-  },
-  methods: {
-    // Is there a better way to implement this?
-    fitMarkersInMap () {
-      const { show, activities, locations, activity, location, searchLocationGeometry } = this
-      let geometries
-
-      if (show === 'activities' && activities.length > 0) {
-        geometries = activities.map((activity) => activity.facilityGeometry)
-        if (searchLocationGeometry) {
+  watch: {
+    activities () {
+      if (this.activities && this.activities.length > 0) {
+        const geometries = map(this.activities, 'facilityGeometry')
+        if (this.searchLocationGeometry) {
           geometries.splice(3)
-          geometries.push(searchLocationGeometry)
+          geometries.push(this.searchLocationGeometry)
         }
-      } else if (show === 'locations' && locations.length > 0) {
-        geometries = locations.map((location) => location.geometry)
-        if (searchLocationGeometry) {
-          geometries.splice(3)
-          geometries.push(searchLocationGeometry)
-        }
-      } else if (show === 'activity' && activity.facilityGeometry) {
-        geometries = [ activity.facilityGeometry ]
-      } else if (show === 'location' && location.geometry) {
-        geometries = [ location.geometry ]
-      }
-
-      if (geometries) {
         this.$refs.map.fitBounds(geometries)
       }
     },
+    locations () {
+      if (this.locations && this.locations.length > 0) {
+        const geometries = map(this.locations, 'geometry')
+        if (this.searchLocationGeometry) {
+          geometries.splice(3)
+          geometries.push(this.searchLocationGeometry)
+        }
+        this.$refs.map.fitBounds(geometries)
+      }
+    },
+    activity () {
+      if (this.activity && this.activity.facilityGeometry) {
+        const geometries = [ this.activity.facilityGeometry ]
+        this.$refs.map.fitBounds(geometries)
+      }
+    },
+    location () {
+      if (this.location && this.location.geometry) {
+        const geometries = [ this.location.geometry ]
+        this.$refs.map.fitBounds(geometries)
+      }
+    }
+  },
+  methods: {
     getActivityPopupContent ({ name }) {
       return `
         <h3>${name}</h3>
