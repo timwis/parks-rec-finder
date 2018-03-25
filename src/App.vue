@@ -5,27 +5,12 @@
       :search-location="searchLocation"
       @search="onSearch"
     />
-    <main>
-      <aside class="list">
-        <router-view/>
-      </aside>
-      <section class="map">
-        <SiteMap
-          :activities="activities"
-          :locations="locations"
-          :activity="activity"
-          :location="location"
-          :show="mapShows"
-          :search-location-geometry="searchLocationGeometry"
-        />
-      </section>
-    </main>
+    <router-view/>
   </div>
 </template>
 
 
 <script>
-import { mapState } from 'vuex'
 import 'phila-standards/dist/css/phila-app.min.css'
 
 import SiteHeader from './components/SiteHeader'
@@ -34,26 +19,10 @@ import SiteMap from '~/components/SiteMap'
 export default {
   name: 'app',
   components: {
-    SiteHeader,
-    SiteMap
+    SiteHeader
   },
   computed: {
-    ...mapState([
-      'activities',
-      'locations',
-      'activity',
-      'location',
-      'searchLocationGeometry'
-    ]),
-    mapShows () {
-      // Ideally we'd use props over this.$route but I
-      // couldn't think of a better way to do this, and
-      // multiple <router-view>s seems overkill.
-      return this.$route.meta.mapShows
-    },
     searchTerm () {
-      // This is also not ideal, but I can't think of a
-      // better way.
       return this.$route.query.term
     },
     searchLocation () {

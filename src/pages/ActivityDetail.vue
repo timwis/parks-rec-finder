@@ -1,19 +1,29 @@
 <template>
-  <div>
-    <h2>{{ name }}</h2>
-  </div>
+  <main>
+    <aside class="list">
+      <h2>{{ name }}</h2>
+    </aside>
+    <section class="map">
+      <SiteMap :activity="activity"/>
+    </section>
+  </main>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import SiteMap from '~/components/SiteMap'
 import { concatAddress } from '~/util'
 
 export default {
   props: {
     id: String
   },
+  components: {
+    SiteMap
+  },
   computed: {
     ...mapState({
+      activity: (state) => state.activity,
       name: (state) => state.activity.name,
     }),
     // directionsUrl () {
