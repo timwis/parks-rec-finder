@@ -102,33 +102,31 @@ export default {
     this.fitMarkersInMap()
   },
   methods: {
-    // Is there a more efficient way to handle this logic?
+    // Is there a better way to implement this?
     fitMarkersInMap () {
       const { show, activities, locations, activity, location, searchLocationGeometry } = this
-      const map = this.$refs.map
+      let geometries
 
       if (show === 'activities' && activities.length > 0) {
-        const geometries = activities.map((activity) => activity.facilityGeometry)
+        geometries = activities.map((activity) => activity.facilityGeometry)
         if (searchLocationGeometry) {
-          const zoomedGeometries = geometries.slice(0, 3)
-          zoomedGeometries.push(searchLocationGeometry)
-          map.fitBounds(zoomedGeometries)
-        } else {
-          map.fitBounds(geometries)
+          geometries.splice(3)
+          geometries.push(searchLocationGeometry)
         }
       } else if (show === 'locations' && locations.length > 0) {
-        const geometries = locations.map((location) => location.geometry)
+        geometries = locations.map((location) => location.geometry)
         if (searchLocationGeometry) {
-          const zoomedGeometries = geometries.slice(0, 3)
-          zoomedGeometries.push(searchLocationGeometry)
-          map.fitBounds(zoomedGeometries)
-        } else {
-          map.fitBounds(geometries)
+          geometries.splice(3)
+          geometries.push(searchLocationGeometry)
         }
       } else if (show === 'activity' && activity.facilityGeometry) {
-        map.setCenter(activity.facilityGeometry)
+        geometries = [ activity.facilityGeometry ]
       } else if (show === 'location' && location.geometry) {
-        map.setCenter(location.geometry)
+        geometries = [ location.geometry ]
+      }
+
+      if (geometries) {
+        this.$refs.map.fitBounds(geometries)
       }
     },
     getActivityPopupContent ({ name }) {
