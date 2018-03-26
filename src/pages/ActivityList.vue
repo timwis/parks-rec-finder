@@ -4,9 +4,11 @@
       <h2>{{ categoryName }}</h2>
       <p>({{ count }})</p>
 
+      <ActivityFilterControls v-model="currentFilters" />
+
       <ul>
         <ActivityListItem
-          v-for="activity in activities"
+          v-for="activity in filteredActivities"
           :key="activity.id"
           :id="activity.id"
           :name="activity.name"
@@ -21,7 +23,7 @@
       </ul>
     </aside>
     <section class="map">
-      <SiteMap :activities="activities"/>
+      <SiteMap :activities="filteredActivities"/>
     </section>
   </main>
 </template>
@@ -30,6 +32,7 @@
 import { mapState, mapActions, mapMutations } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import ActivityListItem from '~/components/ActivityListItem'
+import ActivityFilterControls from '~/components/ActivityFilterControls'
 
 export default {
   props: {
@@ -37,7 +40,13 @@ export default {
   },
   components: {
     SiteMap,
-    ActivityListItem
+    ActivityListItem,
+    ActivityFilterControls
+  },
+  data () {
+    return {
+      currentFilters: {}
+    }
   },
   computed: {
     ...mapState({
@@ -47,6 +56,23 @@ export default {
     }),
     count () {
       return this.activities.length
+    },
+    filteredActivities () {
+      const filterFunctions = []
+      if (this.currentFilters.cost) {
+        filterFunctions.push((activity) => {
+          return activity.fee === '' || activity.fee === '0.00'
+        })
+      }
+      if (this.currentFilters.gender) {
+        const genderInitial = getGenderInitial(this.currentFilters.gender)
+        filterFunctions.push((activity) => {
+          return activity.gender === genderInitial || activity.gender === 'M/F'
+        })
+      }
+      return this.activities.filter((activity) => {
+        return filterFunctions.every((fn) => fn(activity))
+      })
     }
   },
   created () {
@@ -70,6 +96,11 @@ export default {
       resetActivities: 'RESET_ACTIVITIES'
     })
   }
+}
+
+const genderInitialsMap = { male: 'M', female: 'F' }
+function getGenderInitial (gender) {
+  return genderInitialsMap[gender]
 }
 </script>
 
