@@ -247,7 +247,14 @@ export default class Carto {
           .from(
             squel.useFlavour('postgres')
               .select()
-              .fields(['date_from::date', 'date_to::date', 'time_from::time', 'time_to::time', 'days'])
+              .fields([
+                'ppr_program_schedules.id',
+                'date_from::date',
+                'date_to::date',
+                'time_from::time',
+                'time_to::time',
+                'days'
+              ])
               .field('jsonb_agg(ppr_days.days_name)', 'days')
               .from('ppr_program_schedules')
               .from('jsonb_array_elements_text(days)', 'expanded_days')
