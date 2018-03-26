@@ -159,12 +159,46 @@ export default class Carto {
         'ppr_programs.fee_frequency->>0': 'fee_frequency',
         'ppr_programs.gender->>0': 'gender',
         'ppr_facilities.facility_name': 'facility_name',
-        'ppr_facilities.address': 'facility_address'
+        'ppr_facilities.address': 'facility_address',
+        'schedules.*': 'schedules'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'facility_geometry')
       .from('ppr_programs')
       .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
+      .left_join(
+        squel.str('LATERAL (?)', squel.useFlavour('postgres')
+          .select()
+          .field('jsonb_agg(ppr_program_schedules)', 'schedules')
+          .from(
+            squel.useFlavour('postgres')
+              .select()
+              .fields([
+                'ppr_program_schedules.id',
+                'date_from::date',
+                'date_to::date',
+                'time_from::time',
+                'time_to::time',
+                'days'
+              ])
+              .field('jsonb_agg(ppr_days.days_name)', 'days')
+              .from('ppr_program_schedules')
+              .from('jsonb_array_elements_text(days)', 'expanded_days')
+              .left_join('ppr_days', null, 'ppr_days.id = expanded_days')
+              .where('program->>0 = ppr_programs.id')
+              .where('date_to >= current_timestamp')
+              .group('ppr_program_schedules.id')
+              .group('ppr_program_schedules.date_from') // TODO: Any way to improve this group by?
+              .group('ppr_program_schedules.date_to')
+              .group('ppr_program_schedules.time_from')
+              .group('ppr_program_schedules.time_to')
+              .group('ppr_program_schedules.days'),
+            'ppr_program_schedules'
+          )
+        ).toString(),
+        'schedules',
+        'true'
+      )
       .where('ppr_programs.program_is_public')
       .where('ppr_programs.program_is_approved')
       .where('ppr_programs.program_is_active')
