@@ -11,7 +11,6 @@
 
 
 <script>
-import 'phila-standards/dist/css/phila-app.min.css'
 import SiteHeader from './components/SiteHeader'
 import SiteMap from '~/components/SiteMap'
 
@@ -45,6 +44,7 @@ export default {
 <style lang="sass">
 $fa-font-path: "~font-awesome/fonts"
 @import "~font-awesome/scss/font-awesome"
+@import "~phila-standards/src/sass/phila-app"
 
 main
   display: grid
