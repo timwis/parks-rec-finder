@@ -1,47 +1,53 @@
 <template>
-  <header class="site-header app group">
-    <div class="row expanded">
-      <div class="columns">
+  <header class="site-header app grid-x align-middle">
+
+      <div class="logo-container cell shrink">
         <a class="logo" href="https://beta.phila.gov/departments/parks-recreation/">
           <img
             src="http://standards.phila.gov/img/logo/city-of-philadelphia-yellow-white.png"
             alt="City of Philadelphia"
           />
         </a>
-        <div class="app-divide"/>
-        <div class="page-title-container">
-          <router-link to="/">
-            <h1 class="page-title">
-              Finder
-            </h1>
-            <h2 class="page-subtitle">
-              Search for activities, locations, or zip codes.
-            </h2>
-          </router-link>
-        </div>
-        <div class="app-buttons">
-          <form role="search" @submit.prevent="onSubmit">
-            <div class="search">
-              <input
-                class="search-field"
-                type="text"
-                placeholder="Search by activity or location name"
-                ref="searchTerm"
-                :value="searchTerm"
-              />
-              <input
-                class="search-field"
-                type="text"
-                placeholder="Address or zip code"
-                ref="searchLocation"
-                :value="searchLocation"
-              />
-              <input type="submit" class="search-submit"/>
-            </div>
-          </form>
-        </div>
       </div>
-    </div>
+
+      <div class="app-divide cell shrink"/>
+
+      <div class="page-title-container cell auto">
+        <router-link to="/">
+          <h1 class="page-title">
+            Finder
+          </h1>
+          <h2 class="page-subtitle">
+            Search for activities, locations, or zip codes.
+          </h2>
+        </router-link>
+      </div>
+
+      <div class="search-container cell medium-8">
+
+        <form role="search" @submit.prevent="onSubmit">
+          <div class="grid-x">
+            <input
+              class="cell medium-10"
+              type="search"
+              placeholder="Search by activity or location name"
+              ref="searchTerm"
+              :value="searchTerm"
+            />
+            <input
+              class="cell medium-10"
+              type="search"
+              placeholder="Address or zip code"
+              ref="searchLocation"
+              :value="searchLocation"
+            />
+            <button type="submit" class="cell button shrink">
+              <i class="fa fa-search valign-cell"></i>
+            </button>
+          </div>
+        </form>
+
+      </div>
   </header>
 </template>
 
@@ -63,3 +69,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+input[type="search"]
+  margin-bottom: 0
+</style>

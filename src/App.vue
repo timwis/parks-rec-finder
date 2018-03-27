@@ -1,11 +1,12 @@
 <template>
-  <div id="application">
+  <div id="application" class="grid-y medium-grid-frame">
     <SiteHeader
+      class="cell"
       :search-term="searchTerm"
       :search-location="searchLocation"
       @search="onSearch"
     />
-    <router-view/>
+    <router-view class="cell auto"/>
   </div>
 </template>
 
@@ -47,16 +48,12 @@ $fa-font-path: "~font-awesome/fonts"
 @import "~phila-standards/src/sass/phila-app"
 
 main
-  display: grid
-  grid-template-columns: minmax(300px, 3fr) 9fr
-  grid-template-rows: calc(100vh - 73px)
-  grid-template-areas: "list map"
+  @include xy-grid(horizontal)
 
   .list
-    grid-area: list
-    overflow-y: auto
-    padding: 0 10px
+    @include xy-cell(8)
+    @include xy-cell-block(true)
 
   .map
-    grid-area: map
+    @include xy-cell(16, false, 0)
 </style>
