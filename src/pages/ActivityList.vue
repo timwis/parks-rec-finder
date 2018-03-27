@@ -59,15 +59,25 @@ export default {
     },
     filteredActivities () {
       const filterFunctions = []
-      if (this.currentFilters.cost) {
+      const currentFilters = this.currentFilters
+      if (currentFilters.cost) {
         filterFunctions.push((activity) => {
           return activity.fee === '' || activity.fee === '0.00'
         })
       }
-      if (this.currentFilters.gender) {
-        const genderInitial = getGenderInitial(this.currentFilters.gender)
+      if (currentFilters.gender) {
+        const genderInitial = getGenderInitial(currentFilters.gender)
         filterFunctions.push((activity) => {
           return activity.gender === genderInitial || activity.gender === 'M/F'
+        })
+      }
+      if (currentFilters.days && currentFilters.days.length > 0) {
+        filterFunctions.push((activity) => {
+          return currentFilters.days.some((day) => {
+            return activity.schedules && activity.schedules.some((schedule) => {
+              return schedule.days && schedule.days.includes(day)
+            })
+          })
         })
       }
       return this.activities.filter((activity) => {
