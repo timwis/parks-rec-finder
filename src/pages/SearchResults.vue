@@ -7,18 +7,20 @@
         for {{ searchTerm }}
       </p>
 
-      <ul>
-        <li>
-          <router-link :to="{ path: '/search/activities', query }">
-            Activities ({{ activities.length }})
-          </router-link>
-        </li>
-        <li>
-          <router-link :to="{ path: '/search/locations', query }">
-            Locations ({{ locations.length }})
-          </router-link>
-        </li>
-      </ul>
+      <TabSwitcher :active-tab="activeTab">
+        <router-link
+          slot="activities"
+          :to="{ path: '/search/activities', query }"
+        >
+          Activities ({{ activities.length }})
+        </router-link>
+        <router-link
+          slot="locations"
+          :to="{ path: '/search/locations', query }"
+        >
+          Locations ({{ locations.length }})
+        </router-link>
+      </TabSwitcher>
 
       <ul v-if="activeTab === 'activities'">
         <ActivityListItem
@@ -67,6 +69,7 @@ import pick from 'lodash/pick'
 import SiteMap from '~/components/SiteMap'
 import ActivityListItem from '~/components/ActivityListItem'
 import LocationListItem from '~/components/LocationListItem'
+import TabSwitcher from '~/components/TabSwitcher'
 
 export default {
   props: {
@@ -80,7 +83,8 @@ export default {
   components: {
     SiteMap,
     ActivityListItem,
-    LocationListItem
+    LocationListItem,
+    TabSwitcher
   },
   computed: {
     ...mapState([
