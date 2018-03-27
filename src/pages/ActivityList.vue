@@ -55,7 +55,7 @@ export default {
       categoryName: (state) => state.activityCategoryDetails.name
     }),
     count () {
-      return this.activities.length
+      return this.filteredActivities.length
     },
     filteredActivities () {
       const filterFunctions = []
