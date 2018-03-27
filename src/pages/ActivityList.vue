@@ -65,6 +65,13 @@ export default {
           return activity.fee === '' || activity.fee === '0.00'
         })
       }
+      if (currentFilters.age) {
+        const [filterLow, filterHigh] = currentFilters.age.split('-')
+        filterFunctions.push((activity) => {
+          return (!filterHigh || activity.ageLow <= filterHigh) &&
+            (!filterLow || activity.ageHigh >= filterLow)
+        })
+      }
       if (currentFilters.gender) {
         const genderInitial = getGenderInitial(currentFilters.gender)
         filterFunctions.push((activity) => {
