@@ -1,3 +1,13 @@
+import Vue from 'vue'
+
+export function BEGIN_REQUEST (state, requestName) {
+  Vue.set(state.pendingRequests, requestName, true)
+}
+
+export function END_REQUEST (state, requestName) {
+  Vue.delete(state.pendingRequests, requestName)
+}
+
 export function SET_ACTIVITY_CATEGORIES (state, activityCategories) {
   state.activityCategories = activityCategories
 }
