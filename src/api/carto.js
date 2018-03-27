@@ -25,7 +25,7 @@ export default class Carto {
         'activity_category_id': 'id',
         'activity_category_name': 'name',
         'activity_category_description': 'description',
-        'activity_category_photo': 'photo',
+        'activity_category_photo': 'photo_id',
         "regexp_replace(regexp_replace(lower(trim(activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
       .from('program_activity_categories_tmp')
@@ -40,6 +40,7 @@ export default class Carto {
     const params = { q: query }
     return this.client({ params })
       .then((res) => res.data.rows)
+      .then(camelcaseKeys)
   }
 
   getLocationCategories () {
@@ -56,7 +57,7 @@ export default class Carto {
         'location_type_id': 'id',
         'location_type_name': 'name',
         'location_type_description': 'description',
-        'location_type_photo': 'photo',
+        'location_type_photo': 'photo_id',
         "regexp_replace(regexp_replace(lower(trim(location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
       .from('facility_location_types_tmp')
@@ -71,6 +72,7 @@ export default class Carto {
     const params = { q: query }
     return this.client({ params })
       .then((res) => res.data.rows)
+      .then(camelcaseKeys)
   }
 
   getLocationCategoryDetails (category) {
