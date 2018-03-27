@@ -44,12 +44,27 @@ module.exports = {
             'scss': [
               'vue-style-loader',
               'css-loader',
-              'sass-loader'
+              {
+                loader: 'sass-loader',
+                options: {
+                  includePaths: [
+                    path.resolve(__dirname, './node_modules/foundation-sites/scss')
+                  ]
+                }
+              }
             ],
             'sass': [
               'vue-style-loader',
               'css-loader',
-              'sass-loader?indentedSyntax'
+              {
+                loader: 'sass-loader',
+                options: {
+                  indentedSyntax: true,
+                  includePaths: [
+                    path.resolve(__dirname, './node_modules/foundation-sites/scss')
+                  ]
+                }
+              }
             ]
           }
           // other vue-loader options go here
