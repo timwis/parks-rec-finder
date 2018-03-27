@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import { concatAddress } from '~/util'
 
@@ -63,13 +63,9 @@ export default {
       this.getLocationDetails(this.id)
     }
   },
-  methods: {
-    ...mapActions([
-      'getLocationDetails'
-    ]),
-    ...mapMutations({
-      resetLocationDetails: 'RESET_LOCATION_DETAILS'
-    })
-  }
+  methods: mapActions([
+    'getLocationDetails',
+    'resetLocationDetails'
+  ])
 }
 </script>

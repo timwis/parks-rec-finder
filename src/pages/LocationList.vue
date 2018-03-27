@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import LocationListItem from '~/components/LocationListItem'
 
@@ -47,23 +47,17 @@ export default {
     this.getLocationsByCategorySlug(this.categorySlug)
   },
   destroyed () {
-    this.resetLocationCategoryDetails()
-    this.resetLocations()
+    this.resetLocationsByCategorySlug()
   },
   watch: {
     categorySlug () {
       this.getLocationsByCategorySlug(this.categorySlug)
     }
   },
-  methods: {
-    ...mapActions([
-      'getLocationsByCategorySlug'
-    ]),
-    ...mapMutations({
-      resetLocationCategoryDetails: 'RESET_LOCATION_CATEGORY_DETAILS',
-      resetLocations: 'RESET_LOCATIONS'
-    })
-  }
+  methods: mapActions([
+    'getLocationsByCategorySlug',
+    'resetLocationsByCategorySlug'
+  ])
 }
 </script>
 
