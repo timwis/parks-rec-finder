@@ -11,14 +11,18 @@
         <p>Choose a category from the list below to explore our locations.</p>
       </section>
 
-      <ul class="tab-switcher">
-        <li :class="{'is-active': activeTab === 'activities'}">
-          <router-link to="/activities">Activities ({{ activitiesCount }})</router-link>
-        </li>
-        <li :class="{'is-active': activeTab === 'locations'}">
-          <router-link to="/locations">Locations ({{ locationsCount }})</router-link>
-        </li>
-      </ul>
+      <TabSwitcher :active-tab="activeTab">
+        <router-link
+          slot="activities"
+          to="/activities">
+          Activities ({{ activitiesCount }})
+        </router-link>
+        <router-link
+          slot="locations"
+          to="/locations">
+          Locations ({{ locationsCount }})
+        </router-link>
+      </TabSwitcher>
 
       <ul v-if="activeTab === 'activities'">
         <CategoryListItem
@@ -55,6 +59,7 @@
 import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import CategoryListItem from '~/components/CategoryListItem'
+import TabSwitcher from '~/components/TabSwitcher'
 
 export default {
   name: 'Categories',
@@ -63,7 +68,8 @@ export default {
   },
   components: {
     SiteMap,
-    CategoryListItem
+    CategoryListItem,
+    TabSwitcher
   },
   computed: {
     ...mapState([
@@ -91,24 +97,3 @@ function categoryCountReducer (accumulator, category) {
   return accumulator + category.count
 }
 </script>
-
-<style lang="sass" scoped>
-.tab-switcher
-  margin-left: 0
-
-  li
-    display: inline
-
-    a
-      font-weight: normal
-      padding-bottom: 5px
-
-  li.is-active
-    a
-      font-weight: bold
-      border-bottom: 2px #0f4d90 solid
-
-  li:not(:first-child):before
-    content: " | "
-</style>
-
