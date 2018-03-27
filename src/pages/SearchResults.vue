@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import pick from 'lodash/pick'
 import SiteMap from '~/components/SiteMap'
 import ActivityListItem from '~/components/ActivityListItem'
@@ -102,9 +102,7 @@ export default {
     this.search()
   },
   destroyed () {
-    this.resetActivities()
-    this.resetLocations()
-    this.resetSearchLocationGeometry()
+    this.resetSearchActivitiesAndLocations()
   },
   watch: {
     searchTerm () {
@@ -116,13 +114,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      'searchActivitiesAndLocations'
+      'searchActivitiesAndLocations',
+      'resetSearchActivitiesAndLocations'
     ]),
-    ...mapMutations({
-      'resetActivities': 'RESET_ACTIVITIES',
-      'resetLocations': 'RESET_LOCATIONS',
-      'resetSearchLocationGeometry': 'RESET_SEARCH_LOCATION_GEOMETRY'
-    }),
     search () {
       if (this.searchTerm || this.searchLocation) {
         const filters = pick(this, ['searchTerm', 'searchLocation'])

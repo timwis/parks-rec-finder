@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import ActivityListItem from '~/components/ActivityListItem'
 import ActivityFilterControls from '~/components/ActivityFilterControls'
@@ -96,23 +96,17 @@ export default {
     this.getActivitiesByCategorySlug(this.categorySlug)
   },
   destroyed () {
-    this.resetActivityCategoryDetails()
-    this.resetActivities()
+    this.resetActivitiesByCategorySlug()
   },
   watch: {
     categorySlug () {
       this.getActivitiesByCategorySlug(this.categorySlug)
     }
   },
-  methods: {
-    ...mapActions([
-      'getActivitiesByCategorySlug'
-    ]),
-    ...mapMutations({
-      resetActivityCategoryDetails: 'RESET_ACTIVITY_CATEGORY_DETAILS',
-      resetActivities: 'RESET_ACTIVITIES'
-    })
-  }
+  methods: mapActions([
+    'getActivitiesByCategorySlug',
+    'resetActivitiesByCategorySlug'
+  ])
 }
 
 const genderInitialsMap = { male: 'M', female: 'F' }

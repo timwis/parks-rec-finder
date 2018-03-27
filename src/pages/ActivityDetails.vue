@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import { concatAddress } from '~/util'
 
@@ -67,13 +67,9 @@ export default {
       this.getActivityDetails(this.id)
     }
   },
-  methods: {
-    ...mapActions([
-      'getActivityDetails'
-    ]),
-    ...mapMutations({
-      resetActivityDetails: 'RESET_ACTIVITY_DETAILS'
-    })
-  }
+  methods: mapActions([
+    'getActivityDetails',
+    'resetActivityDetails'
+  ])
 }
 </script>

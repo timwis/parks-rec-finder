@@ -32,7 +32,6 @@ export async function getLocationCategories ({ commit }) {
 }
 
 export async function getActivitiesByCategorySlug ({ commit, dispatch }, categorySlug) {
-  commit('RESET_ACTIVITY_CATEGORY_DETAILS')
   const activityCategoryDetails = await carto.getActivityCategoryDetails(categorySlug)
   commit('SET_ACTIVITY_CATEGORY_DETAILS', activityCategoryDetails)
 
@@ -41,7 +40,6 @@ export async function getActivitiesByCategorySlug ({ commit, dispatch }, categor
 }
 
 export async function getLocationsByCategorySlug ({ commit, dispatch }, categorySlug) {
-  commit('RESET_LOCATION_CATEGORY_DETAILS')
   const locationCategoryDetails = await carto.getLocationCategoryDetails(categorySlug)
   commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
 
@@ -49,35 +47,47 @@ export async function getLocationsByCategorySlug ({ commit, dispatch }, category
   dispatch('getLocations', { categoryId })
 }
 
-export async function getActivities ({ commit }, filters) {
+export function resetActivitiesByCategorySlug ({ commit }) {
+  commit('RESET_ACTIVITY_CATEGORY_DETAILS')
   commit('RESET_ACTIVITIES')
+}
+
+export function resetLocationsByCategorySlug ({ commit }) {
+  commit('RESET_LOCATION_CATEGORY_DETAILS')
+  commit('RESET_LOCATIONS')
+}
+
+export async function getActivities ({ commit }, filters) {
   const activities = await carto.getActivities(filters)
   commit('SET_ACTIVITIES', activities)
 }
 
 export async function getLocations ({ commit }, filters) {
-  commit('RESET_LOCATIONS')
   const locations = await carto.getLocations(filters)
   commit('SET_LOCATIONS', locations)
 }
 
 export async function getActivityDetails ({ commit }, id) {
-  commit('RESET_ACTIVITY_DETAILS')
   const activityDetails = await carto.getActivityDetails(id)
   commit('SET_ACTIVITY_DETAILS', activityDetails)
 }
 
 export async function getLocationDetails ({ commit }, id) {
-  commit('RESET_LOCATION_DETAILS')
   const locationDetails = await carto.getLocationDetails(id)
   commit('SET_LOCATION_DETAILS', locationDetails)
+}
+
+export function resetActivityDetails ({ commit }) {
+  commit('RESET_ACTIVITY_DETAILS')
+}
+
+export function resetLocationDetails ({ commit }) {
+  commit('RESET_LOCATION_DETAILS')
 }
 
 // Combined function to share the results of zipcode and address lookups
 export async function searchActivitiesAndLocations ({ commit, dispatch }, filters) {
   if (filters.searchLocation) {
-    commit('RESET_SEARCH_LOCATION_GEOMETRY')
-
     filters.searchLocationGeometry = (isZipcode(filters.searchLocation))
       ? await carto.getZipcodeGeometry(filters.searchLocation)
       : await ais.getAddressGeometry(filters.searchLocation)
@@ -87,6 +97,12 @@ export async function searchActivitiesAndLocations ({ commit, dispatch }, filter
 
   dispatch('getActivities', filters)
   dispatch('getLocations', filters)
+}
+
+export function resetSearchActivitiesAndLocations ({ commit }) {
+  commit('RESET_SEARCH_LOCATION_GEOMETRY')
+  commit('RESET_ACTIVITIES')
+  commit('RESET_LOCATIONS')
 }
 
 function isZipcode (value) {
