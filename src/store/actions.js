@@ -61,16 +61,16 @@ export async function getLocations ({ commit }, filters) {
   commit('SET_LOCATIONS', locations)
 }
 
-export async function getActivity ({ commit }, id) {
-  commit('RESET_ACTIVITY')
-  const activity = await carto.getActivity(id)
-  commit('SET_ACTIVITY', activity)
+export async function getActivityDetails ({ commit }, id) {
+  commit('RESET_ACTIVITY_DETAILS')
+  const activityDetails = await carto.getActivityDetails(id)
+  commit('SET_ACTIVITY_DETAILS', activityDetails)
 }
 
-export async function getLocation ({ commit }, id) {
-  commit('RESET_LOCATION')
-  const location = await carto.getLocation(id)
-  commit('SET_LOCATION', location)
+export async function getLocationDetails ({ commit }, id) {
+  commit('RESET_LOCATION_DETAILS')
+  const locationDetails = await carto.getLocationDetails(id)
+  commit('SET_LOCATION_DETAILS', locationDetails)
 }
 
 // Combined function to share the results of zipcode and address lookups

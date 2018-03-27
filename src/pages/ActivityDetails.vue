@@ -26,7 +26,7 @@
       </div>
     </aside>
     <section class="map">
-      <SiteMap :activity="activity"/>
+      <SiteMap :activity-details="activityDetails"/>
     </section>
   </main>
 </template>
@@ -45,9 +45,9 @@ export default {
   },
   computed: {
     ...mapState({
-      activity: (state) => state.activity,
-      name: (state) => state.activity.name,
-      schedules: (state) => state.activity.schedules
+      activityDetails: (state) => state.activityDetails,
+      name: (state) => state.activityDetails.name,
+      schedules: (state) => state.activityDetails.schedules
     }),
     // directionsUrl () {
     //   return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
@@ -57,22 +57,22 @@ export default {
     // }
   },
   created () {
-    this.getActivity(this.id)
+    this.getActivityDetails(this.id)
   },
   destroyed () {
-    this.resetActivity()
+    this.resetActivityDetails()
   },
   watch: {
     id (newId) {
-      this.getActivity(this.id)
+      this.getActivityDetails(this.id)
     }
   },
   methods: {
     ...mapActions([
-      'getActivity'
+      'getActivityDetails'
     ]),
     ...mapMutations({
-      resetActivity: 'RESET_ACTIVITY'
+      resetActivityDetails: 'RESET_ACTIVITY_DETAILS'
     })
   }
 }

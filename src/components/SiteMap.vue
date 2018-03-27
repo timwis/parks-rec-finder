@@ -28,14 +28,14 @@
     </LeafletMarker>
 
     <LeafletMarker
-      v-if="activity && activity.facilityGeometry"
-      :lat-lng="activity.facilityGeometry"
+      v-if="activityDetails && activityDetails.facilityGeometry"
+      :lat-lng="activityDetails.facilityGeometry"
       :icon="activityIcon"
     />
 
     <LeafletMarker
-      v-if="location && location.geometry"
-      :lat-lng="location.geometry"
+      v-if="locationDetails && locationDetails.geometry"
+      :lat-lng="locationDetails.geometry"
       :icon="locationIcon"
     />
 
@@ -67,8 +67,8 @@ export default {
   props: {
     activities: Array,
     locations: Array,
-    activity: Object,
-    location: Object,
+    activityDetails: Object,
+    locationDetails: Object,
     searchLocationGeometry: Array
   },
   components: {
@@ -119,15 +119,15 @@ export default {
         this.$refs.map.fitBounds(geometries)
       }
     },
-    activity () {
-      if (this.activity && this.activity.facilityGeometry) {
-        const geometries = [ this.activity.facilityGeometry ]
+    activityDetails () {
+      if (this.activityDetails && this.activityDetails.facilityGeometry) {
+        const geometries = [ this.activityDetails.facilityGeometry ]
         this.$refs.map.fitBounds(geometries)
       }
     },
-    location () {
-      if (this.location && this.location.geometry) {
-        const geometries = [ this.location.geometry ]
+    locationDetails () {
+      if (this.locationDetails && this.locationDetails.geometry) {
+        const geometries = [ this.locationDetails.geometry ]
         this.$refs.map.fitBounds(geometries)
       }
     }
