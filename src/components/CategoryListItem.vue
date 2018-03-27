@@ -2,6 +2,7 @@
   <li>
     <router-link :to="url">
       {{ name }} ({{ count }})
+      <img :src="photo">
     </router-link>
   </li>
 </template>
