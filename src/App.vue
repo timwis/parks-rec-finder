@@ -6,12 +6,14 @@
       :search-location="searchLocation"
       @search="onSearch"
     />
+    <vue-progress-bar/>
     <router-view class="cell auto"/>
   </div>
 </template>
 
 
 <script>
+import { mapState } from 'vuex'
 import SiteHeader from './components/SiteHeader'
 import SiteMap from '~/components/SiteMap'
 
@@ -21,11 +23,23 @@ export default {
     SiteHeader
   },
   computed: {
+    ...mapState({
+      pendingRequests: (state) => Object.keys(state.pendingRequests)
+    }),
     searchTerm () {
       return this.$route.query.term
     },
     searchLocation () {
       return this.$route.query.location
+    }
+  },
+  watch: {
+    pendingRequests () {
+      if (this.pendingRequests.length > 0) {
+        this.$Progress.start()
+      } else {
+        this.$Progress.finish()
+      }
     }
   },
   methods: {
