@@ -38,20 +38,20 @@ export function RESET_ACTIVITIES (state) {
   state.activities = []
 }
 
-export function SET_LOCATION (state, location) {
-  state.location = location
+export function SET_LOCATION_DETAILS (state, locationDetails) {
+  state.locationDetails = locationDetails
 }
 
-export function RESET_LOCATION (state) {
-  state.location = {}
+export function RESET_LOCATION_DETAILS (state) {
+  state.locationDetails = {}
 }
 
-export function SET_ACTIVITY (state, activity) {
-  state.activity = activity
+export function SET_ACTIVITY_DETAILS (state, activityDetails) {
+  state.activityDetails = activityDetails
 }
 
-export function RESET_ACTIVITY (state) {
-  state.activity = {}
+export function RESET_ACTIVITY_DETAILS (state) {
+  state.activityDetails = {}
 }
 
 export function SET_SEARCH_LOCATION_GEOMETRY (state, geometry) {

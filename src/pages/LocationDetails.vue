@@ -20,7 +20,7 @@
       </div>
     </aside>
     <section class="map">
-      <SiteMap :location="location"/>
+      <SiteMap :location-details="locationDetails"/>
     </section>
   </main>
 </template>
@@ -39,11 +39,11 @@ export default {
   },
   computed: {
     ...mapState({
-      location: (state) => state.location,
-      name: (state) => state.location.name,
-      description: (state) => state.location.description,
-      fullAddress: (state) => concatAddress(state.location.address),
-      phone: (state) => state.location.phone
+      locationDetails: (state) => state.locationDetails,
+      name: (state) => state.locationDetails.name,
+      description: (state) => state.locationDetails.description,
+      fullAddress: (state) => concatAddress(state.locationDetails.address),
+      phone: (state) => state.locationDetails.phone
     }),
     directionsUrl () {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
@@ -53,22 +53,22 @@ export default {
     }
   },
   created () {
-    this.getLocation(this.id)
+    this.getLocationDetails(this.id)
   },
   destroyed () {
-    this.resetLocation()
+    this.resetLocationDetails()
   },
   watch: {
     id (newId) {
-      this.getLocation(this.id)
+      this.getLocationDetails(this.id)
     }
   },
   methods: {
     ...mapActions([
-      'getLocation'
+      'getLocationDetails'
     ]),
     ...mapMutations({
-      resetLocation: 'RESET_LOCATION'
+      resetLocationDetails: 'RESET_LOCATION_DETAILS'
     })
   }
 }

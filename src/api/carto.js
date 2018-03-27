@@ -236,7 +236,7 @@ export default class Carto {
       .then(camelcaseKeys)
   }
 
-  getLocation (id) {
+  getLocationDetails (id) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
@@ -257,7 +257,7 @@ export default class Carto {
       .then(camelcaseKeys)
   }
 
-  getActivity (id) {
+  getActivityDetails (id) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
