@@ -13,6 +13,25 @@
       </fieldset>
 
       <fieldset @change="onChange">
+        <legend class="h4">Age range</legend>
+
+        <input type="radio" id="tots" name="age" value="2-5" v-model="filters.age">
+        <label for="tots">Tots (2-5 or younger)</label>
+
+        <input type="radio" id="youth" name="age" value="6-12" v-model="filters.age">
+        <label for="youth">Youth (6-12)</label>
+
+        <input type="radio" id="teen" name="age" value="13-19" v-model="filters.age">
+        <label for="teen">Teen (13-19)</label>
+
+        <input type="radio" id="adult" name="age" value="20-55" v-model="filters.age">
+        <label for="adult">Adult (20-55)</label>
+
+        <input type="radio" id="senior" name="age" value="56-" v-model="filters.age">
+        <label for="senior">Senior (56+)</label>
+      </fieldset>
+
+      <fieldset @change="onChange">
         <legend class="h4">Gender</legend>
 
         <input type="radio" id="all-genders" name="gender" value="" v-model="filters.gender">
@@ -66,6 +85,7 @@ export default {
       isOpen: false,
       filters: {
         cost: null,
+        age: null,
         gender: null,
         days: [],
         ...this.value
