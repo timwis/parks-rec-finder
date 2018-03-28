@@ -67,13 +67,15 @@ export default {
       return this.filteredActivities.length
     },
     filteredActivities () {
-      const filterFunctions = []
       const currentFilters = this.currentFilters
+      const filterFunctions = []
+
       if (currentFilters.cost) {
         filterFunctions.push((activity) => {
           return activity.fee === '' || activity.fee === '0.00'
         })
       }
+
       if (currentFilters.age) {
         const [filterLow, filterHigh] = currentFilters.age.split('-')
         filterFunctions.push((activity) => {
@@ -81,12 +83,14 @@ export default {
             (!filterLow || activity.ageHigh >= filterLow)
         })
       }
+
       if (currentFilters.gender) {
         const genderInitial = getGenderInitial(currentFilters.gender)
         filterFunctions.push((activity) => {
           return activity.gender === genderInitial || activity.gender === 'M/F'
         })
       }
+
       if (currentFilters.days && currentFilters.days.length > 0) {
         filterFunctions.push((activity) => {
           return currentFilters.days.some((day) => {
@@ -96,6 +100,7 @@ export default {
           })
         })
       }
+
       return this.activities.filter((activity) => {
         return filterFunctions.every((fn) => fn(activity))
       })

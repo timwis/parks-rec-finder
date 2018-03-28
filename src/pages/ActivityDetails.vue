@@ -58,12 +58,6 @@ export default {
     isLoading () {
       return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
     }
-    // directionsUrl () {
-    //   return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
-    // },
-    // phoneUrl () {
-    //   return `tel:${this.phone}`
-    // }
   },
   created () {
     this.getActivityDetails(this.id)
@@ -72,7 +66,7 @@ export default {
     this.resetActivityDetails()
   },
   watch: {
-    id (newId) {
+    id () {
       this.getActivityDetails(this.id)
     }
   },
