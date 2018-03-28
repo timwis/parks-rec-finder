@@ -77,6 +77,20 @@ export default class Carto {
     return this.request(query)
   }
 
+  getActivityCategoryDetails (category) {
+    const query = squel.useFlavour('postgres')
+      .select()
+      .fields({
+        'id': 'id',
+        'activity_category_name': 'name'
+      })
+      .from('ppr_activity_categories')
+      .where(`regexp_replace(regexp_replace(lower(trim(ppr_activity_categories.activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
+
+    return this.request(query)
+      .then((rows) => rows[0])
+  }
+
   getLocationCategoryDetails (category) {
     const query = squel.useFlavour('postgres')
       .select()
@@ -87,60 +101,6 @@ export default class Carto {
       .from('ppr_location_types')
       .where(`regexp_replace(regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
       .where('location_type_is_published = true')
-
-    return this.request(query)
-      .then((rows) => rows[0])
-  }
-
-  getLocations ({ categoryId, searchTerm, searchLocationGeometry }) {
-    const query = squel.useFlavour('postgres')
-      .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
-      .fields({
-        'ppr_facilities.id': 'id',
-        'ppr_facilities.facility_name': 'name',
-        'ppr_facilities.address': 'address'
-      })
-      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
-      .from('ppr_facilities')
-      .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
-
-    if (categoryId) {
-      query.where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
-    }
-    if (searchTerm) {
-      query.where(
-        squel.expr()
-          .and('ppr_facilities.facility_name ILIKE ?', `%${searchTerm}%`)
-          .or('ppr_facilities.long_name ILIKE ?', `%${searchTerm}%`)
-          .or('ppr_facilities.facility_description ILIKE ?', `%${searchTerm}%`)
-      )
-    }
-    if (searchLocationGeometry) {
-      const geometryString = `${searchLocationGeometry[1]},${searchLocationGeometry[0]}`
-      query.field(`
-        ST_Distance(
-          ST_Centroid(ppr_website_locatorpoints.the_geom),
-          ST_SetSRID(
-            ST_Point(${geometryString}),
-            4326
-          )::geography
-        ) * ${METERS_TO_MILES_RATIO}
-      `, 'distance')
-      query.order('distance')
-    }
-
-    return this.request(query)
-  }
-
-  getActivityCategoryDetails (category) {
-    const query = squel.useFlavour('postgres')
-      .select()
-      .fields({
-        'id': 'id',
-        'activity_category_name': 'name'
-      })
-      .from('ppr_activity_categories')
-      .where(`regexp_replace(regexp_replace(lower(trim(ppr_activity_categories.activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
 
     return this.request(query)
       .then((rows) => rows[0])
@@ -229,23 +189,44 @@ export default class Carto {
     return this.request(query)
   }
 
-  getLocationDetails (id) {
+  getLocations ({ categoryId, searchTerm, searchLocationGeometry }) {
     const query = squel.useFlavour('postgres')
-      .select()
+      .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
       .fields({
+        'ppr_facilities.id': 'id',
         'ppr_facilities.facility_name': 'name',
-        'ppr_facilities.facility_description': 'description',
-        'ppr_facilities.address': 'address',
-        'ppr_facilities.contact_phone': 'phone',
-        'ppr_facilities.location_contact_name': 'site_contact'
+        'ppr_facilities.address': 'address'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
-      .where('ppr_facilities.id = ?', id)
+
+    if (categoryId) {
+      query.where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
+    }
+    if (searchTerm) {
+      query.where(
+        squel.expr()
+          .and('ppr_facilities.facility_name ILIKE ?', `%${searchTerm}%`)
+          .or('ppr_facilities.long_name ILIKE ?', `%${searchTerm}%`)
+          .or('ppr_facilities.facility_description ILIKE ?', `%${searchTerm}%`)
+      )
+    }
+    if (searchLocationGeometry) {
+      const geometryString = `${searchLocationGeometry[1]},${searchLocationGeometry[0]}`
+      query.field(`
+        ST_Distance(
+          ST_Centroid(ppr_website_locatorpoints.the_geom),
+          ST_SetSRID(
+            ST_Point(${geometryString}),
+            4326
+          )::geography
+        ) * ${METERS_TO_MILES_RATIO}
+      `, 'distance')
+      query.order('distance')
+    }
 
     return this.request(query)
-      .then((rows) => rows[0])
   }
 
   getActivityDetails (id) {
@@ -301,6 +282,25 @@ export default class Carto {
         'true'
       )
       .where('ppr_programs.id = ?', id)
+
+    return this.request(query)
+      .then((rows) => rows[0])
+  }
+
+  getLocationDetails (id) {
+    const query = squel.useFlavour('postgres')
+      .select()
+      .fields({
+        'ppr_facilities.facility_name': 'name',
+        'ppr_facilities.facility_description': 'description',
+        'ppr_facilities.address': 'address',
+        'ppr_facilities.contact_phone': 'phone',
+        'ppr_facilities.location_contact_name': 'site_contact'
+      })
+      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
+      .from('ppr_facilities')
+      .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
+      .where('ppr_facilities.id = ?', id)
 
     return this.request(query)
       .then((rows) => rows[0])
