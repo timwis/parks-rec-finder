@@ -79,10 +79,7 @@ import TabSwitcher from '~/components/TabSwitcher'
 
 export default {
   props: {
-    activeTab: {
-      type: String, // activities or programs
-      default: 'activities'
-    },
+    activeTab: String, // activities or locations
     searchTerm: String,
     searchLocation: String
   },
