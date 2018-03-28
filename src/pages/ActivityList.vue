@@ -1,26 +1,31 @@
 <template>
   <main>
     <aside class="list">
-      <h2>{{ categoryName }}</h2>
-      <p>({{ count }})</p>
+      <div v-if="isLoading">
+        Loading...
+      </div>
+      <div v-else>
+        <h2>{{ categoryName }}</h2>
+        <p>({{ count }})</p>
 
-      <ActivityFilterControls v-model="currentFilters" />
+        <ActivityFilterControls v-model="currentFilters" />
 
-      <ul>
-        <ActivityListItem
-          v-for="activity in filteredActivities"
-          :key="activity.id"
-          :id="activity.id"
-          :name="activity.name"
-          :fee="activity.fee"
-          :fee-frequency="activity.feeFrequency"
-          :gender="activity.gender"
-          :age-low="activity.ageLow"
-          :age-high="activity.ageHigh"
-          :facility-name="activity.facilityName"
-          :facility-address="activity.facilityAddress"
-        />
-      </ul>
+        <ul>
+          <ActivityListItem
+            v-for="activity in filteredActivities"
+            :key="activity.id"
+            :id="activity.id"
+            :name="activity.name"
+            :fee="activity.fee"
+            :fee-frequency="activity.feeFrequency"
+            :gender="activity.gender"
+            :age-low="activity.ageLow"
+            :age-high="activity.ageHigh"
+            :facility-name="activity.facilityName"
+            :facility-address="activity.facilityAddress"
+          />
+        </ul>
+      </div>
     </aside>
     <section class="map">
       <SiteMap :activities="filteredActivities"/>
@@ -52,8 +57,12 @@ export default {
     ...mapState({
       activities: (state) => state.activities,
       categoryId: (state) => state.activityCategoryDetails.id,
-      categoryName: (state) => state.activityCategoryDetails.name
+      categoryName: (state) => state.activityCategoryDetails.name,
+      pendingRequests: (state) => state.pendingRequests
     }),
+    isLoading () {
+      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
+    },
     count () {
       return this.filteredActivities.length
     },

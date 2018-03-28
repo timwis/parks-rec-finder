@@ -1,22 +1,27 @@
 <template>
   <main>
     <aside class="list">
-      <h2>{{ name }}</h2>
-
-      <div v-if="fullAddress">
-        <h4>Location</h4>
-        <p>{{ fullAddress }}</p>
-        <p><a :href="directionsUrl" class="external">Get directions</a></p>
+      <div v-if="isLoading">
+        Loading...
       </div>
+      <div v-else>
+        <h2>{{ name }}</h2>
 
-      <div v-if="phone">
-        <h4>Contact</h4>
-        <a :href="phoneUrl">{{ phone }}</a>
-      </div>
+        <div v-if="fullAddress">
+          <h4>Location</h4>
+          <p>{{ fullAddress }}</p>
+          <p><a :href="directionsUrl" class="external">Get directions</a></p>
+        </div>
 
-      <div v-if="description">
-        <h4>About this location</h4>
-        <p>{{ description }}</p>
+        <div v-if="phone">
+          <h4>Contact</h4>
+          <a :href="phoneUrl">{{ phone }}</a>
+        </div>
+
+        <div v-if="description">
+          <h4>About this location</h4>
+          <p>{{ description }}</p>
+        </div>
       </div>
     </aside>
     <section class="map">
@@ -43,8 +48,12 @@ export default {
       name: (state) => state.locationDetails.name,
       description: (state) => state.locationDetails.description,
       fullAddress: (state) => concatAddress(state.locationDetails.address),
-      phone: (state) => state.locationDetails.phone
+      phone: (state) => state.locationDetails.phone,
+      pendingRequests: (state) => state.pendingRequests
     }),
+    isLoading () {
+      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
+    },
     directionsUrl () {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
     },

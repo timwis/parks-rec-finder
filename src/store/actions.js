@@ -41,7 +41,7 @@ export async function getActivitiesByCategorySlug ({ commit, dispatch }, categor
   commit('SET_ACTIVITY_CATEGORY_DETAILS', activityCategoryDetails)
 
   const categoryId = activityCategoryDetails.id
-  dispatch('getActivities', { categoryId })
+  await dispatch('getActivities', { categoryId })
   commit('END_REQUEST', 'getActivitiesByCategorySlug')
 }
 
@@ -51,7 +51,7 @@ export async function getLocationsByCategorySlug ({ commit, dispatch }, category
   commit('SET_LOCATION_CATEGORY_DETAILS', locationCategoryDetails)
 
   const categoryId = locationCategoryDetails.id
-  dispatch('getLocations', { categoryId })
+  await dispatch('getLocations', { categoryId })
   commit('END_REQUEST', 'getLocationsByCategorySlug')
 }
 
@@ -76,7 +76,7 @@ export async function getLocations ({ commit }, filters) {
   commit('BEGIN_REQUEST', 'getLocations')
   const locations = await carto.getLocations(filters)
   commit('SET_LOCATIONS', locations)
-  commit('BEGIN_REQUEST', 'getLocations')
+  commit('END_REQUEST', 'getLocations')
 }
 
 export async function getActivityDetails ({ commit }, id) {
@@ -112,8 +112,10 @@ export async function searchActivitiesAndLocations ({ commit, dispatch }, filter
     commit('SET_SEARCH_LOCATION_GEOMETRY', filters.searchLocationGeometry)
   }
 
-  dispatch('getActivities', filters)
-  dispatch('getLocations', filters)
+  await Promise.all([
+    dispatch('getActivities', filters),
+    dispatch('getLocations', filters)
+  ])
   commit('END_REQUEST', 'searchActivitiesAndLocations')
 }
 

@@ -11,42 +11,47 @@
         <p>Choose a category from the list below to explore our locations.</p>
       </section>
 
-      <TabSwitcher :active-tab="activeTab">
-        <router-link
-          slot="activities"
-          to="/activities">
-          Activities ({{ activitiesCount }})
-        </router-link>
-        <router-link
-          slot="locations"
-          to="/locations">
-          Locations ({{ locationsCount }})
-        </router-link>
-      </TabSwitcher>
+      <div v-if="isLoading">
+        Loading...
+      </div>
+      <div v-else>
+        <TabSwitcher :active-tab="activeTab">
+          <router-link
+            slot="activities"
+            to="/activities">
+            Activities ({{ activitiesCount }})
+          </router-link>
+          <router-link
+            slot="locations"
+            to="/locations">
+            Locations ({{ locationsCount }})
+          </router-link>
+        </TabSwitcher>
 
-      <ul v-if="activeTab === 'activities'">
-        <CategoryListItem
-          v-for="category in activityCategories"
-          :key="category.id"
-          :name="category.name"
-          :count="category.count"
-          :photo="category.photo"
-          url-prefix="activities"
-          :slug="category.slug"
-        />
-      </ul>
+        <ul v-if="activeTab === 'activities'">
+          <CategoryListItem
+            v-for="category in activityCategories"
+            :key="category.id"
+            :name="category.name"
+            :count="category.count"
+            :photo="category.photo"
+            url-prefix="activities"
+            :slug="category.slug"
+          />
+        </ul>
 
-      <ul v-if="activeTab === 'locations'">
-        <CategoryListItem
-          v-for="category in locationCategories"
-          :key="category.id"
-          :name="category.name"
-          :count="category.count"
-          :photo="category.photo"
-          url-prefix="locations"
-          :slug="category.slug"
-        />
-      </ul>
+        <ul v-if="activeTab === 'locations'">
+          <CategoryListItem
+            v-for="category in locationCategories"
+            :key="category.id"
+            :name="category.name"
+            :count="category.count"
+            :photo="category.photo"
+            url-prefix="locations"
+            :slug="category.slug"
+          />
+        </ul>
+      </div>
     </aside>
     <section class="map">
       <SiteMap/>
@@ -74,8 +79,12 @@ export default {
   computed: {
     ...mapState([
       'activityCategories',
-      'locationCategories'
+      'locationCategories',
+      'pendingRequests'
     ]),
+    isLoading () {
+      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
+    },
     activitiesCount () {
       return this.activityCategories.reduce(categoryCountReducer, 0)
     },
