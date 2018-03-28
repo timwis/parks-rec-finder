@@ -23,9 +23,9 @@ export default {
     SiteHeader
   },
   computed: {
-    ...mapState({
-      pendingRequests: (state) => Object.keys(state.pendingRequests)
-    }),
+    ...mapState([
+      'pendingRequests'
+    ]),
     searchTerm () {
       return this.$route.query.term
     },
@@ -35,7 +35,8 @@ export default {
   },
   watch: {
     pendingRequests () {
-      if (this.pendingRequests.length > 0) {
+      const pendingRequestsCount = Object.keys(this.pendingRequests).length
+      if (pendingRequestsCount > 0) {
         this.$Progress.start()
       } else {
         this.$Progress.finish()

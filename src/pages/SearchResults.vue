@@ -2,51 +2,57 @@
   <main>
     <aside class="list">
       <h2>Search results</h2>
-      <p>
-        Showing {{ count }} results
-        for {{ searchTerm }}
-      </p>
 
-      <TabSwitcher :active-tab="activeTab">
-        <router-link
-          slot="activities"
-          :to="{ path: '/search/activities', query }"
-        >
-          Activities ({{ activities.length }})
-        </router-link>
-        <router-link
-          slot="locations"
-          :to="{ path: '/search/locations', query }"
-        >
-          Locations ({{ locations.length }})
-        </router-link>
-      </TabSwitcher>
+      <div v-if="isLoading">
+        Loading...
+      </div>
+      <div v-else>
+        <p>
+          Showing {{ count }} results
+          for {{ searchTerm }}
+        </p>
 
-      <ul v-if="activeTab === 'activities'">
-        <ActivityListItem
-          v-for="activity in activities"
-          :key="activity.id"
-          :id="activity.id"
-          :name="activity.name"
-          :fee="activity.fee"
-          :fee-frequency="activity.feeFrequency"
-          :gender="activity.gender"
-          :age-low="activity.ageLow"
-          :age-high="activity.ageHigh"
-          :facility-name="activity.facilityName"
-          :facility-address="activity.facilityAddress"
-        />
-      </ul>
+        <TabSwitcher :active-tab="activeTab">
+          <router-link
+            slot="activities"
+            :to="{ path: '/search/activities', query }"
+          >
+            Activities ({{ activities.length }})
+          </router-link>
+          <router-link
+            slot="locations"
+            :to="{ path: '/search/locations', query }"
+          >
+            Locations ({{ locations.length }})
+          </router-link>
+        </TabSwitcher>
 
-      <ul v-else-if="activeTab === 'locations'">
-        <LocationListItem
-          v-for="location in locations"
-          :key="location.id"
-          :id="location.id"
-          :name="location.name"
-          :address="location.address"
-        />
-      </ul>
+        <ul v-if="activeTab === 'activities'">
+          <ActivityListItem
+            v-for="activity in activities"
+            :key="activity.id"
+            :id="activity.id"
+            :name="activity.name"
+            :fee="activity.fee"
+            :fee-frequency="activity.feeFrequency"
+            :gender="activity.gender"
+            :age-low="activity.ageLow"
+            :age-high="activity.ageHigh"
+            :facility-name="activity.facilityName"
+            :facility-address="activity.facilityAddress"
+          />
+        </ul>
+
+        <ul v-else-if="activeTab === 'locations'">
+          <LocationListItem
+            v-for="location in locations"
+            :key="location.id"
+            :id="location.id"
+            :name="location.name"
+            :address="location.address"
+          />
+        </ul>
+      </div>
     </aside>
     <section class="map">
       <SiteMap
@@ -90,8 +96,12 @@ export default {
     ...mapState([
       'activities',
       'locations',
-      'searchLocationGeometry'
+      'searchLocationGeometry',
+      'pendingRequests'
     ]),
+    isLoading () {
+      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
+    },
     count () {
       return this.activities.length + this.locations.length
     },

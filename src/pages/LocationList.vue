@@ -1,18 +1,23 @@
 <template>
   <main>
     <aside class="list">
-      <h2>{{ categoryName }}</h2>
-      <p>({{ count }})</p>
+      <div v-if="isLoading">
+        Loading...
+      </div>
+      <div v-else>
+        <h2>{{ categoryName }}</h2>
+        <p>({{ count }})</p>
 
-      <ul>
-        <LocationListItem
-          v-for="location in locations"
-          :key="location.id"
-          :id="location.id"
-          :name="location.name"
-          :address="location.address"
-        />
-      </ul>
+        <ul>
+          <LocationListItem
+            v-for="location in locations"
+            :key="location.id"
+            :id="location.id"
+            :name="location.name"
+            :address="location.address"
+          />
+        </ul>
+      </div>
     </aside>
     <section class="map">
       <SiteMap :locations="locations"/>
@@ -37,11 +42,15 @@ export default {
     ...mapState({
       locations: (state) => state.locations,
       categoryId: (state) => state.locationCategoryDetails.id,
-      categoryName: (state) => state.locationCategoryDetails.name
+      categoryName: (state) => state.locationCategoryDetails.name,
+      pendingRequests: (state) => state.pendingRequests
     }),
     count () {
       return this.locations.length
-    }
+    },
+    isLoading () {
+      return this.pendingRequests.hasOwnProperty('getLocationsByCategorySlug')
+    },
   },
   created () {
     this.getLocationsByCategorySlug(this.categorySlug)
