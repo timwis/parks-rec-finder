@@ -9,6 +9,14 @@ export default class Carto {
     this.client = axios.create({ baseURL })
   }
 
+  request (query) {
+    const sql = query.toString()
+    const params = { q: sql }
+    return this.client({ params })
+      .then((res) => res.data.rows)
+      .then(camelcaseKeys)
+  }
+
   getActivityCategories () {
     const query = squel.useFlavour('postgres')
       .select()
@@ -36,11 +44,8 @@ export default class Carto {
       .group('activity_category_description')
       .group('activity_category_photo')
       .order('count', false)
-      .toString()
-    const params = { q: query }
-    return this.client({ params })
-      .then((res) => res.data.rows)
-      .then(camelcaseKeys)
+
+    return this.request(query)
   }
 
   getLocationCategories () {
@@ -68,11 +73,8 @@ export default class Carto {
       .group('location_type_description')
       .group('location_type_photo')
       .order('count', false)
-      .toString()
-    const params = { q: query }
-    return this.client({ params })
-      .then((res) => res.data.rows)
-      .then(camelcaseKeys)
+
+    return this.request(query)
   }
 
   getLocationCategoryDetails (category) {
@@ -85,10 +87,9 @@ export default class Carto {
       .from('ppr_location_types')
       .where(`regexp_replace(regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
       .where('location_type_is_published = true')
-      .toString()
-    const params = { q: query }
-    return this.client({ params })
-      .then((res) => res.data.rows[0])
+
+    return this.request(query)
+      .then((rows) => rows[0])
   }
 
   getLocations ({ categoryId, searchTerm, searchLocationGeometry }) {
@@ -128,10 +129,7 @@ export default class Carto {
       query.order('distance')
     }
 
-    const sql = query.toString()
-    const params = { q: sql }
-    return this.client({ params })
-      .then((res) => res.data.rows)
+    return this.request(query)
   }
 
   getActivityCategoryDetails (category) {
@@ -143,10 +141,9 @@ export default class Carto {
       })
       .from('ppr_activity_categories')
       .where(`regexp_replace(regexp_replace(lower(trim(ppr_activity_categories.activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
-      .toString()
-    const params = { q: query }
-    return this.client({ params })
-      .then((res) => res.data.rows[0])
+
+    return this.request(query)
+      .then((rows) => rows[0])
   }
 
   getActivities ({ categoryId, searchTerm, searchLocationGeometry }) {
@@ -229,11 +226,7 @@ export default class Carto {
       query.order('distance')
     }
 
-    const sql = query.toString()
-    const params = { q: sql }
-    return this.client({ params })
-      .then((res) => res.data.rows)
-      .then(camelcaseKeys)
+    return this.request(query)
   }
 
   getLocationDetails (id) {
@@ -250,11 +243,9 @@ export default class Carto {
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
       .where('ppr_facilities.id = ?', id)
-      .toString()
-    const params = { q: query }
-    return this.client({ params })
-      .then((res) => res.data.rows[0])
-      .then(camelcaseKeys)
+
+    return this.request(query)
+      .then((rows) => rows[0])
   }
 
   getActivityDetails (id) {
@@ -310,11 +301,9 @@ export default class Carto {
         'true'
       )
       .where('ppr_programs.id = ?', id)
-      .toString()
-    const params = { q: query }
-    return this.client({ params })
-      .then((res) => res.data.rows[0])
-      .then(camelcaseKeys)
+
+    return this.request(query)
+      .then((rows) => rows[0])
   }
 
   getZipcodeGeometry (zipcode) {
@@ -323,9 +312,8 @@ export default class Carto {
       .field('json_build_array(ST_Y(ST_Centroid(the_geom)), ST_X(ST_Centroid(the_geom)))', 'centroid')
       .from('zip_codes')
       .where('code = ?', zipcode)
-      .toString()
-    const params = { q: query }
-    return this.client({ params })
-      .then((res) => res.data.rows[0].centroid)
+
+    return this.request(query)
+      .then((rows) => rows[0].centroid)
   }
 }
