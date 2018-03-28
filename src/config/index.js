@@ -1,0 +1,7 @@
+export const CARTO_ENDPOINT = 'https://phl.carto.com/api/v2/sql'
+export const AIS_ENDPOINT = 'https://api.phila.gov/ais/v1/'
+export const AIS_API_KEY = 'aeec9db5c3d2033149545595dd31c4bf'
+export const FLICKR_ENDPOINT = 'https://api.flickr.com/services/rest'
+export const FLICKR_API_KEY = 'd725fbb674d097510cba546d70aa0244'
+export const TILES_BASEMAP = 'https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityBasemap/MapServer'
+export const TILES_LABELS = 'https://tiles.arcgis.com/tiles/fLeGjb7u4uXqeF9q/arcgis/rest/services/CityBasemap_Labels/MapServer'
