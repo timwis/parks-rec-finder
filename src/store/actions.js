@@ -1,16 +1,16 @@
 import Carto from '~/api/carto'
 import AIS from '~/api/ais'
 import Flickr from '~/api/flickr'
+import {
+  CARTO_ENDPOINT,
+  AIS_ENDPOINT,
+  AIS_API_KEY,
+  FLICKR_ENDPOINT,
+  FLICKR_API_KEY
+} from '~/config'
 
-const CARTO_ENDPOINT = 'https://phl.carto.com/api/v2/sql'
 const carto = new Carto(CARTO_ENDPOINT)
-
-const AIS_ENDPOINT = 'https://api.phila.gov/ais/v1/'
-const AIS_API_KEY = 'aeec9db5c3d2033149545595dd31c4bf'
 const ais = new AIS(AIS_ENDPOINT, AIS_API_KEY)
-
-const FLICKR_ENDPOINT = 'https://api.flickr.com/services/rest'
-const FLICKR_API_KEY = 'd725fbb674d097510cba546d70aa0244'
 const flickr = new Flickr(FLICKR_ENDPOINT, FLICKR_API_KEY)
 
 export default {
