@@ -16,29 +16,13 @@ const flickr = new Flickr(FLICKR_ENDPOINT, FLICKR_API_KEY)
 export default {
   async getActivityCategories ({ commit }) {
     const activityCategories = await carto.getActivityCategories()
-    const activityCategoriesWithPhotos = await Promise.all(activityCategories.map(async (activity) => {
-      try {
-        activity.photo = await flickr.getPhotoUrl(activity.photoId)
-      } catch (err) {
-        // Suppress error and continue
-        console.error(err.message, activity.photoId)
-      }
-      return activity
-    }))
+    const activityCategoriesWithPhotos = await Promise.all(activityCategories.map(getPhotoUrl))
     commit('SET_ACTIVITY_CATEGORIES', activityCategoriesWithPhotos)
   },
 
   async getLocationCategories ({ commit }) {
     const locationCategories = await carto.getLocationCategories()
-    const locationCategoriesWithPhotos = await Promise.all(locationCategories.map(async (location) => {
-      try {
-        location.photo = await flickr.getPhotoUrl(location.photoId)
-      } catch (err) {
-        // Suppress error and continue
-        console.error(err.message, location.photoId)
-      }
-      return location
-    }))
+    const locationCategoriesWithPhotos = await Promise.all(locationCategories.map(getPhotoUrl))
     commit('SET_LOCATION_CATEGORIES', locationCategoriesWithPhotos)
   },
 
@@ -117,6 +101,16 @@ export default {
     commit('RESET_ACTIVITIES')
     commit('RESET_LOCATIONS')
   }
+}
+
+async function getPhotoUrl (category) {
+  try {
+    category.photo = await flickr.getPhotoUrl(category.photoId)
+  } catch (err) {
+    // Suppress error and continue
+    console.error(err.message, category.photoId)
+  }
+  return category
 }
 
 function isZipcode (value) {
