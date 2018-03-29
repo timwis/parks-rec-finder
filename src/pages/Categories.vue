@@ -14,6 +14,9 @@
       <div v-if="isLoading">
         Loading...
       </div>
+      <div v-else-if="error">
+        Error: {{ error }}
+      </div>
       <div v-else>
         <TabSwitcher :active-tab="activeTab">
           <router-link
@@ -76,15 +79,17 @@ export default {
     CategoryListItem,
     TabSwitcher
   },
+  data () {
+    return {
+      error: null,
+      isLoading: false
+    }
+  },
   computed: {
     ...mapState([
       'activityCategories',
-      'locationCategories',
-      'pendingRequests'
+      'locationCategories'
     ]),
-    isLoading () {
-      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
-    },
     activitiesCount () {
       return this.activityCategories.reduce(categoryCountReducer, 0)
     },
@@ -93,13 +98,28 @@ export default {
     }
   },
   created () {
-    this.getActivityCategories()
-    this.getLocationCategories()
+    this.fetch()
   },
-  methods: mapActions([
-    'getActivityCategories',
-    'getLocationCategories'
-  ])
+  methods: {
+    ...mapActions([
+      'getActivityCategories',
+      'getLocationCategories'
+    ]),
+    async fetch () {
+      this.error = null
+      this.isLoading = true
+      try {
+        await Promise.all([
+          this.getActivityCategories(),
+          this.getLocationCategories()
+        ])
+      } catch (err) {
+        this.error = err.message
+      } finally {
+        this.isLoading = false
+      }
+    }
+  }
 }
 
 function categoryCountReducer (accumulator, category) {

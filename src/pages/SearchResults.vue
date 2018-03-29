@@ -6,6 +6,9 @@
       <div v-if="isLoading">
         Loading...
       </div>
+      <div v-else-if="error">
+        Error: {{ error }}
+      </div>
       <div v-else>
         <p>
           Showing {{ count }} results
@@ -89,16 +92,18 @@ export default {
     LocationListItem,
     TabSwitcher
   },
+  data () {
+    return {
+      error: null,
+      isLoading: false
+    }
+  },
   computed: {
     ...mapState([
       'activities',
       'locations',
-      'searchLocationGeometry',
-      'pendingRequests'
+      'searchLocationGeometry'
     ]),
-    isLoading () {
-      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
-    },
     count () {
       return this.activities.length + this.locations.length
     },
@@ -110,28 +115,32 @@ export default {
     }
   },
   created () {
-    this.search()
+    this.fetch()
   },
   destroyed () {
     this.resetSearchActivitiesAndLocations()
   },
   watch: {
-    searchTerm () {
-      this.search()
-    },
-    searchLocation () {
-      this.search()
-    }
+    searchTerm: 'fetch',
+    searchLocation: 'fetch'
   },
   methods: {
     ...mapActions([
       'searchActivitiesAndLocations',
       'resetSearchActivitiesAndLocations'
     ]),
-    search () {
+    async fetch () {
       if (this.searchTerm || this.searchLocation) {
+        this.error = null
+        this.isLoading = true
         const filters = pick(this, ['searchTerm', 'searchLocation'])
-        this.searchActivitiesAndLocations(filters)
+        try {
+          await this.searchActivitiesAndLocations(filters)
+        } catch (err) {
+          this.error = err.message
+        } finally {
+          this.isLoading = false
+        }
       }
     }
   }

@@ -12,12 +12,13 @@ export default class Flickr {
     })
   }
 
-  getPhotoUrl (photoId) {
+  async getPhotoUrl (photoId) {
     const params = {
       method: 'flickr.photos.getSizes',
       photo_id: photoId
     }
-    return this.client({ params })
-      .then((res) => res.data.sizes.size[5].source)
+    const response = await this.client({ params })
+    if (response.data.stat !== 'ok') throw new Error('Photo lookup failed')
+    return response.data.sizes.size[5].source
   }
 }

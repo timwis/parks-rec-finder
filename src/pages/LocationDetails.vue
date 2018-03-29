@@ -4,6 +4,9 @@
       <div v-if="isLoading">
         Loading...
       </div>
+      <div v-else-if="error">
+        Error: {{ error }}
+      </div>
       <div v-else>
         <h2>{{ name }}</h2>
 
@@ -42,18 +45,20 @@ export default {
   components: {
     SiteMap
   },
+  data () {
+    return {
+      error: null,
+      isLoading: false
+    }
+  },
   computed: {
     ...mapState({
       locationDetails: (state) => state.locationDetails,
       name: (state) => state.locationDetails.name,
       description: (state) => state.locationDetails.description,
       fullAddress: (state) => concatAddress(state.locationDetails.address),
-      phone: (state) => state.locationDetails.phone,
-      pendingRequests: (state) => state.pendingRequests
+      phone: (state) => state.locationDetails.phone
     }),
-    isLoading () {
-      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
-    },
     directionsUrl () {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
     },
@@ -62,19 +67,30 @@ export default {
     }
   },
   created () {
-    this.getLocationDetails(this.id)
+    this.fetch()
   },
   destroyed () {
     this.resetLocationDetails()
   },
   watch: {
-    id (newId) {
-      this.getLocationDetails(this.id)
-    }
+    id: 'fetch'
   },
-  methods: mapActions([
-    'getLocationDetails',
-    'resetLocationDetails'
-  ])
+  methods: {
+    ...mapActions([
+      'getLocationDetails',
+      'resetLocationDetails'
+    ]),
+    async fetch () {
+      this.error = null
+      this.isLoading = true
+      try {
+        await this.getLocationDetails(this.id)
+      } catch (err) {
+        this.error = err.message
+      } finally {
+        this.isLoading = false
+      }
+    }
+  }
 }
 </script>

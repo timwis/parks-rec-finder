@@ -4,6 +4,9 @@
       <div v-if="isLoading">
         Loading...
       </div>
+      <div v-else-if="error">
+        Error: {{ error }}
+      </div>
       <div v-else>
         <h2>{{ categoryName }}</h2>
         <p>({{ count }})</p>
@@ -38,35 +41,48 @@ export default {
     SiteMap,
     LocationListItem
   },
+  data () {
+    return {
+      error: null,
+      isLoading: false
+    }
+  },
   computed: {
     ...mapState({
       locations: (state) => state.locations,
       categoryId: (state) => state.locationCategoryDetails.id,
-      categoryName: (state) => state.locationCategoryDetails.name,
-      pendingRequests: (state) => state.pendingRequests
+      categoryName: (state) => state.locationCategoryDetails.name
     }),
     count () {
       return this.locations.length
     },
-    isLoading () {
-      return this.pendingRequests.hasOwnProperty('getLocationsByCategorySlug')
-    },
   },
   created () {
-    this.getLocationsByCategorySlug(this.categorySlug)
+    this.fetch()
   },
   destroyed () {
     this.resetLocationsByCategorySlug()
   },
   watch: {
-    categorySlug () {
-      this.getLocationsByCategorySlug(this.categorySlug)
-    }
+    categorySlug: 'fetch'
   },
-  methods: mapActions([
-    'getLocationsByCategorySlug',
-    'resetLocationsByCategorySlug'
-  ])
+  methods: {
+    ...mapActions([
+      'getLocationsByCategorySlug',
+      'resetLocationsByCategorySlug'
+    ]),
+    async fetch () {
+      this.error = null
+      this.isLoading = true
+      try {
+        await this.getLocationsByCategorySlug(this.categorySlug)
+      } catch (err) {
+        this.error = err.message
+      } finally {
+        this.isLoading = false
+      }
+    }
+  }
 }
 </script>
 
