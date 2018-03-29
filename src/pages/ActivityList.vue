@@ -4,6 +4,9 @@
       <div v-if="isLoading">
         Loading...
       </div>
+      <div v-else-if="error">
+        Error: {{ error }}
+      </div>
       <div v-else>
         <h2>{{ categoryName }}</h2>
         <p>({{ count }})</p>
@@ -50,6 +53,8 @@ export default {
   },
   data () {
     return {
+      error: null,
+      isLoading: false,
       currentFilters: {}
     }
   },
@@ -57,12 +62,8 @@ export default {
     ...mapState({
       activities: (state) => state.activities,
       categoryId: (state) => state.activityCategoryDetails.id,
-      categoryName: (state) => state.activityCategoryDetails.name,
-      pendingRequests: (state) => state.pendingRequests
+      categoryName: (state) => state.activityCategoryDetails.name
     }),
-    isLoading () {
-      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
-    },
     count () {
       return this.filteredActivities.length
     },
@@ -107,20 +108,31 @@ export default {
     }
   },
   created () {
-    this.getActivitiesByCategorySlug(this.categorySlug)
+    this.fetch()
   },
   destroyed () {
     this.resetActivitiesByCategorySlug()
   },
   watch: {
-    categorySlug () {
-      this.getActivitiesByCategorySlug(this.categorySlug)
-    }
+    categorySlug: 'fetch'
   },
-  methods: mapActions([
-    'getActivitiesByCategorySlug',
-    'resetActivitiesByCategorySlug'
-  ])
+  methods: {
+    ...mapActions([
+      'getActivitiesByCategorySlug',
+      'resetActivitiesByCategorySlug'
+    ]),
+    async fetch () {
+      this.error = null
+      this.isLoading = true
+      try {
+        await this.getActivitiesByCategorySlug(this.categorySlug)
+      } catch (err) {
+        this.error = err.message
+      } finally {
+        this.isLoading = false
+      }
+    }
+  }
 }
 
 const genderInitialsMap = { male: 'M', female: 'F' }

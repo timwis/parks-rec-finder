@@ -18,7 +18,12 @@ export default {
     commit('BEGIN_REQUEST', 'getActivityCategories')
     const activityCategories = await carto.getActivityCategories()
     const activityCategoriesWithPhotos = await Promise.all(activityCategories.map(async (activity) => {
-      activity.photo = await flickr.getPhotoUrl(activity.photoId)
+      try {
+        activity.photo = await flickr.getPhotoUrl(activity.photoId)
+      } catch (err) {
+        // Suppress error and continue
+        console.error(err.message, activity.photoId)
+      }
       return activity
     }))
     commit('SET_ACTIVITY_CATEGORIES', activityCategoriesWithPhotos)
@@ -29,7 +34,12 @@ export default {
     commit('BEGIN_REQUEST', 'getLocationCategories')
     const locationCategories = await carto.getLocationCategories()
     const locationCategoriesWithPhotos = await Promise.all(locationCategories.map(async (location) => {
-      location.photo = await flickr.getPhotoUrl(location.photoId)
+      try {
+        location.photo = await flickr.getPhotoUrl(location.photoId)
+      } catch (err) {
+        // Suppress error and continue
+        console.error(err.message, location.photoId)
+      }
       return location
     }))
     commit('SET_LOCATION_CATEGORIES', locationCategoriesWithPhotos)

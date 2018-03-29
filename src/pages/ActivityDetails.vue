@@ -4,6 +4,9 @@
       <div v-if="isLoading">
         Loading...
       </div>
+      <div v-else-if="error">
+        Error: {{ error }}
+      </div>
       <div v-else>
         <h2>{{ name }}</h2>
 
@@ -48,31 +51,44 @@ export default {
   components: {
     SiteMap
   },
+  data () {
+    return {
+      error: null,
+      isLoading: false
+    }
+  },
   computed: {
     ...mapState({
       activityDetails: (state) => state.activityDetails,
       name: (state) => state.activityDetails.name,
-      schedules: (state) => state.activityDetails.schedules,
-      pendingRequests: (state) => state.pendingRequests
-    }),
-    isLoading () {
-      return this.pendingRequests.hasOwnProperty('getActivitiesByCategorySlug')
-    }
+      schedules: (state) => state.activityDetails.schedules
+    })
   },
   created () {
-    this.getActivityDetails(this.id)
+    this.fetch()
   },
   destroyed () {
     this.resetActivityDetails()
   },
   watch: {
-    id () {
-      this.getActivityDetails(this.id)
-    }
+    id: 'fetch'
   },
-  methods: mapActions([
-    'getActivityDetails',
-    'resetActivityDetails'
-  ])
+  methods: {
+    ...mapActions([
+      'getActivityDetails',
+      'resetActivityDetails'
+    ]),
+    async fetch () {
+      this.error = null
+      this.isLoading = true
+      try {
+        await this.getActivityDetails(this.id)
+      } catch (err) {
+        this.error = err.message
+      } finally {
+        this.isLoading = false
+      }
+    }
+  }
 }
 </script>

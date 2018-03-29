@@ -9,12 +9,11 @@ export default class Carto {
     this.client = axios.create({ baseURL })
   }
 
-  request (query) {
+  async request (query) {
     const sql = query.toString()
     const params = { q: sql }
-    return this.client({ params })
-      .then((res) => res.data.rows)
-      .then(camelcaseKeys)
+    const response = await this.client({ params })
+    return camelcaseKeys(response.data.rows)
   }
 
   getActivityCategories () {
@@ -77,7 +76,7 @@ export default class Carto {
     return this.request(query)
   }
 
-  getActivityCategoryDetails (category) {
+  async getActivityCategoryDetails (category) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
@@ -87,11 +86,12 @@ export default class Carto {
       .from('ppr_activity_categories')
       .where(`regexp_replace(regexp_replace(lower(trim(ppr_activity_categories.activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
 
-    return this.request(query)
-      .then((rows) => rows[0])
+    const rows = await this.request(query)
+    if (rows.length === 0) throw new Error('Not found')
+    return rows[0]
   }
 
-  getLocationCategoryDetails (category) {
+  async getLocationCategoryDetails (category) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
@@ -102,8 +102,9 @@ export default class Carto {
       .where(`regexp_replace(regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
       .where('location_type_is_published = true')
 
-    return this.request(query)
-      .then((rows) => rows[0])
+    const rows = await this.request(query)
+    if (rows.length === 0) throw new Error('Not found')
+    return rows[0]
   }
 
   getActivities ({ categoryId, searchTerm, searchLocationGeometry }) {
@@ -229,7 +230,7 @@ export default class Carto {
     return this.request(query)
   }
 
-  getActivityDetails (id) {
+  async getActivityDetails (id) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
@@ -283,11 +284,12 @@ export default class Carto {
       )
       .where('ppr_programs.id = ?', id)
 
-    return this.request(query)
-      .then((rows) => rows[0])
+    const rows = await this.request(query)
+    if (rows.length === 0) throw new Error('Not found')
+    return rows[0]
   }
 
-  getLocationDetails (id) {
+  async getLocationDetails (id) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
@@ -302,18 +304,20 @@ export default class Carto {
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
       .where('ppr_facilities.id = ?', id)
 
-    return this.request(query)
-      .then((rows) => rows[0])
+    const rows = await this.request(query)
+    if (rows.length === 0) throw new Error('Not found')
+    return rows[0]
   }
 
-  getZipcodeGeometry (zipcode) {
+  async getZipcodeGeometry (zipcode) {
     const query = squel.useFlavour('postgres')
       .select()
       .field('json_build_array(ST_Y(ST_Centroid(the_geom)), ST_X(ST_Centroid(the_geom)))', 'centroid')
       .from('zip_codes')
       .where('code = ?', zipcode)
 
-    return this.request(query)
-      .then((rows) => rows[0].centroid)
+    const rows = await this.request(query)
+    if (rows.length === 0) throw new Error('Zipcode not found')
+    return rows[0].centroid
   }
 }
