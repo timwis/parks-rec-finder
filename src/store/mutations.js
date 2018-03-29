@@ -1,14 +1,4 @@
-import Vue from 'vue'
-
 export default {
-  BEGIN_REQUEST (state, requestName) {
-    Vue.set(state.pendingRequests, requestName, true)
-  },
-
-  END_REQUEST (state, requestName) {
-    Vue.delete(state.pendingRequests, requestName)
-  },
-
   SET_ACTIVITY_CATEGORIES (state, activityCategories) {
     state.activityCategories = activityCategories
   },
