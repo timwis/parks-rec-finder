@@ -11,26 +11,11 @@
         <h2>{{ categoryName }}</h2>
         <p>({{ count }})</p>
 
-        <ActivityFilterControls
+        <ActivityList
+          :activities="filteredActivities"
           :current-filters="currentFilters"
-          @change="setFilters"
+          @filter="setFilters"
         />
-
-        <ul>
-          <ActivityListItem
-            v-for="activity in filteredActivities"
-            :key="activity.id"
-            :id="activity.id"
-            :name="activity.name"
-            :fee="activity.fee"
-            :fee-frequency="activity.feeFrequency"
-            :gender="activity.gender"
-            :age-low="activity.ageLow"
-            :age-high="activity.ageHigh"
-            :facility-name="activity.facilityName"
-            :facility-address="activity.facilityAddress"
-          />
-        </ul>
       </div>
     </aside>
     <section class="map">
@@ -42,14 +27,12 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
-import ActivityListItem from '~/components/ActivityListItem'
-import ActivityFilterControls from '~/components/ActivityFilterControls'
+import ActivityList from '~/components/ActivityList'
 
 export default {
   components: {
     SiteMap,
-    ActivityListItem,
-    ActivityFilterControls
+    ActivityList
   },
   data () {
     return {
