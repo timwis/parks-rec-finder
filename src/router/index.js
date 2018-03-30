@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Categories from '~/pages/Categories'
-import ActivityList from '~/pages/ActivityList'
-import LocationList from '~/pages/LocationList'
+import Activities from '~/pages/Activities'
+import Locations from '~/pages/Locations'
 import ActivityDetails from '~/pages/ActivityDetails'
 import LocationDetails from '~/pages/LocationDetails'
 import SearchResults from '~/pages/SearchResults'
@@ -26,13 +26,13 @@ const routes = [
   },
   {
     path: '/activities/:categorySlug',
-    name: 'activityList',
-    component: ActivityList
+    name: 'activities',
+    component: Activities
   },
   {
     path: '/locations/:categorySlug',
-    name: 'locationList',
-    component: LocationList
+    name: 'locations',
+    component: Locations
   },
   {
     path: '/activity/:id',
