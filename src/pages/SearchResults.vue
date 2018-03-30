@@ -37,15 +37,10 @@
           @filter="setFilters"
         />
 
-        <ul v-else-if="activeTab === 'locations'">
-          <LocationListItem
-            v-for="location in locations"
-            :key="location.id"
-            :id="location.id"
-            :name="location.name"
-            :address="location.address"
-          />
-        </ul>
+        <LocationList
+          v-else-if="activeTab === 'locations'"
+          :locations="locations"
+        />
       </div>
     </aside>
     <section class="map">
@@ -68,7 +63,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import pick from 'lodash/pick'
 import SiteMap from '~/components/SiteMap'
 import ActivityList from '~/components/ActivityList'
-import LocationListItem from '~/components/LocationListItem'
+import LocationList from '~/components/LocationList'
 import TabSwitcher from '~/components/TabSwitcher'
 
 export default {
@@ -78,7 +73,7 @@ export default {
   components: {
     SiteMap,
     ActivityList,
-    LocationListItem,
+    LocationList,
     TabSwitcher
   },
   data () {
