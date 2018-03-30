@@ -83,8 +83,6 @@ import TabSwitcher from '~/components/TabSwitcher'
 export default {
   props: {
     activeTab: String, // activities or locations
-    searchTerm: String,
-    searchLocation: String
   },
   components: {
     SiteMap,
@@ -99,11 +97,13 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'activities',
-      'locations',
-      'searchLocationGeometry'
-    ]),
+    ...mapState({
+      searchTerm: (state) => state.route.query.term,
+      searchLocation: (state) => state.route.query.location,
+      activities: (state) => state.activities,
+      locations: (state) => state.locations,
+      searchLocationGeometry: (state) => state.searchLocationGeometry
+    }),
     count () {
       return this.activities.length + this.locations.length
     },

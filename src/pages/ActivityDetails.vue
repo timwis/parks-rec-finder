@@ -45,9 +45,6 @@ import SiteMap from '~/components/SiteMap'
 import { concatAddress } from '~/util'
 
 export default {
-  props: {
-    id: String
-  },
   components: {
     SiteMap
   },
@@ -59,6 +56,7 @@ export default {
   },
   computed: {
     ...mapState({
+      id: (state) => state.route.params.id,
       activityDetails: (state) => state.activityDetails,
       name: (state) => state.activityDetails.name,
       schedules: (state) => state.activityDetails.schedules

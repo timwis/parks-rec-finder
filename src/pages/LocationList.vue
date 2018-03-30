@@ -34,9 +34,6 @@ import SiteMap from '~/components/SiteMap'
 import LocationListItem from '~/components/LocationListItem'
 
 export default {
-  props: {
-    categorySlug: String
-  },
   components: {
     SiteMap,
     LocationListItem
@@ -49,6 +46,7 @@ export default {
   },
   computed: {
     ...mapState({
+      categorySlug: (state) => state.route.params.categorySlug,
       locations: (state) => state.locations,
       categoryId: (state) => state.locationCategoryDetails.id,
       categoryName: (state) => state.locationCategoryDetails.name

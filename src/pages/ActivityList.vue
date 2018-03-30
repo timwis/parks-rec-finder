@@ -43,9 +43,6 @@ import ActivityListItem from '~/components/ActivityListItem'
 import ActivityFilterControls from '~/components/ActivityFilterControls'
 
 export default {
-  props: {
-    categorySlug: String
-  },
   components: {
     SiteMap,
     ActivityListItem,
@@ -60,6 +57,7 @@ export default {
   },
   computed: {
     ...mapState({
+      categorySlug: (state) => state.route.params.categorySlug,
       activities: (state) => state.activities,
       categoryId: (state) => state.activityCategoryDetails.id,
       categoryName: (state) => state.activityCategoryDetails.name
