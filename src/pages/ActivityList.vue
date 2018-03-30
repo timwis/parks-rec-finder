@@ -11,7 +11,10 @@
         <h2>{{ categoryName }}</h2>
         <p>({{ count }})</p>
 
-        <ActivityFilterControls v-model="currentFilters" />
+        <ActivityFilterControls
+          :current-filters="currentFilters"
+          @change="setFilters"
+        />
 
         <ul>
           <ActivityListItem
@@ -37,7 +40,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import ActivityListItem from '~/components/ActivityListItem'
 import ActivityFilterControls from '~/components/ActivityFilterControls'
@@ -51,8 +54,7 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false,
-      currentFilters: {}
+      isLoading: false
     }
   },
   computed: {
@@ -62,47 +64,12 @@ export default {
       categoryId: (state) => state.activityCategoryDetails.id,
       categoryName: (state) => state.activityCategoryDetails.name
     }),
+    ...mapGetters([
+      'currentFilters',
+      'filteredActivities'
+    ]),
     count () {
       return this.filteredActivities.length
-    },
-    filteredActivities () {
-      const currentFilters = this.currentFilters
-      const filterFunctions = []
-
-      if (currentFilters.cost) {
-        filterFunctions.push((activity) => {
-          return activity.fee === '' || activity.fee === '0.00'
-        })
-      }
-
-      if (currentFilters.age) {
-        const [filterLow, filterHigh] = currentFilters.age.split('-')
-        filterFunctions.push((activity) => {
-          return (!filterHigh || activity.ageLow <= filterHigh) &&
-            (!filterLow || activity.ageHigh >= filterLow)
-        })
-      }
-
-      if (currentFilters.gender) {
-        const genderInitial = getGenderInitial(currentFilters.gender)
-        filterFunctions.push((activity) => {
-          return activity.gender === genderInitial || activity.gender === 'M/F'
-        })
-      }
-
-      if (currentFilters.days && currentFilters.days.length > 0) {
-        filterFunctions.push((activity) => {
-          return currentFilters.days.some((day) => {
-            return activity.schedules && activity.schedules.some((schedule) => {
-              return schedule.days && schedule.days.includes(day)
-            })
-          })
-        })
-      }
-
-      return this.activities.filter((activity) => {
-        return filterFunctions.every((fn) => fn(activity))
-      })
     }
   },
   created () {
@@ -117,7 +84,8 @@ export default {
   methods: {
     ...mapActions([
       'getActivitiesByCategorySlug',
-      'resetActivitiesByCategorySlug'
+      'resetActivitiesByCategorySlug',
+      'setFilters'
     ]),
     async fetch () {
       this.error = null
@@ -131,11 +99,6 @@ export default {
       }
     }
   }
-}
-
-const genderInitialsMap = { male: 'M', female: 'F' }
-function getGenderInitial (gender) {
-  return genderInitialsMap[gender]
 }
 </script>
 

@@ -75,10 +75,7 @@
 <script>
 export default {
   props: {
-    value: Object
-  },
-  model: {
-    event: 'change'
+    currentFilters: Object
   },
   data () {
     return {
@@ -88,7 +85,7 @@ export default {
         age: null,
         gender: null,
         days: [],
-        ...this.value
+        ...this.currentFilters
       }
     }
   },

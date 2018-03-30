@@ -1,3 +1,5 @@
+import pickBy from 'lodash/pickBy'
+import router from '~/router'
 import Carto from '~/api/carto'
 import AIS from '~/api/ais'
 import Flickr from '~/api/flickr'
@@ -100,6 +102,13 @@ export default {
     commit('RESET_SEARCH_LOCATION_GEOMETRY')
     commit('RESET_ACTIVITIES')
     commit('RESET_LOCATIONS')
+  },
+
+  // Persist filters to route querystring. Afterwards,
+  // they'll end up in state.route.query by vuex-router-sync.
+  setFilters (context, filters) {
+    const query = pickBy(filters, (value) => !!value) // remove nulls
+    router.replace({ query })
   }
 }
 
