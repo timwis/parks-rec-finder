@@ -11,15 +11,7 @@
         <h2>{{ categoryName }}</h2>
         <p>({{ count }})</p>
 
-        <ul>
-          <LocationListItem
-            v-for="location in locations"
-            :key="location.id"
-            :id="location.id"
-            :name="location.name"
-            :address="location.address"
-          />
-        </ul>
+        <LocationList :locations="locations"/>
       </div>
     </aside>
     <section class="map">
@@ -31,12 +23,12 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
-import LocationListItem from '~/components/LocationListItem'
+import LocationList from '~/components/LocationList'
 
 export default {
   components: {
     SiteMap,
-    LocationListItem
+    LocationList
   },
   data () {
     return {
