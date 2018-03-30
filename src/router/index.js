@@ -27,49 +27,37 @@ const routes = [
   {
     path: '/activities/:categorySlug',
     name: 'activityList',
-    component: ActivityList,
-    props: true
+    component: ActivityList
   },
   {
     path: '/locations/:categorySlug',
     name: 'locationList',
-    component: LocationList,
-    props: true
+    component: LocationList
   },
   {
     path: '/activity/:id',
     alias: '/program/:id',
     name: 'activityDetail',
-    component: ActivityDetails,
-    props: true
+    component: ActivityDetails
   },
   {
     path: '/location/:id',
     name: 'locationDetail',
-    component: LocationDetails,
-    props: true
+    component: LocationDetails
   },
   {
     path: '/search/activities',
     alias: '/search',
     name: 'activitiesSearchResults',
     component: SearchResults,
-    props: (route) => ({
-      activeTab: 'activities',
-      searchTerm: route.query.term,
-      searchLocation: route.query.location
-    })
+    props: { activeTab: 'activities' }
   },
   {
     path: '/search/locations',
     alias: '/search',
     name: 'locationsSearchResults',
     component: SearchResults,
-    props: (route) => ({
-      activeTab: 'locations',
-      searchTerm: route.query.term,
-      searchLocation: route.query.location
-    })
+    props: { activeTab: 'locations' }
   }
 ]
 
