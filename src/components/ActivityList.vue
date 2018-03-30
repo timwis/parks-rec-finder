@@ -1,10 +1,5 @@
 <template>
   <div>
-    <ActivityFilterControls
-      :current-filters="currentFilters"
-      @change="onChangeFilters"
-    />
-
     <ul>
       <ActivityListItem
         v-for="activity in activities"
@@ -24,22 +19,14 @@
 </template>
 
 <script>
-import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityListItem from '~/components/ActivityListItem'
 
 export default {
   props: {
-    activities: Array,
-    currentFilters: Object
+    activities: Array
   },
   components: {
-    ActivityFilterControls,
     ActivityListItem
-  },
-  methods: {
-    onChangeFilters (filters) {
-      this.$emit('filter', filters)
-    }
   }
 }
 </script>
