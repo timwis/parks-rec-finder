@@ -11,11 +11,12 @@
         <h2>{{ categoryName }}</h2>
         <p>({{ count }})</p>
 
-        <ActivityList
-          :activities="filteredActivities"
+        <ActivityFilterControls
           :current-filters="currentFilters"
-          @filter="setFilters"
+          @change="setFilters"
         />
+
+        <ActivityList :activities="filteredActivities"/>
       </div>
     </aside>
     <section class="map">
@@ -27,11 +28,13 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
+import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityList from '~/components/ActivityList'
 
 export default {
   components: {
     SiteMap,
+    ActivityFilterControls,
     ActivityList
   },
   data () {

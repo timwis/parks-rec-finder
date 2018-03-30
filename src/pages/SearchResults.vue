@@ -30,12 +30,14 @@
           </router-link>
         </TabSwitcher>
 
-        <ActivityList
-          v-if="activeTab === 'activities'"
-          :activities="filteredActivities"
-          :current-filters="currentFilters"
-          @filter="setFilters"
-        />
+        <div v-if="activeTab === 'activities'">
+          <ActivityFilterControls
+            :current-filters="currentFilters"
+            @change="setFilters"
+          />
+
+          <ActivityList :activities="filteredActivities"/>
+        </div>
 
         <LocationList
           v-else-if="activeTab === 'locations'"
@@ -62,6 +64,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import pick from 'lodash/pick'
 import SiteMap from '~/components/SiteMap'
+import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityList from '~/components/ActivityList'
 import LocationList from '~/components/LocationList'
 import TabSwitcher from '~/components/TabSwitcher'
@@ -72,6 +75,7 @@ export default {
   },
   components: {
     SiteMap,
+    ActivityFilterControls,
     ActivityList,
     LocationList,
     TabSwitcher
