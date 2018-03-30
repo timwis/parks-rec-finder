@@ -106,8 +106,12 @@ export default {
 
   // Persist filters to route querystring. Afterwards,
   // they'll end up in state.route.query by vuex-router-sync.
-  setFilters (context, filters) {
-    const query = pickBy(filters, (value) => !!value) // remove nulls
+  setFilters ({ state }, filters) {
+    const mergedQuery = {
+      ...state.route.query, // merge with search term and location
+      ...filters
+    }
+    const query = pickBy(mergedQuery, isNotEmpty)
     router.replace({ query })
   }
 }
@@ -124,4 +128,8 @@ async function getPhotoUrl (category) {
 
 function isZipcode (value) {
   return /^\d{5}$/.test(value)
+}
+
+function isNotEmpty (value) {
+  return !!value
 }

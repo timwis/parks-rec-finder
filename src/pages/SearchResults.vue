@@ -20,7 +20,7 @@
             slot="activities"
             :to="{ path: '/search/activities', query }"
           >
-            Activities ({{ activities.length }})
+            Activities ({{ filteredActivities.length }})
           </router-link>
           <router-link
             slot="locations"
@@ -30,21 +30,12 @@
           </router-link>
         </TabSwitcher>
 
-        <ul v-if="activeTab === 'activities'">
-          <ActivityListItem
-            v-for="activity in activities"
-            :key="activity.id"
-            :id="activity.id"
-            :name="activity.name"
-            :fee="activity.fee"
-            :fee-frequency="activity.feeFrequency"
-            :gender="activity.gender"
-            :age-low="activity.ageLow"
-            :age-high="activity.ageHigh"
-            :facility-name="activity.facilityName"
-            :facility-address="activity.facilityAddress"
-          />
-        </ul>
+        <ActivityList
+          v-if="activeTab === 'activities'"
+          :activities="filteredActivities"
+          :current-filters="currentFilters"
+          @filter="setFilters"
+        />
 
         <ul v-else-if="activeTab === 'locations'">
           <LocationListItem
@@ -60,7 +51,7 @@
     <section class="map">
       <SiteMap
         v-if="activeTab === 'activities'"
-        :activities="activities"
+        :activities="filteredActivities"
         :search-location-geometry="searchLocationGeometry"
       />
       <SiteMap
@@ -73,10 +64,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import pick from 'lodash/pick'
 import SiteMap from '~/components/SiteMap'
-import ActivityListItem from '~/components/ActivityListItem'
+import ActivityList from '~/components/ActivityList'
 import LocationListItem from '~/components/LocationListItem'
 import TabSwitcher from '~/components/TabSwitcher'
 
@@ -86,7 +77,7 @@ export default {
   },
   components: {
     SiteMap,
-    ActivityListItem,
+    ActivityList,
     LocationListItem,
     TabSwitcher
   },
@@ -104,14 +95,15 @@ export default {
       locations: (state) => state.locations,
       searchLocationGeometry: (state) => state.searchLocationGeometry
     }),
+    ...mapGetters([
+      'currentFilters',
+      'filteredActivities'
+    ]),
     count () {
-      return this.activities.length + this.locations.length
+      return this.filteredActivities.length + this.locations.length
     },
     query () {
-      return {
-        term: this.searchTerm,
-        location: this.searchLocation
-      }
+      return this.$route.query
     }
   },
   created () {
@@ -127,7 +119,8 @@ export default {
   methods: {
     ...mapActions([
       'searchActivitiesAndLocations',
-      'resetSearchActivitiesAndLocations'
+      'resetSearchActivitiesAndLocations',
+      'setFilters'
     ]),
     async fetch () {
       if (this.searchTerm || this.searchLocation) {
