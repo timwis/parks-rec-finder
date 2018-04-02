@@ -3,6 +3,7 @@ describe('Categories page', () => {
     cy.server()
     cy.route(/FROM\+ppr_programs/, 'fixture:activityCategories')
     cy.route(/FROM\+ppr_facilities/, 'fixture:locationCategories')
+    cy.route(/flickr/, 'fixture:photoUrl')
   })
 
   it('shows activities by default', () => {
