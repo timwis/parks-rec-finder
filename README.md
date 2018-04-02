@@ -1,6 +1,6 @@
-# standards-map-app-template
+# Philadelphia Parks & Recreation Finder
 
-> A map + list application template using the City of Philadelphia's digital standards
+> Search for activities and locations in your neighborhood
 
 ## Build Setup
 
@@ -13,6 +13,7 @@ npm start
 
 # build for production with minification
 npm run build
-```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# run integration tests in desktop UI
+npm test
+```

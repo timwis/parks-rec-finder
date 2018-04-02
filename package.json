@@ -1,8 +1,8 @@
 {
-  "name": "standards-map-app-template",
-  "description": "A map + list application template using the City of Philadelphia's digital standards",
-  "version": "1.0.0",
-  "author": "timwis <tim@timwis.com>",
+  "name": "parks-rec-finder",
+  "description": "Search for activities and locations in your neighborhood",
+  "version": "2.0.0",
+  "author": "City of Philadelphia <oddt@phila.gov>",
   "license": "MIT",
   "private": true,
   "scripts": {
