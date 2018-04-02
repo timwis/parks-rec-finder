@@ -71,6 +71,7 @@ export default {
 
   async getLocationDetails ({ commit }, id) {
     const locationDetails = await carto.getLocationDetails(id)
+    locationDetails.activities = await carto.getActivities({ locationId: id })
     commit('SET_LOCATION_DETAILS', locationDetails)
   },
 

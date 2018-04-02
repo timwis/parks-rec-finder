@@ -58,6 +58,13 @@
         >
           <p>{{ description }}</p>
         </DetailSection>
+
+        <DetailSection
+          v-if="activities && activities.length > 0"
+          :title="activities.length + ' activities offered here'"
+        >
+          <ActivityList :activities="activities"/>
+        </DetailSection>
       </div>
     </aside>
     <section class="map">
@@ -70,6 +77,7 @@
 import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
 import DetailSection from '~/components/DetailSection'
+import ActivityList from '~/components/ActivityList'
 import {
   concatAddress,
   formatPhone,
@@ -81,7 +89,8 @@ import {
 export default {
   components: {
     SiteMap,
-    DetailSection
+    DetailSection,
+    ActivityList
   },
   filters: {
     formatTime,
@@ -103,7 +112,8 @@ export default {
       phone: (state) => formatPhone(state.locationDetails.phone),
       phoneLink: (state) => `tel:+1` + state.locationDetails.phone,
       siteContact: (state) => state.locationDetails.siteContact,
-      schedules: (state) => sortByFirstDay(state.locationDetails.schedules)
+      schedules: (state) => sortByFirstDay(state.locationDetails.schedules),
+      activities: (state) => state.locationDetails.activities
     }),
     directionsUrl () {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`

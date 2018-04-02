@@ -107,7 +107,7 @@ export default class Carto {
     return rows[0]
   }
 
-  getActivities ({ categoryId, searchTerm, searchLocationGeometry }) {
+  getActivities ({ categoryId, searchTerm, searchLocationGeometry, locationId }) {
     const query = squel.useFlavour('postgres')
       .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
       .fields({
@@ -185,6 +185,9 @@ export default class Carto {
         ) * ${METERS_TO_MILES_RATIO}
       `, 'distance')
       query.order('distance')
+    }
+    if (locationId) {
+      query.where('ppr_programs.facility->>0 = @', locationId)
     }
 
     return this.request(query)
