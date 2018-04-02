@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     searchTerm () {
-      return this.$route.query.term
+      return this.$route.query.term || this.$route.query.freetext // backwards compatability w/1.0
     },
     searchLocation () {
       return this.$route.query.location
