@@ -7,7 +7,9 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "test": "cypress run",
+    "ci": "start-server-and-test start http://localhost:8080 test"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.4",
@@ -37,14 +39,24 @@
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
+    "cypress": "^2.1.0",
     "fast-async": "^6.3.0",
     "file-loader": "^1.1.4",
     "node-sass": "^4.5.3",
     "pug": "^2.0.0-rc.4",
     "sass-loader": "^6.0.6",
+    "start-server-and-test": "^1.1.4",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it",
+      "beforeEach",
+      "cy"
+    ]
   }
 }

@@ -1,9 +1,15 @@
 <template>
   <ul class="tab-switcher">
-    <li :class="{'is-active': activeTab === 'activities'}">
+    <li
+      :class="{'is-active': activeTab === 'activities'}"
+      data-testid="activitiesTab"
+    >
       <slot name="activities"/>
     </li>
-    <li :class="{'is-active': activeTab === 'locations'}">
+    <li
+      :class="{'is-active': activeTab === 'locations'}"
+      data-testid="locationsTab"
+    >
       <slot name="locations"/>
     </li>
   </ul>

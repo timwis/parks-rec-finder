@@ -31,7 +31,7 @@
           </router-link>
         </TabSwitcher>
 
-        <ul v-if="activeTab === 'activities'">
+        <ul v-if="activeTab === 'activities'" data-testid="activityCategories">
           <CategoryListItem
             v-for="category in activityCategories"
             :key="category.id"
@@ -43,7 +43,7 @@
           />
         </ul>
 
-        <ul v-if="activeTab === 'locations'">
+        <ul v-if="activeTab === 'locations'" data-testid="locationCategories">
           <CategoryListItem
             v-for="category in locationCategories"
             :key="category.id"
