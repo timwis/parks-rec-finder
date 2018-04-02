@@ -199,7 +199,8 @@ export default class Carto {
       .fields({
         'ppr_facilities.id': 'id',
         'ppr_facilities.facility_name': 'name',
-        'ppr_facilities.address': 'address'
+        'ppr_facilities.address': 'address',
+        'ppr_facilities.contact_phone': 'phone'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
       .from('ppr_facilities')
