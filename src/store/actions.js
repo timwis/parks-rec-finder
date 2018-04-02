@@ -1,8 +1,8 @@
-import pickBy from 'lodash/pickBy'
 import router from '~/router'
 import Carto from '~/api/carto'
 import AIS from '~/api/ais'
 import Flickr from '~/api/flickr'
+import { removeEmptyKeys } from '~/util'
 import {
   CARTO_ENDPOINT,
   AIS_ENDPOINT,
@@ -112,7 +112,7 @@ export default {
       ...state.route.query, // merge with search term and location
       ...filters
     }
-    const query = pickBy(mergedQuery, isNotEmpty)
+    const query = removeEmptyKeys(mergedQuery)
     router.replace({ query })
   }
 }
@@ -129,8 +129,4 @@ async function getPhotoUrl (category) {
 
 function isZipcode (value) {
   return /^\d{5}$/.test(value)
-}
-
-function isNotEmpty (value) {
-  return !!value
 }

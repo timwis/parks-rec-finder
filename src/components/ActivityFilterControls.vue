@@ -69,10 +69,22 @@
         <label for="saturday">Saturday</label>
       </fieldset>
     </div>
+    <div v-show="!isOpen && activeFiltersCount > 0">
+      <span
+        class="label"
+        v-for="(value, key) in activeFilters"
+        :key="key">
+        <i class="fa fa-remove"></i>
+        {{ key }}: {{ value }}
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
+import pickBy from 'lodash/pickBy'
+import { removeEmptyKeys } from '~/util'
+
 export default {
   props: {
     currentFilters: Object
@@ -87,6 +99,14 @@ export default {
         days: [],
         ...this.currentFilters
       }
+    }
+  },
+  computed: {
+    activeFilters () {
+      return removeEmptyKeys(this.filters)
+    },
+    activeFiltersCount () {
+      return Object.keys(this.activeFilters).length
     }
   },
   methods: {
