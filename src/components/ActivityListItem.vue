@@ -14,7 +14,11 @@
 </template>
 
 <script>
-import { concatAddress } from '~/util'
+import {
+  concatAddress,
+  getAgeRange,
+  getFeeDescription
+} from '~/util'
 
 export default {
   props: {
@@ -36,21 +40,10 @@ export default {
       return concatAddress(this.facilityAddress)
     },
     ageRange () {
-      return [
-        this.ageLow,
-        this.ageHigh
-      ].join('-')
+      return getAgeRange(this.ageLow, this.ageHigh)
     },
     feeDescription () {
-      const { fee, feeFrequency } = this
-      if (fee.length === 0 || fee === '0.00') {
-        return 'Free'
-      } else {
-        return [
-          '$' + fee,
-          feeFrequency.toLowerCase()
-        ].join(' ')
-      }
+      return getFeeDescription(this.fee, this.feeFrequency)
     }
   }
 }
