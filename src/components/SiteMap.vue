@@ -1,20 +1,20 @@
 <template>
-  <LeafletMap
+  <LMap
     ref="map"
     :zoom="defaultZoom"
     :center="defaultCenter"
   >
-    <EsriTileLayer :url="basemap"/>
-    <EsriTileLayer :url="labels"/>
+    <LTileLayer :url="basemap" :tile-layer-class="esriTileLayer"/>
+    <LTileLayer :url="labels" :tile-layer-class="esriTileLayer"/>
 
-    <LeafletMarker
+    <LMarker
       v-for="activityLocation in uniqueActivityLocations"
       v-if="activityLocation.facilityGeometry"
       :key="activityLocation.facilityId"
       :lat-lng="activityLocation.facilityGeometry"
       :icon="activityIcon"
     >
-      <LeafletPopup>
+      <LPopup>
         <h3>{{ activityLocation.facilityName }}</h3>
         <ul>
           <li v-for="activity in activityLocation.activities" :key="activity.id">
@@ -23,17 +23,17 @@
             </router-link>
           </li>
         </ul>
-      </LeafletPopup>
-    </LeafletMarker>
+      </LPopup>
+    </LMarker>
 
-    <LeafletMarker
+    <LMarker
       v-for="location in locations"
       v-if="location.geometry"
       :key="location.id"
       :lat-lng="location.geometry"
       :icon="locationIcon"
     >
-      <LeafletPopup>
+      <LPopup>
         <h3>{{ location.name }}</h3>
         <div v-if="location.phone">
           <i class="fa fa-phone"></i>
@@ -42,43 +42,38 @@
         <router-link :to="`/location/${location.id}`">
           View details
         </router-link>
-      </LeafletPopup>
-    </LeafletMarker>
+      </LPopup>
+    </LMarker>
 
-    <LeafletMarker
+    <LMarker
       v-if="activityDetails && activityDetails.facilityGeometry"
       :lat-lng="activityDetails.facilityGeometry"
       :icon="activityIcon"
     />
 
-    <LeafletMarker
+    <LMarker
       v-if="locationDetails && locationDetails.geometry"
       :lat-lng="locationDetails.geometry"
       :icon="locationIcon"
     />
 
-    <LeafletMarker
+    <LMarker
       v-if="searchLocationGeometry"
       :lat-lng="searchLocationGeometry"
       :icon="searchLocationIcon"
     />
 
-  </LeafletMap>
+  </LMap>
 </template>
 
-
 <script>
-import {
-  Map as LeafletMap,
-  Marker as LeafletMarker,
-  Popup as LeafletPopup
-} from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
 import map from 'lodash/map'
 import pick from 'lodash/pick'
 import values from 'lodash/values'
 import L from 'leaflet'
 import 'leaflet-svgicon'
-import EsriTileLayer from '~/components/EsriTileLayer'
+import { tiledMapLayer as EsriTileLayer } from 'esri-leaflet'
 import { TILES_BASEMAP, TILES_LABELS } from '~/config'
 import { formatPhone } from '~/util'
 
@@ -97,10 +92,10 @@ export default {
     formatPhone
   },
   components: {
-    LeafletMap, 
-    EsriTileLayer,
-    LeafletMarker,
-    LeafletPopup
+    LMap, 
+    LTileLayer,
+    LMarker,
+    LPopup
   },
   data () {
     return {
@@ -108,6 +103,7 @@ export default {
       defaultCenter: [39.9523893, -75.1636291],
       basemap: TILES_BASEMAP,
       labels: TILES_LABELS,
+      esriTileLayer: (url, options) => EsriTileLayer({ url, ...options }),
       activityIcon: new L.DivIcon.SVGIcon({
         color: '#2176D2',
         fillOpacity: 1,
