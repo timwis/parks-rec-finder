@@ -14,16 +14,10 @@
       :lat-lng="activityLocation.facilityGeometry"
       :icon="activityIcon"
     >
-      <LPopup>
-        <h3>{{ activityLocation.facilityName }}</h3>
-        <ul>
-          <li v-for="activity in activityLocation.activities" :key="activity.id">
-            <router-link :to="`/activity/${activity.id}`">
-              {{ activity.name }}
-            </router-link>
-          </li>
-        </ul>
-      </LPopup>
+      <ActivityMarkerPopup
+        :facility-name="activityLocation.facilityName"
+        :activities="activityLocation.activities"
+      />
     </LMarker>
 
     <LMarker
@@ -33,16 +27,11 @@
       :lat-lng="location.geometry"
       :icon="locationIcon"
     >
-      <LPopup>
-        <h3>{{ location.name }}</h3>
-        <div v-if="location.phone">
-          <i class="fa fa-phone"></i>
-          {{ location.phone | formatPhone }}
-        </div>
-        <router-link :to="`/location/${location.id}`">
-          View details
-        </router-link>
-      </LPopup>
+      <LocationMarkerPopup
+        :name="location.name"
+        :phone="location.phone"
+        :id="location.id"
+      />
     </LMarker>
 
     <LMarker
@@ -75,7 +64,8 @@ import L from 'leaflet'
 import 'leaflet-svgicon'
 import { tiledMapLayer as EsriTileLayer } from 'esri-leaflet'
 import { TILES_BASEMAP, TILES_LABELS } from '~/config'
-import { formatPhone } from '~/util'
+import ActivityMarkerPopup from '~/components/ActivityMarkerPopup'
+import LocationMarkerPopup from '~/components/LocationMarkerPopup'
 
 // TODO: Think of a better name for this component...
 // Map conflicts with the component used within, but
@@ -88,14 +78,12 @@ export default {
     locationDetails: Object,
     searchLocationGeometry: Array
   },
-  filters: {
-    formatPhone
-  },
   components: {
     LMap, 
     LTileLayer,
     LMarker,
-    LPopup
+    ActivityMarkerPopup,
+    LocationMarkerPopup
   },
   data () {
     return {
