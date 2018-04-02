@@ -1,6 +1,9 @@
 <template>
   <div>
-    <button @click="isOpen = !isOpen">Filters</button>
+    <button @click="isOpen = !isOpen">
+      <i class="fa fa-filter"></i>
+      Filters
+    </button>
     <div v-show="isOpen">
       <fieldset @change="onChange">
         <legend class="h4">Cost</legend>
