@@ -15,6 +15,9 @@
       <fieldset @change="onChange">
         <legend class="h4">Age range</legend>
 
+        <input type="radio" id="all-ages" name="age" value="" v-model="filters.age">
+        <label for="all-ages">All ages</label>
+
         <input type="radio" id="tots" name="age" value="2-5" v-model="filters.age">
         <label for="tots">Tots (2-5 or younger)</label>
 
