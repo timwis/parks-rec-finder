@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     ...mapState({
-      searchTerm: (state) => state.route.query.term,
+      searchTerm: (state) => state.route.query.term || state.route.query.freetext, // backwards compatibility w/v1.0
       searchLocation: (state) => state.route.query.location,
       activities: (state) => state.activities,
       locations: (state) => state.locations,

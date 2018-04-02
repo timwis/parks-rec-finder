@@ -1,0 +1,114 @@
+{
+  "rows": [
+    {
+      "count": 153,
+      "id": 6,
+      "name": "Parks",
+      "description": "The city began creating parks as early as 1844. Today, Philadelphians enjoy a variety of parks, from the natural wonders of the Wissahickon Valley to a tree-lined playlot down the block.",
+      "photo_id": "39341957342",
+      "slug": "parks"
+    },
+    {
+      "count": 149,
+      "id": 4,
+      "name": "Recreation Centers",
+      "description": "Our centers include gymnasiums, pools, weight rooms, basketball and tennis courts, dance and arts spaces, computer rooms, and auditoriums. Many sites offer a range of programs for people of all ages.",
+      "photo_id": "25259984643",
+      "slug": "recreation-centers"
+    },
+    {
+      "count": 10,
+      "id": 10,
+      "name": "Historic & Cultural Attractions",
+      "description": "From the Fairmount Park historic houses to the Dell Music Center, there is something from almost every era of Philadelphia’s history in our park and recreation system!",
+      "photo_id": "25502483288",
+      "slug": "historic-cultural-attractions"
+    },
+    {
+      "count": 9,
+      "id": 5,
+      "name": "Places to Eat",
+      "description": "From lunch in LOVE Park to sit-down dinners along the Schuylkill River, Philadelphia Parks & Recreation offers an abundance of diverse dining destinations.",
+      "photo_id": "35226144274",
+      "slug": "places-to-eat"
+    },
+    {
+      "count": 6,
+      "id": 7,
+      "name": "Older Adult Centers",
+      "description": "In partnership with Philadelphia Corporation for the Aging our older adult centers offer recreation, dining, educational opportunities, and more to Philadelphians 55 and over.",
+      "photo_id": "35610238964",
+      "slug": "older-adult-centers"
+    },
+    {
+      "count": 6,
+      "id": 11,
+      "name": "Golf Courses",
+      "description": "Philadelphia's public golf courses have welcomed golfers for many years. With Philadelphia's parks as backdrops, each course has unique characteristics that provide a memorable experience to golfers of all skill levels. ",
+      "photo_id": "25864055556",
+      "slug": "golf-courses"
+    },
+    {
+      "count": 5,
+      "id": 8,
+      "name": "Ice Rinks",
+      "description": "In partnership with Ed Snider Youth Hockey Foundation, Philadelphia Parks & Recreation helps people of all ages hit the ice most months of the year. Activities include ice hockey, ice skating, skating lessons and open skating time.",
+      "photo_id": "25254980014",
+      "slug": "ice-rinks"
+    },
+    {
+      "count": 5,
+      "id": 13,
+      "name": "Boat Launches",
+      "description": "To explore Philadelphia on the water, access the Delaware and Schuylkill rivers at these boat launches!",
+      "photo_id": "25863786706",
+      "slug": "boat-launches"
+    },
+    {
+      "count": 4,
+      "id": 12,
+      "name": "Environmental Education Centers",
+      "description": "Come learn about Philadelphia’s natural environment and how to preserve it. Visit one of our centers and bring your family, school, or group! Our knowledgeable staff will guide you through a wonderful educational experience.",
+      "photo_id": "25921080893",
+      "slug": "environmental-education-centers"
+    },
+    {
+      "count": 1,
+      "id": 3,
+      "name": "Recycling Center",
+      "description": "Philadelphians' home for free or low-cost organic material pick up and drop off. ",
+      "photo_id": "27594779879",
+      "slug": "recycling-center"
+    },
+    {
+      "count": 1,
+      "id": 9,
+      "name": "Horse Stables",
+      "description": "From race tracks to mounted park guards, horses have always been a big part of Philadelphia park and recreation history. Philadelphia horse lovers can choose from a variety of riding programs and stabling options.",
+      "photo_id": "39341958492",
+      "slug": "horse-stables"
+    }
+  ],
+  "time": 0.003,
+  "fields": {
+    "count": {
+      "type": "number"
+    },
+    "id": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "photo_id": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    }
+  },
+  "total_rows": 11
+}

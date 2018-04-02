@@ -1,0 +1,106 @@
+{
+  "rows": [
+    {
+      "count": 286,
+      "id": 1,
+      "name": "Athletic",
+      "description": "Whether at gyms, courts, or rinks or in pools these active sports programs and events will get your heart rate and your competitive spirit up.",
+      "photo_id": "28282565513",
+      "slug": "athletic"
+    },
+    {
+      "count": 181,
+      "id": 3,
+      "name": "Cultural",
+      "description": "Be musical; be artistic; be dramatic! Dance, draw, or drum your way to fun with programs designed to inspire. ",
+      "photo_id": "36198736131",
+      "slug": "cultural"
+    },
+    {
+      "count": 109,
+      "id": 9,
+      "name": "School Year",
+      "description": "Children can make friends, get homework help, be active, and learn arts and crafts at these activities that are scheduled around the school day.",
+      "photo_id": "25588224850",
+      "slug": "school-year"
+    },
+    {
+      "count": 65,
+      "id": 4,
+      "name": "Educational & Mentoring",
+      "description": "From cooking and computers to book clubs and resume building, young and old can grow and learn with these activities.",
+      "photo_id": "28613410710",
+      "slug": "educational-mentoring"
+    },
+    {
+      "count": 63,
+      "id": 6,
+      "name": "Fitness",
+      "description": "Get into shape with yoga, aerobics, and other exercise programs for all ages and experience levels.",
+      "photo_id": "37623148791",
+      "slug": "fitness"
+    },
+    {
+      "count": 43,
+      "id": 7,
+      "name": "Games",
+      "description": "Have fun indoors playing table tennis, video games, chess and other board games with your friends, families, and neighbors.",
+      "photo_id": "36704530733",
+      "slug": "games"
+    },
+    {
+      "count": 42,
+      "id": 10,
+      "name": "Summer Camps",
+      "description": "Affordable, fun and safe summer programming for children of all ages in neighborhoods throughout the city! Neighborhood camps offer arts & crafts, sports, and trips. Citywide specialty camps focus on arts, sports, and the environment.",
+      "photo_id": "25766086382",
+      "slug": "summer-camps"
+    },
+    {
+      "count": 40,
+      "id": 2,
+      "name": "Civic & Community",
+      "description": "Engage your neighbors through volunteer opportunities and community meetings on important topics that matter to your neighborhood.",
+      "photo_id": "26042243342",
+      "slug": "civic-community"
+    },
+    {
+      "count": 19,
+      "id": 5,
+      "name": "Environmental",
+      "description": " Our knowledgeable staff are here to help you learn what's in your backyard and its ecosystem.",
+      "photo_id": "25259668483",
+      "slug": "environmental"
+    },
+    {
+      "count": 10,
+      "id": 8,
+      "name": "Programs for People with Disabilities",
+      "description": "Programs that support the mental, physical, social, cultural, and emotional growth of people with disabilities.",
+      "photo_id": "33999839522",
+      "slug": "programs-for-people-with-disabilities"
+    }
+  ],
+  "time": 0.006,
+  "fields": {
+    "count": {
+      "type": "number"
+    },
+    "id": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "photo_id": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    }
+  },
+  "total_rows": 10
+}
