@@ -14,7 +14,12 @@
       :lat-lng="activity.facilityGeometry"
       :icon="activityIcon"
     >
-      <LeafletPopup :content="getActivityPopupContent(activity)"/>
+      <LeafletPopup>
+        <h3>{{ activity.name }}</h3>
+        <router-link :to="`/activity/${activity.id}`">
+          View details
+        </router-link>
+      </LeafletPopup>
     </LeafletMarker>
 
     <LeafletMarker
@@ -24,7 +29,16 @@
       :lat-lng="location.geometry"
       :icon="locationIcon"
     >
-      <LeafletPopup :content="getLocationPopupContent(location)"/>
+      <LeafletPopup>
+        <h3>{{ location.name }}</h3>
+        <div v-if="location.phone">
+          <i class="fa fa-phone"></i>
+          {{ location.phone | formatPhone }}
+        </div>
+        <router-link :to="`/location/${location.id}`">
+          View details
+        </router-link>
+      </LeafletPopup>
     </LeafletMarker>
 
     <LeafletMarker
@@ -60,6 +74,7 @@ import L from 'leaflet'
 import 'leaflet-svgicon'
 import EsriTileLayer from '~/components/EsriTileLayer'
 import { TILES_BASEMAP, TILES_LABELS } from '~/config'
+import { formatPhone } from '~/util'
 
 // TODO: Think of a better name for this component...
 // Map conflicts with the component used within, but
@@ -71,6 +86,9 @@ export default {
     activityDetails: Object,
     locationDetails: Object,
     searchLocationGeometry: Array
+  },
+  filters: {
+    formatPhone
   },
   components: {
     LeafletMap, 
@@ -131,18 +149,6 @@ export default {
         const geometries = [ this.locationDetails.geometry ]
         this.$refs.map.fitBounds(geometries)
       }
-    }
-  },
-  methods: {
-    getActivityPopupContent ({ name }) {
-      return `
-        <h3>${name}</h3>
-      `
-    },
-    getLocationPopupContent ({ name, address }) {
-      return `
-        <h3>${name}</h3>
-      `
     }
   }
 }
