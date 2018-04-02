@@ -302,11 +302,45 @@ export default class Carto {
         'ppr_facilities.facility_description': 'description',
         'ppr_facilities.address': 'address',
         'ppr_facilities.contact_phone': 'phone',
-        'ppr_facilities.location_contact_name': 'site_contact'
+        'ppr_facilities.location_contact_name': 'site_contact',
+        'schedules.*': 'schedules'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
+      .left_join(
+        squel.str('LATERAL (?)', squel.useFlavour('postgres')
+          .select()
+          .field('jsonb_agg(ppr_facility_schedules)', 'schedules')
+          .from(
+            squel.useFlavour('postgres')
+              .select()
+              .fields([
+                'ppr_facility_schedules.id',
+                'date_from::date',
+                'date_to::date',
+                'time_from::time',
+                'time_to::time',
+                'days'
+              ])
+              .field('jsonb_agg(ppr_days.days_name)', 'days')
+              .from('ppr_facility_schedules')
+              .from('jsonb_array_elements_text(days)', 'expanded_days')
+              .left_join('ppr_days', null, 'ppr_days.id = expanded_days')
+              .where('facility->>0 = ppr_facilities.id')
+              // .where('date_to >= current_timestamp') // ppr_facility_schedules appears to always have this null
+              .group('ppr_facility_schedules.id')
+              .group('ppr_facility_schedules.date_from') // TODO: Any way to improve this group by?
+              .group('ppr_facility_schedules.date_to')
+              .group('ppr_facility_schedules.time_from')
+              .group('ppr_facility_schedules.time_to')
+              .group('ppr_facility_schedules.days'),
+            'ppr_facility_schedules'
+          )
+        ).toString(),
+        'schedules',
+        'true'
+      )
       .where('ppr_facilities.id = ?', id)
 
     const rows = await this.request(query)

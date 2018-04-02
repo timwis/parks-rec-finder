@@ -1,4 +1,5 @@
 import pickBy from 'lodash/pickBy'
+import sortBy from 'lodash/sortBy'
 import dateFnsFormat from 'date-fns/format'
 
 export function concatAddress (addressParts = {}) {
@@ -55,4 +56,18 @@ export function formatDaysList (days) {
     pluralDays[last] = 'and ' + pluralDays[last]
   }
   return pluralDays.join(', ')
+}
+
+const daysSortKeys = {
+  Monday: 0,
+  Tuesday: 1,
+  Wednesday: 2,
+  Thursday: 3,
+  Friday: 4,
+  Saturday: 5,
+  Sunday: 6
+}
+
+export function sortByFirstDay (schedules) {
+  return sortBy(schedules, (schedule) => daysSortKeys[schedule.days[0]])
 }

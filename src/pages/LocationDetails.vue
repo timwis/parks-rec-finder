@@ -10,21 +10,54 @@
       <div v-else>
         <h2>{{ name }}</h2>
 
-        <div v-if="fullAddress">
-          <h4>Location</h4>
-          <p>{{ fullAddress }}</p>
+        <DetailSection
+          v v-if="fullAddress"
+          title="Location"
+          icon="map-marker"
+        >
+          <address>{{ fullAddress }}</address>
           <p><a :href="directionsUrl" class="external">Get directions</a></p>
-        </div>
+        </DetailSection>
 
-        <div v-if="phone">
-          <h4>Contact</h4>
-          <a :href="phoneUrl">{{ phone }}</a>
-        </div>
+        <DetailSection
+          v-if="phone"
+          title="Contact"
+          icon="phone"
+        >
+          <a :href="phoneLink">{{ phone }}</a>
+        </DetailSection>
 
-        <div v-if="description">
-          <h4>About this location</h4>
+        <DetailSection
+          v-if="siteContact"
+          title="Site contact"
+          icon="person"
+        >
+          {{ siteContact }}
+        </DetailSection>
+
+        <DetailSection
+          v-if="schedules && schedules.length > 0"
+          title="Regular hours"
+          icon="clock-o"
+        >
+          <ul v-for="schedule in schedules" :key="schedule.id">
+            <li>
+              {{ schedule.days | formatDaysList }}
+              from
+              <time>{{ schedule.time_from | formatTime }}</time>
+              to
+              <time>{{ schedule.time_to | formatTime }}</time>
+            </li>
+          </ul>
+        </DetailSection>
+
+        <DetailSection
+          v-if="description"
+          title="About this location"
+          icon="file-o"
+        >
           <p>{{ description }}</p>
-        </div>
+        </DetailSection>
       </div>
     </aside>
     <section class="map">
@@ -36,11 +69,23 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
-import { concatAddress } from '~/util'
+import DetailSection from '~/components/DetailSection'
+import {
+  concatAddress,
+  formatPhone,
+  formatTime,
+  formatDaysList,
+  sortByFirstDay
+} from '~/util'
 
 export default {
   components: {
-    SiteMap
+    SiteMap,
+    DetailSection
+  },
+  filters: {
+    formatTime,
+    formatDaysList
   },
   data () {
     return {
@@ -55,13 +100,13 @@ export default {
       name: (state) => state.locationDetails.name,
       description: (state) => state.locationDetails.description,
       fullAddress: (state) => concatAddress(state.locationDetails.address),
-      phone: (state) => state.locationDetails.phone
+      phone: (state) => formatPhone(state.locationDetails.phone),
+      phoneLink: (state) => `tel:+1` + state.locationDetails.phone,
+      siteContact: (state) => state.locationDetails.siteContact,
+      schedules: (state) => sortByFirstDay(state.locationDetails.schedules)
     }),
     directionsUrl () {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
-    },
-    phoneUrl () {
-      return `tel:${this.phone}`
     }
   },
   created () {
