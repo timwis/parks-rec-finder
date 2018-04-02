@@ -118,6 +118,7 @@ export default class Carto {
         'ppr_programs.fee': 'fee',
         'ppr_programs.fee_frequency->>0': 'fee_frequency',
         'ppr_programs.gender->>0': 'gender',
+        'ppr_facilities.id': 'facility_id',
         'ppr_facilities.facility_name': 'facility_name',
         'ppr_facilities.address': 'facility_address',
         'schedules.*': 'schedules'

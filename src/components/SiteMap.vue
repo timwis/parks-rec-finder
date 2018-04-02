@@ -8,17 +8,21 @@
     <EsriTileLayer :url="labels"/>
 
     <LeafletMarker
-      v-for="activity in activities"
-      v-if="activity.facilityGeometry"
-      :key="activity.id"
-      :lat-lng="activity.facilityGeometry"
+      v-for="activityLocation in uniqueActivityLocations"
+      v-if="activityLocation.facilityGeometry"
+      :key="activityLocation.facilityId"
+      :lat-lng="activityLocation.facilityGeometry"
       :icon="activityIcon"
     >
       <LeafletPopup>
-        <h3>{{ activity.name }}</h3>
-        <router-link :to="`/activity/${activity.id}`">
-          View details
-        </router-link>
+        <h3>{{ activityLocation.facilityName }}</h3>
+        <ul>
+          <li v-for="activity in activityLocation.activities" :key="activity.id">
+            <router-link :to="`/activity/${activity.id}`">
+              {{ activity.name }}
+            </router-link>
+          </li>
+        </ul>
       </LeafletPopup>
     </LeafletMarker>
 
@@ -70,6 +74,8 @@ import {
   Popup as LeafletPopup
 } from 'vue2-leaflet'
 import map from 'lodash/map'
+import pick from 'lodash/pick'
+import values from 'lodash/values'
 import L from 'leaflet'
 import 'leaflet-svgicon'
 import EsriTileLayer from '~/components/EsriTileLayer'
@@ -117,10 +123,28 @@ export default {
       })
     }
   },
+  computed: {
+    // Multiple activities can happen at the same location;
+    // only show one marker per location
+    uniqueActivityLocations () {
+      if (!this.activities || this.activities.length === 0) return
+
+      const uniqueLocations = {}
+      this.activities.forEach((activity) => {
+        if (!uniqueLocations[activity.facilityId]) {
+          const locationFields = ['facilityId', 'facilityName', 'facilityGeometry', 'facilityAddress']
+          uniqueLocations[activity.facilityId] = pick(activity, locationFields)
+          uniqueLocations[activity.facilityId].activities = []
+        }
+        uniqueLocations[activity.facilityId].activities.push(activity)
+      })
+      return values(uniqueLocations)
+    }
+  },
   watch: {
-    activities () {
-      if (this.activities && this.activities.length > 0) {
-        const geometries = map(this.activities, 'facilityGeometry')
+    uniqueActivityLocations () {
+      if (this.uniqueActivityLocations && this.uniqueActivityLocations.length > 0) {
+        const geometries = map(this.uniqueActivityLocations, 'facilityGeometry')
         if (this.searchLocationGeometry) {
           geometries.splice(3)
           geometries.push(this.searchLocationGeometry)
