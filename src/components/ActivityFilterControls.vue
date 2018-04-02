@@ -73,12 +73,21 @@
       </fieldset>
     </div>
     <div v-show="!isOpen && activeFiltersCount > 0">
-      <span
-        class="label"
-        v-for="(value, key) in activeFilters"
-        :key="key">
-        <i class="fa fa-remove"></i>
-        {{ key }}: {{ value }}
+      <span v-if="filters.cost" class="label">
+        <a @click="removeFilter('cost')"><i class="fa fa-close"></i></a>
+        Cost: {{ filters.cost }}
+      </span>
+      <span v-if="filters.age" class="label">
+        <a @click="removeFilter('age')"><i class="fa fa-close"></i></a>
+        Age: {{ filters.age }}
+      </span>
+      <span v-if="filters.gender" class="label">
+        <a @click="removeFilter('gender')"><i class="fa fa-close"></i></a>
+        Gender: {{ filters.gender }}
+      </span>
+      <span v-if="filters.days.length > 0" class="label">
+        <a @click="removeFilter('days')"><i class="fa fa-close"></i></a>
+        Days: {{ filters.days.join(', ') }}
       </span>
     </div>
   </div>
@@ -105,16 +114,21 @@ export default {
     }
   },
   computed: {
-    activeFilters () {
-      return removeEmptyKeys(this.filters)
-    },
     activeFiltersCount () {
-      return Object.keys(this.activeFilters).length
+      const activeFilters = removeEmptyKeys(this.filters)
+      return Object.keys(activeFilters).length
     }
   },
   methods: {
-    onChange (event) {
+    onChange () {
       this.$emit('change', this.filters)
+    },
+    removeFilter (key) {
+      // Use original default value. We could just pass `null` or `''`
+      // here, but `days` needs to be an empty array for `v-model` to
+      // work with the checkboxes.
+      this.filters[key] = this.$options.data().filters[key]
+      this.onChange()
     }
   }
 }
