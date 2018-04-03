@@ -24,3 +24,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+ul
+  max-height: 150px
+  overflow-y: auto
+</style>
