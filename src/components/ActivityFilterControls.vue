@@ -51,7 +51,7 @@
       </fieldset>
 
       <fieldset @change="onChange">
-        <legend class="h4">Show programs on these days</legend>
+        <legend class="h4">Show activities on these days</legend>
 
         <input type="checkbox" id="sunday" value="Sunday" v-model="filters.days">
         <label for="sunday">Sunday</label>
