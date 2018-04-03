@@ -38,6 +38,12 @@ export default {
         query
       })
     }
+  },
+  metaInfo: {
+    titleTemplate: (title) => {
+      const appTitle = 'Philadelphia Parks & Recreation Finder'
+      return title ? `${title} | ${appTitle}` : appTitle
+    }
   }
 }
 </script>
