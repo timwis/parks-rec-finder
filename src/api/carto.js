@@ -118,12 +118,12 @@ export default class Carto {
         'ppr_programs.fee': 'fee',
         'ppr_programs.fee_frequency->>0': 'fee_frequency',
         'ppr_programs.gender->>0': 'gender',
-        'ppr_facilities.id': 'facility_id',
-        'ppr_facilities.facility_name': 'facility_name',
-        'ppr_facilities.address': 'facility_address',
+        'ppr_facilities.id': 'location_id',
+        'ppr_facilities.facility_name': 'location_name',
+        'ppr_facilities.address': 'location_address',
         'schedules.*': 'schedules'
       })
-      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'facility_geometry')
+      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'location_geometry')
       .from('ppr_programs')
       .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
@@ -249,13 +249,13 @@ export default class Carto {
         'ppr_programs.gender->>0': 'gender',
         'ppr_programs.registration_status->>0': 'registration_status',
         'ppr_programs.registration_form_link': 'registration_link',
-        'ppr_facilities.id': 'facility_id',
-        'ppr_facilities.facility_name': 'facility_name',
-        'ppr_facilities.address': 'facility_address',
-        'ppr_facilities.contact_phone': 'facility_phone',
+        'ppr_facilities.id': 'location_id',
+        'ppr_facilities.facility_name': 'location_name',
+        'ppr_facilities.address': 'location_address',
+        'ppr_facilities.contact_phone': 'location_phone',
         'schedules.*': 'schedules'
       })
-      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'facility_geometry')
+      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'location_geometry')
       .from('ppr_programs')
       .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')

@@ -9,13 +9,13 @@
 
     <LMarker
       v-for="activityLocation in uniqueActivityLocations"
-      v-if="activityLocation.facilityGeometry"
-      :key="activityLocation.facilityId"
-      :lat-lng="activityLocation.facilityGeometry"
+      v-if="activityLocation.locationGeometry"
+      :key="activityLocation.locationId"
+      :lat-lng="activityLocation.locationGeometry"
       :icon="activityIcon"
     >
       <ActivityMarkerPopup
-        :facility-name="activityLocation.facilityName"
+        :location-name="activityLocation.locationName"
         :activities="activityLocation.activities"
       />
     </LMarker>
@@ -35,8 +35,8 @@
     </LMarker>
 
     <LMarker
-      v-if="activityDetails && activityDetails.facilityGeometry"
-      :lat-lng="activityDetails.facilityGeometry"
+      v-if="activityDetails && activityDetails.locationGeometry"
+      :lat-lng="activityDetails.locationGeometry"
       :icon="activityIcon"
     />
 
@@ -115,12 +115,12 @@ export default {
 
       const uniqueLocations = {}
       this.activities.forEach((activity) => {
-        if (!uniqueLocations[activity.facilityId]) {
-          const locationFields = ['facilityId', 'facilityName', 'facilityGeometry', 'facilityAddress']
-          uniqueLocations[activity.facilityId] = pick(activity, locationFields)
-          uniqueLocations[activity.facilityId].activities = []
+        if (!uniqueLocations[activity.locationId]) {
+          const locationFields = ['locationId', 'locationName', 'locationGeometry', 'locationAddress']
+          uniqueLocations[activity.locationId] = pick(activity, locationFields)
+          uniqueLocations[activity.locationId].activities = []
         }
-        uniqueLocations[activity.facilityId].activities.push(activity)
+        uniqueLocations[activity.locationId].activities.push(activity)
       })
       return values(uniqueLocations)
     }
@@ -128,7 +128,7 @@ export default {
   watch: {
     uniqueActivityLocations () {
       if (this.uniqueActivityLocations && this.uniqueActivityLocations.length > 0) {
-        const geometries = map(this.uniqueActivityLocations, 'facilityGeometry')
+        const geometries = map(this.uniqueActivityLocations, 'locationGeometry')
         if (this.searchLocationGeometry) {
           geometries.splice(3)
           geometries.push(this.searchLocationGeometry)
@@ -147,8 +147,8 @@ export default {
       }
     },
     activityDetails () {
-      if (this.activityDetails && this.activityDetails.facilityGeometry) {
-        const geometries = [ this.activityDetails.facilityGeometry ]
+      if (this.activityDetails && this.activityDetails.locationGeometry) {
+        const geometries = [ this.activityDetails.locationGeometry ]
         this.$refs.map.fitBounds(geometries)
       }
     },

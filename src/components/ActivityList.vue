@@ -11,8 +11,8 @@
         :gender="activity.gender"
         :age-low="activity.ageLow"
         :age-high="activity.ageHigh"
-        :facility-name="activity.facilityName"
-        :facility-address="activity.facilityAddress"
+        :location-name="activity.locationName"
+        :location-address="activity.locationAddress"
       />
     </ul>
   </div>

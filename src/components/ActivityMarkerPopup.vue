@@ -1,6 +1,6 @@
 <template>
   <LPopup>
-    <h3>{{ facilityName }}</h3>
+    <h3>{{ locationName }}</h3>
     <ul>
       <li v-for="activity in activities" :key="activity.id">
         <router-link :to="`/activity/${activity.id}`">
@@ -16,7 +16,7 @@ import { LPopup } from 'vue2-leaflet'
 
 export default {
   props: {
-    facilityName: String,
+    locationName: String,
     activities: Array
   },
   components: {

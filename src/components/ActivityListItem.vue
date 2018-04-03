@@ -5,7 +5,7 @@
         {{ name }}
       </router-link>
     </h3>
-    <p>{{ facilityName }}</p>
+    <p>{{ locationName }}</p>
     <p>{{ fullAddress }}</p>
     <p v-if="ageRange">Ages: {{ ageRange }}</p>
     <p v-if="feeDescription">Cost: {{ feeDescription }}</p>
@@ -29,15 +29,15 @@ export default {
     gender: String,
     ageLow: Number,
     ageHigh: Number,
-    facilityName: String,
-    facilityAddress: Object
+    locationName: String,
+    locationAddress: Object
   },
   computed: {
     url () {
       return `/activity/${this.id}`
     },
     fullAddress () {
-      return concatAddress(this.facilityAddress)
+      return concatAddress(this.locationAddress)
     },
     ageRange () {
       return getAgeRange(this.ageLow, this.ageHigh)
