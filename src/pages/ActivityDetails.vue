@@ -17,16 +17,16 @@
         </ul>
 
         <DetailSection
-          v-if="facilityFullAddress"
+          v-if="locationFullAddress"
           title="Location"
           icon="map-marker"
         >
           <address>
             <router-link :to="locationUrl">
-              {{ facilityName }}
+              {{ locationName }}
             </router-link>
             <br>
-            {{ facilityFullAddress }}
+            {{ locationFullAddress }}
           </address>
           <router-link :to="locationUrl">
             View this location
@@ -34,11 +34,11 @@
         </DetailSection>
 
         <DetailSection
-          v-if="facilityPhone"
+          v-if="locationPhone"
           title="Contact"
           icon="phone"
         >
-          <a :href="facilityPhoneLink">{{ facilityPhone }}</a>
+          <a :href="locationPhoneLink">{{ locationPhone }}</a>
         </DetailSection>
 
         <DetailSection
@@ -75,7 +75,7 @@
         </DetailSection>
 
         <DetailSection
-          v-if="registrationStatus || registrationLink || facilityPhone"
+          v-if="registrationStatus || registrationLink || locationPhone"
           title="Registration"
           icon="info-circle"
         >
@@ -139,15 +139,15 @@ export default {
       feeDescription: (state) => getFeeDescription(state.activityDetails.fee, state.activityDetails.feeFrequency),
       registrationStatus: (state) => state.activityDetails.registrationStatus,
       registrationLink: (state) => state.activityDetails.registrationLink,
-      facilityId: (state) => state.activityDetails.facilityId,
-      facilityName: (state) => state.activityDetails.facilityName,
-      facilityFullAddress: (state) => concatAddress(state.activityDetails.facilityAddress),
-      facilityPhone: (state) => formatPhone(state.activityDetails.facilityPhone),
-      facilityPhoneLink: (state) => `tel:+1` + state.activityDetails.facilityPhone,
+      locationId: (state) => state.activityDetails.locationId,
+      locationName: (state) => state.activityDetails.locationName,
+      locationFullAddress: (state) => concatAddress(state.activityDetails.locationAddress),
+      locationPhone: (state) => formatPhone(state.activityDetails.locationPhone),
+      locationPhoneLink: (state) => `tel:+1` + state.activityDetails.locationPhone,
       schedules: (state) => state.activityDetails.schedules
     }),
     locationUrl () {
-      return `/location/${this.facilityId}`
+      return `/location/${this.locationId}`
     }
   },
   created () {
