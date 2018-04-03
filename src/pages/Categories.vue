@@ -72,7 +72,7 @@ import TabSwitcher from '~/components/TabSwitcher'
 export default {
   name: 'Categories',
   props: {
-    activeTab: String // programs or locations
+    activeTab: String // activities or locations
   },
   components: {
     SiteMap,
