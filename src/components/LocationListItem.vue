@@ -16,6 +16,7 @@ export default {
   props: {
     id: String,
     name: String,
+    slug: String,
     address: Object
   },
   computed: {
@@ -23,7 +24,7 @@ export default {
       return concatAddress(this.address)
     },
     url () {
-      return `/location/${this.id}`
+      return `/location/${this.slug}/${this.id}`
     }
   }
 }

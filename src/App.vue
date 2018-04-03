@@ -34,7 +34,7 @@ export default {
       if (searchTerm) query.term = searchTerm
       if (searchLocation) query.location = searchLocation
       this.$router.push({
-        name: 'activitiesSearchResults',
+        path: '/search/activities',
         query
       })
     }
