@@ -62,7 +62,6 @@
   </main>
 </template>
 
-
 <script>
 import { mapState, mapActions } from 'vuex'
 import SiteMap from '~/components/SiteMap'
