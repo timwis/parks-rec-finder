@@ -5,6 +5,7 @@
       :key="location.id"
       :id="location.id"
       :name="location.name"
+      :slug="location.slug"
       :address="location.address"
     />
   </ul>

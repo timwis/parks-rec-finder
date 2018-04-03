@@ -24,6 +24,7 @@ export default {
   props: {
     id: String,
     name: String,
+    slug: String,
     fee: String,
     feeFrequency: String,
     gender: String,
@@ -34,7 +35,7 @@ export default {
   },
   computed: {
     url () {
-      return `/activity/${this.id}`
+      return `/activity/${this.slug}/${this.id}`
     },
     fullAddress () {
       return concatAddress(this.locationAddress)

@@ -6,6 +6,7 @@
         :key="activity.id"
         :id="activity.id"
         :name="activity.name"
+        :slug="activity.slug"
         :fee="activity.fee"
         :fee-frequency="activity.feeFrequency"
         :gender="activity.gender"

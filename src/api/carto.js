@@ -121,7 +121,8 @@ export default class Carto {
         'ppr_facilities.id': 'location_id',
         'ppr_facilities.facility_name': 'location_name',
         'ppr_facilities.address': 'location_address',
-        'schedules.*': 'schedules'
+        'schedules.*': 'schedules',
+        "regexp_replace(regexp_replace(lower(trim(program_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'location_geometry')
       .from('ppr_programs')
@@ -201,7 +202,8 @@ export default class Carto {
         'ppr_facilities.id': 'id',
         'ppr_facilities.facility_name': 'name',
         'ppr_facilities.address': 'address',
-        'ppr_facilities.contact_phone': 'phone'
+        'ppr_facilities.contact_phone': 'phone',
+        "regexp_replace(regexp_replace(lower(trim(facility_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
       .from('ppr_facilities')
