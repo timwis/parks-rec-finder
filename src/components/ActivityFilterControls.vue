@@ -74,6 +74,14 @@
         <input type="checkbox" id="saturday" value="Saturday" v-model="filters.days">
         <label for="saturday">Saturday</label>
       </fieldset>
+
+      <button
+        v-if="activeFiltersCount > 0"
+        @click="removeAllFilters"
+        class="button"
+      >
+        Reset filters
+      </button>
     </div>
     <div v-show="!isOpen && activeFiltersCount > 0">
       <span v-if="filters.cost" class="label">
@@ -131,6 +139,10 @@ export default {
       // here, but `days` needs to be an empty array for `v-model` to
       // work with the checkboxes.
       this.filters[key] = this.$options.data().filters[key]
+      this.onChange()
+    },
+    removeAllFilters () {
+      this.filters = this.$options.data().filters
       this.onChange()
     }
   }
