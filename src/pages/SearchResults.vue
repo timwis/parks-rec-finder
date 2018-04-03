@@ -71,7 +71,7 @@ import TabSwitcher from '~/components/TabSwitcher'
 
 export default {
   props: {
-    activeTab: String, // activities or locations
+    activeTab: String // activities or locations
   },
   components: {
     SiteMap,
@@ -134,6 +134,11 @@ export default {
           this.isLoading = false
         }
       }
+    }
+  },
+  metaInfo () {
+    return {
+      title: `Search results for ${this.searchTerm}`
     }
   }
 }

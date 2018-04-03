@@ -84,6 +84,11 @@ export default {
         this.isLoading = false
       }
     }
+  },
+  metaInfo () {
+    return {
+      title: `${this.categoryName} Activities`
+    }
   }
 }
 </script>
