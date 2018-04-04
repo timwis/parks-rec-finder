@@ -8,15 +8,28 @@
 </template>
 
 <script>
-import { slugify } from '~/util'
-
 export default {
   props: {
-    name: String,
-    count: Number,
-    photo: String,
-    urlPrefix: String, // locations or activities
-    slug: String
+    name: {
+      type: String,
+      required: true
+    },
+    count: {
+      type: Number,
+      required: true
+    },
+    photo: {
+      type: String,
+      default: ''
+    },
+    urlPrefix: {
+      type: String, // locations or activities
+      required: true
+    },
+    slug: {
+      type: String,
+      required: true
+    }
   },
   computed: {
     url () {

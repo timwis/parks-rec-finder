@@ -14,7 +14,7 @@
         :age-high="activity.ageHigh"
         :location-name="activity.locationName"
         :location-address="activity.locationAddress"
-      />
+        data-testid="activityList"/>
     </ul>
   </div>
 </template>
@@ -23,11 +23,14 @@
 import ActivityListItem from '~/components/ActivityListItem'
 
 export default {
-  props: {
-    activities: Array
-  },
   components: {
     ActivityListItem
+  },
+  props: {
+    activities: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>

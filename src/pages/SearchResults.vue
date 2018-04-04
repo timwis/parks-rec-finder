@@ -18,14 +18,12 @@
         <TabSwitcher :active-tab="activeTab">
           <router-link
             slot="activities"
-            :to="{ path: '/search/activities', query }"
-          >
+            :to="{ path: '/search/activities', query }">
             Activities ({{ filteredActivities.length }})
           </router-link>
           <router-link
             slot="locations"
-            :to="{ path: '/search/locations', query }"
-          >
+            :to="{ path: '/search/locations', query }">
             Locations ({{ locations.length }})
           </router-link>
         </TabSwitcher>
@@ -33,29 +31,25 @@
         <div v-if="activeTab === 'activities'">
           <ActivityFilterControls
             :current-filters="currentFilters"
-            @change="setFilters"
-          />
+            @change="setFilters"/>
 
           <ActivityList :activities="filteredActivities"/>
         </div>
 
         <LocationList
           v-else-if="activeTab === 'locations'"
-          :locations="locations"
-        />
+          :locations="locations"/>
       </div>
     </aside>
     <section class="map">
       <SiteMap
         v-if="activeTab === 'activities'"
         :activities="filteredActivities"
-        :search-location-geometry="searchLocationGeometry"
-      />
+        :search-location-geometry="searchLocationGeometry"/>
       <SiteMap
         v-else-if="activeTab === 'locations'"
         :locations="locations"
-        :search-location-geometry="searchLocationGeometry"
-      />
+        :search-location-geometry="searchLocationGeometry"/>
     </section>
   </main>
 </template>
@@ -70,15 +64,18 @@ import LocationList from '~/components/LocationList'
 import TabSwitcher from '~/components/TabSwitcher'
 
 export default {
-  props: {
-    activeTab: String // activities or locations
-  },
   components: {
     SiteMap,
     ActivityFilterControls,
     ActivityList,
     LocationList,
     TabSwitcher
+  },
+  props: {
+    activeTab: {
+      type: String, // activities or locations
+      default: 'activities'
+    }
   },
   data () {
     return {
@@ -105,15 +102,15 @@ export default {
       return this.$route.query
     }
   },
+  watch: {
+    searchTerm: 'fetch',
+    searchLocation: 'fetch'
+  },
   created () {
     this.fetch()
   },
   destroyed () {
     this.resetSearchActivitiesAndLocations()
-  },
-  watch: {
-    searchTerm: 'fetch',
-    searchLocation: 'fetch'
   },
   methods: {
     ...mapActions([
@@ -143,4 +140,3 @@ export default {
   }
 }
 </script>
-

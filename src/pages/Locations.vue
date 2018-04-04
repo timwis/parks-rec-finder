@@ -45,16 +45,16 @@ export default {
     }),
     count () {
       return this.locations.length
-    },
+    }
+  },
+  watch: {
+    categorySlug: 'fetch'
   },
   created () {
     this.fetch()
   },
   destroyed () {
     this.resetLocationsByCategorySlug()
-  },
-  watch: {
-    categorySlug: 'fetch'
   },
   methods: {
     ...mapActions([
@@ -80,4 +80,3 @@ export default {
   }
 }
 </script>
-

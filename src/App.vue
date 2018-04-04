@@ -1,22 +1,20 @@
 <template>
-  <div id="application" class="grid-y medium-grid-frame">
+  <div
+    id="application"
+    class="grid-y medium-grid-frame">
     <SiteHeader
-      class="cell"
       :search-term="searchTerm"
       :search-location="searchLocation"
-      @search="onSearch"
-    />
+      class="cell"
+      @search="onSearch"/>
     <router-view class="cell auto"/>
   </div>
 </template>
 
-
 <script>
 import SiteHeader from './components/SiteHeader'
-import SiteMap from '~/components/SiteMap'
 
 export default {
-  name: 'app',
   components: {
     SiteHeader
   },

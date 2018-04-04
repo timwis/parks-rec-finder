@@ -31,28 +31,30 @@
           </router-link>
         </TabSwitcher>
 
-        <ul v-if="activeTab === 'activities'" data-testid="activityCategories">
+        <ul
+          v-if="activeTab === 'activities'"
+          data-testid="activityCategories">
           <CategoryListItem
             v-for="category in activityCategories"
             :key="category.id"
             :name="category.name"
             :count="category.count"
             :photo="category.photo"
-            url-prefix="activities"
             :slug="category.slug"
-          />
+            url-prefix="activities"/>
         </ul>
 
-        <ul v-if="activeTab === 'locations'" data-testid="locationCategories">
+        <ul
+          v-if="activeTab === 'locations'"
+          data-testid="locationCategories">
           <CategoryListItem
             v-for="category in locationCategories"
             :key="category.id"
             :name="category.name"
             :count="category.count"
             :photo="category.photo"
-            url-prefix="locations"
             :slug="category.slug"
-          />
+            url-prefix="locations"/>
         </ul>
       </div>
     </aside>
@@ -69,14 +71,16 @@ import CategoryListItem from '~/components/CategoryListItem'
 import TabSwitcher from '~/components/TabSwitcher'
 
 export default {
-  name: 'Categories',
-  props: {
-    activeTab: String // activities or locations
-  },
   components: {
     SiteMap,
     CategoryListItem,
     TabSwitcher
+  },
+  props: {
+    activeTab: {
+      type: String, // activities or locations
+      default: 'activities'
+    }
   },
   data () {
     return {

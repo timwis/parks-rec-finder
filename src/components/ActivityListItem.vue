@@ -22,16 +22,46 @@ import {
 
 export default {
   props: {
-    id: String,
-    name: String,
-    slug: String,
-    fee: String,
-    feeFrequency: String,
-    gender: String,
-    ageLow: Number,
-    ageHigh: Number,
-    locationName: String,
-    locationAddress: Object
+    id: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    slug: {
+      type: String,
+      required: true
+    },
+    fee: {
+      type: String,
+      default: ''
+    },
+    feeFrequency: {
+      type: String,
+      default: ''
+    },
+    gender: {
+      type: String,
+      default: ''
+    },
+    ageLow: {
+      type: Number,
+      required: true
+    },
+    ageHigh: {
+      type: Number,
+      required: true
+    },
+    locationName: {
+      type: String,
+      required: true
+    },
+    locationAddress: {
+      type: Object,
+      required: true
+    }
   },
   computed: {
     url () {

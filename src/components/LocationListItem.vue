@@ -14,10 +14,22 @@ import { concatAddress } from '~/util'
 
 export default {
   props: {
-    id: String,
-    name: String,
-    slug: String,
-    address: Object
+    id: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    slug: {
+      type: String,
+      required: true
+    },
+    address: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     fullAddress () {

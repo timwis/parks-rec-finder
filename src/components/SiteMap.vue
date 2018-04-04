@@ -2,22 +2,23 @@
   <LMap
     ref="map"
     :zoom="defaultZoom"
-    :center="defaultCenter"
-  >
-    <LTileLayer :url="basemap" :tile-layer-class="esriTileLayer"/>
-    <LTileLayer :url="labels" :tile-layer-class="esriTileLayer"/>
+    :center="defaultCenter">
+    <LTileLayer
+      :url="basemap"
+      :tile-layer-class="esriTileLayer"/>
+    <LTileLayer
+      :url="labels"
+      :tile-layer-class="esriTileLayer"/>
 
     <LMarker
       v-for="activityLocation in uniqueActivityLocations"
       v-if="activityLocation.locationGeometry"
       :key="activityLocation.locationId"
       :lat-lng="activityLocation.locationGeometry"
-      :icon="activityIcon"
-    >
+      :icon="activityIcon">
       <ActivityMarkerPopup
         :location-name="activityLocation.locationName"
-        :activities="activityLocation.activities"
-      />
+        :activities="activityLocation.activities"/>
     </LMarker>
 
     <LMarker
@@ -25,38 +26,33 @@
       v-if="location.geometry"
       :key="location.id"
       :lat-lng="location.geometry"
-      :icon="locationIcon"
-    >
+      :icon="locationIcon">
       <LocationMarkerPopup
         :name="location.name"
         :phone="location.phone"
-        :id="location.id"
-      />
+        :id="location.id"/>
     </LMarker>
 
     <LMarker
       v-if="activityDetails && activityDetails.locationGeometry"
       :lat-lng="activityDetails.locationGeometry"
-      :icon="activityIcon"
-    />
+      :icon="activityIcon"/>
 
     <LMarker
       v-if="locationDetails && locationDetails.geometry"
       :lat-lng="locationDetails.geometry"
-      :icon="locationIcon"
-    />
+      :icon="locationIcon"/>
 
     <LMarker
       v-if="searchLocationGeometry"
       :lat-lng="searchLocationGeometry"
-      :icon="searchLocationIcon"
-    />
+      :icon="searchLocationIcon"/>
 
   </LMap>
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import map from 'lodash/map'
 import pick from 'lodash/pick'
 import values from 'lodash/values'
@@ -68,22 +64,37 @@ import ActivityMarkerPopup from '~/components/ActivityMarkerPopup'
 import LocationMarkerPopup from '~/components/LocationMarkerPopup'
 
 // TODO: Think of a better name for this component...
-// Map conflicts with the component used within, but
+// Map is a reserved element name in HTML, but
 // SiteMap has a different meaning normally
 export default {
-  props: {
-    activities: Array,
-    locations: Array,
-    activityDetails: Object,
-    locationDetails: Object,
-    searchLocationGeometry: Array
-  },
   components: {
-    LMap, 
+    LMap,
     LTileLayer,
     LMarker,
     ActivityMarkerPopup,
     LocationMarkerPopup
+  },
+  props: {
+    activities: {
+      type: Array,
+      default: null
+    },
+    locations: {
+      type: Array,
+      default: null
+    },
+    activityDetails: {
+      type: Object,
+      default: null
+    },
+    locationDetails: {
+      type: Object,
+      default: null
+    },
+    searchLocationGeometry: {
+      type: Array,
+      default: null
+    }
   },
   data () {
     return {
@@ -161,7 +172,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="sass">
 @import "~leaflet/dist/leaflet.css"
