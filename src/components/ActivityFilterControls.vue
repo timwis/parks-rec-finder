@@ -1,103 +1,193 @@
 <template>
   <div>
     <button @click="isOpen = !isOpen">
-      <i class="fa fa-filter"></i>
+      <i class="fa fa-filter"/>
       Filters
     </button>
     <div v-show="isOpen">
       <fieldset @change="onChange">
         <legend class="h4">Cost</legend>
 
-        <input type="radio" id="all-costs" name="cost" value="" v-model="filters.cost">
+        <input 
+          id="all-costs" 
+          v-model="filters.cost"
+          type="radio" 
+          name="cost" 
+          value="">
         <label for="all-costs">All costs</label>
 
-        <input type="radio" id="free" name="cost" value="free" v-model="filters.cost">
+        <input 
+          id="free" 
+          v-model="filters.cost"
+          type="radio" 
+          name="cost" 
+          value="free">
         <label for="free">Free</label>
       </fieldset>
 
       <fieldset @change="onChange">
         <legend class="h4">Age range</legend>
 
-        <input type="radio" id="all-ages" name="age" value="" v-model="filters.age">
+        <input 
+          id="all-ages" 
+          v-model="filters.age"
+          type="radio" 
+          name="age" 
+          value=""> 
         <label for="all-ages">All ages</label>
 
-        <input type="radio" id="tots" name="age" value="2-5" v-model="filters.age">
+        <input 
+          id="tots" 
+          v-model="filters.age"
+          type="radio" 
+          name="age" 
+          value="2-5"> 
         <label for="tots">Tots (2-5 or younger)</label>
 
-        <input type="radio" id="youth" name="age" value="6-12" v-model="filters.age">
+        <input 
+          id="youth" 
+          v-model="filters.age"
+          name="age" 
+          type="radio" 
+          value="6-12"> 
         <label for="youth">Youth (6-12)</label>
 
-        <input type="radio" id="teen" name="age" value="13-19" v-model="filters.age">
+        <input 
+          id="teen" 
+          v-model="filters.age"
+          name="age" 
+          type="radio" 
+          value="13-19"> 
         <label for="teen">Teen (13-19)</label>
 
-        <input type="radio" id="adult" name="age" value="20-55" v-model="filters.age">
+        <input 
+          id="adult" 
+          v-model="filters.age"
+          name="age" 
+          type="radio" 
+          value="20-55"> 
         <label for="adult">Adult (20-55)</label>
 
-        <input type="radio" id="senior" name="age" value="56-" v-model="filters.age">
+        <input 
+          id="senior" 
+          v-model="filters.age"
+          name="age" 
+          type="radio" 
+          value="56-"> 
         <label for="senior">Senior (56+)</label>
       </fieldset>
 
       <fieldset @change="onChange">
         <legend class="h4">Gender</legend>
 
-        <input type="radio" id="all-genders" name="gender" value="" v-model="filters.gender">
+        <input 
+          id="all-genders" 
+          v-model="filters.gender"
+          name="gender" 
+          type="radio" 
+          value=""> 
         <label for="all-genders">All genders</label>
 
-        <input type="radio" id="male" name="gender" value="male" v-model="filters.gender">
+        <input 
+          id="male" 
+          v-model="filters.gender"
+          name="gender" 
+          type="radio" 
+          value="male"> 
         <label for="male">Male</label>
 
-        <input type="radio" id="female" name="gender" value="female" v-model="filters.gender">
+        <input 
+          id="female" 
+          v-model="filters.gender"
+          name="gender" 
+          type="radio" 
+          value="female"> 
         <label for="female">Female</label>
       </fieldset>
 
       <fieldset @change="onChange">
         <legend class="h4">Show activities on these days</legend>
 
-        <input type="checkbox" id="sunday" value="Sunday" v-model="filters.days">
+        <input 
+          id="sunday" 
+          v-model="filters.days"
+          type="checkbox" 
+          value="Sunday"> 
         <label for="sunday">Sunday</label>
 
-        <input type="checkbox" id="monday" value="Monday" v-model="filters.days">
+        <input 
+          id="monday" 
+          v-model="filters.days"
+          type="checkbox" 
+          value="Monday"> 
         <label for="monday">Monday</label>
 
-        <input type="checkbox" id="tuesday" value="Tuesday" v-model="filters.days">
+        <input 
+          id="tuesday" 
+          v-model="filters.days"
+          type="checkbox" 
+          value="Tuesday"> 
         <label for="tuesday">Tuesday</label>
 
-        <input type="checkbox" id="wednesday" value="Wednesday" v-model="filters.days">
+        <input 
+          id="wednesday" 
+          v-model="filters.days"
+          type="checkbox" 
+          value="Wednesday"> 
         <label for="wednesday">Wednesday</label>
 
-        <input type="checkbox" id="thursday" value="Thursday" v-model="filters.days">
+        <input 
+          id="thursday" 
+          v-model="filters.days"
+          type="checkbox" 
+          value="Thursday"> 
         <label for="thursday">Thursday</label>
 
-        <input type="checkbox" id="friday" value="Friday" v-model="filters.days">
+        <input 
+          id="friday" 
+          v-model="filters.days"
+          type="checkbox" 
+          value="Friday"> 
         <label for="friday">Friday</label>
 
-        <input type="checkbox" id="saturday" value="Saturday" v-model="filters.days">
+        <input 
+          id="saturday" 
+          v-model="filters.days"
+          type="checkbox" 
+          value="Saturday"> 
         <label for="saturday">Saturday</label>
       </fieldset>
 
       <button
         v-if="activeFiltersCount > 0"
-        @click="removeAllFilters"
         class="button"
-      >
+        @click="removeAllFilters">
         Reset filters
       </button>
     </div>
     <div v-show="!isOpen && activeFiltersCount > 0">
-      <span v-if="filters.cost" class="label">
-        <a @click="removeFilter('cost')"><i class="fa fa-close"></i></a>
+      <span 
+        v-if="filters.cost" 
+        class="label">
+        <a @click="removeFilter('cost')"><i class="fa fa-close"/></a>
         Cost: {{ filters.cost }}
       </span>
-      <span v-if="filters.age" class="label">
-        <a @click="removeFilter('age')"><i class="fa fa-close"></i></a>
+      <span 
+        v-if="filters.age" 
+        class="label">
+        <a @click="removeFilter('age')"><i class="fa fa-close"/></a>
         Age: {{ filters.age }}
       </span>
-      <span v-if="filters.gender" class="label">
-        <a @click="removeFilter('gender')"><i class="fa fa-close"></i></a>
+      <span 
+        v-if="filters.gender" 
+        class="label">
+        <a @click="removeFilter('gender')"><i class="fa fa-close"/></a>
         Gender: {{ filters.gender }}
       </span>
-      <span v-if="filters.days.length > 0" class="label">
-        <a @click="removeFilter('days')"><i class="fa fa-close"></i></a>
+      <span 
+        v-if="filters.days.length > 0" 
+        class="label">
+        <a @click="removeFilter('days')"><i class="fa fa-close"/></a>
         Days: {{ filters.days.join(', ') }}
       </span>
     </div>
@@ -105,12 +195,14 @@
 </template>
 
 <script>
-import pickBy from 'lodash/pickBy'
 import { removeEmptyKeys } from '~/util'
 
 export default {
   props: {
-    currentFilters: Object
+    currentFilters: {
+      type: Object,
+      default: () => ({})
+    }
   },
   data () {
     return {

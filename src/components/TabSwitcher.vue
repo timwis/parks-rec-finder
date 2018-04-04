@@ -2,14 +2,12 @@
   <ul class="tab-switcher">
     <li
       :class="{'is-active': activeTab === 'activities'}"
-      data-testid="activitiesTab"
-    >
+      data-testid="activitiesTab">
       <slot name="activities"/>
     </li>
     <li
       :class="{'is-active': activeTab === 'locations'}"
-      data-testid="locationsTab"
-    >
+      data-testid="locationsTab">
       <slot name="locations"/>
     </li>
   </ul>
@@ -18,9 +16,10 @@
 <script>
 export default {
   props: {
-    activeTab: String,
-    activitiesCount: Number,
-    locationsCount: Number
+    activeTab: {
+      type: String, // activities or locations
+      default: 'activities'
+    }
   }
 }
 </script>

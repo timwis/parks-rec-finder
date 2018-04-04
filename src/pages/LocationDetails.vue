@@ -11,36 +11,40 @@
         <h2>{{ name }}</h2>
 
         <DetailSection
-          v v-if="fullAddress"
+          v-if="fullAddress"
           title="Location"
-          icon="map-marker"
-        >
+          icon="map-marker">
           <address>{{ fullAddress }}</address>
-          <p><a :href="directionsUrl" class="external">Get directions</a></p>
+          <p>
+            <a
+              :href="directionsUrl"
+              class="external">
+              Get directions
+            </a>
+          </p>
         </DetailSection>
 
         <DetailSection
           v-if="phone"
           title="Contact"
-          icon="phone"
-        >
+          icon="phone">
           <a :href="phoneLink">{{ phone }}</a>
         </DetailSection>
 
         <DetailSection
           v-if="siteContact"
           title="Site contact"
-          icon="person"
-        >
+          icon="person">
           {{ siteContact }}
         </DetailSection>
 
         <DetailSection
           v-if="schedules && schedules.length > 0"
           title="Regular hours"
-          icon="clock-o"
-        >
-          <ul v-for="schedule in schedules" :key="schedule.id">
+          icon="clock-o">
+          <ul
+            v-for="schedule in schedules"
+            :key="schedule.id">
             <li>
               {{ schedule.days | formatDaysList }}
               from
@@ -54,15 +58,13 @@
         <DetailSection
           v-if="description"
           title="About this location"
-          icon="file-o"
-        >
+          icon="file-o">
           <p>{{ description }}</p>
         </DetailSection>
 
         <DetailSection
           v-if="activities && activities.length > 0"
-          :title="activities.length + ' activities offered here'"
-        >
+          :title="activities.length + ' activities offered here'">
           <ActivityList :activities="activities"/>
         </DetailSection>
       </div>
@@ -119,14 +121,14 @@ export default {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
     }
   },
+  watch: {
+    id: 'fetch'
+  },
   created () {
     this.fetch()
   },
   destroyed () {
     this.resetLocationDetails()
-  },
-  watch: {
-    id: 'fetch'
   },
   methods: {
     ...mapActions([

@@ -2,7 +2,9 @@
   <LPopup>
     <h3>{{ locationName }}</h3>
     <ul>
-      <li v-for="activity in activities" :key="activity.id">
+      <li
+        v-for="activity in activities"
+        :key="activity.id">
         <router-link :to="`/activity/${activity.id}`">
           {{ activity.name }}
         </router-link>
@@ -15,12 +17,18 @@
 import { LPopup } from 'vue2-leaflet'
 
 export default {
-  props: {
-    locationName: String,
-    activities: Array
-  },
   components: {
     LPopup
+  },
+  props: {
+    locationName: {
+      type: String,
+      required: true
+    },
+    activities: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>

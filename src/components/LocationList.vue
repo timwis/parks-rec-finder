@@ -6,8 +6,7 @@
       :id="location.id"
       :name="location.name"
       :slug="location.slug"
-      :address="location.address"
-    />
+      :address="location.address"/>
   </ul>
 </template>
 
@@ -15,11 +14,14 @@
 import LocationListItem from '~/components/LocationListItem'
 
 export default {
-  props: {
-    locations: Array
-  },
   components: {
     LocationListItem
+  },
+  props: {
+    locations: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>

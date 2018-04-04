@@ -19,8 +19,7 @@
         <DetailSection
           v-if="locationFullAddress"
           title="Location"
-          icon="map-marker"
-        >
+          icon="map-marker">
           <address>
             <router-link :to="locationUrl">
               {{ locationName }}
@@ -36,25 +35,24 @@
         <DetailSection
           v-if="locationPhone"
           title="Contact"
-          icon="phone"
-        >
+          icon="phone">
           <a :href="locationPhoneLink">{{ locationPhone }}</a>
         </DetailSection>
 
         <DetailSection
           v-if="description"
           title="About this activity"
-          icon="file-o"
-        >
+          icon="file-o">
           <p>{{ description }}</p>
         </DetailSection>
 
         <DetailSection
           v-if="schedules && schedules.length > 0"
           title="Schedules"
-          icon="calendar"
-        >
-          <ul v-for="schedule in schedules" :key="schedule.id">
+          icon="calendar">
+          <ul
+            v-for="schedule in schedules"
+            :key="schedule.id">
             <li>
               Between
               <time :datetime="schedule.date_from">
@@ -77,14 +75,17 @@
         <DetailSection
           v-if="registrationStatus || registrationLink || locationPhone"
           title="Registration"
-          icon="info-circle"
-        >
+          icon="info-circle">
           <p v-if="registrationStatus">
             Status: <em>{{ registrationStatus }}</em>
           </p>
           <p v-if="registrationLink">
             To sign up visit
-            <a :href="registrationLink" class="external">{{ registrationLink }}</a>
+            <a
+              :href="registrationLink"
+              class="external">
+              {{ registrationLink }}
+            </a>
           </p>
           <p v-else>
             To sign up or learn more, use the contact information listed above!
@@ -150,14 +151,14 @@ export default {
       return `/location/${this.locationId}`
     }
   },
+  watch: {
+    id: 'fetch'
+  },
   created () {
     this.fetch()
   },
   destroyed () {
     this.resetActivityDetails()
-  },
-  watch: {
-    id: 'fetch'
   },
   methods: {
     ...mapActions([

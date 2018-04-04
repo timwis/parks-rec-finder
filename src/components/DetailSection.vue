@@ -1,7 +1,9 @@
 <template>
   <div class="detail-section">
     <h4>
-      <i v-if="icon" :class="iconClass"></i>
+      <i
+        v-if="icon"
+        :class="iconClass"/>
       {{ title }}
     </h4>
     <slot/>
@@ -11,8 +13,14 @@
 <script>
 export default {
   props: {
-    icon: String,
-    title: String,
+    icon: {
+      type: String,
+      default: null
+    },
+    title: {
+      type: String,
+      required: true
+    }
   },
   computed: {
     iconClass () {

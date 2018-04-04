@@ -13,8 +13,7 @@
 
         <ActivityFilterControls
           :current-filters="currentFilters"
-          @change="setFilters"
-        />
+          @change="setFilters"/>
 
         <ActivityList :activities="filteredActivities"/>
       </div>
@@ -58,14 +57,14 @@ export default {
       return this.filteredActivities.length
     }
   },
+  watch: {
+    categorySlug: 'fetch'
+  },
   created () {
     this.fetch()
   },
   destroyed () {
     this.resetActivitiesByCategorySlug()
-  },
-  watch: {
-    categorySlug: 'fetch'
   },
   methods: {
     ...mapActions([
@@ -92,4 +91,3 @@ export default {
   }
 }
 </script>
-
