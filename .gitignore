@@ -11,7 +11,7 @@ yarn-error.log
 *.njsproj
 *.sln
 
-# cypress extras
-cypress/plugins
-cypress/support
-cypress/videos
+# unused cypress directories
+test/plugins
+test/support
+test/videos
