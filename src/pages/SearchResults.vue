@@ -12,7 +12,12 @@
       <div v-else>
         <p>
           Showing {{ count }} results
-          for {{ searchTerm }}
+          <span v-if="searchTerm">
+            for <b>{{ searchTerm }}</b>
+          </span>
+          <span v-if="searchLocation">
+            in <b>{{ searchLocation }}</b>
+          </span>
         </p>
 
         <TabSwitcher :active-tab="activeTab">
@@ -134,8 +139,12 @@ export default {
     }
   },
   metaInfo () {
+    let title = 'Search results'
+    if (this.searchTerm) title += ` for ${this.searchTerm}`
+    if (this.searchLocation) title += ` for ${this.searchLocation}`
+
     return {
-      title: `Search results for ${this.searchTerm}`
+      title
     }
   }
 }
