@@ -5,7 +5,7 @@
       <li
         v-for="activity in activities"
         :key="activity.id">
-        <router-link :to="`/activity/${activity.id}`">
+        <router-link :to="`/activity/${activity.slug}/${activity.id}`">
           {{ activity.name }}
         </router-link>
       </li>
