@@ -29,6 +29,7 @@
       :icon="locationIcon">
       <LocationMarkerPopup
         :name="location.name"
+        :slug="location.slug"
         :phone="location.phone"
         :id="location.id"/>
     </LMarker>

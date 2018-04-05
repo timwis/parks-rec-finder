@@ -5,7 +5,7 @@
       <i class="fa fa-phone"/>
       {{ phone | formatPhone }}
     </div>
-    <router-link :to="`/location/${id}`">
+    <router-link :to="`/location/${slug}/${id}`">
       View details
     </router-link>
   </LPopup>
@@ -24,6 +24,10 @@ export default {
   },
   props: {
     id: {
+      type: String,
+      required: true
+    },
+    slug: {
       type: String,
       required: true
     },
