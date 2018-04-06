@@ -6,7 +6,7 @@
         class="logo"
         href="https://beta.phila.gov/departments/parks-recreation/">
         <img
-          src="http://standards.phila.gov/img/logo/city-of-philadelphia-yellow-white.png"
+          src="../assets/parks-rec-logo.png"
           alt="City of Philadelphia">
       </a>
     </div>
