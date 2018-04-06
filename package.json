@@ -8,11 +8,11 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "test": "cypress open",
-    "ci": "start-server-and-test start http://localhost:8080 cypress run",
-    "lint:standard": "standard --plugin html '**/*.{js,vue}'",
-    "lint:vue": "eslint 'src/**/*.vue'",
-    "lint": "run-p lint:*"
+    "test": "run-p lint test:local",
+    "ci": "run-p lint test:headless",
+    "test:local": "cypress open",
+    "test:headless": "start-server-and-test start http://localhost:8080 cypress run",
+    "lint": "eslint 'src/**/*.{js,vue}'"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.4",
@@ -45,7 +45,12 @@
     "css-loader": "^0.28.7",
     "cypress": "^2.1.0",
     "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
     "eslint-plugin-html": "^4.0.2",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
     "eslint-plugin-vue": "^4.4.0",
     "fast-async": "^6.3.0",
     "file-loader": "^1.1.4",
@@ -53,19 +58,10 @@
     "npm-run-all": "^4.1.2",
     "pug": "^2.0.0-rc.4",
     "sass-loader": "^6.0.6",
-    "standard": "^11.0.1",
     "start-server-and-test": "^1.1.4",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
-  },
-  "standard": {
-    "globals": [
-      "describe",
-      "it",
-      "beforeEach",
-      "cy"
-    ]
   }
 }
