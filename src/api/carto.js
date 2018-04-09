@@ -229,7 +229,7 @@ export default class Carto {
       query.where(
         squel.expr()
           .and('ppr_programs.program_name ILIKE ?', `%${searchTerm}%`)
-          .or('ppr_programs.program_description ILIKE ?', `%${searchTerm}%`)
+          .or('ppr_programs.programdescriptionshort ILIKE ?', `%${searchTerm}%`)
       )
     }
     if (searchLocationGeometry) {
