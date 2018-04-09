@@ -38,6 +38,7 @@
   ],
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-engine-plugin": "^0.2.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
@@ -55,6 +56,7 @@
     "eslint-plugin-vue": "^4.4.0",
     "fast-async": "^6.3.0",
     "file-loader": "^1.1.4",
+    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.1.2",
     "pug": "^2.0.0-rc.4",
