@@ -1,11 +1,16 @@
 var path = require('path')
 var webpack = require('webpack')
+var BabelEnginePlugin = require('babel-engine-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './src/main.js',
+  entry: [
+    'babel-polyfill',
+    './src/main.js'
+  ],
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    // publicPath: '/dist/',
     filename: 'build.js'
   },
   module: {
@@ -67,7 +72,6 @@ module.exports = {
               }
             ]
           }
-          // other vue-loader options go here
         }
       },
       {
@@ -99,18 +103,25 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      favicon: 'src/assets/favicon.png',
+      hash: true
+    })
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
+  module.exports.plugins = module.exports.plugins.concat([
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
       }
     }),
+    new BabelEnginePlugin({ presets: ['env'] }, { verbose: false }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
