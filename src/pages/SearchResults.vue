@@ -16,7 +16,7 @@
             for <b>{{ searchTerm }}</b>
           </span>
           <span v-if="searchLocation">
-            in <b>{{ searchLocation }}</b>
+            near <b>{{ searchLocation }}</b>
           </span>
         </p>
 
@@ -141,7 +141,7 @@ export default {
   metaInfo () {
     let title = 'Search results'
     if (this.searchTerm) title += ` for ${this.searchTerm}`
-    if (this.searchLocation) title += ` for ${this.searchLocation}`
+    if (this.searchLocation) title += ` near ${this.searchLocation}`
 
     return {
       title
