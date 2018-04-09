@@ -13,7 +13,7 @@ export default class Carto {
     const sql = query.toString()
     const params = { q: sql }
     const response = await this.client({ params })
-    return camelcaseKeys(response.data.rows)
+    return response.data.rows.map(camelcaseKeys)
   }
 
   /**
