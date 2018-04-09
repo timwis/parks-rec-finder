@@ -16,6 +16,11 @@ export default class Carto {
     return camelcaseKeys(response.data.rows)
   }
 
+  /**
+   * Gets a list of activity categories with a count of activities. Omits
+   * activities with no active schedules. Omits categories that aren't
+   * published, as well as activities that aren't public/approved/active.
+   */
   getActivityCategories () {
     const query = squel.useFlavour('postgres')
       .select()
@@ -81,6 +86,11 @@ export default class Carto {
     return this.request(query)
   }
 
+  /**
+   * Gets a list of location categories with a count of locations. Omits
+   * categories that aren't published, as well as locations that aren't
+   * published.
+   */
   getLocationCategories () {
     const query = squel.useFlavour('postgres')
       .select()
@@ -110,7 +120,10 @@ export default class Carto {
     return this.request(query)
   }
 
-  async getActivityCategoryDetails (category) {
+  /**
+   * Gets the printable name of a category by its slug
+   */
+  async getActivityCategoryDetails (categorySlug) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
@@ -118,14 +131,17 @@ export default class Carto {
         'activity_category_name': 'name'
       })
       .from('ppr_activity_categories')
-      .where(`regexp_replace(regexp_replace(lower(trim(ppr_activity_categories.activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
+      .where(`regexp_replace(regexp_replace(lower(trim(ppr_activity_categories.activity_category_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, categorySlug)
 
     const rows = await this.request(query)
     if (rows.length === 0) throw new Error('Not found')
     return rows[0]
   }
 
-  async getLocationCategoryDetails (category) {
+  /**
+   * Gets the printable name of a category by its slug
+   */
+  async getLocationCategoryDetails (categorySlug) {
     const query = squel.useFlavour('postgres')
       .select()
       .fields({
@@ -133,7 +149,7 @@ export default class Carto {
         'location_type_name': 'name'
       })
       .from('ppr_location_types')
-      .where(`regexp_replace(regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, category)
+      .where(`regexp_replace(regexp_replace(lower(trim(ppr_location_types.location_type_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g') = ?`, categorySlug)
       .where('location_type_is_published = true')
 
     const rows = await this.request(query)
@@ -141,6 +157,12 @@ export default class Carto {
     return rows[0]
   }
 
+  /**
+   * Gets a list of activities by category, location, or search term.
+   * Optionally ordered by distance to search location. Includes basic location
+   * info, location geometry, and activity schedules. Omits activities with no
+   * active schedules. Omits activities that aren't public/approved/active.
+   */
   getActivities ({ categoryId, searchTerm, searchLocationGeometry, locationId }) {
     const query = squel.useFlavour('postgres')
       .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
@@ -230,6 +252,10 @@ export default class Carto {
     return this.request(query)
   }
 
+  /**
+   * Gets a list of locations by category or search term. Optionally ordered by
+   * distance to search location. Includes geometry.
+   */
   getLocations ({ categoryId, searchTerm, searchLocationGeometry }) {
     const query = squel.useFlavour('postgres')
       .select({ parameterCharacter: '@' }) // '?' is used as jsonb operator
@@ -272,6 +298,10 @@ export default class Carto {
     return this.request(query)
   }
 
+  /**
+   * Gets a single activity by id. Includes basic location info, location
+   * geometry, and activity schedules.
+   */
   async getActivityDetails (id) {
     const query = squel.useFlavour('postgres')
       .select()
@@ -336,6 +366,10 @@ export default class Carto {
     return rows[0]
   }
 
+  /**
+   * Gets a single location by id. Includes location geometry and location
+   * schedules.
+   */
   async getLocationDetails (id) {
     const query = squel.useFlavour('postgres')
       .select()
@@ -390,6 +424,9 @@ export default class Carto {
     return rows[0]
   }
 
+  /**
+   * Gets a zipcode polygon centroid by the zipcode string.
+   */
   async getZipcodeGeometry (zipcode) {
     const query = squel.useFlavour('postgres')
       .select()
