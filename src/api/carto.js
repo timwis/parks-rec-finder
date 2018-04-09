@@ -19,13 +19,47 @@ export default class Carto {
   getActivityCategories () {
     const query = squel.useFlavour('postgres')
       .select()
-      .with('program_activity_categories_tmp', squel
+      .with('program_activity_categories_tmp', squel.useFlavour('postgres')
         .select()
         .field('jsonb_array_elements_text(activity_category) as exploded_activity_category')
         .from('ppr_programs')
+        .left_join(
+          squel.str('LATERAL (?)', squel.useFlavour('postgres')
+            .select()
+            .field('jsonb_agg(ppr_program_schedules)', 'schedules')
+            .from(
+              squel.useFlavour('postgres')
+                .select()
+                .fields([
+                  'ppr_program_schedules.id',
+                  'date_from::date',
+                  'date_to::date',
+                  'time_from::time',
+                  'time_to::time',
+                  'days'
+                ])
+                .field('jsonb_agg(ppr_days.days_name)', 'days')
+                .from('ppr_program_schedules')
+                .from('jsonb_array_elements_text(days)', 'expanded_days')
+                .left_join('ppr_days', null, 'ppr_days.id = expanded_days')
+                .where('program->>0 = ppr_programs.id')
+                .where('date_to >= current_timestamp')
+                .group('ppr_program_schedules.id')
+                .group('ppr_program_schedules.date_from') // TODO: Any way to improve this group by?
+                .group('ppr_program_schedules.date_to')
+                .group('ppr_program_schedules.time_from')
+                .group('ppr_program_schedules.time_to')
+                .group('ppr_program_schedules.days'),
+              'ppr_program_schedules'
+            )
+          ).toString(),
+          'program_schedules',
+          'true'
+        )
         .where('ppr_programs.program_is_public')
         .where('ppr_programs.program_is_approved')
         .where('ppr_programs.program_is_active')
+        .where('jsonb_array_length(program_schedules.schedules) > 0')
       )
       .fields({
         'count(*)': 'count',
@@ -121,7 +155,7 @@ export default class Carto {
         'ppr_facilities.id': 'location_id',
         'ppr_facilities.facility_name': 'location_name',
         'ppr_facilities.address': 'location_address',
-        'schedules.*': 'schedules',
+        'program_schedules.schedules': 'schedules',
         "regexp_replace(regexp_replace(lower(trim(program_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'location_geometry')
@@ -158,12 +192,13 @@ export default class Carto {
             'ppr_program_schedules'
           )
         ).toString(),
-        'schedules',
+        'program_schedules',
         'true'
       )
       .where('ppr_programs.program_is_public')
       .where('ppr_programs.program_is_approved')
       .where('ppr_programs.program_is_active')
+      .where('jsonb_array_length(program_schedules.schedules) > 0')
 
     if (categoryId) {
       query.where('ppr_programs.activity_category ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
@@ -255,7 +290,7 @@ export default class Carto {
         'ppr_facilities.facility_name': 'location_name',
         'ppr_facilities.address': 'location_address',
         'ppr_facilities.contact_phone': 'location_phone',
-        'schedules.*': 'schedules'
+        'program_schedules.schedules': 'schedules'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'location_geometry')
       .from('ppr_programs')
@@ -291,7 +326,7 @@ export default class Carto {
             'ppr_program_schedules'
           )
         ).toString(),
-        'schedules',
+        'program_schedules',
         'true'
       )
       .where('ppr_programs.id = ?', id)
@@ -310,7 +345,7 @@ export default class Carto {
         'ppr_facilities.address': 'address',
         'ppr_facilities.contact_phone': 'phone',
         'ppr_facilities.location_contact_name': 'site_contact',
-        'schedules.*': 'schedules'
+        'program_schedules.schedules': 'schedules'
       })
       .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
       .from('ppr_facilities')
@@ -345,7 +380,7 @@ export default class Carto {
             'ppr_facility_schedules'
           )
         ).toString(),
-        'schedules',
+        'program_schedules',
         'true'
       )
       .where('ppr_facilities.id = ?', id)
