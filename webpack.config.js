@@ -89,7 +89,8 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       '~': path.resolve(__dirname, './src')
     },
-    extensions: ['*', '.js', '.vue', '.json']
+    extensions: ['*', '.js', '.vue', '.json'],
+    mainFields: ['module', 'browser', 'main']
   },
   devServer: {
     historyApiFallback: true,
