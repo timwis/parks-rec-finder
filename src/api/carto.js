@@ -180,7 +180,7 @@ export default class Carto {
         'program_schedules.schedules': 'schedules',
         "regexp_replace(regexp_replace(lower(trim(program_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
-      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'location_geometry')
+      .field('json_build_array(ST_Y(ppr_website_locatorpoints.the_geom), ST_X(ppr_website_locatorpoints.the_geom))', 'location_geometry')
       .from('ppr_programs')
       .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
@@ -236,7 +236,7 @@ export default class Carto {
       const geometryString = `${searchLocationGeometry[1]},${searchLocationGeometry[0]}`
       query.field(`
         ST_Distance(
-          ST_Centroid(ppr_website_locatorpoints.the_geom),
+          ppr_website_locatorpoints.the_geom,
           ST_SetSRID(
             ST_Point(${geometryString}),
             4326
@@ -266,7 +266,7 @@ export default class Carto {
         'ppr_facilities.contact_phone': 'phone',
         "regexp_replace(regexp_replace(lower(trim(facility_name)), '[^a-zA-Z0-9]', '-', 'g'), '\\-\\-+', '-', 'g')": 'slug'
       })
-      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
+      .field('json_build_array(ST_Y(ppr_website_locatorpoints.the_geom), ST_X(ppr_website_locatorpoints.the_geom))', 'geometry')
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
 
@@ -285,7 +285,7 @@ export default class Carto {
       const geometryString = `${searchLocationGeometry[1]},${searchLocationGeometry[0]}`
       query.field(`
         ST_Distance(
-          ST_Centroid(ppr_website_locatorpoints.the_geom),
+          ppr_website_locatorpoints.the_geom,
           ST_SetSRID(
             ST_Point(${geometryString}),
             4326
@@ -322,7 +322,7 @@ export default class Carto {
         'ppr_facilities.contact_phone': 'location_phone',
         'program_schedules.schedules': 'schedules'
       })
-      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'location_geometry')
+      .field('json_build_array(ST_Y(ppr_website_locatorpoints.the_geom), ST_X(ppr_website_locatorpoints.the_geom))', 'location_geometry')
       .from('ppr_programs')
       .join('ppr_facilities', null, 'ppr_facilities.id = ppr_programs.facility->>0')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
@@ -381,7 +381,7 @@ export default class Carto {
         'ppr_facilities.location_contact_name': 'site_contact',
         'program_schedules.schedules': 'schedules'
       })
-      .field('json_build_array(ST_Y(ST_Centroid(ppr_website_locatorpoints.the_geom)), ST_X(ST_Centroid(ppr_website_locatorpoints.the_geom)))', 'geometry')
+      .field('json_build_array(ST_Y(ppr_website_locatorpoints.the_geom), ST_X(ppr_website_locatorpoints.the_geom))', 'geometry')
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
       .left_join(
