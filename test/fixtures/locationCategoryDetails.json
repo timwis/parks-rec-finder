@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "id": "5a3c1a3bb9c24a0722bc88cc",
+      "name": "Historic & Cultural Attractions"
+    }
+  ],
+  "time": 0.002,
+  "fields": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "total_rows": 1
+}

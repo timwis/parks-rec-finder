@@ -6,7 +6,8 @@
       :id="location.id"
       :name="location.name"
       :slug="location.slug"
-      :address="location.address"/>
+      :address="location.address"
+      data-testid="locationListItem"/>
   </ul>
 </template>
 

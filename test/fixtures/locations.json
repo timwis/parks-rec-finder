@@ -1,0 +1,306 @@
+{
+  "rows": [
+    {
+      "id": "56a8f8757a8cee5e3a25b101",
+      "name": "Venice Island",
+      "address": {
+        "zip": "19127",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1 Rector St.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.024071,
+        "longitude": -75.222921
+      },
+      "phone": "2156853583",
+      "slug": "venice-island",
+      "geometry": [
+        40.0231150439357,
+        -75.2215738922845
+      ]
+    },
+    {
+      "id": "5a3d822e9a5c40071b510da0",
+      "name": "Glen Foerd",
+      "address": {
+        "zip": "19114",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5001 Grant Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0515769,
+        "longitude": -74.97885149999999
+      },
+      "phone": "",
+      "slug": "glen-foerd",
+      "geometry": [
+        40.0515982153779,
+        -74.9789357595925
+      ]
+    },
+    {
+      "id": "5a57d50548dc5b2fa46304ea",
+      "name": "Dell Music Center",
+      "address": {
+        "zip": "19132",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "Ridge Ave. and Huntingdon Dr.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9957728,
+        "longitude": -75.18754009999999
+      },
+      "phone": "2156859560",
+      "slug": "dell-music-center",
+      "geometry": [
+        39.9963690635224,
+        -75.189851271589
+      ]
+    },
+    {
+      "id": "5a3d82249a5c40071b510d7b",
+      "name": "Lemon Hill Mansion",
+      "address": {
+        "zip": "19130",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "Sedgley Dr. & Lemon Hill Dr.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9716808,
+        "longitude": -75.1857271
+      },
+      "phone": "",
+      "slug": "lemon-hill-mansion",
+      "geometry": [
+        39.9707231670446,
+        -75.1871954076956
+      ]
+    },
+    {
+      "id": "56a8f8797a8cee5e3a25b127",
+      "name": "Horticulture Center",
+      "address": {
+        "zip": "19131",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "4180 Horticulture Dr.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9837596,
+        "longitude": -75.2103525
+      },
+      "phone": "2156850096",
+      "slug": "horticulture-center",
+      "geometry": [
+        39.983381896845,
+        -75.2101801553533
+      ]
+    },
+    {
+      "id": "5a57d50148dc5b2fa46304dc",
+      "name": "Betsy Ross House",
+      "address": {
+        "zip": "19106",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "239 Arch St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9523137,
+        "longitude": -75.1446021
+      },
+      "phone": "2156294026",
+      "slug": "betsy-ross-house",
+      "geometry": [
+        39.9523962546202,
+        -75.1446070293334
+      ]
+    },
+    {
+      "id": "5a3d823f9a5c40071b510de0",
+      "name": "Fairmount Water Works",
+      "address": {
+        "zip": "19130",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "650 Water Works Dr.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9660769,
+        "longitude": -75.18319740000001
+      },
+      "phone": "",
+      "slug": "fairmount-water-works",
+      "geometry": [
+        39.9663390910608,
+        -75.1835547968121
+      ]
+    },
+    {
+      "id": "5a57d50348dc5b2fa46304e2",
+      "name": "Ryerss Museum and Library",
+      "address": {
+        "zip": "19111",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "7370 Central Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.06826969999999,
+        "longitude": -75.0880135
+      },
+      "phone": "2156850544",
+      "slug": "ryerss-museum-and-library",
+      "geometry": [
+        40.0685529079773,
+        -75.0887034697139
+      ]
+    },
+    {
+      "id": "56a8f86a7a8cee5e3a25b0b5",
+      "name": "Fish Hatchery",
+      "address": {
+        "zip": "19136",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5298 Linden Ave",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0425578,
+        "longitude": -74.9909976
+      },
+      "phone": "",
+      "slug": "fish-hatchery",
+      "geometry": [
+        40.0419781178231,
+        -74.9929199306747
+      ]
+    },
+    {
+      "id": "56a8f8777a8cee5e3a25b115",
+      "name": "Allens Lane Art Center",
+      "address": {
+        "zip": "19119",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "Allens Lane And Macallum",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0523133,
+        "longitude": -75.20145459999999
+      },
+      "phone": "2156859297",
+      "slug": "allens-lane-art-center",
+      "geometry": [
+        40.0519303719452,
+        -75.2028855621036
+      ]
+    },
+    {
+      "id": "56a8f82b7a8cee5e3a25ae86",
+      "name": "Smith Memorial",
+      "address": {
+        "zip": "19121",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "3500 Reservoir Dr.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9817329,
+        "longitude": -75.1956898
+      },
+      "phone": "2157654325",
+      "slug": "smith-memorial",
+      "geometry": [
+        39.9813945333247,
+        -75.1956127327802
+      ]
+    },
+    {
+      "id": "5a3d822f9a5c40071b510da5",
+      "name": "Greble Post (War Memorial)",
+      "address": {
+        "zip": "19147",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1327 S 3rd St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9309476,
+        "longitude": -75.149729
+      },
+      "phone": "",
+      "slug": "greble-post-war-memorial-",
+      "geometry": [
+        39.9308951807585,
+        -75.1498363680145
+      ]
+    },
+    {
+      "id": "56a8f87b7a8cee5e3a25b147",
+      "name": "Korean War Veteran's Memorial",
+      "address": {
+        "zip": "19106",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "109 Spruce St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9446561,
+        "longitude": -75.14352629999999
+      },
+      "phone": "",
+      "slug": "korean-war-veteran-s-memorial",
+      "geometry": [
+        39.9449096145076,
+        -75.1434246001041
+      ]
+    },
+    {
+      "id": "5a57d50648dc5b2fa46304ec",
+      "name": "Boathouse Row",
+      "address": {
+        "zip": "19130",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2-15 Boathouse Row",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9695828,
+        "longitude": -75.1876317
+      },
+      "phone": "",
+      "slug": "boathouse-row",
+      "geometry": [
+        39.969586822242,
+        -75.1871360065265
+      ]
+    }
+  ],
+  "time": 0.003,
+  "fields": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "jsonb"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "geometry": {
+      "type": "JSON"
+    }
+  },
+  "total_rows": 14
+}

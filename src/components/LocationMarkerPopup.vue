@@ -5,7 +5,9 @@
       <i class="fa fa-phone"/>
       {{ phone | formatPhone }}
     </div>
-    <router-link :to="`/location/${slug}/${id}`">
+    <router-link
+      :to="`/location/${slug}/${id}`"
+      data-testid="popupLink">
       View details
     </router-link>
   </LPopup>
