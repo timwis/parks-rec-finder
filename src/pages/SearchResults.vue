@@ -10,7 +10,7 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <p>
+        <p data-testid="resultsSummary">
           Showing {{ count }} results
           <span v-if="searchTerm">
             for <b>{{ searchTerm }}</b>

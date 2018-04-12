@@ -47,7 +47,8 @@
     <LMarker
       v-if="searchLocationGeometry"
       :lat-lng="searchLocationGeometry"
-      :icon="searchLocationIcon"/>
+      :icon="searchLocationIcon"
+      data-testid="searchLocationGeometry"/>
 
   </LMap>
 </template>
