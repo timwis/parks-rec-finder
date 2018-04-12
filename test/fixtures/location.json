@@ -1,0 +1,101 @@
+{
+  "rows": [
+    {
+      "name": "Happy Hollow",
+      "description": "A 4.6-acre site featuring playground equipment, sports fields, basketball and tennis courts. The three-room building includes a computer room, boxing gym, and multi-purpose room that host an array of activities. Opened in 1911, Happy Hollow is Philadelphia's oldest city-owned, continuously operating recreation center.",
+      "address": {
+        "zip": "19144",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "4800 Wayne Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0242448,
+        "longitude": -75.1659795
+      },
+      "phone": "2156852195",
+      "site_contact": "{'first': 'Jonto', 'middle': '', 'title': '', 'last': 'Swift'}",
+      "schedules": [
+        {
+          "id": "5a832fa68da1cc3d066a1519",
+          "days": [
+            "Wednesday"
+          ],
+          "date_to": null,
+          "time_to": "21:30:00",
+          "date_from": null,
+          "time_from": "11:00:00"
+        },
+        {
+          "id": "5a832faf8da1cc3d066a1820",
+          "days": [
+            "Saturday"
+          ],
+          "date_to": null,
+          "time_to": "14:30:00",
+          "date_from": null,
+          "time_from": "08:30:00"
+        },
+        {
+          "id": "5a832f9f8da1cc3d066a12e8",
+          "days": [
+            "Monday"
+          ],
+          "date_to": null,
+          "time_to": "21:30:00",
+          "date_from": null,
+          "time_from": "13:00:00"
+        },
+        {
+          "id": "5a832fa28da1cc3d066a1400",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": null,
+          "time_to": "21:30:00",
+          "date_from": null,
+          "time_from": "13:00:00"
+        },
+        {
+          "id": "5a832fad8da1cc3d066a1747",
+          "days": [
+            "Friday"
+          ],
+          "date_to": null,
+          "time_to": "21:30:00",
+          "date_from": null,
+          "time_from": "13:00:00"
+        }
+      ],
+      "geometry": [
+        40.0238156857695,
+        -75.1664686130659
+      ]
+    }
+  ],
+  "time": 0.003,
+  "fields": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "address": {
+      "type": "jsonb"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "site_contact": {
+      "type": "string"
+    },
+    "schedules": {
+      "type": "jsonb"
+    },
+    "geometry": {
+      "type": "JSON"
+    }
+  },
+  "total_rows": 1
+}
