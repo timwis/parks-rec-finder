@@ -35,13 +35,15 @@
             :value="searchTerm"
             class="cell medium-10"
             type="search"
-            placeholder="Search by activity or location name">
+            placeholder="Search by activity or location name"
+            data-testid="searchTerm">
           <input
             ref="searchLocation"
             :value="searchLocation"
             class="cell medium-10"
             type="search"
-            placeholder="Address or zip code">
+            placeholder="Address or zip code"
+            data-testid="searchLocation">
           <button
             type="submit"
             class="cell button shrink">
