@@ -8,5 +8,12 @@
   },
   "rules": {
     "vue/html-closing-bracket-newline": "error"
+  },
+  "globals": {
+    "describe": true,
+    "before": true,
+    "beforeEach": true,
+    "it": true,
+    "cy": true
   }
 }
