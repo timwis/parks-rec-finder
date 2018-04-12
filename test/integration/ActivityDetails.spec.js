@@ -6,12 +6,13 @@ describe('Activity Detail page', () => {
   beforeEach(() => {
     const { slug, id } = fixtures.activity.rows[0]
     cy.server()
-    cy.route(id, fixtures.activity)
+    cy.route(/FROM\+ppr_programs/, fixtures.activity)
     cy.visit(`#/activity/${slug}/${id}`)
   })
 
   it('shows the activity name', () => {
     const { name } = fixtures.activity.rows[0]
+
     cy.get('[data-testid=name]')
       .should('contain', name)
   })
