@@ -6,4 +6,4 @@ cache:
     - ~/.npm
     - node_modules
 script:
-  - npm run ci
+  - npm run test:ci

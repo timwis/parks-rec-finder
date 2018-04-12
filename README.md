@@ -15,13 +15,21 @@ some queries from it are surfaced on the website
 npm install
 
 # serve with hot reload at localhost:8080
-npm start
+npm run dev
 
 # build for production with minification
 npm run build
+```
 
-# run integration tests in desktop UI
+### Testing
+While running a server (`npm run dev`):
+
+``` bash
+# run linter and tests (headless)
 npm test
+
+# open test gui (for writing and debugging tests)
+npm run test:gui
 ```
 
 ## Deployment
