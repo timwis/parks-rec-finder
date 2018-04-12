@@ -8,8 +8,8 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <h2>{{ categoryName }}</h2>
-        <p>({{ count }})</p>
+        <h2 data-testid="categoryName">{{ categoryName }}</h2>
+        <p data-testid="count">({{ count }})</p>
 
         <ActivityFilterControls
           :current-filters="currentFilters"

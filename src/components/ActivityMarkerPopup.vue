@@ -5,7 +5,9 @@
       <li
         v-for="activity in activities"
         :key="activity.id">
-        <router-link :to="`/activity/${activity.slug}/${activity.id}`">
+        <router-link
+          :to="`/activity/${activity.slug}/${activity.id}`"
+          data-testid="popupLink">
           {{ activity.name }}
         </router-link>
       </li>
