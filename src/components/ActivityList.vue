@@ -14,7 +14,7 @@
         :age-high="activity.ageHigh"
         :location-name="activity.locationName"
         :location-address="activity.locationAddress"
-        data-testid="activityList"/>
+        data-testid="activityListItem"/>
     </ul>
   </div>
 </template>

@@ -1,0 +1,1623 @@
+{
+  "rows": [
+    {
+      "id": "580167c57f41c2041a63a64f",
+      "name": "Advisory council meeting",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f81e7a8cee5e3a25ae0f",
+      "location_name": "Mill Creek",
+      "location_address": {
+        "zip": "19139",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "743-81 N 48th St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9611145,
+        "longitude": -75.2158899
+      },
+      "schedules": [
+        {
+          "id": "5a945a3777903233b821b493",
+          "days": [
+            "Monday"
+          ],
+          "date_to": "2018-09-24",
+          "time_to": "21:00:00",
+          "date_from": "2017-09-25",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "advisory-council-meeting",
+      "location_geometry": [
+        39.9658203121623,
+        -75.2159665726847
+      ]
+    },
+    {
+      "id": "58111ad2c1c3e7202d1cdab7",
+      "name": "Advisory council meeting",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "1.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8647a8cee5e3a25b08b",
+      "location_name": "Laura Sims",
+      "location_address": {
+        "zip": "19139",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "200 S. 63rd St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9596671,
+        "longitude": -75.2474111
+      },
+      "schedules": [
+        {
+          "id": "58111b61db87088d28d1e6f9",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-07-31",
+          "time_to": "20:00:00",
+          "date_from": "2017-10-10",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "advisory-council-meeting",
+      "location_geometry": [
+        39.9593349132715,
+        -75.2480227472904
+      ]
+    },
+    {
+      "id": "57dd69b2a11e1de27fceb319",
+      "name": "Advisory council meeting",
+      "age_low": 18,
+      "age_high": 80,
+      "fee": "",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8497a8cee5e3a25afb1",
+      "location_name": "Hawthorne",
+      "location_address": {
+        "zip": "19147",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1200 Carpenter St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.938455,
+        "longitude": -75.163494
+      },
+      "schedules": [
+        {
+          "id": "57dd6a1c6b38cd517eab1466",
+          "days": [
+            "Wednesday"
+          ],
+          "date_to": "2018-12-05",
+          "time_to": "19:30:00",
+          "date_from": "2018-01-03",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "advisory-council-meeting",
+      "location_geometry": [
+        39.9384836281259,
+        -75.1634746258812
+      ]
+    },
+    {
+      "id": "58bafb434d7fd526f13ec368",
+      "name": "Advisory council meeting",
+      "age_low": 18,
+      "age_high": 85,
+      "fee": "",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8267a8cee5e3a25ae54",
+      "location_name": "Shuler",
+      "location_address": {
+        "zip": "19132",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "3000 N 27th St.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.001237,
+        "longitude": -75.1745066
+      },
+      "schedules": [
+        {
+          "id": "58bafbb0a634af2726b413c6",
+          "days": [
+            "Monday"
+          ],
+          "date_to": "2018-06-25",
+          "time_to": "20:00:00",
+          "date_from": "2017-10-30",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "advisory-council-meeting",
+      "location_geometry": [
+        40.0022370870936,
+        -75.1750486658909
+      ]
+    },
+    {
+      "id": "580ffb493524f94828243021",
+      "name": "Advisory council meeting",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8237a8cee5e3a25ae32",
+      "location_name": "Sturgis",
+      "location_address": {
+        "zip": "19126",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "200-20 W. 65th Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.049489,
+        "longitude": -75.123091
+      },
+      "schedules": [
+        {
+          "id": "580ffb733524f94828243026",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-06-21",
+          "time_to": "20:00:00",
+          "date_from": "2017-09-21",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "advisory-council-meeting",
+      "location_geometry": [
+        40.0489762189304,
+        -75.1238651861963
+      ]
+    },
+    {
+      "id": "5978b01cfebca54fa3f691eb",
+      "name": "Alcoholics Anonymous",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "0.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f86a7a8cee5e3a25b0b7",
+      "location_name": "Jardel",
+      "location_address": {
+        "zip": "19111",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1400 Cottman Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0562593,
+        "longitude": -75.0757868
+      },
+      "schedules": [
+        {
+          "id": "5a78ad3e8087965900dde377",
+          "days": [
+            "Saturday"
+          ],
+          "date_to": "2018-12-31",
+          "time_to": "12:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "10:00:00"
+        },
+        {
+          "id": "5a78ad15723db2590a6ac074",
+          "days": [
+            "Friday"
+          ],
+          "date_to": "2018-12-31",
+          "time_to": "21:30:00",
+          "date_from": "2018-01-01",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "alcoholics-anonymous",
+      "location_geometry": [
+        40.0558367865045,
+        -75.0768327335423
+      ]
+    },
+    {
+      "id": "57f41afac79b9e52368e5bbf",
+      "name": "Alcoholics Anonymous",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8537a8cee5e3a25aff9",
+      "location_name": "Samuel",
+      "location_address": {
+        "zip": "19134",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "3539 Gaul St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9911123,
+        "longitude": -75.09707949999999
+      },
+      "schedules": [
+        {
+          "id": "5a9093bbcedbef7447d31385",
+          "days": [
+            "Wednesday",
+            "Friday"
+          ],
+          "date_to": "2019-05-31",
+          "time_to": "21:00:00",
+          "date_from": "2018-02-23",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "alcoholics-anonymous",
+      "location_geometry": [
+        39.9906291204842,
+        -75.0971500549454
+      ]
+    },
+    {
+      "id": "59dfcc57aacc94552f8eebed",
+      "name": "Annual flea market",
+      "age_low": 1,
+      "age_high": 99,
+      "fee": "20.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f86c7a8cee5e3a25b0c9",
+      "location_name": "Holmesburg",
+      "location_address": {
+        "zip": "19136",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "4500 Rhawn St.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0362976,
+        "longitude": -75.02663950000002
+      },
+      "schedules": [
+        {
+          "id": "59dfcc77bcf6cb505052806d",
+          "days": [
+            "Saturday"
+          ],
+          "date_to": "2018-10-06",
+          "time_to": "15:00:00",
+          "date_from": "2017-10-07",
+          "time_from": "09:00:00"
+        }
+      ],
+      "slug": "annual-flea-market",
+      "location_geometry": [
+        40.0359956153963,
+        -75.0273049387423
+      ]
+    },
+    {
+      "id": "57f3f230faaff2c8333ccbe3",
+      "name": "Community meeting",
+      "age_low": 21,
+      "age_high": 80,
+      "fee": "",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f85f7a8cee5e3a25b065",
+      "location_name": "Houseman",
+      "location_address": {
+        "zip": "19124",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5091 Summerdale Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0302162,
+        "longitude": -75.0932859
+      },
+      "schedules": [
+        {
+          "id": "57f3f25ba175348b49ccf717",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-06-29",
+          "time_to": "21:00:00",
+          "date_from": "2016-09-01",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "community-meeting",
+      "location_geometry": [
+        40.0290457303195,
+        -75.0938106976279
+      ]
+    },
+    {
+      "id": "57f57584aa15254734ad4b8f",
+      "name": "Diamond in the heart - Narcotics Anonymous group",
+      "age_low": 18,
+      "age_high": 80,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f85d7a8cee5e3a25b04f",
+      "location_name": "8th & Diamond",
+      "location_address": {
+        "zip": "19122",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "800 Diamond St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.983538,
+        "longitude": -75.1476271
+      },
+      "schedules": [
+        {
+          "id": "57f575ef3d414eca659dd00c",
+          "days": [
+            "Saturday"
+          ],
+          "date_to": "2018-08-25",
+          "time_to": "13:00:00",
+          "date_from": "2017-09-04",
+          "time_from": "09:00:00"
+        }
+      ],
+      "slug": "diamond-in-the-heart-narcotics-anonymous-group",
+      "location_geometry": [
+        39.9831211645623,
+        -75.1474762876104
+      ]
+    },
+    {
+      "id": "57db014932a9fa80701a8b07",
+      "name": "Drexel block meeting",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8617a8cee5e3a25b077",
+      "location_name": "John Anderson",
+      "location_address": {
+        "zip": "19131",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5301 Overbrook Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9951622,
+        "longitude": -75.2332514
+      },
+      "schedules": [
+        {
+          "id": "5a6f796753e0b358ad8b5bef",
+          "days": [
+            "Monday"
+          ],
+          "date_to": "2018-06-15",
+          "time_to": "20:45:00",
+          "date_from": "2018-01-26",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "drexel-block-meeting",
+      "location_geometry": [
+        39.9951755612353,
+        -75.2332387051687
+      ]
+    },
+    {
+      "id": "5a7385eea8f7992f8ef76417",
+      "name": "Drugs & drug addiction",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f86c7a8cee5e3a25b0c9",
+      "location_name": "Holmesburg",
+      "location_address": {
+        "zip": "19136",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "4500 Rhawn St.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0362976,
+        "longitude": -75.02663950000002
+      },
+      "schedules": [
+        {
+          "id": "5a738620a5ddae58aaa7fc3f",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2019-01-17",
+          "time_to": "21:00:00",
+          "date_from": "2018-01-18",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "drugs-drug-addiction",
+      "location_geometry": [
+        40.0359956153963,
+        -75.0273049387423
+      ]
+    },
+    {
+      "id": "58223235bcc5a9f63d07e558",
+      "name": "Ex-offenders to returning citizens clinic",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f84d7a8cee5e3a25afd3",
+      "location_name": "Nelson",
+      "location_address": {
+        "zip": "19133",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2500-34 N. 3rd St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9893722,
+        "longitude": -75.13811609999999
+      },
+      "schedules": [
+        {
+          "id": "5a7a57ca314ce0516ca9465f",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-19",
+          "time_to": "20:00:00",
+          "date_from": "2017-09-12",
+          "time_from": "18:00:00"
+        },
+        {
+          "id": "5a7a5ca5e773da5a8a8a282b",
+          "days": [
+            "Wednesday"
+          ],
+          "date_to": "2018-06-20",
+          "time_to": "20:00:00",
+          "date_from": "2017-09-20",
+          "time_from": "18:00:00"
+        }
+      ],
+      "slug": "ex-offenders-to-returning-citizens-clinic",
+      "location_geometry": [
+        39.9890533933343,
+        -75.1381978434475
+      ]
+    },
+    {
+      "id": "5a68df3d0fa0015c0854ae39",
+      "name": "Expungement clinic",
+      "age_low": 16,
+      "age_high": 100,
+      "fee": "0.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f84d7a8cee5e3a25afd3",
+      "location_name": "Nelson",
+      "location_address": {
+        "zip": "19133",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2500-34 N. 3rd St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9893722,
+        "longitude": -75.13811609999999
+      },
+      "schedules": [
+        {
+          "id": "5a68df9dfbdc6664410844f8",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-11",
+          "time_to": "20:00:00",
+          "date_from": "2017-09-11",
+          "time_from": "18:00:00"
+        },
+        {
+          "id": "5a7a59cfa05dee59a2e451da",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-06-14",
+          "time_to": "20:30:00",
+          "date_from": "2017-09-14",
+          "time_from": "19:30:00"
+        }
+      ],
+      "slug": "expungement-clinic",
+      "location_geometry": [
+        39.9890533933343,
+        -75.1381978434475
+      ]
+    },
+    {
+      "id": "57f829189ac3522a3d015f9c",
+      "name": "Friends of Schuylkill River Park monthly meeting",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f86a7a8cee5e3a25b0b9",
+      "location_name": "Markward",
+      "location_address": {
+        "zip": "19146",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "400-16 S. Taney St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9480334,
+        "longitude": -75.1834299
+      },
+      "schedules": [
+        {
+          "id": "5a85fb33fa2f5572ceb8d6c0",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-12-27",
+          "time_to": "21:00:00",
+          "date_from": "2018-01-25",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "friends-of-schuylkill-river-park-monthly-meeting",
+      "location_geometry": [
+        39.947992604495,
+        -75.1833871829373
+      ]
+    },
+    {
+      "id": "57f3f4a5b4d9207f32b3ce09",
+      "name": "Gamblers' Anonymous/Accountability",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8167a8cee5e3a25adbd",
+      "location_name": "Hunting Park Recreation Area",
+      "location_address": {
+        "zip": "19140",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "900 Hunting Park Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.01579539999999,
+        "longitude": -75.1412639
+      },
+      "schedules": [
+        {
+          "id": "57f3f4dacbb7a08b32357b06",
+          "days": [
+            "Saturday"
+          ],
+          "date_to": "2018-12-29",
+          "time_to": "12:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "10:00:00"
+        }
+      ],
+      "slug": "gamblers-anonymous-accountability",
+      "location_geometry": [
+        40.0174022485703,
+        -75.1438163823001
+      ]
+    },
+    {
+      "id": "59af13267e49d9335a48ab55",
+      "name": "Harrowgate Civic Association meeting",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f8557a8cee5e3a25b009",
+      "location_name": "Heitzman",
+      "location_address": {
+        "zip": "19134",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2136 Castor Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9981271,
+        "longitude": -75.0976185
+      },
+      "schedules": [
+        {
+          "id": "59af13476ac59330d16c1f94",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-08-02",
+          "time_to": "21:00:00",
+          "date_from": "2017-09-07",
+          "time_from": "17:30:00"
+        }
+      ],
+      "slug": "harrowgate-civic-association-meeting",
+      "location_geometry": [
+        39.9977524835127,
+        -75.0983593050256
+      ]
+    },
+    {
+      "id": "597920fd9b1ebc5163eaaa64",
+      "name": "Improv island",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f8757a8cee5e3a25b101",
+      "location_name": "Venice Island",
+      "location_address": {
+        "zip": "19127",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1 Rector St.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.024071,
+        "longitude": -75.222921
+      },
+      "schedules": [
+        {
+          "id": "5a82105135b75968cd77a4c8",
+          "days": [
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "date_to": "2018-12-31",
+          "time_to": "22:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "18:45:00"
+        }
+      ],
+      "slug": "improv-island",
+      "location_geometry": [
+        40.0231150439357,
+        -75.2215738922845
+      ]
+    },
+    {
+      "id": "5a5e2c613d0872557274252a",
+      "name": "Kingsessing movers & shakers",
+      "age_low": 21,
+      "age_high": 100,
+      "fee": "",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f8617a8cee5e3a25b073",
+      "location_name": "Kingsessing",
+      "location_address": {
+        "zip": "19143",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "4901 Kingsessing Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9422388,
+        "longitude": -75.216493
+      },
+      "schedules": [
+        {
+          "id": "5a5e2ca2f6ac485e07e70152",
+          "days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "date_to": "2018-06-30",
+          "time_to": "21:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "13:00:00"
+        }
+      ],
+      "slug": "kingsessing-movers-shakers",
+      "location_geometry": [
+        39.9426512421455,
+        -75.2172296444823
+      ]
+    },
+    {
+      "id": "57f6a7f7395245d73d45393b",
+      "name": "Mayfair older adults program",
+      "age_low": 62,
+      "age_high": 90,
+      "fee": "300.00",
+      "fee_frequency": "Per month",
+      "gender": "M/F",
+      "location_id": "56a8f8637a8cee5e3a25b087",
+      "location_name": "Mayfair",
+      "location_address": {
+        "zip": "19135",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2901 Princeton Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0406189,
+        "longitude": -75.0539508
+      },
+      "schedules": [
+        {
+          "id": "57f6a82ae31596e1355c9612",
+          "days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "date_to": "2018-06-22",
+          "time_to": "14:15:00",
+          "date_from": "2017-08-14",
+          "time_from": "09:00:00"
+        }
+      ],
+      "slug": "mayfair-older-adults-program",
+      "location_geometry": [
+        40.040286605424,
+        -75.0534044001254
+      ]
+    },
+    {
+      "id": "58f6790a45da7c0d66a0a42f",
+      "name": "Narcotics anonymous",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "1.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8257a8cee5e3a25ae4b",
+      "location_name": "Monkiewicz",
+      "location_address": {
+        "zip": "19134",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "3201 Richmond St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9831361,
+        "longitude": -75.0997377
+      },
+      "schedules": [
+        {
+          "id": "58f679431647f1151f34fd03",
+          "days": [
+            "Wednesday"
+          ],
+          "date_to": "2018-12-27",
+          "time_to": "21:00:00",
+          "date_from": "2017-01-04",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "narcotics-anonymous",
+      "location_geometry": [
+        39.9819461899124,
+        -75.0988835977481
+      ]
+    },
+    {
+      "id": "57e052f548ba06f04aff6bee",
+      "name": "Narcotics Anonymous",
+      "age_low": 16,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Per month",
+      "gender": "M/F",
+      "location_id": "56a8f81b7a8cee5e3a25adf9",
+      "location_name": "Guerin",
+      "location_address": {
+        "zip": "19145",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2201 S. 16th St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9235428,
+        "longitude": -75.17322469999999
+      },
+      "schedules": [
+        {
+          "id": "57e0533d19292e860b394d51",
+          "days": [
+            "Tuesday",
+            "Thursday",
+            "Friday"
+          ],
+          "date_to": "2018-09-28",
+          "time_to": "20:30:00",
+          "date_from": "2017-09-12",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "narcotics-anonymous",
+      "location_geometry": [
+        39.9228841163826,
+        -75.1729399644947
+      ]
+    },
+    {
+      "id": "5a1f22c06136e9621de440d9",
+      "name": "Narcotics Anonymous",
+      "age_low": 16,
+      "age_high": 90,
+      "fee": "",
+      "fee_frequency": "Per Day",
+      "gender": "M/F",
+      "location_id": "56a8f8587a8cee5e3a25b029",
+      "location_name": "Penrose",
+      "location_address": {
+        "zip": "19122",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1101 W. Susquehanna Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.985983,
+        "longitude": -75.1518866
+      },
+      "schedules": [
+        {
+          "id": "5a1f22edde239d60771925d4",
+          "days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "date_to": "2018-04-30",
+          "time_to": "12:15:00",
+          "date_from": "2017-11-06",
+          "time_from": "10:00:00"
+        },
+        {
+          "id": "5a68d8f4948797637f687a61",
+          "days": [
+            "Saturday"
+          ],
+          "date_to": "2018-12-31",
+          "time_to": "14:30:00",
+          "date_from": "2018-01-01",
+          "time_from": "12:00:00"
+        },
+        {
+          "id": "5a68d8b54ea177608ff023d7",
+          "days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "date_to": "2018-12-31",
+          "time_to": "12:30:00",
+          "date_from": "2018-01-01",
+          "time_from": "10:00:00"
+        }
+      ],
+      "slug": "narcotics-anonymous",
+      "location_geometry": [
+        39.9860214527657,
+        -75.1516295578171
+      ]
+    },
+    {
+      "id": "57fd64a8db7925fe356178ac",
+      "name": "Narcotics Anonymous",
+      "age_low": 18,
+      "age_high": 65,
+      "fee": "",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8687a8cee5e3a25b0ab",
+      "location_name": "Finley",
+      "location_address": {
+        "zip": "19150",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "7701 Mansfield Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0646908,
+        "longitude": -75.1703778
+      },
+      "schedules": [
+        {
+          "id": "5a721b07e2c86a1522b8e919",
+          "days": [
+            "Wednesday"
+          ],
+          "date_to": "2018-12-05",
+          "time_to": "20:30:00",
+          "date_from": "2018-01-03",
+          "time_from": "18:00:00"
+        }
+      ],
+      "slug": "narcotics-anonymous",
+      "location_geometry": [
+        40.0648429254746,
+        -75.1696164599421
+      ]
+    },
+    {
+      "id": "57e96e25ed3042723aaf9884",
+      "name": "Narcotics Anonymous",
+      "age_low": 1,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f85e7a8cee5e3a25b05d",
+      "location_name": "Happy Hollow",
+      "location_address": {
+        "zip": "19144",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "4800 Wayne Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0242448,
+        "longitude": -75.1659795
+      },
+      "schedules": [
+        {
+          "id": "5a820a76ed43f368b998047d",
+          "days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "date_to": "2018-12-31",
+          "time_to": "11:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "09:00:00"
+        },
+        {
+          "id": "5a3d7c1438e97655ed2122df",
+          "days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "date_to": "2018-12-31",
+          "time_to": "11:00:00",
+          "date_from": "2017-12-18",
+          "time_from": "09:00:00"
+        }
+      ],
+      "slug": "narcotics-anonymous",
+      "location_geometry": [
+        40.0238156857695,
+        -75.1664686130659
+      ]
+    },
+    {
+      "id": "5a90ca1056794f6a6016749b",
+      "name": "Narcotics Anonymous",
+      "age_low": 18,
+      "age_high": 199,
+      "fee": "0.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "location_id": "56a8f85a7a8cee5e3a25b033",
+      "location_name": "Gathers",
+      "location_address": {
+        "zip": "19121",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2501-19 W Diamond St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9872708,
+        "longitude": -75.1746441
+      },
+      "schedules": [
+        {
+          "id": "5a90ca7e9cf73b5854c6e55c",
+          "days": [
+            "Friday"
+          ],
+          "date_to": "2020-01-01",
+          "time_to": "21:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "18:00:00"
+        }
+      ],
+      "slug": "narcotics-anonymous",
+      "location_geometry": [
+        39.9876764754453,
+        -75.1749701072791
+      ]
+    },
+    {
+      "id": "59cc0e73be4591238036942e",
+      "name": "Nutrition group for seniors",
+      "age_low": 55,
+      "age_high": 120,
+      "fee": "1.00",
+      "fee_frequency": "Per month",
+      "gender": "M/F",
+      "location_id": "56a8f8617a8cee5e3a25b077",
+      "location_name": "John Anderson",
+      "location_address": {
+        "zip": "19131",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5301 Overbrook Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9951622,
+        "longitude": -75.2332514
+      },
+      "schedules": [
+        {
+          "id": "5a723b4e9cf4407bdb19a71e",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-15",
+          "time_to": "14:30:00",
+          "date_from": "2018-01-26",
+          "time_from": "00:00:00"
+        },
+        {
+          "id": "59cc0eadd7f68c28e24caa5f",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-15",
+          "time_to": "02:30:00",
+          "date_from": "2018-01-26",
+          "time_from": "00:00:00"
+        },
+        {
+          "id": "5a95d60630af5114c36552ad",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-19",
+          "time_to": "15:00:00",
+          "date_from": "2018-02-27",
+          "time_from": "12:00:00"
+        }
+      ],
+      "slug": "nutrition-group-for-seniors",
+      "location_geometry": [
+        39.9951755612353,
+        -75.2332387051687
+      ]
+    },
+    {
+      "id": "5a8213ee98f6ea68bb28b545",
+      "name": "Pointman soldiers heart ministry",
+      "age_low": 18,
+      "age_high": 120,
+      "fee": "0.00",
+      "fee_frequency": "Per month",
+      "gender": "M/F",
+      "location_id": "56a8f8617a8cee5e3a25b077",
+      "location_name": "John Anderson",
+      "location_address": {
+        "zip": "19131",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5301 Overbrook Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9951622,
+        "longitude": -75.2332514
+      },
+      "schedules": [
+        {
+          "id": "5a8214b468b59168c9691483",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-18",
+          "time_to": "16:00:00",
+          "date_from": "2018-02-19",
+          "time_from": "01:30:00"
+        }
+      ],
+      "slug": "pointman-soldiers-heart-ministry",
+      "location_geometry": [
+        39.9951755612353,
+        -75.2332387051687
+      ]
+    },
+    {
+      "id": "58c854e618b6fa2cf391ea09",
+      "name": "Recovery",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8437a8cee5e3a25af73",
+      "location_name": "Athletic",
+      "location_address": {
+        "zip": "19121",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1401-55 N. 26th St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9769903,
+        "longitude": -75.17818950000002
+      },
+      "schedules": [
+        {
+          "id": "58c85539d1970828127d85ba",
+          "days": [
+            "Monday",
+            "Tuesday",
+            "Wednesday"
+          ],
+          "date_to": "2018-12-17",
+          "time_to": "20:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "17:00:00"
+        }
+      ],
+      "slug": "recovery",
+      "location_geometry": [
+        39.977772441644,
+        -75.1788374014863
+      ]
+    },
+    {
+      "id": "57eeb732c5e0713c32748135",
+      "name": "Referee meetings-PIAA",
+      "age_low": 18,
+      "age_high": 65,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8147a8cee5e3a25ad97",
+      "location_name": "Disston",
+      "location_address": {
+        "zip": "19135",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "4423 Longshore Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.028676,
+        "longitude": -75.0445699
+      },
+      "schedules": [
+        {
+          "id": "5805538fda61c2e8184b8c13",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-05-18",
+          "time_to": "21:15:00",
+          "date_from": "2017-08-24",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "referee-meetings-piaa",
+      "location_geometry": [
+        40.0284028603846,
+        -75.0443640262198
+      ]
+    },
+    {
+      "id": "58178bdc9233649629373fda",
+      "name": "Seniors bingo",
+      "age_low": 50,
+      "age_high": 99,
+      "fee": "1.00",
+      "fee_frequency": "Per month",
+      "gender": "M/F",
+      "location_id": "56a8f8397a8cee5e3a25af0d",
+      "location_name": "Fishtown",
+      "location_address": {
+        "zip": "19125",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "1202-32 E Montgomery Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9718684,
+        "longitude": -75.1280311
+      },
+      "schedules": [
+        {
+          "id": "5a84ea0cacfb2a0c8483a79d",
+          "days": [
+            "Monday"
+          ],
+          "date_to": "2018-06-01",
+          "time_to": "14:00:00",
+          "date_from": "2017-09-11",
+          "time_from": "10:00:00"
+        }
+      ],
+      "slug": "seniors-bingo",
+      "location_geometry": [
+        39.9717717283654,
+        -75.128017903163
+      ]
+    },
+    {
+      "id": "57eee944bb5a6521344a2a26",
+      "name": "Seniors citizens club ",
+      "age_low": 50,
+      "age_high": 95,
+      "fee": "5.00",
+      "fee_frequency": "Per month",
+      "gender": "M/F",
+      "location_id": "56a8f8477a8cee5e3a25afa5",
+      "location_name": "Lower Mayfair",
+      "location_address": {
+        "zip": "19135",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "3001 Robbins Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0298287,
+        "longitude": -75.0619162
+      },
+      "schedules": [
+        {
+          "id": "5a6bec5c81eb5a59605bb937",
+          "days": [
+            "Friday"
+          ],
+          "date_to": "2019-02-01",
+          "time_to": "13:30:00",
+          "date_from": "2018-01-26",
+          "time_from": "09:00:00"
+        }
+      ],
+      "slug": "seniors-citizens-club",
+      "location_geometry": [
+        40.0293601272359,
+        -75.0610413329372
+      ]
+    },
+    {
+      "id": "58093fc1635e1e2f38cccc10",
+      "name": "Shared food program",
+      "age_low": 18,
+      "age_high": 99,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8577a8cee5e3a25b019",
+      "location_name": "J. Finnegan",
+      "location_address": {
+        "zip": "19142",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "6801 Grovers Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9154481,
+        "longitude": -75.2313113
+      },
+      "schedules": [
+        {
+          "id": "58093ff7be00a33d2f0e6f3c",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-10-02",
+          "time_to": "20:00:00",
+          "date_from": "2017-10-03",
+          "time_from": "18:00:00"
+        }
+      ],
+      "slug": "shared-food-program",
+      "location_geometry": [
+        39.9151358046195,
+        -75.231461261316
+      ]
+    },
+    {
+      "id": "581783e262c2e82e2919e018",
+      "name": "Simons Special Event",
+      "age_low": 1,
+      "age_high": 99,
+      "fee": "1.00",
+      "fee_frequency": "Per month",
+      "gender": "M/F",
+      "location_id": "56a8f8427a8cee5e3a25af61",
+      "location_name": "Simons",
+      "location_address": {
+        "zip": "19138",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "7200 Woolston Ave",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0618253,
+        "longitude": -75.1572688
+      },
+      "schedules": [
+        {
+          "id": "5817840ce35dbc3f296385e5",
+          "days": [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "date_to": "2021-12-31",
+          "time_to": "22:00:00",
+          "date_from": "2018-01-01",
+          "time_from": "09:00:00"
+        }
+      ],
+      "slug": "simons-special-event",
+      "location_geometry": [
+        40.0622505110241,
+        -75.1576385554721
+      ]
+    },
+    {
+      "id": "57db005beee20b056ff5efc3",
+      "name": "Ski club",
+      "age_low": 18,
+      "age_high": 100,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8617a8cee5e3a25b077",
+      "location_name": "John Anderson",
+      "location_address": {
+        "zip": "19131",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5301 Overbrook Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9951622,
+        "longitude": -75.2332514
+      },
+      "schedules": [
+        {
+          "id": "57db008a9fcfd5823280904e",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-06-15",
+          "time_to": "19:30:00",
+          "date_from": "2017-01-27",
+          "time_from": "18:30:00"
+        }
+      ],
+      "slug": "ski-club",
+      "location_geometry": [
+        39.9951755612353,
+        -75.2332387051687
+      ]
+    },
+    {
+      "id": "57f6cfe1e0229ee3357cfb73",
+      "name": "Spanish class",
+      "age_low": 50,
+      "age_high": 80,
+      "fee": "5.00",
+      "fee_frequency": "Per Day",
+      "gender": "M/F",
+      "location_id": "56a8f8637a8cee5e3a25b087",
+      "location_name": "Mayfair",
+      "location_address": {
+        "zip": "19135",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2901 Princeton Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0406189,
+        "longitude": -75.0539508
+      },
+      "schedules": [
+        {
+          "id": "57f6d02c4c02c1fc35a2988d",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-19",
+          "time_to": "14:30:00",
+          "date_from": "2017-09-19",
+          "time_from": "12:30:00"
+        }
+      ],
+      "slug": "spanish-class",
+      "location_geometry": [
+        40.040286605424,
+        -75.0534044001254
+      ]
+    },
+    {
+      "id": "582501acd3e35ebc33ddef01",
+      "name": "Wadsworth mature adults",
+      "age_low": 60,
+      "age_high": 100,
+      "fee": "0.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f86f7a8cee5e3a25b0e5",
+      "location_name": "Dorothy Emanuel",
+      "location_address": {
+        "zip": "19150",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "8500 Pickering Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 40.0812437,
+        "longitude": -75.1748458
+      },
+      "schedules": [
+        {
+          "id": "5a95bf18e57a700ee39709f9",
+          "days": [
+            "Tuesday",
+            "Wednesday",
+            "Thursday"
+          ],
+          "date_to": "2018-06-21",
+          "time_to": "14:00:00",
+          "date_from": "2017-09-05",
+          "time_from": "11:00:00"
+        }
+      ],
+      "slug": "wadsworth-mature-adults",
+      "location_geometry": [
+        40.0815729973548,
+        -75.175921777097
+      ]
+    },
+    {
+      "id": "57dafb1681806de22f20c3d5",
+      "name": "Wynnefield Residents’ Association (WRA) monthly meeting",
+      "age_low": 18,
+      "age_high": 110,
+      "fee": "5.00",
+      "fee_frequency": "Total",
+      "gender": "M/F",
+      "location_id": "56a8f8617a8cee5e3a25b077",
+      "location_name": "John Anderson",
+      "location_address": {
+        "zip": "19131",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "5301 Overbrook Ave.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9951622,
+        "longitude": -75.2332514
+      },
+      "schedules": [
+        {
+          "id": "5a723add9cf4407bdb19a646",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-15",
+          "time_to": "20:30:00",
+          "date_from": "2018-01-26",
+          "time_from": "19:00:00"
+        },
+        {
+          "id": "57dafb4b81806de22f20c3e0",
+          "days": [
+            "Tuesday"
+          ],
+          "date_to": "2018-06-15",
+          "time_to": "08:30:00",
+          "date_from": "2018-01-26",
+          "time_from": "19:00:00"
+        }
+      ],
+      "slug": "wynnefield-residents-association-wra-monthly-meeting",
+      "location_geometry": [
+        39.9951755612353,
+        -75.2332387051687
+      ]
+    }
+  ],
+  "time": 0.063,
+  "fields": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "age_low": {
+      "type": "number"
+    },
+    "age_high": {
+      "type": "number"
+    },
+    "fee": {
+      "type": "string"
+    },
+    "fee_frequency": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "location_address": {
+      "type": "jsonb"
+    },
+    "schedules": {
+      "type": "jsonb"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "location_geometry": {
+      "type": "JSON"
+    }
+  },
+  "total_rows": 38
+}

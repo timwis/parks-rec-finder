@@ -1,10 +1,14 @@
 <template>
   <div>
-    <button @click="isOpen = !isOpen">
+    <button
+      data-testid="filterButton"
+      @click="isOpen = !isOpen">
       <i class="fa fa-filter"/>
       Filters
     </button>
-    <div v-show="isOpen">
+    <div
+      v-show="isOpen"
+      data-testid="filterControls">
       <fieldset @change="onChange">
         <legend class="h4">Cost</legend>
 
@@ -21,7 +25,8 @@
           v-model="filters.cost"
           type="radio"
           name="cost"
-          value="free">
+          value="free"
+          data-testid="filterCostFree">
         <label for="free">Free</label>
       </fieldset>
 
@@ -161,11 +166,14 @@
       <button
         v-if="activeFiltersCount > 0"
         class="button"
+        data-testid="resetFilterButton"
         @click="removeAllFilters">
         Reset filters
       </button>
     </div>
-    <div v-show="!isOpen && activeFiltersCount > 0">
+    <div
+      v-show="!isOpen && activeFiltersCount > 0"
+      data-testid="activeFilters">
       <span
         v-if="filters.cost"
         class="label">

@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "id": "5a3906a79c96dc071f925683",
+      "name": "Civic & Community"
+    }
+  ],
+  "time": 0.002,
+  "fields": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "total_rows": 1
+}
