@@ -4,11 +4,13 @@
       <div v-if="isLoading">
         Loading...
       </div>
-      <div v-else-if="error">
+      <div
+        v-else-if="error"
+        data-testid="error">
         Error: {{ error }}
       </div>
       <div v-else>
-        <h2>{{ name }}</h2>
+        <h2 data-testid="name">{{ name }}</h2>
 
         <DetailSection
           v-if="fullAddress"
@@ -64,7 +66,8 @@
 
         <DetailSection
           v-if="activities && activities.length > 0"
-          :title="activities.length + ' activities offered here'">
+          :title="activities.length + ' activities offered here'"
+          data-testid="activitiesCount">
           <ActivityList :activities="activities"/>
         </DetailSection>
       </div>
