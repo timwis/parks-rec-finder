@@ -6,12 +6,14 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "test": "run-p lint test:local",
-    "ci": "run-p lint test:headless",
-    "test:local": "cypress open",
-    "test:headless": "start-server-and-test start http://localhost:8080 cypress run",
+    "test": "run-p lint test:headless:run",
+    "test:gui": "cypress open",
+    "test:ci": "run-s lint build test:headless",
+    "test:headless": "start-server-and-test test:headless:serve 8080 test:headless:run",
+    "test:headless:serve": "serve --port 8080 dist",
+    "test:headless:run": "cypress run",
     "lint": "eslint 'src/**/*.{js,vue}' test"
   },
   "dependencies": {
@@ -60,6 +62,7 @@
     "npm-run-all": "^4.1.2",
     "pug": "^2.0.0-rc.4",
     "sass-loader": "^6.0.6",
+    "serve": "^6.5.5",
     "start-server-and-test": "^1.1.4",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
