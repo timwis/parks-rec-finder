@@ -1,34 +1,49 @@
+const fixtures = {
+  locationCategoryDetails: require('../fixtures/locationCategoryDetails'),
+  locations: require('../fixtures/locations')
+}
+
 describe('Locations page', () => {
   beforeEach(() => {
     cy.server()
-    cy.route(/FROM\+ppr_location_types/, 'fixture:locationCategoryDetails')
-    cy.route(/FROM\+ppr_facilities/, 'fixture:locations')
+    cy.route(/FROM\+ppr_location_types/, fixtures.locationCategoryDetails)
+    cy.route(/FROM\+ppr_facilities/, fixtures.locations)
     cy.visit('#/locations/historic-cultural-attractions')
   })
 
   it('shows the list header', () => {
+    const { name } = fixtures.locationCategoryDetails.rows[0]
+    const count = fixtures.locations.rows.length
+
     cy.get('[data-testid=categoryName]')
       .should('be.visible')
-      .should('contain', 'Historic & Cultural Attractions')
+      .should('contain', name)
     cy.get('[data-testid=count]')
-      .should('contain', '14')
+      .should('contain', count)
   })
 
   it('shows the list items', () => {
-    cy.get('[data-testid=locationListItem]')
-      .should('have.lengthOf', 14)
+    const firstLocation = fixtures.locations.rows[0]
+    const count = fixtures.locations.rows.length
 
-    cy.contains('Venice Island')
+    cy.get('[data-testid=locationListItem]')
+      .should('have.lengthOf', count)
+
+    cy.contains(firstLocation.name)
       .should('have.attr', 'href')
-      .and('include', 'location/venice-island')
+      .and('include', `location/${firstLocation.slug}`)
   })
 
   it('shows the map markers', () => {
+    const count = fixtures.locations.rows.length
+
     cy.get('.leaflet-marker-icon')
-      .should('have.lengthOf', 14)
+      .should('have.lengthOf', count)
   })
 
   it('shows the marker popup info', () => {
+    const firstLocation = fixtures.locations.rows[0]
+
     cy.get('.leaflet-marker-icon')
       .first().click()
 
@@ -36,10 +51,10 @@ describe('Locations page', () => {
       .should('have.lengthOf', 1)
 
     cy.get('.leaflet-popup-content')
-      .should('contain', 'Venice Island')
+      .should('contain', firstLocation.name)
 
     cy.get('.leaflet-popup-content [data-testid=popupLink]')
       .should('have.attr', 'href')
-      .and('include', 'location/venice-island')
+      .and('include', `location/${firstLocation.slug}`)
   })
 })
