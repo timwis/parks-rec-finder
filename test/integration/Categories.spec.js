@@ -1,12 +1,9 @@
 describe('Categories page', () => {
-  before(() => {
+  beforeEach(() => {
     cy.server()
     cy.route(/FROM\+ppr_programs/, 'fixture:activityCategories')
     cy.route(/FROM\+ppr_facilities/, 'fixture:locationCategories')
     cy.route(/flickr/, 'fixture:photoUrl')
-  })
-
-  beforeEach(() => {
     cy.visit('#/')
   })
 
