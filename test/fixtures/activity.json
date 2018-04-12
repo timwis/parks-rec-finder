@@ -1,0 +1,97 @@
+{
+  "rows": [
+    {
+      "id": "5a90cdc89de670135c1225cf",
+      "name": "16 & under basketball",
+      "description": "",
+      "age_low": 14,
+      "age_high": 16,
+      "fee": "0.00",
+      "fee_frequency": "Total/Season",
+      "gender": "M/F",
+      "registration_status": "Closed: Check back again!",
+      "registration_link": "",
+      "location_id": "56a8f85a7a8cee5e3a25b033",
+      "location_name": "Gathers",
+      "location_address": {
+        "zip": "19121",
+        "city": "Philadelphia",
+        "state": "PA",
+        "street": "2501-19 W Diamond St.",
+        "country": "",
+        "street2": "",
+        "latitude": 39.9872708,
+        "longitude": -75.1746441
+      },
+      "location_phone": "2156852710",
+      "schedules": [
+        {
+          "id": "5a90ce2456794f6a601676b6",
+          "days": [
+            "Thursday"
+          ],
+          "date_to": "2018-04-26",
+          "time_to": "21:30:00",
+          "date_from": "2018-02-08",
+          "time_from": "18:00:00"
+        }
+      ],
+      "location_geometry": [
+        39.9876764754453,
+        -75.1749701072791
+      ]
+    }
+  ],
+  "time": 0.007,
+  "fields": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "age_low": {
+      "type": "number"
+    },
+    "age_high": {
+      "type": "number"
+    },
+    "fee": {
+      "type": "string"
+    },
+    "fee_frequency": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "registration_status": {
+      "type": "string"
+    },
+    "registration_link": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "location_address": {
+      "type": "jsonb"
+    },
+    "location_phone": {
+      "type": "string"
+    },
+    "schedules": {
+      "type": "jsonb"
+    },
+    "location_geometry": {
+      "type": "JSON"
+    }
+  },
+  "total_rows": 1
+}

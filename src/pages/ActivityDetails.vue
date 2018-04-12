@@ -4,11 +4,13 @@
       <div v-if="isLoading">
         Loading...
       </div>
-      <div v-else-if="error">
+      <div
+        v-else-if="error"
+        data-testid="error">
         Error: {{ error }}
       </div>
       <div v-else>
-        <h2>{{ name }}</h2>
+        <h2 data-testid="name">{{ name }}</h2>
 
         <ul>
           <li v-if="ageRange">Age: {{ ageRange }}</li>
