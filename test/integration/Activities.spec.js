@@ -100,7 +100,7 @@ describe('Activities page', () => {
       .should('contain', 'free')
   })
 
-  it.only('active filters can be removed', () => {
+  it('active filters can be removed', () => {
     cy.visit('#/activities/civic-community?cost=free')
 
     cy.get('[data-testid=activeFilters] a')
