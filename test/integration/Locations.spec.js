@@ -1,11 +1,8 @@
 describe('Locations page', () => {
-  before(() => {
+  beforeEach(() => {
     cy.server()
     cy.route(/FROM\+ppr_location_types/, 'fixture:locationCategoryDetails')
     cy.route(/FROM\+ppr_facilities/, 'fixture:locations')
-  })
-
-  beforeEach(() => {
     cy.visit('#/locations/historic-cultural-attractions')
   })
 
