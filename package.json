@@ -12,7 +12,7 @@
     "ci": "run-p lint test:headless",
     "test:local": "cypress open",
     "test:headless": "start-server-and-test start http://localhost:8080 cypress run",
-    "lint": "eslint 'src/**/*.{js,vue}'"
+    "lint": "eslint 'src/**/*.{js,vue}' test"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.4",
