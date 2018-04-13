@@ -134,7 +134,18 @@ export default {
           this.error = err.message
         } finally {
           this.isLoading = false
+          this.switchTabsIfEmpty()
         }
+      }
+    },
+    switchTabsIfEmpty () {
+      if (this.activeTab === 'activities' &&
+          this.activities.length === 0 &&
+          this.locations.length > 0) {
+        this.$router.replace({
+          path: '/search/locations',
+          query: this.query
+        })
       }
     }
   },

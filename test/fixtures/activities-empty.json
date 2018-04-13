@@ -1,0 +1,46 @@
+{
+  "rows": [],
+  "time": 0.005,
+  "fields": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "age_low": {
+      "type": "number"
+    },
+    "age_high": {
+      "type": "number"
+    },
+    "fee": {
+      "type": "string"
+    },
+    "fee_frequency": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "location_address": {
+      "type": "jsonb"
+    },
+    "schedules": {
+      "type": "jsonb"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "location_geometry": {
+      "type": "JSON"
+    }
+  },
+  "total_rows": 0
+}
