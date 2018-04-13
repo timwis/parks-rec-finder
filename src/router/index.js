@@ -15,50 +15,60 @@ const routes = [
     path: '/activities',
     alias: '/',
     component: Categories,
-    props: { activeTab: 'activities' }
+    props: { activeTab: 'activities' },
+    name: 'activityCategories'
   },
   {
     path: '/locations',
     component: Categories,
-    props: { activeTab: 'locations' }
+    props: { activeTab: 'locations' },
+    name: 'locationCategories'
   },
   {
     path: '/activities/:categorySlug',
-    component: Activities
+    component: Activities,
+    name: 'activities'
   },
   {
     path: '/locations/:categorySlug',
-    component: Locations
+    component: Locations,
+    name: 'locations'
   },
   {
     path: '/activity/:activitySlug/:id',
-    component: ActivityDetails
+    component: ActivityDetails,
+    name: 'activityDetails'
   },
   {
     // Backwards compatibility with w/v1.0
     path: '/program/:id',
-    component: ActivityDetails
+    component: ActivityDetails,
+    name: 'activityDetailsV2'
   },
   {
     path: '/location/:locationSlug/:id',
-    component: LocationDetails
+    component: LocationDetails,
+    name: 'locationDetails'
   },
   {
     // Backwards compatibility with w/v1.0
     path: '/location/:id',
-    component: LocationDetails
+    component: LocationDetails,
+    name: 'locationDetailsV1'
   },
   {
     path: '/search/activities',
     alias: '/search',
     component: SearchResults,
-    props: { activeTab: 'activities' }
+    props: { activeTab: 'activities' },
+    name: 'searchResultsActivities'
   },
   {
     path: '/search/locations',
     alias: '/search',
     component: SearchResults,
-    props: { activeTab: 'locations' }
+    props: { activeTab: 'locations' },
+    name: 'searchResultsLocations'
   }
 ]
 
