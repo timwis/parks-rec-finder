@@ -35,6 +35,7 @@
 
         <div v-if="activeTab === 'activities'">
           <ActivityFilterControls
+            v-if="activities.length > 0"
             :current-filters="currentFilters"
             @change="setFilters"/>
 
