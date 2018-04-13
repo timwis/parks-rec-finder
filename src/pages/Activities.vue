@@ -26,6 +26,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityList from '~/components/ActivityList'
@@ -79,6 +80,7 @@ export default {
         await this.getActivitiesByCategorySlug(this.categorySlug)
       } catch (err) {
         this.error = err.message
+        Raven.captureException(err)
       } finally {
         this.isLoading = false
       }
