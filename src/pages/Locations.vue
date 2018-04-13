@@ -22,6 +22,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import LocationList from '~/components/LocationList'
 
@@ -68,6 +69,7 @@ export default {
         await this.getLocationsByCategorySlug(this.categorySlug)
       } catch (err) {
         this.error = err.message
+        Raven.captureException(err)
       } finally {
         this.isLoading = false
       }

@@ -62,6 +62,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import Raven from 'raven-js'
 import pick from 'lodash/pick'
 import SiteMap from '~/components/SiteMap'
 import ActivityFilterControls from '~/components/ActivityFilterControls'
@@ -133,6 +134,7 @@ export default {
           await this.searchActivitiesAndLocations(filters)
         } catch (err) {
           this.error = err.message
+          Raven.captureException(err)
         } finally {
           this.isLoading = false
           this.switchTabsIfEmpty()
