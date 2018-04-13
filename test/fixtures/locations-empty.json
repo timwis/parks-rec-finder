@@ -1,0 +1,25 @@
+{
+  "rows": [],
+  "time": 0.007,
+  "fields": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "jsonb"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "geometry": {
+      "type": "JSON"
+    }
+  },
+  "total_rows": 0
+}

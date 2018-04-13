@@ -2,20 +2,20 @@ const uniqBy = require('lodash/uniqBy')
 
 const fixtures = {
   activities: require('../fixtures/activities'),
+  activitiesEmpty: require('../fixtures/activities-empty'),
+  locationsEmpty: require('../fixtures/locations-empty'),
   locations: require('../fixtures/locations'),
   zipcodeGeometry: require('../fixtures/zipcodeGeometry'),
   addressGeometry: require('../fixtures/addressGeometry')
 }
 
 describe('Search Results page', () => {
-  describe('Search form', () => {
-    beforeEach(() => {
+  describe('General', () => {
+    it('search form term updates route', () => {
       cy.server()
       cy.route('*', {})
       cy.visit('/')
-    })
 
-    it('search form term updates route', () => {
       cy.get('[data-testid=searchTerm]')
         .type('foo')
 
@@ -26,6 +26,28 @@ describe('Search Results page', () => {
       cy.url()
         .should('contain', 'term=foo')
         .should('contain', 'location=19111')
+    })
+
+    it('should switch to locations tab if activities empty but locations not', () => {
+      cy.server()
+      cy.route(/FROM\+ppr_programs/, fixtures.activitiesEmpty)
+      cy.route(/FROM\+ppr_facilities/, fixtures.locations)
+      cy.visit('#/search/activities?term=poplar')
+
+      cy.url()
+        .should('contain', 'locations')
+        .should('contain', 'term=poplar')
+    })
+
+    it('should stay on activities tab if both activites and locations empty', () => {
+      cy.server()
+      cy.route(/FROM\+ppr_programs/, fixtures.activitiesEmpty)
+      cy.route(/FROM\+ppr_facilities/, fixtures.locationsEmpty)
+      cy.visit('#/search/activities?term=asdfasdf')
+
+      cy.url()
+        .should('contain', 'activities')
+        .should('contain', 'term=asdfasdf')
     })
   })
 
