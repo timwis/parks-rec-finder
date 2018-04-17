@@ -61,7 +61,6 @@ main
     @include xy-cell(8, false)
     @include xy-cell-block(true)
     position: relative
-    
   .map
     @include xy-cell(16, false, 0)
 </style>
