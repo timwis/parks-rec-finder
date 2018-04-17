@@ -8,15 +8,18 @@
       class="cell"
       @search="onSearch"/>
     <router-view class="cell auto"/>
+    <SiteFooter />
   </div>
 </template>
 
 <script>
 import SiteHeader from './components/SiteHeader'
+import SiteFooter from './components/SiteFooter'
 
 export default {
   components: {
-    SiteHeader
+    SiteHeader,
+    SiteFooter
   },
   computed: {
     searchTerm () {
