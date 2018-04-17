@@ -1,9 +1,9 @@
 <template>
   <header class="site-header app grid-x grid-padding-x align-middle">
 
-    <div class="logo-container cell shrink">
+    <div class="logo-container cell shrink hide-for-small-only">
       <a
-        class="logo hide-for-small-only"
+        class="logo"
         href="https://beta.phila.gov/departments/parks-recreation/">
         <img
           src="../assets/parks-rec-logo.png"
@@ -11,7 +11,7 @@
       </a>
     </div>
 
-    <div class="app-divide cell shrink"/>
+    <div class="app-divide cell shrink hide-for-small-only"/>
 
     <div class="page-title-container cell shrink">
       <router-link to="/">
