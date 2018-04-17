@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="no-bullet">
     <LocationListItem
       v-for="location in locations"
       :key="location.id"

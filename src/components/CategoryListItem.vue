@@ -5,13 +5,9 @@
       class="category--link">
       <h3
         class="category--name">{{ name }}</h3>
-      <div
-        class="category--count">
-        <div class="icon">
-          <font-awesome-icon
-            :icon="icon" /></div>
-        {{ count }}
-      </div>
+        <ItemCount
+          :count="count"
+        ></ItemCount>
       <div
         class="category--description">
         {{ description }}
@@ -24,12 +20,11 @@
 </template>
 
 <script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
+import ItemCount from '~/components/ItemCount'
 
 export default {
   components: {
-    FontAwesomeIcon
+    ItemCount
   },
   props: {
     name: {
@@ -58,9 +53,6 @@ export default {
     }
   },
   computed: {
-    icon () {
-      return faMapMarkerAlt
-    },
     url () {
       return `/${this.urlPrefix}/${this.slug}`
     }
@@ -80,17 +72,6 @@ export default {
     z-index: 9
     color: white
     font-weight: bold
-  .category--count
-    position: absolute
-    top: 1rem
-    right: 1rem
-    padding: .5rem 1rem
-    z-index: 9
-    background: white
-    color: #444
-    .icon
-      display: inline-block
-      padding: 0 1rem 0 0
 
   .category--photo
     display: block
