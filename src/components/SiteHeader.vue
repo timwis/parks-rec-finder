@@ -1,9 +1,9 @@
 <template>
-  <header class="site-header app grid-x align-middle">
+  <header class="site-header app grid-x grid-padding-x align-middle">
 
-    <div class="logo-container cell shrink mlm">
+    <div class="logo-container cell shrink">
       <a
-        class="logo"
+        class="logo hide-for-small-only"
         href="https://beta.phila.gov/departments/parks-recreation/">
         <img
           src="../assets/parks-rec-logo.png"
@@ -13,7 +13,7 @@
 
     <div class="app-divide cell shrink"/>
 
-    <div class="page-title-container cell auto">
+    <div class="page-title-container cell shrink">
       <router-link to="/">
         <h1 class="page-title">
           Finder
@@ -24,12 +24,12 @@
       </router-link>
     </div>
 
-    <div class="search-container cell large-14">
+    <div class="search-container cell large-auto small-24">
 
       <form
         role="search"
         @submit.prevent="onSubmit">
-        <div class="grid-x align-right mrm">
+        <div class="grid-x align-right">
           <input
             ref="searchTerm"
             :value="searchTerm"
@@ -86,4 +86,15 @@ input[type="search"]
   margin-bottom: 0
 .bdr-right
   border-right: 1px solid #444
+#application
+  .site-header
+    .logo
+        img
+          max-width: 200px
+    .app-divide
+      min-height: 5rem
+      margin: 0
+    .page-title-container h1
+      font-size: 2rem
+
 </style>
