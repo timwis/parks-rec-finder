@@ -40,33 +40,39 @@
           </TabSwitcher>
         </div>
       </div>
-      <ul
-        v-if="activeTab === 'activities'"
-        data-testid="activityCategories"
-        class="no-bullet">
-        <CategoryListItem
-          v-for="category in activityCategories"
-          :key="category.id"
-          :name="category.name"
-          :count="category.count"
-          :photo="category.photo"
-          :slug="category.slug"
-          :description="category.description"
-          url-prefix="activities"/>
-      </ul>
 
-      <ul
-        v-if="activeTab === 'locations'"
-        data-testid="locationCategories">
-        <CategoryListItem
-          v-for="category in locationCategories"
-          :key="category.id"
-          :name="category.name"
-          :count="category.count"
-          :photo="category.photo"
-          :slug="category.slug"
-          url-prefix="locations"/>
-      </ul>
+      <div class="results">
+        <div class="results-buffer"></div>
+        <ul
+          v-if="activeTab === 'activities'"
+          data-testid="activityCategories"
+          class="no-bullet">
+          <CategoryListItem
+            v-for="category in activityCategories"
+            :key="category.id"
+            :name="category.name"
+            :count="category.count"
+            :photo="category.photo"
+            :slug="category.slug"
+            :description="category.description"
+            url-prefix="activities"/>
+        </ul>
+
+        <ul
+          v-if="activeTab === 'locations'"
+          data-testid="locationCategories"
+          class="no-bullet">
+          <CategoryListItem
+            v-for="category in locationCategories"
+            :key="category.id"
+            :name="category.name"
+            :count="category.count"
+            :photo="category.photo"
+            :slug="category.slug"
+            :description="category.description"
+            url-prefix="locations"/>
+        </ul>
+      </div>
     </aside>
 
     <section class="map">
@@ -148,12 +154,20 @@ function categoryCountReducer (accumulator, category) {
 .panel-head
   position: fixed
   background: white
-  width: 100%
+  width: inherit
   padding: 1rem
+  height: 13rem
+  z-index: 10
   h2
     font-weight: bold
     line-height: 1rem
   p
     margin-bottom: 4rem
-
+.results
+  overflow-y: auto
+  position: absolute
+  top: 13rem
+  bottom: 0
+  left: 0
+  right: 0
 </style>

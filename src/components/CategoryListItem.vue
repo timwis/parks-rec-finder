@@ -1,15 +1,36 @@
 <template>
-  <li>
-    <router-link :to="url">
-      {{ name }} ({{ count }})
-      {{ description }}
-      <img :src="photo">
+  <li class="category mam">
+    <router-link
+      :to="url"
+      class="category--link">
+      <h3
+        class="category--name">{{ name }}</h3>
+      <div
+        class="category--count">
+        <div class="icon">
+          <font-awesome-icon
+          :icon="icon" /></div>
+          {{ count }}
+      </div>
+      <div
+        class="category--description">
+        {{ description }}
+      </div>
+      <img
+        :src="photo"
+        class="category--photo">
     </router-link>
   </li>
 </template>
 
 <script>
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
+
 export default {
+  components: {
+    FontAwesomeIcon
+  },
   props: {
     name: {
       type: String,
@@ -37,9 +58,48 @@ export default {
     }
   },
   computed: {
+    icon () {
+      return faMapMarkerAlt
+    },
     url () {
       return `/${this.urlPrefix}/${this.slug}`
     }
   }
 }
 </script>
+<style lang="sass">
+.category
+  position: relative
+  margin-bottom: 1rem
+  background: black
+  max-height: 275px
+  .category--name
+    position: absolute
+    top: 1rem
+    left: 1rem
+    z-index: 9
+    color: white
+    font-weight: bold
+  .category--count
+    position: absolute
+    top: 1rem
+    right: 1rem
+    padding: .5rem 1rem
+    z-index: 9
+    background: white
+    color: #444
+    .icon
+      display: inline-block
+      padding: 0 1rem 0 0
+
+  .category--photo
+    display: block
+    opacity: .5
+    object-fit: cover
+
+
+
+  .category--description
+    display: none
+
+</style>

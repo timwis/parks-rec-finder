@@ -10,7 +10,7 @@
       <div v-else>
         <h2 data-testid="categoryName">{{ categoryName }}</h2>
         <p data-testid="count">({{ count }})</p>
-
+        {{ description }}
         <LocationList :locations="locations"/>
       </div>
     </aside>
