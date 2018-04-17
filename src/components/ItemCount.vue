@@ -1,10 +1,11 @@
 <template>
   <div
     class="item-count">
-    <div class="icon">
+    <div
+      class="icon">
       <font-awesome-icon
         :icon="icon" /></div>
-    {{ count }}
+    <span data-testid="count">{{ count }}</span>
   </div>
 </template>
 
