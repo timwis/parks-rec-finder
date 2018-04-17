@@ -1,63 +1,74 @@
 <template>
   <main>
     <aside class="list">
-      <section v-if="activeTab === 'activities'">
-        <h2>Things to do</h2>
-        <p>Choose a category from the list below to find an activity.</p>
-      </section>
-
-      <section v-else-if="activeTab === 'locations'">
-        <h2>Places to go</h2>
-        <p>Choose a category from the list below to explore our locations.</p>
-      </section>
-
-      <div v-if="isLoading">
-        Loading...
-      </div>
-      <div v-else-if="error">
-        Error: {{ error }}
-      </div>
-      <div v-else>
-        <TabSwitcher :active-tab="activeTab">
-          <router-link
-            slot="activities"
-            to="/activities">
-            Activities ({{ activitiesCount }})
-          </router-link>
-          <router-link
-            slot="locations"
-            to="/locations">
-            Locations ({{ locationsCount }})
-          </router-link>
-        </TabSwitcher>
-
-        <ul
+      <div class="panel-head">
+        <div
           v-if="activeTab === 'activities'"
-          data-testid="activityCategories">
-          <CategoryListItem
-            v-for="category in activityCategories"
-            :key="category.id"
-            :name="category.name"
-            :count="category.count"
-            :photo="category.photo"
-            :slug="category.slug"
-            url-prefix="activities"/>
-        </ul>
+          class="activities">
+          <section>
+            <h2>Things to do</h2>
+            <p>Choose a category from the list below to find an activity.</p>
+          </section>
+        </div>
+        <div
+          v-else-if="activeTab === 'locations'"
+          class="locations">
+          <section>
+            <h2>Places to go</h2>
+            <p>Choose a category from the list below to explore our locations.</p>
+          </section>
+        </div>
 
-        <ul
-          v-if="activeTab === 'locations'"
-          data-testid="locationCategories">
-          <CategoryListItem
-            v-for="category in locationCategories"
-            :key="category.id"
-            :name="category.name"
-            :count="category.count"
-            :photo="category.photo"
-            :slug="category.slug"
-            url-prefix="locations"/>
-        </ul>
+        <div v-if="isLoading">
+          Loading...
+        </div>
+        <div v-else-if="error">
+          Error: {{ error }}
+        </div>
+        <div v-else>
+          <TabSwitcher :active-tab="activeTab">
+            <router-link
+              slot="activities"
+              to="/activities">
+              Activities ({{ activitiesCount }})
+            </router-link>
+            <router-link
+              slot="locations"
+              to="/locations">
+              Locations ({{ locationsCount }})
+            </router-link>
+          </TabSwitcher>
+        </div>
       </div>
+      <ul
+        v-if="activeTab === 'activities'"
+        data-testid="activityCategories"
+        class="no-bullet">
+        <CategoryListItem
+          v-for="category in activityCategories"
+          :key="category.id"
+          :name="category.name"
+          :count="category.count"
+          :photo="category.photo"
+          :slug="category.slug"
+          :description="category.description"
+          url-prefix="activities"/>
+      </ul>
+
+      <ul
+        v-if="activeTab === 'locations'"
+        data-testid="locationCategories">
+        <CategoryListItem
+          v-for="category in locationCategories"
+          :key="category.id"
+          :name="category.name"
+          :count="category.count"
+          :photo="category.photo"
+          :slug="category.slug"
+          url-prefix="locations"/>
+      </ul>
     </aside>
+
     <section class="map">
       <SiteMap/>
     </section>
@@ -131,3 +142,18 @@ function categoryCountReducer (accumulator, category) {
   return accumulator + category.count
 }
 </script>
+
+<style lang="sass">
+
+.panel-head
+  position: fixed
+  background: white
+  width: 100%
+  padding: 1rem
+  h2
+    font-weight: bold
+    line-height: 1rem
+  p
+    margin-bottom: 4rem
+
+</style>
