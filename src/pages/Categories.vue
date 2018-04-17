@@ -1,7 +1,7 @@
 <template>
   <main>
     <aside class="list">
-      <div class="panel-head">
+      <div class="panel-head entry">
         <div
           v-if="activeTab === 'activities'"
           class="activities">
@@ -41,7 +41,7 @@
         </div>
       </div>
 
-      <div class="results">
+      <div class="results entry">
         <ul
           v-if="activeTab === 'activities'"
           data-testid="activityCategories"
@@ -151,22 +151,23 @@ function categoryCountReducer (accumulator, category) {
 <style lang="sass">
 
 .panel-head
+  width: calc(33.33333% - 1.42857rem)
   position: fixed
   background: white
-  width: inherit
   padding: 1rem
-  height: 13rem
   z-index: 10
+  &.entry
+    height: 13rem
+
   h2
     font-weight: bold
     line-height: 1rem
-  p
-    margin-bottom: 4rem
 .results
   overflow-y: auto
   position: absolute
-  top: 13rem
   bottom: 0
   left: 0
   right: 0
+  &.entry
+    top: 13rem
 </style>

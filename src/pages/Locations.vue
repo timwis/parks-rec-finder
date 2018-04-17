@@ -8,10 +8,15 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <h2 data-testid="categoryName">{{ categoryName }}</h2>
-        <p data-testid="count">({{ count }})</p>
-        {{ description }}
-        <LocationList :locations="locations"/>
+        <div
+          class="panel-head locations">
+          <h2 data-testid="categoryName">{{ categoryName }}</h2>
+          <ItemCount
+            :count="count"></ItemCount>
+        </div>
+        <div class="results">
+          <LocationList :locations="locations"/>
+        </div>
       </div>
     </aside>
     <section class="map">
@@ -25,11 +30,13 @@ import { mapState, mapActions } from 'vuex'
 import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import LocationList from '~/components/LocationList'
+import ItemCount from '~/components/ItemCount'
 
 export default {
   components: {
     SiteMap,
-    LocationList
+    LocationList,
+    ItemCount
   },
   data () {
     return {
@@ -82,3 +89,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  .panel-head.locations
+    background: #a5097e
+    color: white
+</style>

@@ -8,12 +8,14 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <h2 data-testid="categoryName">{{ categoryName }}</h2>
-        <p data-testid="count">({{ count }})</p>
-
-        <ActivityFilterControls
-          :current-filters="currentFilters"
-          @change="setFilters"/>
+        <div class="panel-head activities">
+          <h2 data-testid="categoryName">{{ categoryName }}</h2>
+          <ItemCount
+            :count="count"></ItemCount>
+          <ActivityFilterControls
+            :current-filters="currentFilters"
+            @change="setFilters"/>
+          </div>
 
         <ActivityList :activities="filteredActivities"/>
       </div>
@@ -30,12 +32,14 @@ import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityList from '~/components/ActivityList'
+import ItemCount from '~/components/ItemCount'
 
 export default {
   components: {
     SiteMap,
     ActivityFilterControls,
-    ActivityList
+    ActivityList,
+    ItemCount
   },
   data () {
     return {
@@ -93,3 +97,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  .panel-head.activities
+    background: #2176d2
+    color: white
+</style>
