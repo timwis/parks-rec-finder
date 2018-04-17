@@ -9,8 +9,8 @@
         class="category--count">
         <div class="icon">
           <font-awesome-icon
-          :icon="icon" /></div>
-          {{ count }}
+            :icon="icon" /></div>
+        {{ count }}
       </div>
       <div
         class="category--description">
@@ -96,8 +96,6 @@ export default {
     display: block
     opacity: .5
     object-fit: cover
-
-
 
   .category--description
     display: none

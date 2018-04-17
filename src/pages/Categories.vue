@@ -42,7 +42,6 @@
       </div>
 
       <div class="results">
-        <div class="results-buffer"></div>
         <ul
           v-if="activeTab === 'activities'"
           data-testid="activityCategories"
