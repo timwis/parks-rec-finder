@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="filter-controls">
     <button
       data-testid="filterButton"
-      @click="isOpen = !isOpen">
+      @click="isOpen = !isOpen"
+      class="filter-button">
       <i class="fa fa-filter"/>
       Filters
     </button>
@@ -248,3 +249,9 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.filter-controls
+  background: #f0f0f0
+.filter-button
+  width: 100%
+</style>
