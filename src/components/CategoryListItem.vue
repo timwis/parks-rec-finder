@@ -2,6 +2,7 @@
   <li>
     <router-link :to="url">
       {{ name }} ({{ count }})
+      {{ description }}
       <img :src="photo">
     </router-link>
   </li>
@@ -16,6 +17,10 @@ export default {
     },
     count: {
       type: Number,
+      required: true
+    },
+    description: {
+      type: String,
       required: true
     },
     photo: {
