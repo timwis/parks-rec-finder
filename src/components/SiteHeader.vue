@@ -1,7 +1,7 @@
 <template>
   <header class="site-header app grid-x align-middle">
 
-    <div class="logo-container cell shrink">
+    <div class="logo-container cell shrink mlm">
       <a
         class="logo"
         href="https://beta.phila.gov/departments/parks-recreation/">
@@ -24,16 +24,16 @@
       </router-link>
     </div>
 
-    <div class="search-container cell medium-8">
+    <div class="search-container cell medium-14">
 
       <form
         role="search"
         @submit.prevent="onSubmit">
-        <div class="grid-x">
+        <div class="grid-x align-right mrm">
           <input
             ref="searchTerm"
             :value="searchTerm"
-            class="cell medium-10"
+            class="bdr-right cell medium-11"
             type="search"
             placeholder="Search by activity or location name"
             data-testid="searchTerm">
@@ -46,8 +46,8 @@
             data-testid="searchLocation">
           <button
             type="submit"
-            class="cell button shrink">
-            <i class="fa fa-search valign-cell"/>
+            class="cell button medium-1">
+            <i class="fa fa-search"/>
           </button>
         </div>
       </form>
@@ -84,4 +84,6 @@ export default {
 <style lang="sass" scoped>
 input[type="search"]
   margin-bottom: 0
+.bdr-right
+  border-right: 1px solid #444
 </style>
