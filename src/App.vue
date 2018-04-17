@@ -58,7 +58,7 @@ main
   @include xy-grid(horizontal)
 
   .list
-    @include xy-cell(8)
+    @include xy-cell(8, false)
     @include xy-cell-block(true)
 
   .map
