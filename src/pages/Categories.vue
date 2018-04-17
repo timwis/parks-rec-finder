@@ -154,9 +154,9 @@ function categoryCountReducer (accumulator, category) {
   width: calc(33.33333% - 1.42857rem)
   position: fixed
   background: white
-  padding: 1rem
   z-index: 10
   &.entry
+    padding: 1rem
     height: 13rem
 
   h2
