@@ -20,7 +20,7 @@ export default {
     count: {
       type: Number,
       required: true
-    },
+    }
   },
   computed: {
     icon () {

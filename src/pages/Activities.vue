@@ -11,11 +11,11 @@
         <div class="panel-head activities">
           <h2 data-testid="categoryName">{{ categoryName }}</h2>
           <ItemCount
-            :count="count"></ItemCount>
+            :count="count" />
           <ActivityFilterControls
             :current-filters="currentFilters"
             @change="setFilters"/>
-          </div>
+        </div>
 
         <ActivityList :activities="filteredActivities"/>
       </div>
