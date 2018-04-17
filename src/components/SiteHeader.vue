@@ -24,7 +24,7 @@
       </router-link>
     </div>
 
-    <div class="search-container cell medium-14">
+    <div class="search-container cell large-14">
 
       <form
         role="search"
@@ -33,20 +33,20 @@
           <input
             ref="searchTerm"
             :value="searchTerm"
-            class="bdr-right cell medium-11"
+            class="bdr-right cell large-11"
             type="search"
             placeholder="Search by activity or location name"
             data-testid="searchTerm">
           <input
             ref="searchLocation"
             :value="searchLocation"
-            class="cell medium-10"
+            class="cell large-10"
             type="search"
             placeholder="Address or zip code"
             data-testid="searchLocation">
           <button
             type="submit"
-            class="cell button medium-1">
+            class="cell button large-1">
             <i class="fa fa-search"/>
           </button>
         </div>
