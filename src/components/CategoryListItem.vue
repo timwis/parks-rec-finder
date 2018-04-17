@@ -5,9 +5,8 @@
       class="category--link">
       <h3
         class="category--name">{{ name }}</h3>
-        <ItemCount
-          :count="count"
-        ></ItemCount>
+      <ItemCount
+        :count="count" />
       <div
         class="category--description">
         {{ description }}

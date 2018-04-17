@@ -12,7 +12,7 @@
           class="panel-head locations">
           <h2 data-testid="categoryName">{{ categoryName }}</h2>
           <ItemCount
-            :count="count"></ItemCount>
+            :count="count" />
         </div>
         <div class="results">
           <LocationList :locations="locations"/>
