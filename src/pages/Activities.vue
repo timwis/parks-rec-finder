@@ -100,6 +100,6 @@ export default {
 
 <style lang="sass" scoped>
   .panel-head.activities
-    background: #2176d2
+    background: $activities
     color: white
 </style>

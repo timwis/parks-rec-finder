@@ -14,9 +14,7 @@
           <ItemCount
             :count="count" />
         </div>
-        <div class="results">
-          <LocationList :locations="locations"/>
-        </div>
+        <LocationList :locations="locations"/>
       </div>
     </aside>
     <section class="map">
@@ -92,6 +90,7 @@ export default {
 
 <style lang="sass" scoped>
   .panel-head.locations
-    background: #a5097e
+    background: $locations
     color: white
+    padding: 1rem
 </style>
