@@ -33,5 +33,5 @@ export default {
 ul
   padding: 1rem
 .results
-  top: 1rem
+  top: 5rem
 </style>
