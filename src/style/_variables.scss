@@ -1,2 +1,8 @@
 $locations: #a5097e
 $activities: #2176d2
+
+=fixed-header($background)
+  width: calc(33.33333% - 1.42857rem)
+  position: fixed
+  background: $background
+  z-index: 10
