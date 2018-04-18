@@ -151,14 +151,11 @@ function categoryCountReducer (accumulator, category) {
 <style lang="sass">
 
 .panel-head
-  width: calc(33.33333% - 1.42857rem)
-  position: fixed
-  background: white
-  z-index: 10
+  +fixed-header(white)
+
   &.entry
     padding: 1rem
     height: 13rem
-
   h2
     font-weight: bold
     line-height: 1rem
