@@ -2,8 +2,8 @@
   <div class="filter-controls">
     <button
       data-testid="filterButton"
-      @click="isOpen = !isOpen"
-      class="filter-button">
+      class="filter-button"
+      @click="isOpen = !isOpen">
       <i class="fa fa-filter"/>
       Filters
     </button>

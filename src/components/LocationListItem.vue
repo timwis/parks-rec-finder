@@ -1,5 +1,10 @@
 <template>
   <li>
+    <span class="icon">
+      <font-awesome-icon
+        :icon="icon"
+        size="4x"/>
+    </span>
     <h3>
       <router-link :to="url">
         {{ name }}
@@ -11,8 +16,13 @@
 
 <script>
 import { concatAddress } from '~/util'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
 
 export default {
+  components: {
+    FontAwesomeIcon
+  },
   props: {
     id: {
       type: String,
@@ -32,6 +42,9 @@ export default {
     }
   },
   computed: {
+    icon () {
+      return faMapMarkerAlt
+    },
     fullAddress () {
       return concatAddress(this.address)
     },
@@ -41,3 +54,7 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.icon
+  color: $locations
+</style>
