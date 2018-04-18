@@ -7,9 +7,15 @@
         </router-link>
       </h3>
       <div class="grid-x">
-        <div class="cell auto" v-if="ageRange">Ages:<br /> {{ ageRange }}</div>
-        <div class="cell auto" v-if="gender">Gender:<br /> {{ gender }}</div>
-        <div class="cell auto" v-if="feeDescription">Cost:<br /> {{ feeDescription }}</div>
+        <div
+          v-if="ageRange"
+          class="cell auto">Ages:<br> {{ ageRange }}</div>
+        <div
+          v-if="gender"
+          class="cell auto" >Gender:<br> {{ gender }}</div>
+        <div
+          v-if="feeDescription"
+          class="cell auto">Cost:<br> {{ feeDescription }}</div>
       </div>
     </div>
     <div class="cell auto">
