@@ -63,7 +63,7 @@ export default {
   position: relative
   margin-bottom: 1rem
   background: black
-  max-height: 275px
+  max-height: 280px
   .category--name
     position: absolute
     top: 1rem
