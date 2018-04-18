@@ -90,7 +90,7 @@ export default {
 
 <style lang="sass" scoped>
   .panel-head.locations
-    background: $locations
+    +fixed-header($locations)
     color: white
     padding: 1rem
 </style>

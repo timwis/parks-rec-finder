@@ -10,66 +10,76 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <h2 data-testid="name">{{ name }}</h2>
+        <div class="panel-head location-detail">
+          <font-awesome-icon
+            :icon="icon"
+            size="4x"/>
+          <h2 data-testid="name">{{ name }}</h2>
+        </div>
+        <div class="results">
+          <DetailSection
+            v-if="fullAddress"
+            title="Location"
+            icon="map-marker">
+            <div class="detail">
+              <address>{{ fullAddress }}</address>
+            </div>
+            <div class="detail">
+              <a
+                :href="directionsUrl"
+                class="external">
+                Get directions
+              </a>
+            </div>
+          </DetailSection>
 
-        <DetailSection
-          v-if="fullAddress"
-          title="Location"
-          icon="map-marker">
-          <address>{{ fullAddress }}</address>
-          <p>
-            <a
-              :href="directionsUrl"
-              class="external">
-              Get directions
-            </a>
-          </p>
-        </DetailSection>
+          <DetailSection
+            v-if="phone"
+            title="Contact"
+            icon="phone">
+            <a :href="phoneLink">{{ phone }}</a>
+          </DetailSection>
 
-        <DetailSection
-          v-if="phone"
-          title="Contact"
-          icon="phone">
-          <a :href="phoneLink">{{ phone }}</a>
-        </DetailSection>
+          <DetailSection
+            v-if="siteContact"
+            title="Site contact"
+            icon="person">
+            <div class="detail">
+              {{ siteContact }}
+            </div>
+          </DetailSection>
 
-        <DetailSection
-          v-if="siteContact"
-          title="Site contact"
-          icon="person">
-          {{ siteContact }}
-        </DetailSection>
+          <DetailSection
+            v-if="schedules && schedules.length > 0"
+            title="Regular hours"
+            icon="clock-o">
+            <ul
+              v-for="schedule in schedules"
+              :key="schedule.id">
+              <li>
+                {{ schedule.days | formatDaysList }}
+                from
+                <time>{{ schedule.time_from | formatTime }}</time>
+                to
+                <time>{{ schedule.time_to | formatTime }}</time>
+              </li>
+            </ul>
+          </DetailSection>
 
-        <DetailSection
-          v-if="schedules && schedules.length > 0"
-          title="Regular hours"
-          icon="clock-o">
-          <ul
-            v-for="schedule in schedules"
-            :key="schedule.id">
-            <li>
-              {{ schedule.days | formatDaysList }}
-              from
-              <time>{{ schedule.time_from | formatTime }}</time>
-              to
-              <time>{{ schedule.time_to | formatTime }}</time>
-            </li>
-          </ul>
-        </DetailSection>
+          <DetailSection
+            v-if="description"
+            title="About this location"
+            icon="file-o">
+            <div class="detail">{{ description }}</div>
+          </DetailSection>
 
-        <DetailSection
-          v-if="description"
-          title="About this location"
-          icon="file-o">
-          <p>{{ description }}</p>
-        </DetailSection>
-
-        <DetailSection
-          v-if="activities && activities.length > 0"
-          :title="activities.length + ' activities offered here'"
-          data-testid="activitiesCount">
-          <ActivityList :activities="activities"/>
-        </DetailSection>
+          <DetailSection
+            v-if="activities && activities.length > 0"
+            :title="activities.length + ' activities offered here'"
+            data-testid="activitiesCount">
+            <ActivityList :activities="activities"/>
+          </DetailSection>
+        </div>
       </div>
     </aside>
     <section class="map">
@@ -84,6 +94,8 @@ import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import DetailSection from '~/components/DetailSection'
 import ActivityList from '~/components/ActivityList'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
 import {
   concatAddress,
   formatPhone,
@@ -96,7 +108,8 @@ export default {
   components: {
     SiteMap,
     DetailSection,
-    ActivityList
+    ActivityList,
+    FontAwesomeIcon
   },
   filters: {
     formatTime,
@@ -123,6 +136,9 @@ export default {
     }),
     directionsUrl () {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
+    },
+    icon () {
+      return faMapMarkerAlt
     }
   },
   watch: {
@@ -159,3 +175,15 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.location-detail
+  +fixed-header($locations)
+  color: white
+  text-align: center
+  padding: 1rem
+.detail
+  margin-left: 2rem
+.results
+  padding: 1rem
+
+</style>
