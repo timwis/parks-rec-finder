@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="activity-detail-container">
     <aside class="list">
       <div v-if="isLoading">
         Loading...
@@ -18,82 +18,83 @@
             <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
           </ul>
         </div>
-
-        <DetailSection
-          v-if="locationFullAddress"
-          title="Location"
-          icon="map-marker">
-          <address>
+        <div class="results">
+          <DetailSection
+            v-if="locationFullAddress"
+            title="Location"
+            icon="map-marker">
+            <address>
+              <router-link :to="locationUrl">
+                {{ locationName }}
+              </router-link>
+              <br>
+              {{ locationFullAddress }}
+            </address>
             <router-link :to="locationUrl">
-              {{ locationName }}
+              View this location
             </router-link>
-            <br>
-            {{ locationFullAddress }}
-          </address>
-          <router-link :to="locationUrl">
-            View this location
-          </router-link>
-        </DetailSection>
+          </DetailSection>
 
-        <DetailSection
-          v-if="locationPhone"
-          title="Contact"
-          icon="phone">
-          <a :href="locationPhoneLink">{{ locationPhone }}</a>
-        </DetailSection>
+          <DetailSection
+            v-if="locationPhone"
+            title="Contact"
+            icon="phone">
+            <a :href="locationPhoneLink">{{ locationPhone }}</a>
+          </DetailSection>
 
-        <DetailSection
-          v-if="description"
-          title="About this activity"
-          icon="file-o">
-          <p>{{ description }}</p>
-        </DetailSection>
+          <DetailSection
+            v-if="description"
+            title="About this activity"
+            icon="file-o">
+            <p>{{ description }}</p>
+          </DetailSection>
 
-        <DetailSection
-          v-if="schedules && schedules.length > 0"
-          title="Schedules"
-          icon="calendar">
-          <ul
-            v-for="schedule in schedules"
-            :key="schedule.id">
-            <li>
-              Between
-              <time :datetime="schedule.date_from">
-                {{ schedule.date_from | formatDate }}
-              </time>
-              and
-              <time :datetime="schedule.date_to">
-                {{ schedule.date_to | formatDate }}
-              </time>
-              on
-              {{ schedule.days | formatDaysList }}
-              from
-              <time>{{ schedule.time_from | formatTime }}</time>
-              to
-              <time>{{ schedule.time_to | formatTime }}</time>
-            </li>
-          </ul>
-        </DetailSection>
+          <DetailSection
+            v-if="schedules && schedules.length > 0"
+            title="Program schedules"
+            icon="calendar">
+            <ul
+              v-for="schedule in schedules"
+              :key="schedule.id">
+              <li>
+                Between
+                <time :datetime="schedule.date_from">
+                  {{ schedule.date_from | formatDate }}
+                </time>
+                and
+                <time :datetime="schedule.date_to">
+                  {{ schedule.date_to | formatDate }}
+                </time>
+                on
+                {{ schedule.days | formatDaysList }}
+                from
+                <time>{{ schedule.time_from | formatTime }}</time>
+                to
+                <time>{{ schedule.time_to | formatTime }}</time>
+              </li>
+            </ul>
+          </DetailSection>
 
-        <DetailSection
-          v-if="registrationStatus || registrationLink || locationPhone"
-          title="Registration"
-          icon="info-circle">
-          <p v-if="registrationStatus">
-            Status: <em>{{ registrationStatus }}</em>
-          </p>
-          <p v-if="registrationLink">
-            To sign up visit
-            <a
-              :href="registrationLink"
-              class="external">
-              {{ registrationLink }}
-            </a>
-          </p>
-          <p v-else>
-            To sign up or learn more, use the contact information listed above!
-          </p>
-        </DetailSection>
+          <DetailSection
+            v-if="registrationStatus || registrationLink || locationPhone"
+            title="Registration information"
+            icon="info-circle">
+            <p v-if="registrationStatus">
+              Status: <em>{{ registrationStatus }}</em>
+            </p>
+            <p v-if="registrationLink">
+              To sign up visit
+              <a
+                :href="registrationLink"
+                class="external">
+                {{ registrationLink }}
+              </a>
+            </p>
+            <p v-else>
+              To sign up or learn more, use the contact information listed above!
+            </p>
+          </DetailSection>
+        </div>
       </div>
     </aside>
     <section class="map">
@@ -189,13 +190,18 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-.panel-head
+<style lang="sass">
+.panel-head.activity-detail
   +fixed-header($activities)
   color: white
   text-align: center
+  padding: 1rem
   h2
     font-weight: bold
+    padding: 1rem 0
   ul li
     padding-right: 1rem
+.results
+  top: 4rem
+  position: relative
 </style>

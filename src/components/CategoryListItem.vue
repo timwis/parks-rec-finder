@@ -1,5 +1,5 @@
 <template>
-  <li class="category mam">
+  <li class="category">
     <router-link
       :to="url"
       class="category--link">
