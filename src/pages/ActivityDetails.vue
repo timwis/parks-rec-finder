@@ -10,13 +10,14 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <h2 data-testid="name">{{ name }}</h2>
-
-        <ul>
-          <li v-if="ageRange">Age: {{ ageRange }}</li>
-          <li v-if="gender">Gender: {{ gender }}</li>
-          <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
-        </ul>
+        <div class="panel-head activity-detail">
+          <h2 data-testid="name">{{ name }}</h2>
+          <ul class="inline-list">
+            <li v-if="ageRange">Age: {{ ageRange }}</li>
+            <li v-if="gender">Gender: {{ gender }}</li>
+            <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
+          </ul>
+        </div>
 
         <DetailSection
           v-if="locationFullAddress"
@@ -188,3 +189,13 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.panel-head
+  +fixed-header($activities)
+  color: white
+  text-align: center
+  h2
+    font-weight: bold
+  ul li
+    padding-right: 1rem
+</style>

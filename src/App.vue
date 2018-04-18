@@ -63,4 +63,7 @@ main
     position: relative
   .map
     @include xy-cell(16, false, 0)
+
+.overflow-wrap
+  overflow-wrap: break-word
 </style>

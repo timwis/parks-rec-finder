@@ -102,5 +102,7 @@ export default {
   .panel-head.activities
     +fixed-header($activities)
     color: white
+    h2
+      padding: 1rem
 
 </style>

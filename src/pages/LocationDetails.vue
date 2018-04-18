@@ -185,5 +185,7 @@ export default {
   margin-left: 2rem
 .results
   padding: 1rem
-
+  .results
+    position: relative
+    top: 0
 </style>
