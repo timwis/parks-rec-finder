@@ -100,4 +100,5 @@ li
   padding-bottom: 1rem
   &:last-child
     border-bottom: none
+
 </style>

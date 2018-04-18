@@ -251,6 +251,9 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
+.filter-controls
+  position: relative
+  z-index: 20
 .overlay
   background: #f0f0f0
   height: calc(100vh - 16.5rem)

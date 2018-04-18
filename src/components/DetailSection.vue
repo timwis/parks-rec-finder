@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 .detail-section
   margin-bottom: 2rem
 </style>

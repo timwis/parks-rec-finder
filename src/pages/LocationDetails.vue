@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="location-detail-container">
     <aside class="list">
       <div v-if="isLoading">
         Loading...
@@ -76,7 +76,8 @@
           <DetailSection
             v-if="activities && activities.length > 0"
             :title="activities.length + ' activities offered here'"
-            data-testid="activitiesCount">
+            data-testid="activitiesCount"
+            class="activities-count">
             <ActivityList :activities="activities"/>
           </DetailSection>
         </div>
@@ -184,8 +185,11 @@ export default {
 .detail
   margin-left: 2rem
 .results
-  padding: 1rem
-  .results
-    position: relative
-    top: 0
+  top: 3rem
+  position: relative
+
+.results /deep/ .activities-count .results
+  position: relative
+  top: 0
+
 </style>

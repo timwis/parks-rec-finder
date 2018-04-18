@@ -30,8 +30,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-ul
-  padding: 1rem
 .results
-  top: 5rem
+  top: 6rem
 </style>
