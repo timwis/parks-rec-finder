@@ -1,16 +1,18 @@
 <template>
-  <li>
-    <span class="icon">
+  <li class="grid-x grid-padding-x">
+    <span class="icon cell small-4">
       <font-awesome-icon
         :icon="icon"
         size="4x"/>
     </span>
-    <h3>
-      <router-link :to="url">
-        {{ name }}
-      </router-link>
-    </h3>
-    <p>{{ fullAddress }}</p>
+    <div class="location-data cell small-18">
+      <h3>
+        <router-link :to="url">
+          {{ name }}
+        </router-link>
+      </h3>
+      {{ fullAddress }}
+    </div>
   </li>
 </template>
 
@@ -57,4 +59,10 @@ export default {
 <style lang="sass" scoped>
 .icon
   color: $locations
+.location-data
+  display: inline-block
+li
+  margin-bottom: 1rem
+  padding-bottom: 1rem
+  border-bottom: 1px solid black
 </style>

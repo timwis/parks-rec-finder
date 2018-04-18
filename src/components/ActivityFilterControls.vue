@@ -9,7 +9,8 @@
     </button>
     <div
       v-show="isOpen"
-      data-testid="filterControls">
+      data-testid="filterControls"
+      class="overlay">
       <fieldset @change="onChange">
         <legend class="h4">Cost</legend>
 
@@ -250,8 +251,13 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.filter-controls
+.overlay
   background: #f0f0f0
+  height: calc(100vh - 16.5rem)
+  color: #444
+  padding: 1rem
+.h4
+  padding: 1rem 0 .5rem 0
 .filter-button
   width: 100%
 </style>

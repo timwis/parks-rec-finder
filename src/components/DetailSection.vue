@@ -3,7 +3,8 @@
     <h4>
       <i
         v-if="icon"
-        :class="iconClass"/>
+        :class="iconClass"
+        class="fa-fw"/>
       {{ title }}
     </h4>
     <slot/>
@@ -33,5 +34,5 @@ export default {
 
 <style lang="sass" scoped>
 .detail-section
-  margin-bottom: 10px
+  margin-bottom: 2rem
 </style>
