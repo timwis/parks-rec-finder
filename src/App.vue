@@ -62,10 +62,18 @@ main
     @include xy-cell-block(true)
     position: relative
     height: 100%
+    overflow-y: hidden
 
   .map
     @include xy-cell(16, false, 0)
 
+.results-container
+  height: calc(100vh - 17rem)
+  padding: 1rem
+
 .overflow-wrap
   overflow-wrap: break-word
+
+address
+  font-style: normal
 </style>

@@ -10,11 +10,15 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <div class="panel-head location-detail align-top">
-          <font-awesome-icon
-            :icon="icon"
-            size="4x"/>
-          <h2 data-testid="name">{{ name }}</h2>
+        <div class="panel-head location-detail cell shrink medium-cell-block-container align-center grid-x">
+          <div class="cell">
+            <font-awesome-icon
+              :icon="icon"
+              size="4x"/>
+          </div>
+          <h2
+            data-testid="name"
+            class="cell">{{ name }}</h2>
         </div>
         <div class="results">
           <DetailSection
@@ -183,12 +187,6 @@ export default {
   padding: 1rem
 .detail
   margin-left: 2rem
-.results
-  top: 3rem
-  position: relative
 
-.results /deep/ .activities-count .results
-  position: relative
-  top: 0
 
 </style>
