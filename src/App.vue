@@ -70,11 +70,9 @@ main
       height: 100%
       overflow-y: hidden
 
-
   .map
     @include xy-cell(24, false)
     width: 100%
-
 
     @include breakpoint(large)
       @include xy-cell(16, false)
