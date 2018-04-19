@@ -60,20 +60,33 @@ main
   .sidebar
     @include xy-cell(8, false)
     @include xy-cell-block(true)
+    //foundation xy-cell includes with margins set to false fail to remove width calc for gutters, so we're overriding
+    width: 33.33333%
     position: relative
     height: 100%
     overflow-y: hidden
 
   .map
-    @include xy-cell(16, false, 0)
+    @include xy-cell(16, false)
+    width: 66.66667%
 
 .results-container
   height: calc(100vh - 17rem)
   padding: 1rem
+  overflow-y: scroll
+
+.results-container /deep/ .activities-count .results-container
+  overflow: hidden
 
 .overflow-wrap
   overflow-wrap: break-word
 
 address
   font-style: normal
+
+table
+  background: #f0f0f0
+  width: auto
+  td
+    padding: .5rem
 </style>

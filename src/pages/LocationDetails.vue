@@ -20,7 +20,7 @@
             data-testid="name"
             class="cell">{{ name }}</h2>
         </div>
-        <div class="results">
+        <div class="results-container">
           <DetailSection
             v-if="fullAddress"
             title="Location"
@@ -41,13 +41,15 @@
             v-if="phone"
             title="Contact"
             icon="phone">
-            <a :href="phoneLink">{{ phone }}</a>
+            <div class="detail">
+              <a :href="phoneLink">{{ phone }}</a>
+            </div>
           </DetailSection>
 
           <DetailSection
             v-if="siteContact"
             title="Site contact"
-            icon="person">
+            icon="user">
             <div class="detail">
               {{ siteContact }}
             </div>
@@ -57,17 +59,19 @@
             v-if="schedules && schedules.length > 0"
             title="Regular hours"
             icon="clock-o">
-            <ul
-              v-for="schedule in schedules"
-              :key="schedule.id">
-              <li>
-                {{ schedule.days | formatDaysList }}
-                from
-                <time>{{ schedule.time_from | formatTime }}</time>
-                to
-                <time>{{ schedule.time_to | formatTime }}</time>
-              </li>
-            </ul>
+            <table class="detail">
+              <tr
+                v-for="schedule in schedules"
+                :key="schedule.id">
+                <td>
+                  {{ schedule.days | formatDaysList }}
+                </td>
+                <td>
+                  <time>{{ schedule.time_from | formatTime }}</time> -
+                  <time>{{ schedule.time_to | formatTime }}</time>
+                </td>
+              </tr>
+            </table>
           </DetailSection>
 
           <DetailSection
@@ -186,7 +190,6 @@ export default {
   text-align: center
   padding: 1rem
 .detail
-  margin-left: 2rem
-
+  margin: 0 1rem 0 2rem
 
 </style>

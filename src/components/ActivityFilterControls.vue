@@ -1,16 +1,16 @@
 <template>
-  <div class="filter-controls">
-    <button
+  <div class="filter-controls cell">
+    <a
       data-testid="filterButton"
-      class="filter-button"
+      class="button cell"
       @click="isOpen = !isOpen">
       <i class="fa fa-filter"/>
       Filters
-    </button>
+    </a>
     <div
       v-show="isOpen"
       data-testid="filterControls"
-      class="overlay">
+      class="overlay cell">
       <fieldset @change="onChange">
         <legend class="h4">Cost</legend>
 
@@ -261,6 +261,4 @@ export default {
   padding: 1rem
 .h4
   padding: 1rem 0 .5rem 0
-.filter-button
-  width: 100%
 </style>

@@ -101,8 +101,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .panel-head.activities
-    +fixed-header($activities)
-    color: white
-    padding: 1rem
+.panel-head.activities
+  +fixed-header($activities)
+  color: white
+h2
+  padding: 1rem
 </style>
