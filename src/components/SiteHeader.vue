@@ -15,9 +15,9 @@
 
     <div class="page-title-container cell shrink">
       <a
-        @click.prevent="toggleMobileMenu"
-        class="mobile-menu-toggle hide-for-large">
-          <i class="fa fa-bars fa-2x"/>
+        class="mobile-menu-toggle hide-for-large"
+        @click.prevent="toggleMobileMenu">
+        <i class="fa fa-bars fa-2x"/>
       </a>
       <router-link to="/">
         <h1 class="page-title">
@@ -90,12 +90,6 @@
 
 <script>
 export default {
-  data: function() {
-    return  {
-      mobileMenuOpen: false,
-      howToUseOpen: false,
-    }
-  },
   props: {
     searchTerm: {
       type: String,
@@ -106,11 +100,17 @@ export default {
       default: ''
     }
   },
+  data: function () {
+    return {
+      mobileMenuOpen: false,
+      howToUseOpen: false
+    }
+  },
   methods: {
-    toggleMobileMenu (){
+    toggleMobileMenu () {
       this.mobileMenuOpen = !this.mobileMenuOpen
     },
-    toggleHowToUse (){
+    toggleHowToUse () {
       this.howToUseOpen = !this.howToUseOpen
     },
     onSubmit (event) {
