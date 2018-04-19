@@ -37,7 +37,5 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.results-container
-  //visible height minus header + footer heights
-  height: calc(100vh - 17rem)
+
 </style>

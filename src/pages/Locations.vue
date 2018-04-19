@@ -93,5 +93,6 @@ export default {
 <style lang="sass" scoped>
   .panel-head.locations
     +fixed-header($locations)
+    padding: 1rem
 
 </style>

@@ -200,7 +200,5 @@ export default {
     padding: 1rem 0
   ul li
     padding-right: 1rem
-.results
-  top: 4rem
-  position: relative
+
 </style>

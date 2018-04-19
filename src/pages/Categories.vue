@@ -160,7 +160,4 @@ function categoryCountReducer (accumulator, category) {
     font-weight: bold
     line-height: 1rem
 
-.results-container
-  height: calc(100vh - 17rem)
-
 </style>
