@@ -58,17 +58,27 @@ main
   @include xy-grid(horizontal)
 
   .sidebar
-    @include xy-cell(8, false)
-    @include xy-cell-block(true)
-    //foundation xy-cell includes with margins set to false fail to remove width calc for gutters, so we're overriding
-    width: 33.33333%
-    position: relative
-    height: 100%
-    overflow-y: hidden
+    @include xy-cell(24, false)
+    width: 100%
+
+    @include breakpoint(large)
+      @include xy-cell(8, false)
+      @include xy-cell-block(true)
+      //foundation xy-cell includes with margins set to false fail to remove width calc for gutters, so we're overriding
+      width: 33.33333%
+      position: relative
+      height: 100%
+      overflow-y: hidden
+
 
   .map
-    @include xy-cell(16, false)
-    width: 66.66667%
+    @include xy-cell(24, false)
+    width: 100%
+
+
+    @include breakpoint(large)
+      @include xy-cell(16, false)
+      width: 66.66667%
 
 .results-container
   height: calc(100vh - 17rem)

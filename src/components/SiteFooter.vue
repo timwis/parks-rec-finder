@@ -1,5 +1,5 @@
 <template>
-  <footer class="app-footer">
+  <footer class="app-footer show-for-large-only">
     <nav>
       <ul class="inline-list">
         <li>

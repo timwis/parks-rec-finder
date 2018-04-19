@@ -1,7 +1,7 @@
 <template>
   <header class="site-header app grid-x grid-padding-x align-middle">
 
-    <div class="logo-container cell shrink hide-for-small-only">
+    <div class="logo-container cell shrink show-for-large">
       <a
         class="logo"
         href="https://beta.phila.gov/departments/parks-recreation/">
@@ -11,9 +11,14 @@
       </a>
     </div>
 
-    <div class="app-divide cell shrink hide-for-small-only"/>
+    <div class="app-divide cell shrink show-for-large"/>
 
     <div class="page-title-container cell shrink">
+      <a
+        @click.prevent="toggleMobileMenu"
+        class="mobile-menu-toggle hide-for-large">
+          <i class="fa fa-bars fa-2x"/>
+      </a>
       <router-link to="/">
         <h1 class="page-title">
           Finder
@@ -29,35 +34,68 @@
       <form
         role="search"
         @submit.prevent="onSubmit">
-        <div class="grid-x align-right">
+        <div class="grid-x align-right-large">
           <input
             ref="searchTerm"
             :value="searchTerm"
-            class="bdr-right cell large-11"
+            class="bdr-right cell small-11"
             type="search"
             placeholder="Search by activity or location name"
             data-testid="searchTerm">
           <input
             ref="searchLocation"
             :value="searchLocation"
-            class="cell large-10"
+            class="cell small-10"
             type="search"
             placeholder="Address or zip code"
             data-testid="searchLocation">
           <button
             type="submit"
-            class="cell button large-1">
+            class="cell button small-1">
             <i class="fa fa-search"/>
           </button>
         </div>
       </form>
 
     </div>
+    <div
+      v-show="mobileMenuOpen"
+      class="mobile-menu hide-for-large">
+      <a
+        class="logo"
+        href="https://beta.phila.gov/departments/parks-recreation/">
+        <img
+          src="../assets/parks-rec-logo.png"
+          alt="City of Philadelphia">
+      </a>
+      <nav>
+        <ul>
+          <li>
+            <a href="http://beta.phila.gov">City of Philadelphia</a>
+          </li>
+          <li>
+            <a @click.prevent="toggleHowToUse">How to use</a>
+          </li>
+          <li>
+            <a
+              href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))"
+              class="link-dark-bg text-upper">Feedback
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 </template>
 
 <script>
 export default {
+  data: function() {
+    return  {
+      mobileMenuOpen: false,
+      howToUseOpen: false,
+    }
+  },
   props: {
     searchTerm: {
       type: String,
@@ -69,6 +107,12 @@ export default {
     }
   },
   methods: {
+    toggleMobileMenu (){
+      this.mobileMenuOpen = !this.mobileMenuOpen
+    },
+    toggleHowToUse (){
+      this.howToUseOpen = !this.howToUseOpen
+    },
     onSubmit (event) {
       const searchTerm = this.$refs.searchTerm.value
       const searchLocation = this.$refs.searchLocation.value
@@ -96,5 +140,11 @@ input[type="search"]
       margin: 0
     .page-title-container h1
       font-size: 2rem
+.mobile-menu-toggle
+  color: white
+
+.mobile-menu
+  width: 100%
+  height: 100vh
 
 </style>
