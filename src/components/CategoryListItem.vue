@@ -63,7 +63,10 @@ export default {
   position: relative
   margin-bottom: 1rem
   background: black
-  max-height: 280px
+  height: 280px
+  img
+    width: 100%
+    height: 100%
   .category--name
     position: absolute
     top: 1rem

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <aside class="list">
+    <aside class="sidebar">
       <div v-if="isLoading">
         Loading...
       </div>
@@ -8,8 +8,10 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <div class="panel-head activities">
-          <h2 data-testid="categoryName">{{ categoryName }}</h2>
+        <div class="panel-head activities cell shrink medium-cell-block-container grid-x">
+          <h2
+            data-testid="categoryName"
+            class="cell">{{ categoryName }}</h2>
           <ItemCount
             :count="count" />
           <ActivityFilterControls
@@ -102,7 +104,5 @@ export default {
   .panel-head.activities
     +fixed-header($activities)
     color: white
-    h2
-      padding: 1rem
-
+    padding: 1rem
 </style>

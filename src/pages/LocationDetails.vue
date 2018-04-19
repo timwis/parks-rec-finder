@@ -1,6 +1,6 @@
 <template>
   <main class="location-detail-container">
-    <aside class="list">
+    <aside class="sidebar">
       <div v-if="isLoading">
         Loading...
       </div>
@@ -10,7 +10,7 @@
         Error: {{ error }}
       </div>
       <div v-else>
-        <div class="panel-head location-detail">
+        <div class="panel-head location-detail align-top">
           <font-awesome-icon
             :icon="icon"
             size="4x"/>
@@ -179,7 +179,6 @@ export default {
 <style lang="sass" scoped>
 .location-detail
   +fixed-header($locations)
-  color: white
   text-align: center
   padding: 1rem
 .detail
