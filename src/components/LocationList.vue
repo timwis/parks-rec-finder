@@ -1,5 +1,5 @@
 <template>
-  <div class="results">
+  <div class="cell medium-cell-block-y medium-cell-block-container results-container">
     <ul class="no-bullet">
       <LocationListItem
         v-for="location in locations"
@@ -30,6 +30,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.results
-  top: 6rem
+ul
+  padding: 1rem
+.results-container
+  //visible height minus header + footer heights
+  height: calc(100vh - 17rem)
 </style>

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <aside class="list">
+    <aside class="sidebar">
       <h2>Search results</h2>
 
       <div v-if="isLoading">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="results">
+    <div class="cell medium-cell-block-y medium-cell-block-container results-container">
       <ul class="no-bullet">
         <ActivityListItem
           v-for="activity in activities"
@@ -37,11 +37,7 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.results
-  top: 9rem
-  overflow-y: auto
-  position: absolute
-  bottom: 0
-  left: 0
-  right: 0
+.results-container
+  //visible height minus header + footer heights
+  height: calc(100vh - 17rem)
 </style>

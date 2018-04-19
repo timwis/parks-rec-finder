@@ -57,10 +57,12 @@ $fa-font-path: "~font-awesome/fonts"
 main
   @include xy-grid(horizontal)
 
-  .list
+  .sidebar
     @include xy-cell(8, false)
     @include xy-cell-block(true)
     position: relative
+    height: 100%
+
   .map
     @include xy-cell(16, false, 0)
 

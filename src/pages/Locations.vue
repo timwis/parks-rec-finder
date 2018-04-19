@@ -1,15 +1,17 @@
 <template>
   <main>
-    <aside class="list">
+    <aside class="sidebar">
       <div v-if="isLoading">
         Loading...
       </div>
       <div v-else-if="error">
         Error: {{ error }}
       </div>
-      <div v-else>
+      <div
+        v-else
+        class="grid-y">
         <div
-          class="panel-head locations">
+          class="panel-head locations cell shrink medium-cell-block-container">
           <h2 data-testid="categoryName">{{ categoryName }}</h2>
           <ItemCount
             :count="count" />
@@ -91,6 +93,5 @@ export default {
 <style lang="sass" scoped>
   .panel-head.locations
     +fixed-header($locations)
-    color: white
-    padding: 1rem
+
 </style>

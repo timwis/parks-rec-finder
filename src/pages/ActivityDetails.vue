@@ -1,6 +1,6 @@
 <template>
   <main class="activity-detail-container">
-    <aside class="list">
+    <aside class="sidebar">
       <div v-if="isLoading">
         Loading...
       </div>
@@ -193,7 +193,6 @@ export default {
 <style lang="sass">
 .panel-head.activity-detail
   +fixed-header($activities)
-  color: white
   text-align: center
   padding: 1rem
   h2

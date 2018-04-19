@@ -1,10 +1,10 @@
 <template>
   <main>
-    <aside class="list">
-      <div class="panel-head entry">
+    <aside class="sidebar">
+      <div class="panel-head grid-x">
         <div
           v-if="activeTab === 'activities'"
-          class="activities">
+          class="activities cell">
           <section>
             <h2>Things to do</h2>
             <p>Choose a category from the list below to find an activity.</p>
@@ -12,7 +12,7 @@
         </div>
         <div
           v-else-if="activeTab === 'locations'"
-          class="locations">
+          class="locations cell">
           <section>
             <h2>Places to go</h2>
             <p>Choose a category from the list below to explore our locations.</p>
@@ -25,7 +25,9 @@
         <div v-else-if="error">
           Error: {{ error }}
         </div>
-        <div v-else>
+        <div
+          v-else
+          class="cell">
           <TabSwitcher :active-tab="activeTab">
             <router-link
               slot="activities"
@@ -41,7 +43,7 @@
         </div>
       </div>
 
-      <div class="results entry">
+      <div class="cell medium-cell-block-y medium-cell-block-container results-container">
         <ul
           v-if="activeTab === 'activities'"
           data-testid="activityCategories"
@@ -148,25 +150,17 @@ function categoryCountReducer (accumulator, category) {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 
 .panel-head
   +fixed-header(white)
-
-  &.entry
-    padding: 1rem
-    height: 13rem
+  padding: 1rem
+  color: #444
   h2
     font-weight: bold
     line-height: 1rem
-.results
-  overflow-y: auto
-  position: absolute
-  bottom: 0
-  left: 0
-  right: 0
-  padding: 0 1rem
-  &.entry
-    top: 13rem
+
+.results-container
+  height: calc(100vh - 17rem)
 
 </style>
