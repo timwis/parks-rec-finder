@@ -1,8 +1,8 @@
 <template>
   <main>
-    <aside class="sidebar">
+    <aside class="sidebar search-results">
       <div
-        class="panel-head grid-x">
+        class="panel-head">
       <h2>Search results</h2>
 
       <div v-if="isLoading">
@@ -171,8 +171,10 @@ export default {
   padding: 1rem
 h2
   margin-top: 0
-.results-container
-  //min/max accounts for filter display
-  min-height: calc(100vh - 23rem)
-  max-height: calc(100vh - 21rem)
+
+.search-results
+  .results-container
+    //min/max accounts for filter display
+    min-height: calc(100vh - 23rem)
+    max-height: calc(100vh - 21rem)
 </style>
