@@ -1,6 +1,7 @@
 <template>
   <main>
     <aside class="sidebar search-results">
+      <div class="grid-y medium-grid-frame">
       <div
         class="panel-head">
       <h2>Search results</h2>
@@ -47,7 +48,7 @@
         <LocationList
           v-else-if="activeTab === 'locations'"
           :locations="locations"/>
-
+      </div>
     </aside>
 
     <section class="map">
@@ -172,9 +173,4 @@ export default {
 h2
   margin-top: 0
 
-.search-results
-  .results-container
-    //min/max accounts for filter display
-    min-height: calc(100vh - 23rem)
-    max-height: calc(100vh - 21rem)
 </style>
