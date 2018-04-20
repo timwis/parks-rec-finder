@@ -151,6 +151,8 @@ function categoryCountReducer (accumulator, category) {
 </script>
 
 <style lang="sass" scoped>
+.results-container
+  height: calc(100vh - 20rem)
 
 .panel-head
   +fixed-header(white)
