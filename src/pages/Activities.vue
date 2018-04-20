@@ -7,7 +7,8 @@
       <div v-else-if="error">
         Error: {{ error }}
       </div>
-      <div v-else
+      <div
+        v-else
         class="grid-y medium-grid-frame">
         <div class="panel-head activities cell shrink medium-cell-block-container grid-x">
           <h2

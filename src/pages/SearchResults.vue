@@ -2,41 +2,41 @@
   <main>
     <aside class="sidebar search-results">
       <div class="grid-y medium-grid-frame">
-      <div
-        class="panel-head">
-      <h2>Search results</h2>
+        <div
+          class="panel-head">
+          <h2>Search results</h2>
 
-      <div v-if="isLoading">
-        Loading...
-      </div>
-      <div v-else-if="error">
-        Error: {{ error }}
-      </div>
-      <div v-else>
-        <p data-testid="resultsSummary">
-          Showing {{ count }} results
-          <span v-if="searchTerm">
-            for <b>{{ searchTerm }}</b>
-          </span>
-          <span v-if="searchLocation">
-            near <b>{{ searchLocation }}</b>
-          </span>
-        </p>
-      </div>
-        <TabSwitcher :active-tab="activeTab">
-          <router-link
-            slot="activities"
-            :to="{ path: '/search/activities', query }">
-            Activities ({{ filteredActivities.length }})
-          </router-link>
-          <router-link
-            slot="locations"
-            :to="{ path: '/search/locations', query }">
-            Locations ({{ locations.length }})
-          </router-link>
-        </TabSwitcher>
+          <div v-if="isLoading">
+            Loading...
+          </div>
+          <div v-else-if="error">
+            Error: {{ error }}
+          </div>
+          <div v-else>
+            <p data-testid="resultsSummary">
+              Showing {{ count }} results
+              <span v-if="searchTerm">
+                for <b>{{ searchTerm }}</b>
+              </span>
+              <span v-if="searchLocation">
+                near <b>{{ searchLocation }}</b>
+              </span>
+            </p>
+          </div>
+          <TabSwitcher :active-tab="activeTab">
+            <router-link
+              slot="activities"
+              :to="{ path: '/search/activities', query }">
+              Activities ({{ filteredActivities.length }})
+            </router-link>
+            <router-link
+              slot="locations"
+              :to="{ path: '/search/locations', query }">
+              Locations ({{ locations.length }})
+            </router-link>
+          </TabSwitcher>
 
-      </div>
+        </div>
         <div v-if="activeTab === 'activities'">
           <ActivityFilterControls
             v-if="activities.length > 0"
