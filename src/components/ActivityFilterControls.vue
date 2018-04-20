@@ -276,7 +276,7 @@ export default {
   z-index: 20
 .overlay
   background: #f0f0f0
-  height: calc(100vh - 16.5rem)
+  min-height: calc(100vh - 22rem)
   color: #444
   padding: 0 1rem 1rem 1rem
   overflow-y: scroll

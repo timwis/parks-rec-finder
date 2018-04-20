@@ -1,6 +1,8 @@
 <template>
   <main>
     <aside class="sidebar">
+      <div
+        class="panel-head grid-x">
       <h2>Search results</h2>
 
       <div v-if="isLoading">
@@ -19,7 +21,7 @@
             near <b>{{ searchLocation }}</b>
           </span>
         </p>
-
+      </div>
         <TabSwitcher :active-tab="activeTab">
           <router-link
             slot="activities"
@@ -33,20 +35,21 @@
           </router-link>
         </TabSwitcher>
 
+      </div>
         <div v-if="activeTab === 'activities'">
           <ActivityFilterControls
             v-if="activities.length > 0"
             :current-filters="currentFilters"
             @change="setFilters"/>
-
           <ActivityList :activities="filteredActivities"/>
         </div>
 
         <LocationList
           v-else-if="activeTab === 'locations'"
           :locations="locations"/>
-      </div>
+
     </aside>
+
     <section class="map">
       <SiteMap
         v-if="activeTab === 'activities'"
@@ -163,3 +166,13 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.panel-head
+  padding: 1rem
+h2
+  margin-top: 0
+.results-container
+  //min/max accounts for filter display
+  min-height: calc(100vh - 23rem)
+  max-height: calc(100vh - 21rem)
+</style>

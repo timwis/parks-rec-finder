@@ -46,14 +46,14 @@
             </div>
           </DetailSection>
 
-          <DetailSection
+          <!-- <DetailSection
             v-if="siteContact"
             title="Site contact"
             icon="user">
             <div class="detail">
               {{ siteContact }}
             </div>
-          </DetailSection>
+          </DetailSection> -->
 
           <DetailSection
             v-if="schedules && schedules.length > 0"
