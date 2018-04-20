@@ -97,4 +97,7 @@ table
   width: auto
   td
     padding: .5rem
+
+h2
+  font-weight: bold
 </style>
