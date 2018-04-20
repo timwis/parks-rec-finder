@@ -38,7 +38,7 @@
           <input
             ref="searchTerm"
             :value="searchTerm"
-            class="bdr-right cell small-11"
+            class="bdr-right cell auto"
             type="search"
             placeholder="Search by activity or location name"
             data-testid="searchTerm">
@@ -51,8 +51,8 @@
             data-testid="searchLocation">
           <button
             type="submit"
-            class="cell button small-1">
-            <i class="fa fa-search"/>
+            class="cell button small-2">
+            <i class="fa fa-search fa-lg"/>
           </button>
         </div>
       </form>
@@ -128,6 +128,7 @@ export default {
 <style lang="sass" scoped>
 input[type="search"]
   margin-bottom: 0
+  font-size: 1rem
 .bdr-right
   border-right: 1px solid #444
 #application
@@ -147,4 +148,8 @@ input[type="search"]
   width: 100%
   height: 100vh
 
+.page-title
+  font-weight: bold
+.page-subtitle
+  font-weight: normal
 </style>

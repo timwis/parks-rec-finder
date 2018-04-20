@@ -105,5 +105,5 @@ export default {
   +fixed-header($activities)
   color: white
 h2
-  padding: 1rem
+  padding: 0 1rem
 </style>
