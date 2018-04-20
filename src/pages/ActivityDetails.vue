@@ -9,7 +9,8 @@
         data-testid="error">
         Error: {{ error }}
       </div>
-      <div v-else
+      <div
+        v-else
         class="grid-y medium-grid-frame">
         <div class="panel-head activity-detail grid-x align-center">
           <h2 data-testid="name">{{ name }}</h2>
@@ -77,15 +78,16 @@
               <div
                 v-for="schedule in schedules"
                 :key="schedule.id">
-                  <b>Start Date:</b> {{schedule.date_from | formatDate}}</p>
-                  <b>End Date:</b> {{schedule.date_to | formatDate }}</p>
-                  <table>
-                    <tr v-for="day in schedule.days">
-                      <td>{{day}}</td>
-                      <td>{{schedule.time_from | formatTime}} - {{schedule.time_to | formatTime}}</td>
-                    </tr>
-                 </table>
-                </li>
+                <b>Start Date:</b> {{ schedule.date_from | formatDate }}
+                <b>End Date:</b> {{ schedule.date_to | formatDate }}
+                <table>
+                  <tr
+                    v-for="day in schedule.days"
+                    :key="day.id">
+                    <td>{{ day }}</td>
+                    <td>{{ schedule.time_from | formatTime }} - {{ schedule.time_to | formatTime }}</td>
+                  </tr>
+                </table>
               </div>
             </div>
           </DetailSection>
