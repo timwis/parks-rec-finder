@@ -9,7 +9,8 @@
         data-testid="error">
         Error: {{ error }}
       </div>
-      <div v-else>
+      <div v-else
+        class="grid-y medium-grid-frame">
         <div class="panel-head location-detail cell shrink medium-cell-block-container align-center grid-x">
           <div class="cell">
             <font-awesome-icon

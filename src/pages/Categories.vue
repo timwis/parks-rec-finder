@@ -1,6 +1,7 @@
 <template>
   <main>
     <aside class="sidebar">
+      <div class="grid-y medium-grid-frame">
       <div class="panel-head grid-x">
         <div
           v-if="activeTab === 'activities'"
@@ -73,6 +74,7 @@
             :description="category.description"
             url-prefix="locations"/>
         </ul>
+      </div>
       </div>
     </aside>
 
@@ -151,9 +153,6 @@ function categoryCountReducer (accumulator, category) {
 </script>
 
 <style lang="sass" scoped>
-.results-container
-  height: calc(100vh - 20rem)
-
 .panel-head
   +fixed-header(white)
   padding: 1rem

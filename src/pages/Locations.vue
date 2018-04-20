@@ -9,7 +9,7 @@
       </div>
       <div
         v-else
-        class="grid-y">
+        class="grid-y medium-grid-frame">
         <div
           class="panel-head locations cell shrink medium-cell-block-container">
           <h2 data-testid="categoryName">{{ categoryName }}</h2>
@@ -93,6 +93,6 @@ export default {
 <style lang="sass" scoped>
   .panel-head.locations
     +fixed-header($locations)
-    padding: 1rem
+    padding: 0 1rem
 
 </style>

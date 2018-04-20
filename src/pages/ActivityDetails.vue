@@ -9,7 +9,8 @@
         data-testid="error">
         Error: {{ error }}
       </div>
-      <div v-else>
+      <div v-else
+        class="grid-y medium-grid-frame">
         <div class="panel-head activity-detail grid-x align-center">
           <h2 data-testid="name">{{ name }}</h2>
           <ul class="inline-list">
@@ -73,26 +74,19 @@
             title="Program schedules"
             icon="calendar">
             <div class="detail">
-              <ul
+              <div
                 v-for="schedule in schedules"
                 :key="schedule.id">
-                <li>
-                  Between
-                  <time :datetime="schedule.date_from">
-                    {{ schedule.date_from | formatDate }}
-                  </time>
-                  and
-                  <time :datetime="schedule.date_to">
-                    {{ schedule.date_to | formatDate }}
-                  </time>
-                  on
-                  {{ schedule.days | formatDaysList }}
-                  from
-                  <time>{{ schedule.time_from | formatTime }}</time>
-                  to
-                  <time>{{ schedule.time_to | formatTime }}</time>
+                  <b>Start Date:</b> {{schedule.date_from | formatDate}}</p>
+                  <b>End Date:</b> {{schedule.date_to | formatDate }}</p>
+                  <table>
+                    <tr v-for="day in schedule.days">
+                      <td>{{day}}</td>
+                      <td>{{schedule.time_from | formatTime}} - {{schedule.time_to | formatTime}}</td>
+                    </tr>
+                 </table>
                 </li>
-              </ul>
+              </div>
             </div>
           </DetailSection>
 

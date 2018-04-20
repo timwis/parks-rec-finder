@@ -276,20 +276,17 @@ export default {
   z-index: 20
 .overlay
   background: #f0f0f0
-  min-height: calc(100vh - 22rem)
+  height: 100vh
   color: #444
   padding: 0 1rem 1rem 1rem
   overflow-y: scroll
 .h4
   padding: 1rem 0 0 0
-
 [type='checkbox'] + label, [type='radio'] + label
   display: block
-
 .filter-button
   background: $secondary
   text-align: left
-
 .active-filters
   background: white
   padding: 0 1rem 1rem 1rem
