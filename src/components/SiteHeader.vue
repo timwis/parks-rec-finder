@@ -12,13 +12,13 @@
     </div>
 
     <div class="app-divide cell shrink show-for-large"/>
+    <a
+      class="mobile-menu-toggle hide-for-large cell shrink"
+      @click.prevent="toggleMobileMenu">
+      <i class="fa fa-bars fa-2x"/>
+    </a>
 
     <div class="page-title-container cell shrink">
-      <a
-        class="mobile-menu-toggle hide-for-large"
-        @click.prevent="toggleMobileMenu">
-        <i class="fa fa-bars fa-2x"/>
-      </a>
       <router-link to="/">
         <h1 class="page-title">
           Finder
@@ -30,7 +30,6 @@
     </div>
 
     <div class="search-container cell large-auto small-24">
-
       <form
         role="search"
         @submit.prevent="onSubmit">
@@ -61,20 +60,23 @@
     <div
       v-show="mobileMenuOpen"
       class="mobile-menu hide-for-large">
-      <a
-        class="logo"
-        href="https://beta.phila.gov/departments/parks-recreation/">
-        <img
-          src="../assets/parks-rec-logo.png"
-          alt="City of Philadelphia">
-      </a>
+      <div class="center mtm">
+        <a
+          class="logo"
+          href="https://beta.phila.gov/departments/parks-recreation/">
+          <img
+            src="../assets/parks-rec-logo.png"
+            alt="City of Philadelphia">
+        </a>
+      </div>
       <nav>
-        <ul>
+        <ul class="no-bullet">
           <li>
             <a href="http://beta.phila.gov">City of Philadelphia</a>
           </li>
           <li>
-            <a @click.prevent="toggleHowToUse">How to use</a>
+            <a href=""
+              @click.prevent="showModal">How to use</a>
           </li>
           <li>
             <a
@@ -85,11 +87,20 @@
         </ul>
       </nav>
     </div>
+    <HowToUse
+      :visibility="isModalVisible"
+      @close="closeModal"
+    />
   </header>
 </template>
 
 <script>
+import HowToUse from './HowToUse'
+
 export default {
+  components: {
+    HowToUse,
+  },
   props: {
     searchTerm: {
       type: String,
@@ -103,16 +114,20 @@ export default {
   data: function () {
     return {
       mobileMenuOpen: false,
-      howToUseOpen: false
+      isModalVisible: false,
+
     }
   },
   methods: {
     toggleMobileMenu () {
       this.mobileMenuOpen = !this.mobileMenuOpen
     },
-    toggleHowToUse () {
-      this.howToUseOpen = !this.howToUseOpen
-    },
+    showModal() {
+      return this.isModalVisible = !this.isModalVisible
+   },
+   closeModal() {
+     this.isModalVisible = false;
+   },
     onSubmit (event) {
       const searchTerm = this.$refs.searchTerm.value
       const searchLocation = this.$refs.searchLocation.value
@@ -120,7 +135,7 @@ export default {
       if (isSearchValid) {
         this.$emit('search', { searchTerm, searchLocation })
       }
-    }
+    },
   }
 }
 </script>
@@ -152,4 +167,21 @@ input[type="search"]
   font-weight: bold
 .page-subtitle
   font-weight: normal
+
+@media screen and (max-width: 39.9375em)
+  .page-title-container
+    margin-bottom: 1rem
+
+.mobile-menu
+  a:link, a:visited
+    color: white
+    text-transform: uppercase
+  a:hover, a:active
+    color: #25cef7
+  ul
+    margin-top: 2rem
+    border-top: 1px solid white
+    li
+      border-bottom: 1px solid white
+      padding: 1rem
 </style>
