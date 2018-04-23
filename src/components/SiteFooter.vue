@@ -2,8 +2,7 @@
   <div>
     <HowToUse
       :visibility="isModalVisible"
-      @close="closeModal"
-    />
+      @close="closeModal" />
     <footer class="app-footer show-for-large">
       <nav>
         <ul class="inline-list">
@@ -15,8 +14,8 @@
           <li>
             <a
               href=""
-              @click.prevent="showModal"
-              class="link-dark-bg text-upper">How to use</a>
+              class="link-dark-bg text-upper"
+              @click.prevent="showModal">How to use</a>
           </li>
           <li>
             <a
@@ -33,27 +32,25 @@
 import HowToUse from './HowToUse'
 
 export default {
+  components: {
+    HowToUse
+  },
   data: function () {
     return {
       mobileMenuOpen: false,
-      isModalVisible: false,
+      isModalVisible: false
     }
   },
-  components: {
-    HowToUse,
-   },
   methods: {
     toggleHowToUse () {
-        this.howToUseOpen = !this.howToUseOpen
-      },
-    showModal() {
-      return this.isModalVisible = !this.isModalVisible
-
-     //return this.isModalVisible = true;
-   },
-   closeModal() {
-     this.isModalVisible = false;
-   }
+      this.howToUseOpen = !this.howToUseOpen
+    },
+    showModal () {
+      this.isModalVisible = !this.isModalVisible
+    },
+    closeModal () {
+      this.isModalVisible = false
+    }
   }
 }
 </script>
