@@ -1,5 +1,6 @@
 <template>
   <LMap
+    v-if="mapVisibility"
     ref="map"
     :zoom="defaultZoom"
     :center="defaultCenter">
@@ -77,6 +78,10 @@ export default {
     LocationMarkerPopup
   },
   props: {
+    mapVisibility: {
+      type: Boolean,
+      default: true
+    },
     activities: {
       type: Array,
       default: null
@@ -177,4 +182,8 @@ export default {
 
 <style lang="sass">
 @import "~leaflet/dist/leaflet.css"
+
+@media screen and (max-width: 39.9375em)
+  .vue2leaflet-map
+    height: 100vh !important
 </style>
