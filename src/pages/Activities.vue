@@ -1,6 +1,8 @@
 <template>
   <main>
-    <aside class="sidebar">
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar">
       <div v-if="isLoading">
         Loading...
       </div>
@@ -24,8 +26,13 @@
         <ActivityList :activities="filteredActivities"/>
       </div>
     </aside>
+    <button
+      @click.prevent="showMap"
+      class="button toggleMap hide-for-large">Toggle map</button>
     <section class="map">
-      <SiteMap :activities="filteredActivities"/>
+      <SiteMap
+      :activities="filteredActivities"
+      :map-visibility="isMapVisible"/>
     </section>
   </main>
 </template>
@@ -48,7 +55,9 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isMapVisible: true,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -92,6 +101,15 @@ export default {
       } finally {
         this.isLoading = false
       }
+    },
+    showMap () {
+      //this.isMapVisible = !this.isMapVisible
+      this.isSidebarVisible = !this.isSidebarVisible
+      this.$refs.map.invalidateSize()
+
+    },
+    sidebarVisible () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
