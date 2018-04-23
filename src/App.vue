@@ -9,6 +9,8 @@
       @search="onSearch"/>
     <router-view class="cell auto"/>
     <SiteFooter />
+    <button
+      class="button toggleMap hide-for-large">Toggle map</button>
   </div>
 </template>
 
