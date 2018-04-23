@@ -9,8 +9,6 @@
       @search="onSearch"/>
     <router-view class="cell auto"/>
     <SiteFooter />
-    <button
-      class="button toggleMap hide-for-large">Toggle map</button>
   </div>
 </template>
 
@@ -75,13 +73,14 @@ main
   .map
     @include xy-cell(24, false)
     width: 100%
+    height: 100%
 
     @include breakpoint(large)
       @include xy-cell(16, false)
       width: 66.66667%
 
 .results-container
-  height: calc(100vh - 17rem)
+  height: calc(100vh - 19rem)
   padding: 1rem
   overflow-y: scroll
 
@@ -102,4 +101,10 @@ table
 
 h2
   font-weight: bold
+
+.toggleMap
+  width: 100%
+  position: absolute
+  bottom: 0
+  z-index: 10000
 </style>
