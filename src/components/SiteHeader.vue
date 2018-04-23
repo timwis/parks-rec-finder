@@ -75,7 +75,8 @@
             <a href="http://beta.phila.gov">City of Philadelphia</a>
           </li>
           <li>
-            <a href=""
+            <a
+              href=""
               @click.prevent="showModal">How to use</a>
           </li>
           <li>
@@ -89,8 +90,7 @@
     </div>
     <HowToUse
       :visibility="isModalVisible"
-      @close="closeModal"
-    />
+      @close="closeModal" />
   </header>
 </template>
 
@@ -99,7 +99,7 @@ import HowToUse from './HowToUse'
 
 export default {
   components: {
-    HowToUse,
+    HowToUse
   },
   props: {
     searchTerm: {
@@ -114,20 +114,19 @@ export default {
   data: function () {
     return {
       mobileMenuOpen: false,
-      isModalVisible: false,
-
+      isModalVisible: false
     }
   },
   methods: {
     toggleMobileMenu () {
       this.mobileMenuOpen = !this.mobileMenuOpen
     },
-    showModal() {
-      return this.isModalVisible = !this.isModalVisible
-   },
-   closeModal() {
-     this.isModalVisible = false;
-   },
+    showModal () {
+      this.isModalVisible = !this.isModalVisible
+    },
+    closeModal () {
+      this.isModalVisible = false
+    },
     onSubmit (event) {
       const searchTerm = this.$refs.searchTerm.value
       const searchLocation = this.$refs.searchLocation.value
@@ -135,7 +134,7 @@ export default {
       if (isSearchValid) {
         this.$emit('search', { searchTerm, searchLocation })
       }
-    },
+    }
   }
 }
 </script>

@@ -1,9 +1,11 @@
 <template>
-  <div class="overlay" v-if="visibility">
+  <div
+    v-if="visibility"
+    class="overlay">
     <section class="how-to-use">
       <button
-        @click="close"
-        class="close-button">
+        class="close-button"
+        @click="close">
         <i class="fa fa-lg fa-times"/>
       </button>
       <h2 class="text-center ">How to use the finder</h2>
@@ -14,31 +16,28 @@
           <b>Search by entering an activity, location, or ZIP code into the search box.</b>
           <p>
             The finder will return results that match what you put input.</p>
-
         </div>
         <div>
-          <i class="fa fa-image" icon="image"/>
+          <i class="fa fa-image"/>
           <b>Browse by Category.</b>
           <p>Select one of the pictured categories.</p>
         </div>
-
         <p>Once you get results, you can <b><i class="fa-xs fa-filter fa"/> filter</b> by age, fee, gender, and day of week to narrow down your search.</p>
       </div>
-      </section>
-    </div>
+    </section>
   </div>
 </template>
 <script>
 export default {
-   name: 'HowToUse',
-   props:{
-     visibility : {
+  name: 'HowToUse',
+  props: {
+    visibility: {
       type: Boolean,
       required: true
     }
   },
   methods: {
-    close(event) {
+    close (event) {
       this.$emit('close')
     }
   }
@@ -62,8 +61,5 @@ export default {
 
 .close-button
   float: right
-
-.fa
-  display:
 
 </style>
