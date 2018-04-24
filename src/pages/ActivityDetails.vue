@@ -1,6 +1,8 @@
 <template>
   <main class="activity-detail-container">
-    <aside class="sidebar">
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar">
       <div v-if="isLoading">
         Loading...
       </div>
@@ -13,8 +15,10 @@
         v-else
         class="grid-y medium-grid-frame">
         <div class="panel-head activity-detail grid-x align-center">
-          <h2 data-testid="name">{{ name }}</h2>
-          <ul class="inline-list">
+          <h2
+            class="cell"
+            data-testid="name">{{ name }}</h2>
+          <ul class="cell inline-list">
             <li v-if="ageRange">Age: {{ ageRange }}</li>
             <li v-if="gender">Gender: {{ gender }}</li>
             <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
@@ -78,7 +82,7 @@
               <div
                 v-for="schedule in schedules"
                 :key="schedule.id">
-                <b>Start Date:</b> {{ schedule.date_from | formatDate }}
+                <b>Start Date:</b> {{ schedule.date_from | formatDate }}<br>
                 <b>End Date:</b> {{ schedule.date_to | formatDate }}
                 <table>
                   <tr
@@ -104,8 +108,13 @@
         </div>
       </div>
     </aside>
+    <button
+      class="button toggleMap hide-for-large"
+      @click.prevent="showMap">Toggle map</button>
     <section class="map">
-      <SiteMap :activity-details="activityDetails"/>
+      <SiteMap
+        :activity-details="activityDetails"
+        :map-visibility="isMapVisible"/>
     </section>
   </main>
 </template>
@@ -138,7 +147,9 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isMapVisible: window.matchMedia('(max-width: 63.9375em)').matches !== 1,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -188,11 +199,18 @@ export default {
       } finally {
         this.isLoading = false
       }
+    },
+    showMap () {
+      this.isMapVisible = !this.isMapVisible
+      this.isSidebarVisible = !this.isSidebarVisible
+    },
+    sidebarVisible () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
     return {
-      title: this.name
+      title: `${this.categoryName} Activities`
     }
   }
 }

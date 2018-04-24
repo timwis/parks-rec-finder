@@ -1,6 +1,8 @@
 <template>
   <main>
-    <aside class="sidebar">
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar">
       <div v-if="isLoading">
         Loading...
       </div>
@@ -19,8 +21,13 @@
         <LocationList :locations="locations"/>
       </div>
     </aside>
+    <button
+      class="button toggleMap hide-for-large"
+      @click.prevent="showMap">Toggle map</button>
     <section class="map">
-      <SiteMap :locations="locations"/>
+      <SiteMap
+        :locations="locations"
+        :map-visibility="isMapVisible"/>
     </section>
   </main>
 </template>
@@ -41,7 +48,9 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isMapVisible: window.matchMedia('(max-width: 63.9375em)').matches !== 1,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -80,6 +89,13 @@ export default {
       } finally {
         this.isLoading = false
       }
+    },
+    showMap () {
+      this.isMapVisible = !this.isMapVisible
+      this.isSidebarVisible = !this.isSidebarVisible
+    },
+    sidebarVisible () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
@@ -94,5 +110,6 @@ export default {
   .panel-head.locations
     +fixed-header($locations)
     padding: 0 1rem
+    position: relative
 
 </style>

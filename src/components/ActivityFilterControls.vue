@@ -280,6 +280,7 @@ export default {
   color: #444
   padding: 0 1rem 1rem 1rem
   overflow-y: scroll
+  position: absolute
 .h4
   padding: 1rem 0 0 0
 [type='checkbox'] + label, [type='radio'] + label
