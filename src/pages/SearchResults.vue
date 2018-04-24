@@ -96,7 +96,6 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isMapVisible: window.matchMedia('(max-width: 63.9375em)').matches !== 1,
       isSidebarVisible: true
     }
   },
@@ -162,10 +161,6 @@ export default {
       }
     },
     showMap () {
-      this.isMapVisible = !this.isMapVisible
-      this.isSidebarVisible = !this.isSidebarVisible
-    },
-    sidebarVisible () {
       this.isSidebarVisible = !this.isSidebarVisible
     }
   },
