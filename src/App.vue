@@ -80,9 +80,13 @@ main
       width: 66.66667%
 
 .results-container
-  height: calc(100vh - 19rem)
+  height: calc(100vh - 22rem)
   padding: 1rem
   overflow-y: scroll
+
+  @include breakpoint(large)
+    height: calc(100vh - 19rem)
+
 
 .results-container /deep/ .activities-count .results-container
   overflow: hidden
@@ -104,7 +108,7 @@ h2
 
 .toggleMap
   width: 100%
-  position: absolute
+  position: fixed
   bottom: 0
   z-index: 10000
 </style>
