@@ -128,6 +128,7 @@ export default {
       this.isModalVisible = false
     },
     onSubmit (event) {
+      this.mobileMenuOpen = false
       const searchTerm = this.$refs.searchTerm.value
       const searchLocation = this.$refs.searchLocation.value
       const isSearchValid = (searchTerm.length > 0 || searchLocation.length > 0)
