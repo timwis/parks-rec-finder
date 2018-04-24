@@ -79,7 +79,8 @@
     </aside>
 
     <section class="map">
-      <SiteMap/>
+      <SiteMap
+        :map-visibility="isMapVisible"/>
     </section>
   </main>
 </template>
@@ -106,7 +107,8 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isMapVisible: window.matchMedia('(max-width: 63.9375em)').matches !== 1
     }
   },
   computed: {

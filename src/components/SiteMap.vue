@@ -1,9 +1,9 @@
 <template>
   <LMap
-    v-if="mapVisibility"
     ref="map"
     :zoom="defaultZoom"
-    :center="defaultCenter">
+    :center="defaultCenter"
+    :style="{height: fullHeight + 'px'}">
     <LTileLayer
       :url="basemap"
       :tile-layer-class="esriTileLayer"/>
@@ -80,7 +80,7 @@ export default {
   props: {
     mapVisibility: {
       type: Boolean,
-      default: true
+      default: null
     },
     activities: {
       type: Array,
@@ -122,7 +122,8 @@ export default {
       }),
       searchLocationIcon: new L.DivIcon.SVGIcon({
         color: 'orange'
-      })
+      }),
+      fullHeight: document.documentElement.clientHeight - 135
     }
   },
   computed: {
@@ -176,14 +177,22 @@ export default {
         this.$refs.map.fitBounds(geometries)
       }
     }
+  },
+  mounted () {
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy  () {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  methods: {
+    handleResize (event) {
+      this.fullHeight = document.documentElement.clientHeight - 135
+      this.$refs.map.mapObject.invalidateSize()
+    }
   }
 }
 </script>
 
 <style lang="sass">
 @import "~leaflet/dist/leaflet.css"
-
-@media screen and (max-width: 39.9375em)
-  .vue2leaflet-map
-    height: 100vh !important
 </style>

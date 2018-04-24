@@ -27,12 +27,12 @@
       </div>
     </aside>
     <button
-      @click.prevent="showMap"
-      class="button toggleMap hide-for-large">Toggle map</button>
+      class="button toggleMap hide-for-large"
+      @click.prevent="showMap">Toggle map</button>
     <section class="map">
       <SiteMap
-      :activities="filteredActivities"
-      :map-visibility="isMapVisible"/>
+        :activities="filteredActivities"
+        :map-visibility="isMapVisible"/>
     </section>
   </main>
 </template>
@@ -56,7 +56,7 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isMapVisible: true,
+      isMapVisible: window.matchMedia('(max-width: 63.9375em)').matches !== 1,
       isSidebarVisible: true
     }
   },
@@ -103,10 +103,8 @@ export default {
       }
     },
     showMap () {
-      //this.isMapVisible = !this.isMapVisible
+      this.isMapVisible = !this.isMapVisible
       this.isSidebarVisible = !this.isSidebarVisible
-      this.$refs.map.invalidateSize()
-
     },
     sidebarVisible () {
       this.isSidebarVisible = !this.isSidebarVisible
@@ -124,6 +122,7 @@ export default {
 .panel-head.activities
   +fixed-header($activities)
   color: white
+  position: relative
 h2
   padding: 0 1rem
 </style>
