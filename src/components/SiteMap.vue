@@ -123,7 +123,7 @@ export default {
       searchLocationIcon: new L.DivIcon.SVGIcon({
         color: 'orange'
       }),
-      fullHeight: document.documentElement.clientHeight - 135
+      fullHeight: document.documentElement.clientHeight - 139
     }
   },
   computed: {
@@ -186,7 +186,7 @@ export default {
   },
   methods: {
     handleResize (event) {
-      this.fullHeight = document.documentElement.clientHeight - 135
+      this.fullHeight = document.documentElement.clientHeight - 139
       this.$refs.map.mapObject.invalidateSize()
     }
   }

@@ -112,9 +112,7 @@
       class="button toggleMap hide-for-large"
       @click.prevent="showMap">Toggle map</button>
     <section class="map">
-      <SiteMap
-        :activity-details="activityDetails"
-        :map-visibility="isMapVisible"/>
+      <SiteMap :activity-details="activityDetails"/>
     </section>
   </main>
 </template>
@@ -148,7 +146,6 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isMapVisible: window.matchMedia('(max-width: 63.9375em)').matches !== 1,
       isSidebarVisible: true
     }
   },
@@ -201,10 +198,6 @@ export default {
       }
     },
     showMap () {
-      this.isMapVisible = !this.isMapVisible
-      this.isSidebarVisible = !this.isSidebarVisible
-    },
-    sidebarVisible () {
       this.isSidebarVisible = !this.isSidebarVisible
     }
   },
