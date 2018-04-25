@@ -58,19 +58,26 @@ main
   @include xy-grid(horizontal)
 
   .sidebar
+    min-height: 100vh
+    position: fixed
+    background: white
+    z-index: 15000
     @include xy-cell(24, false)
     width: 100%
 
     @include breakpoint(large)
       @include xy-cell(8, false)
       @include xy-cell-block(true)
-      //foundation xy-cell includes with margins set to false fail to remove width calc for gutters, so we're overriding
+      //foundation xy-cell includes with margins: false fail to remove width calc for gutters, so we're overriding
       width: 33.33333%
       position: relative
       height: 100%
       overflow-y: hidden
 
   .map
+    &.mapVisible
+      display: block
+
     @include xy-cell(24, false)
     width: 100%
     height: 100%
@@ -79,6 +86,9 @@ main
       @include xy-cell(16, false)
       width: 66.66667%
 
+      @include breakpoint(large)
+        display: block
+
 .results-container
   height: calc(100vh - 22rem)
   padding: 1rem
@@ -86,7 +96,6 @@ main
 
   @include breakpoint(large)
     height: calc(100vh - 19rem)
-
 
 .results-container /deep/ .activities-count .results-container
   overflow: hidden
@@ -110,5 +119,5 @@ h2
   width: 100%
   position: fixed
   bottom: 0
-  z-index: 10000
+  z-index: 15000
 </style>

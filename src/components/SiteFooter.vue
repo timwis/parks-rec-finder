@@ -57,6 +57,9 @@ export default {
 
 <style lang="sass" scoped>
 .app-footer
+  position: fixed
+  bottom: 0
+  z-index: 50000
   text-transform: uppercase
   nav
     ul

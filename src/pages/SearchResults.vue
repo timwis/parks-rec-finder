@@ -1,6 +1,8 @@
 <template>
   <main>
-    <aside class="sidebar search-results">
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar search-results">
       <div class="grid-y medium-grid-frame">
         <div
           class="panel-head">
@@ -50,7 +52,9 @@
           :locations="locations"/>
       </div>
     </aside>
-
+    <button
+      class="button toggleMap hide-for-large"
+      @click.prevent="showMap">Toggle map</button>
     <section class="map">
       <SiteMap
         v-if="activeTab === 'activities'"
@@ -91,7 +95,8 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -154,6 +159,9 @@ export default {
           query: this.query
         })
       }
+    },
+    showMap () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
