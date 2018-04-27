@@ -185,7 +185,7 @@
       </button>
       <button
         v-if="activeFiltersCount > 0"
-        class="button"
+        class="button mlm"
         data-testid="resetFilterButton"
         @click="removeAllFilters">
         Reset filters
