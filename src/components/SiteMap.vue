@@ -78,7 +78,7 @@ export default {
     LocationMarkerPopup
   },
   props: {
-    mapVisibility: {
+    isVisible: {
       type: Boolean,
       default: null
     },
