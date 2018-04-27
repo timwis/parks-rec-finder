@@ -103,7 +103,8 @@
     </aside>
     <button
       class="button toggleMap hide-for-large"
-      @click.prevent="showMap">Toggle map</button>
+      @click.prevent="toggleMap">
+      Toggle map</button>
     <section class="map">
       <SiteMap :location-details="locationDetails"/>
     </section>
@@ -187,7 +188,7 @@ export default {
         this.isLoading = false
       }
     },
-    showMap () {
+    toggleMap () {
       this.isSidebarVisible = !this.isSidebarVisible
     }
   },

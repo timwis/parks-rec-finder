@@ -24,8 +24,7 @@
           <h2
             data-testid="categoryName"
             class="cell">{{ categoryName }}</h2>
-          <ItemCount
-            :count="count" />
+          <ItemCount :count="count" />
           <ActivityFilterControls
             :current-filters="currentFilters"
             @change="setFilters"/>
@@ -36,7 +35,8 @@
     </aside>
     <button
       class="button toggleMap hide-for-large"
-      @click.prevent="showMap">Toggle map</button>
+      @click.prevent="toggleMap">
+      Toggle map</button>
     <section class="map">
       <SiteMap :activities="filteredActivities"/>
     </section>
@@ -109,7 +109,7 @@ export default {
         this.isLoading = false
       }
     },
-    showMap () {
+    toggleMap () {
       this.isSidebarVisible = !this.isSidebarVisible
     }
   },
