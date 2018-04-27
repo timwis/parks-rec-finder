@@ -2,18 +2,18 @@
   <li class="category">
     <router-link
       :to="url"
-      class="category--link">
+      class="link">
       <h3
-        class="category--name">{{ name }}</h3>
+        class="name">{{ name }}</h3>
       <ItemCount
         :count="count" />
       <div
-        class="category--description">
+        class="description">
         {{ description }}
       </div>
       <img
         :src="photo"
-        class="category--photo">
+        class="photo">
     </router-link>
   </li>
 </template>
@@ -67,7 +67,7 @@ export default {
   img
     width: 100%
     height: 100%
-  .category--name
+  .name
     position: absolute
     top: 1rem
     left: 1rem
@@ -75,13 +75,11 @@ export default {
     color: white
     font-weight: bold
     width: 20rem
-
-  .category--photo
+  .photo
     display: block
     opacity: .5
     object-fit: cover
-
-  .category--description
+  .description
     display: none
 
 </style>
