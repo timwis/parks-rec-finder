@@ -4,8 +4,7 @@
       v-if="isSidebarVisible"
       class="sidebar search-results">
       <div class="grid-y medium-grid-frame">
-        <div
-          class="panel-head">
+        <div class="panel-head">
           <h2>Search results</h2>
 
           <div v-if="isLoading">

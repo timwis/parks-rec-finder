@@ -42,7 +42,6 @@
             v-if="locationFullAddress"
             title="Location"
             icon="map-marker">
-            <div class="detail">
               <address>
                 <router-link :to="locationUrl">
                   {{ locationName }}
@@ -53,46 +52,39 @@
               <router-link :to="locationUrl">
                 View this location
               </router-link>
-            </div>
           </DetailSection>
 
           <DetailSection
             v-if="locationPhone"
             title="Contact"
             icon="phone">
-            <div class="detail">
-              <a :href="locationPhoneLink">{{ locationPhone }}</a>
-            </div>
+            <a :href="locationPhoneLink">{{ locationPhone }}</a>
           </DetailSection>
 
           <DetailSection
             v-if="description"
             title="About this activity"
             icon="file-o">
-            <div class="detail">
-              <p>{{ description }}</p>
-            </div>
+            <p>{{ description }}</p>
           </DetailSection>
 
           <DetailSection
             v-if="schedules && schedules.length > 0"
             title="Program schedules"
             icon="calendar">
-            <div class="detail">
-              <div
-                v-for="schedule in schedules"
-                :key="schedule.id">
-                <b>Start Date:</b> {{ schedule.date_from | formatDate }}<br>
-                <b>End Date:</b> {{ schedule.date_to | formatDate }}
-                <table>
-                  <tr
-                    v-for="day in schedule.days"
-                    :key="day.id">
-                    <td>{{ day }}</td>
-                    <td>{{ schedule.time_from | formatTime }} - {{ schedule.time_to | formatTime }}</td>
-                  </tr>
-                </table>
-              </div>
+            <div
+              v-for="schedule in schedules"
+              :key="schedule.id">
+              <b>Start Date:</b> {{ schedule.date_from | formatDate }}<br>
+              <b>End Date:</b> {{ schedule.date_to | formatDate }}
+              <table>
+                <tr
+                  v-for="day in schedule.days"
+                  :key="day.id">
+                  <td>{{ day }}</td>
+                  <td>{{ schedule.time_from | formatTime }} - {{ schedule.time_to | formatTime }}</td>
+                </tr>
+              </table>
             </div>
           </DetailSection>
 
@@ -100,10 +92,7 @@
             v-if="registrationStatus || registrationLink || locationPhone"
             title="Registration information"
             icon="info-circle">
-            <div class="detail">
-              <p>To sign up or learn more, use the contact information above.
-              </p>
-            </div>
+              <p>To sign up or learn more, use the contact information above.</p>
           </DetailSection>
         </div>
       </div>
@@ -218,8 +207,6 @@ export default {
     padding: 1rem 0
   ul li
     padding-right: 1rem
-.detail
-  margin-left: 2rem
 .registration-status
   padding: 1rem
   text-align: center
