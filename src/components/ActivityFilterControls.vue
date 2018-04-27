@@ -265,7 +265,7 @@ export default {
     removeAllFilters () {
       this.filters = this.$options.data().filters
       this.onChange()
-      this.isOpen = !this.isOpen
+      this.isOpen = false
     }
   }
 }
