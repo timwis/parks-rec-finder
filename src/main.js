@@ -11,6 +11,7 @@ import router from './router'
 import { SENTRY_ENDPOINT } from './config'
 
 const IS_PROD = (process.env.NODE_ENV === 'production')
+const mobileHeaderHeight = 139
 
 Vue.config.productionTip = false
 sync(store, router)

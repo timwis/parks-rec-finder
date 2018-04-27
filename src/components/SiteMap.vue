@@ -66,6 +66,8 @@ import { TILES_BASEMAP, TILES_LABELS } from '~/config'
 import ActivityMarkerPopup from '~/components/ActivityMarkerPopup'
 import LocationMarkerPopup from '~/components/LocationMarkerPopup'
 
+const mobileHeaderHeight = 139
+
 // TODO: Think of a better name for this component...
 // Map is a reserved element name in HTML, but
 // SiteMap has a different meaning normally
@@ -123,7 +125,7 @@ export default {
       searchLocationIcon: new L.DivIcon.SVGIcon({
         color: 'orange'
       }),
-      fullHeight: document.documentElement.clientHeight - 139
+      fullHeight: document.documentElement.clientHeight - mobileHeaderHeight
     }
   },
   computed: {
@@ -186,7 +188,7 @@ export default {
   },
   methods: {
     handleResize (event) {
-      this.fullHeight = document.documentElement.clientHeight - 139
+      this.fullHeight = document.documentElement.clientHeight - mobileHeaderHeight
       this.$refs.map.mapObject.invalidateSize()
     }
   }
