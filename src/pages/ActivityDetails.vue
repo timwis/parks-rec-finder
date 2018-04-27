@@ -3,13 +3,19 @@
     <aside
       v-if="isSidebarVisible"
       class="sidebar">
-      <div v-if="isLoading">
-        Loading...
+      <div
+        v-if="isLoading"
+        class="pam center">
+        <font-awesome-icon
+          icon="spinner"
+          spin
+          size="3x"/>
       </div>
       <div
         v-else-if="error"
-        data-testid="error">
-        Error: {{ error }}
+        data-testid="error"
+        class="pam">
+        <b>Error:</b> {{ error }}
       </div>
       <div
         v-else
@@ -42,16 +48,16 @@
             v-if="locationFullAddress"
             title="Location"
             icon="map-marker">
-              <address>
-                <router-link :to="locationUrl">
-                  {{ locationName }}
-                </router-link>
-                <br>
-                {{ locationFullAddress }}
-              </address>
+            <address>
               <router-link :to="locationUrl">
-                View this location
+                {{ locationName }}
               </router-link>
+              <br>
+              {{ locationFullAddress }}
+            </address>
+            <router-link :to="locationUrl">
+              View this location
+            </router-link>
           </DetailSection>
 
           <DetailSection
@@ -92,7 +98,7 @@
             v-if="registrationStatus || registrationLink || locationPhone"
             title="Registration information"
             icon="info-circle">
-              <p>To sign up or learn more, use the contact information above.</p>
+            <p>To sign up or learn more, use the contact information above.</p>
           </DetailSection>
         </div>
       </div>
@@ -111,6 +117,8 @@ import { mapState, mapActions } from 'vuex'
 import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import DetailSection from '~/components/DetailSection'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   concatAddress,
   getAgeRange,
@@ -124,7 +132,8 @@ import {
 export default {
   components: {
     SiteMap,
-    DetailSection
+    DetailSection,
+    FontAwesomeIcon
   },
   filters: {
     formatDate,

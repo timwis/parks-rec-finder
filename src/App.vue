@@ -15,6 +15,12 @@
 <script>
 import SiteHeader from './components/SiteHeader'
 import SiteFooter from './components/SiteFooter'
+import fontawesome from '@fortawesome/fontawesome'
+import solid from '@fortawesome/fontawesome-free-solid'
+import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
+import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
+
+fontawesome.library.add(solid, faSpinner, faMapMarkerAlt)
 
 export default {
   components: {

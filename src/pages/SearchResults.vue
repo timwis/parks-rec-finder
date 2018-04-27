@@ -7,11 +7,19 @@
         <div class="panel-head">
           <h2>Search results</h2>
 
-          <div v-if="isLoading">
-            Loading...
+          <div
+            v-if="isLoading"
+            class="pam center">
+            <font-awesome-icon
+              icon="spinner"
+              spin
+              size="3x"/>
           </div>
-          <div v-else-if="error">
-            Error: {{ error }}
+          <div
+            v-else-if="error"
+            data-testid="error"
+            class="pam">
+            <b>Error:</b> {{ error }}
           </div>
           <div v-else>
             <p data-testid="resultsSummary">
@@ -76,6 +84,7 @@ import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityList from '~/components/ActivityList'
 import LocationList from '~/components/LocationList'
 import TabSwitcher from '~/components/TabSwitcher'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
@@ -83,7 +92,8 @@ export default {
     ActivityFilterControls,
     ActivityList,
     LocationList,
-    TabSwitcher
+    TabSwitcher,
+    FontAwesomeIcon
   },
   props: {
     activeTab: {
