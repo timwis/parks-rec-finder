@@ -20,7 +20,9 @@
     </div>
     <div class="cell auto">
       <p>{{ locationName }}</p>
-      <p>{{ fullAddress }}</p>
+      <p>
+        <address>{{ fullAddress }}</address>
+      </p>
     </div>
   </li>
 </template>

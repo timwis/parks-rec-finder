@@ -11,7 +11,7 @@
           {{ name }}
         </router-link>
       </h3>
-      {{ fullAddress }}
+      <address>{{ fullAddress }}</address>
     </div>
   </li>
 </template>
