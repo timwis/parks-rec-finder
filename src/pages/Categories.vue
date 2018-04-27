@@ -20,11 +20,19 @@
             </section>
           </div>
 
-          <div v-if="isLoading">
-            Loading...
+          <div
+            v-if="isLoading"
+            class="pam center">
+            <font-awesome-icon
+              icon="spinner"
+              spin
+              size="lg"/>
           </div>
-          <div v-else-if="error">
-            Error: {{ error }}
+          <div
+            v-else-if="error"
+            data-testid="error"
+            class="pam">
+            <b>Error:</b> {{ error }}
           </div>
           <div
             v-else
@@ -90,12 +98,14 @@ import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import CategoryListItem from '~/components/CategoryListItem'
 import TabSwitcher from '~/components/TabSwitcher'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
     SiteMap,
     CategoryListItem,
-    TabSwitcher
+    TabSwitcher,
+    FontAwesomeIcon
   },
   props: {
     activeTab: {

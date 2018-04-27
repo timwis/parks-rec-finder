@@ -3,13 +3,19 @@
     <aside
       v-if="isSidebarVisible"
       class="sidebar">
-      <div v-if="isLoading">
-        Loading...
+      <div
+        v-if="isLoading"
+        class="pam center">
+        <font-awesome-icon
+          icon="spinner"
+          spin
+          size="3x"/>
       </div>
       <div
         v-else-if="error"
-        data-testid="error">
-        Error: {{ error }}
+        data-testid="error"
+        class="pam">
+        <b>Error:</b> {{ error }}
       </div>
       <div
         v-else
@@ -17,7 +23,7 @@
         <div class="panel-head location-detail cell shrink medium-cell-block-container align-center grid-x">
           <div class="cell">
             <font-awesome-icon
-              :icon="icon"
+              icon="faMapMarkerAlt"
               size="4x"/>
           </div>
           <h2
@@ -111,7 +117,7 @@ import SiteMap from '~/components/SiteMap'
 import DetailSection from '~/components/DetailSection'
 import ActivityList from '~/components/ActivityList'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
+
 import {
   concatAddress,
   formatPhone,
@@ -153,9 +159,6 @@ export default {
     }),
     directionsUrl () {
       return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
-    },
-    icon () {
-      return faMapMarkerAlt
     }
   },
   watch: {

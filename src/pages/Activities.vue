@@ -3,11 +3,19 @@
     <aside
       v-if="isSidebarVisible"
       class="sidebar">
-      <div v-if="isLoading">
-        Loading...
+      <div
+        v-if="isLoading"
+        class="pam center">
+        <font-awesome-icon
+          icon="spinner"
+          spin
+          size="3x"/>
       </div>
-      <div v-else-if="error">
-        Error: {{ error }}
+      <div
+        v-else-if="error"
+        data-testid="error"
+        class="pam">
+        <b>Error:</b> {{ error }}
       </div>
       <div
         v-else
@@ -42,13 +50,15 @@ import SiteMap from '~/components/SiteMap'
 import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityList from '~/components/ActivityList'
 import ItemCount from '~/components/ItemCount'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
     SiteMap,
     ActivityFilterControls,
     ActivityList,
-    ItemCount
+    ItemCount,
+    FontAwesomeIcon
   },
   data () {
     return {
