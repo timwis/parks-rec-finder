@@ -7,7 +7,7 @@
         class="fa-fw"/>
       {{ title }}
     </h4>
-    <slot/>
+    <div class="detail"><slot/></div>
   </div>
 </template>
 
@@ -35,4 +35,7 @@ export default {
 <style lang="sass">
 .detail-section
   margin-bottom: 2rem
+
+.detail
+  margin-left: 2rem
 </style>
