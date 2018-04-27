@@ -61,7 +61,8 @@
     </aside>
     <button
       class="button toggleMap hide-for-large"
-      @click.prevent="showMap">Toggle map</button>
+      @click.prevent="toggleMap">
+      Toggle map</button>
     <section class="map">
       <SiteMap
         v-if="activeTab === 'activities'"
@@ -169,7 +170,7 @@ export default {
         })
       }
     },
-    showMap () {
+    toggleMap () {
       this.isSidebarVisible = !this.isSidebarVisible
     }
   },
