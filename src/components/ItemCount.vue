@@ -4,14 +4,13 @@
     <div
       class="icon">
       <font-awesome-icon
-        :icon="icon" /></div>
+        icon="map-marker-alt" /></div>
     <span data-testid="count">{{ count }}</span>
   </div>
 </template>
 
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
 
 export default {
   components: {
@@ -21,11 +20,6 @@ export default {
     count: {
       type: Number,
       required: true
-    }
-  },
-  computed: {
-    icon () {
-      return faMapMarkerAlt
     }
   }
 }

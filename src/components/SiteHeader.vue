@@ -15,7 +15,9 @@
     <a
       class="mobile-menu-toggle hide-for-large cell shrink"
       @click.prevent="toggleMobileMenu">
-      <i class="fa fa-bars fa-2x"/>
+      <font-awesome-icon
+        icon="bars"
+        size="2x"/>
     </a>
 
     <div class="page-title-container cell shrink">
@@ -51,7 +53,9 @@
           <button
             type="submit"
             class="cell button small-2">
-            <i class="fa fa-search fa-lg"/>
+            <font-awesome-icon
+              icon="search"
+              size="lg"/>
           </button>
         </div>
       </form>
@@ -96,10 +100,12 @@
 
 <script>
 import HowToUse from './HowToUse'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
-    HowToUse
+    HowToUse,
+    FontAwesomeIcon
   },
   props: {
     searchTerm: {
@@ -176,11 +182,11 @@ input[type="search"]
         margin-left: 0
         h2
           font-size: .85rem
+
 //account for extremely small screens > 360px wide
 @media screen and (max-width: 25.71rem)
   .page-title-container a
     max-width: 17.86rem
-
 
 .mobile-menu-toggle
   color: white

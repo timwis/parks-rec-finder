@@ -6,7 +6,6 @@
       <div class="grid-y medium-grid-frame">
         <div class="panel-head">
           <h2>Search results</h2>
-
           <div
             v-if="isLoading"
             class="pam center">

@@ -2,7 +2,7 @@
   <li class="grid-x grid-padding-x">
     <span class="icon cell small-4">
       <font-awesome-icon
-        :icon="icon"
+        icon="map-marker-alt"
         size="4x"/>
     </span>
     <div class="location-data cell small-18">
@@ -19,7 +19,6 @@
 <script>
 import { concatAddress } from '~/util'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
 
 export default {
   components: {
@@ -44,9 +43,6 @@ export default {
     }
   },
   computed: {
-    icon () {
-      return faMapMarkerAlt
-    },
     fullAddress () {
       return concatAddress(this.address)
     },
