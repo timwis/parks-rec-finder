@@ -50,7 +50,7 @@ export default {
   position: absolute
   top: 0
   background: rgba(0, 0, 0, .5)
-  z-index: 1000
+  z-index: 20000
 
 .how-to-use
   background: white
@@ -58,6 +58,10 @@ export default {
   margin: 0 auto
   padding: 2rem
   color: #444
+  @media screen and (max-width: 39.9375em)
+    width: 100%
+    padding: 1rem
+    height: 100%
 
 .close-button
   float: right
