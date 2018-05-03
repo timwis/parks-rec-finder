@@ -103,6 +103,12 @@ main
 .results-container /deep/ .activities-count .results-container
   overflow: hidden
 
+.panel-head.locations,
+.panel-head.activities
+  + .results-container
+    height: calc(100vh - 14rem)
+
+
 .overflow-wrap
   overflow-wrap: break-word
 
