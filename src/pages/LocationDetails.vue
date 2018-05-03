@@ -23,7 +23,7 @@
         <div class="panel-head location-detail cell shrink medium-cell-block-container align-center grid-x">
           <div class="cell">
             <font-awesome-icon
-              icon="faMapMarkerAlt"
+              icon="map-marker-alt"
               size="4x"/>
           </div>
           <h2

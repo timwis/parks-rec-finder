@@ -38,4 +38,6 @@ export default {
 
 .detail
   margin-left: 2rem
+  .detail
+    margin-left: 0
 </style>

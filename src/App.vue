@@ -16,11 +16,9 @@
 import SiteHeader from './components/SiteHeader'
 import SiteFooter from './components/SiteFooter'
 import fontawesome from '@fortawesome/fontawesome'
-import solid from '@fortawesome/fontawesome-free-solid'
-import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
-import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt'
+import { faMapMarkerAlt, faSpinner, faFilter, faPlus, faMinus,faTimes, faPhone, faImage } from '@fortawesome/fontawesome-free-solid/'
 
-fontawesome.library.add(solid, faSpinner, faMapMarkerAlt)
+fontawesome.library.add(faSpinner, faMapMarkerAlt, faFilter, faPlus, faMinus, faTimes, faPhone, faImage)
 
 export default {
   components: {
@@ -99,7 +97,6 @@ main
   height: calc(100vh - 22rem)
   padding: 1rem
   overflow-y: scroll
-
   @include breakpoint(large)
     height: calc(100vh - 19rem)
 

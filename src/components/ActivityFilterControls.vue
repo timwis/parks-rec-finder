@@ -4,16 +4,21 @@
       data-testid="filterButton"
       class="button cell filter-button"
       @click="isOpen = !isOpen">
-      <i class="fa fa-filter"/>
+      <font-awesome-icon
+        icon="filter"/>
       Filters
       <span
         v-if="!isOpen"
         class="float-right">
-      <i class="fa fa-plus"/></span>
+        <font-awesome-icon
+          icon="plus"/>
+      </span>
       <span
         v-else
         class="float-right">
-      <i class="fa fa-minus"/></span>
+        <font-awesome-icon
+          icon="minus"/>
+      </span>
     </a>
     <div
       v-show="isOpen"
@@ -198,25 +203,36 @@
       <span
         v-if="filters.cost"
         class="label">
-        <a @click="removeFilter('cost')"><i class="fa fa-close"/></a>
+        <a @click="removeFilter('cost')">
+          <font-awesome-icon
+            icon="times"/></a>
         Cost: {{ filters.cost }}
       </span>
       <span
         v-if="filters.age"
         class="label">
-        <a @click="removeFilter('age')"><i class="fa fa-close"/></a>
+        <a @click="removeFilter('age')">
+          <font-awesome-icon
+            icon="times" />
+        </a>
         Age: {{ filters.age }}
       </span>
       <span
         v-if="filters.gender"
         class="label">
-        <a @click="removeFilter('gender')"><i class="fa fa-close"/></a>
+        <a @click="removeFilter('gender')">
+          <font-awesome-icon
+            icon="times" />
+        </a>
         Gender: {{ filters.gender }}
       </span>
       <span
         v-if="filters.days.length > 0"
         class="label">
-        <a @click="removeFilter('days')"><i class="fa fa-close"/></a>
+        <a @click="removeFilter('days')">
+          <font-awesome-icon
+            icon="times" />
+        </a>
         Days: {{ filters.days.join(', ') }}
       </span>
     </div>
@@ -225,8 +241,12 @@
 
 <script>
 import { removeEmptyKeys } from '~/util'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
+  components: {
+    FontAwesomeIcon
+  },
   props: {
     currentFilters: {
       type: Object,
@@ -291,6 +311,6 @@ export default {
 .active-filters
   background: white
   padding: 0 1rem 1rem 1rem
-.fa-close
+.fa-times
   color: white
 </style>
