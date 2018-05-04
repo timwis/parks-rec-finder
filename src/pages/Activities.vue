@@ -25,11 +25,10 @@
             data-testid="categoryName"
             class="cell">{{ categoryName }}</h2>
           <ItemCount :count="count" />
-          <ActivityFilterControls
-            :current-filters="currentFilters"
-            @change="setFilters"/>
         </div>
-
+        <ActivityFilterControls
+          :current-filters="currentFilters"
+          @change="setFilters"/>
         <ActivityList :activities="filteredActivities"/>
       </div>
     </aside>
