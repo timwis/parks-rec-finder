@@ -1,5 +1,7 @@
 <template>
-  <div class="filter-controls cell">
+  <div
+    v-bind:class="{ open: isOpen }"
+    class="filter-controls cell">
     <a
       data-testid="filterButton"
       class="button cell filter-button"
@@ -24,177 +26,179 @@
       v-show="isOpen"
       data-testid="filterControls"
       class="overlay cell">
-      <div class="grid-x">
-        <div class="cell medium-12">
-          <fieldset @change="onChange">
-            <legend class="h4">Cost</legend>
+      <div class="filter-content">
+        <div class="grid-x">
+          <div class="cell small-12">
+            <fieldset @change="onChange">
+              <legend class="h4">Cost</legend>
 
-            <input
-              id="all-costs"
-              v-model="filters.cost"
-              type="radio"
-              name="cost"
-              value="">
-            <label for="all-costs">All costs</label>
+              <input
+                id="all-costs"
+                v-model="filters.cost"
+                type="radio"
+                name="cost"
+                value="">
+              <label for="all-costs">All costs</label>
 
-            <input
-              id="free"
-              v-model="filters.cost"
-              type="radio"
-              name="cost"
-              value="free"
-              data-testid="filterCostFree">
-            <label for="free">Free</label>
-          </fieldset>
+              <input
+                id="free"
+                v-model="filters.cost"
+                type="radio"
+                name="cost"
+                value="free"
+                data-testid="filterCostFree">
+              <label for="free">Free</label>
+            </fieldset>
 
-          <fieldset @change="onChange">
-            <legend class="h4">Age range</legend>
+            <fieldset @change="onChange">
+              <legend class="h4">Age range</legend>
 
-            <input
-              id="all-ages"
-              v-model="filters.age"
-              type="radio"
-              name="age"
-              value="">
-            <label for="all-ages">All ages</label>
+              <input
+                id="all-ages"
+                v-model="filters.age"
+                type="radio"
+                name="age"
+                value="">
+              <label for="all-ages">All ages</label>
 
-            <input
-              id="tots"
-              v-model="filters.age"
-              type="radio"
-              name="age"
-              value="2-5">
-            <label for="tots">Tots (2-5 or younger)</label>
+              <input
+                id="tots"
+                v-model="filters.age"
+                type="radio"
+                name="age"
+                value="2-5">
+              <label for="tots">Tots (2-5 or younger)</label>
 
-            <input
-              id="youth"
-              v-model="filters.age"
-              name="age"
-              type="radio"
-              value="6-12">
-            <label for="youth">Youth (6-12)</label>
+              <input
+                id="youth"
+                v-model="filters.age"
+                name="age"
+                type="radio"
+                value="6-12">
+              <label for="youth">Youth (6-12)</label>
 
-            <input
-              id="teen"
-              v-model="filters.age"
-              name="age"
-              type="radio"
-              value="13-19">
-            <label for="teen">Teen (13-19)</label>
+              <input
+                id="teen"
+                v-model="filters.age"
+                name="age"
+                type="radio"
+                value="13-19">
+              <label for="teen">Teen (13-19)</label>
 
-            <input
-              id="adult"
-              v-model="filters.age"
-              name="age"
-              type="radio"
-              value="20-55">
-            <label for="adult">Adult (20-55)</label>
+              <input
+                id="adult"
+                v-model="filters.age"
+                name="age"
+                type="radio"
+                value="20-55">
+              <label for="adult">Adult (20-55)</label>
 
-            <input
-              id="senior"
-              v-model="filters.age"
-              name="age"
-              type="radio"
-              value="56-">
-            <label for="senior">Senior (56+)</label>
-          </fieldset>
+              <input
+                id="senior"
+                v-model="filters.age"
+                name="age"
+                type="radio"
+                value="56-">
+              <label for="senior">Senior (56+)</label>
+            </fieldset>
+          </div>
+          <div class="cell small-12">
+            <fieldset @change="onChange">
+              <legend class="h4">Gender</legend>
+
+              <input
+                id="all-genders"
+                v-model="filters.gender"
+                name="gender"
+                type="radio"
+                value="">
+              <label for="all-genders">All genders</label>
+
+              <input
+                id="male"
+                v-model="filters.gender"
+                name="gender"
+                type="radio"
+                value="male">
+              <label for="male">Male</label>
+
+              <input
+                id="female"
+                v-model="filters.gender"
+                name="gender"
+                type="radio"
+                value="female">
+              <label for="female">Female</label>
+            </fieldset>
+
+            <fieldset @change="onChange">
+              <legend class="h4">Show activities on these days</legend>
+              <div class="columns">
+                <input
+                  id="sunday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Sunday">
+                <label for="sunday">Sunday</label>
+
+                <input
+                  id="monday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Monday">
+                <label for="monday">Monday</label>
+
+                <input
+                  id="tuesday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Tuesday">
+                <label for="tuesday">Tuesday</label>
+
+                <input
+                  id="wednesday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Wednesday">
+                <label for="wednesday">Wednesday</label>
+
+                <input
+                  id="thursday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Thursday">
+                <label for="thursday">Thursday</label>
+
+                <input
+                  id="friday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Friday">
+                <label for="friday">Friday</label>
+
+                <input
+                  id="saturday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Saturday">
+                <label for="saturday">Saturday</label>
+              </div>
+            </fieldset>
+          </div>
         </div>
-        <div class="cell medium-12">
-          <fieldset @change="onChange">
-            <legend class="h4">Gender</legend>
-
-            <input
-              id="all-genders"
-              v-model="filters.gender"
-              name="gender"
-              type="radio"
-              value="">
-            <label for="all-genders">All genders</label>
-
-            <input
-              id="male"
-              v-model="filters.gender"
-              name="gender"
-              type="radio"
-              value="male">
-            <label for="male">Male</label>
-
-            <input
-              id="female"
-              v-model="filters.gender"
-              name="gender"
-              type="radio"
-              value="female">
-            <label for="female">Female</label>
-          </fieldset>
-
-          <fieldset @change="onChange">
-            <legend class="h4">Show activities on these days</legend>
-            <div class="columns">
-              <input
-                id="sunday"
-                v-model="filters.days"
-                type="checkbox"
-                value="Sunday">
-              <label for="sunday">Sunday</label>
-
-              <input
-                id="monday"
-                v-model="filters.days"
-                type="checkbox"
-                value="Monday">
-              <label for="monday">Monday</label>
-
-              <input
-                id="tuesday"
-                v-model="filters.days"
-                type="checkbox"
-                value="Tuesday">
-              <label for="tuesday">Tuesday</label>
-
-              <input
-                id="wednesday"
-                v-model="filters.days"
-                type="checkbox"
-                value="Wednesday">
-              <label for="wednesday">Wednesday</label>
-
-              <input
-                id="thursday"
-                v-model="filters.days"
-                type="checkbox"
-                value="Thursday">
-              <label for="thursday">Thursday</label>
-
-              <input
-                id="friday"
-                v-model="filters.days"
-                type="checkbox"
-                value="Friday">
-              <label for="friday">Friday</label>
-
-              <input
-                id="saturday"
-                v-model="filters.days"
-                type="checkbox"
-                value="Saturday">
-              <label for="saturday">Saturday</label>
-            </div>
-          </fieldset>
-        </div>
+        <button
+          class="button"
+          @click="isOpen = !isOpen">
+          Close
+        </button>
+        <button
+          v-if="activeFiltersCount > 0"
+          class="button mlm"
+          data-testid="resetFilterButton"
+          @click="removeAllFilters">
+          Reset filters
+        </button>
       </div>
-      <button
-        class="button"
-        @click="isOpen = !isOpen">
-        Close
-      </button>
-      <button
-        v-if="activeFiltersCount > 0"
-        class="button mlm"
-        data-testid="resetFilterButton"
-        @click="removeAllFilters">
-        Reset filters
-      </button>
     </div>
     <div
       v-show="!isOpen && activeFiltersCount > 0"
@@ -291,9 +295,12 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.filter-controls
-  position: relative
+.filter-controls.open
+  position: absolute
   z-index: 20
+  top: 3.8rem
+  bottom: 0
+  width: 100%
 .overlay
   background: #f0f0f0
   height: 100vh
@@ -308,6 +315,8 @@ export default {
 .filter-button
   background: $secondary
   text-align: left
+.filter-content
+  height: calc(100vh + 12rem)
 .active-filters
   background: white
   padding: 0 1rem 1rem 1rem
