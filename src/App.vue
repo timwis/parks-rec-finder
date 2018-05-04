@@ -16,7 +16,7 @@
 import SiteHeader from './components/SiteHeader'
 import SiteFooter from './components/SiteFooter'
 import fontawesome from '@fortawesome/fontawesome'
-import { faMapMarkerAlt, faSpinner, faFilter, faPlus, faMinus,faTimes, faPhone, faImage } from '@fortawesome/fontawesome-free-solid/'
+import { faMapMarkerAlt, faSpinner, faFilter, faPlus, faMinus, faTimes, faPhone, faImage } from '@fortawesome/fontawesome-free-solid/'
 
 fontawesome.library.add(faSpinner, faMapMarkerAlt, faFilter, faPlus, faMinus, faTimes, faPhone, faImage)
 
@@ -102,12 +102,12 @@ main
 
 .results-container /deep/ .activities-count .results-container
   overflow: hidden
+  padding: 0
 
 .panel-head.locations,
 .panel-head.activities
   + .results-container
     height: calc(100vh - 14rem)
-
 
 .overflow-wrap
   overflow-wrap: break-word
