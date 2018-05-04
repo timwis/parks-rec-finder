@@ -19,9 +19,9 @@
           </li>
           <li>
             <a
-              @click.prevent="feedbackPopup"
               href=""
-              class="link-dark-bg text-upper">Feedback
+              class="link-dark-bg text-upper"
+              @click.prevent="feedbackPopup">Feedback
             </a>
           </li>
         </ul>
