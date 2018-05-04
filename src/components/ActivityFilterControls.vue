@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind:class="{ open: isOpen }"
+    :class="{ open: isOpen }"
     class="filter-controls cell">
     <a
       data-testid="filterButton"
