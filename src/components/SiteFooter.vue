@@ -19,7 +19,8 @@
           </li>
           <li>
             <a
-              href="javascript:void(window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500'))"
+              @click.prevent="feedbackPopup"
+              href=""
               class="link-dark-bg text-upper">Feedback
             </a>
           </li>
@@ -50,6 +51,9 @@ export default {
     },
     closeModal () {
       this.isModalVisible = false
+    },
+    feedbackPopup () {
+      return window.open('https://form.jotform.com/80085833214150', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500')
     }
   }
 }
