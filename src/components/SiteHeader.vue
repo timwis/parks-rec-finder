@@ -46,16 +46,17 @@
           <input
             ref="searchLocation"
             :value="searchLocation"
-            class="cell small-10"
+            class="cell small-9 medium-10"
             type="search"
             placeholder="Address or zip code"
             data-testid="searchLocation">
           <button
             type="submit"
-            class="cell button small-2">
+            class="cell button small-3 medium-2 submit">
             <font-awesome-icon
               icon="search"
-              size="lg"/>
+              size="lg"
+              fixed-width />
           </button>
         </div>
       </form>
@@ -205,4 +206,8 @@ input[type="search"]
     li
       border-bottom: 1px solid white
       padding: 1rem
+.submit
+  height: 38px
+  @media screen and (max-width: 39.9375em)
+    height: 39px
 </style>
