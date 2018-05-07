@@ -61,7 +61,8 @@
     <button
       class="button toggleMap hide-for-large"
       @click.prevent="toggleMap">
-      Toggle map</button>
+      Toggle map
+    </button>
     <section class="map">
       <SiteMap
         v-if="activeTab === 'activities'"

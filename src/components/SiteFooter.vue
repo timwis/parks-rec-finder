@@ -2,7 +2,7 @@
   <div>
     <HowToUse
       :visibility="isModalVisible"
-      @close="closeModal" />
+      @close="closeModal"/>
     <footer class="app-footer show-for-large">
       <nav>
         <ul class="inline-list">

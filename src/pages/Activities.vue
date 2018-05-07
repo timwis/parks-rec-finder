@@ -35,7 +35,8 @@
     <button
       class="button toggleMap hide-for-large"
       @click.prevent="toggleMap">
-      Toggle map</button>
+      Toggle map
+    </button>
     <section class="map">
       <SiteMap :activities="filteredActivities"/>
     </section>
@@ -125,6 +126,7 @@ export default {
   +fixed-header($activities)
   color: white
   position: relative
+
 h2
   padding: 0 1rem
 </style>

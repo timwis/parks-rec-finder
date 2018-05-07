@@ -23,8 +23,7 @@
         <div
           class="panel-head locations cell shrink medium-cell-block-container">
           <h2 data-testid="categoryName">{{ categoryName }}</h2>
-          <ItemCount
-            :count="count" />
+          <ItemCount :count="count"/>
         </div>
         <LocationList :locations="locations"/>
       </div>
@@ -32,7 +31,8 @@
     <button
       class="button toggleMap hide-for-large"
       @click.prevent="toggleMap">
-      Toggle map</button>
+      Toggle map
+    </button>
     <section class="map">
       <SiteMap :locations="locations"/>
     </section>

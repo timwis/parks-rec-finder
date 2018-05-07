@@ -3,10 +3,8 @@
     <router-link
       :to="url"
       class="link">
-      <h3
-        class="name">{{ name }}</h3>
-      <ItemCount
-        :count="count" />
+      <h3 class="name">{{ name }}</h3>
+      <ItemCount :count="count"/>
       <div
         class="description">
         {{ description }}
