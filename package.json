@@ -14,7 +14,7 @@
     "test:headless": "start-server-and-test test:headless:serve http-get://localhost:8080 test:headless:run",
     "test:headless:serve": "serve --port 8080 dist",
     "test:headless:run": "cypress run",
-    "lint": "eslint 'src/**/*.{js,vue}' test"
+    "lint": "eslint '*.js' 'src/**/*.{js,vue}' test"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.4",
