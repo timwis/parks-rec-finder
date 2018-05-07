@@ -42,6 +42,7 @@ export default {
 
 .is-indented
   margin-left: 2rem
+
   .detail
     margin-left: 0
 </style>

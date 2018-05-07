@@ -65,9 +65,10 @@ export default {
   bottom: 0
   z-index: 50000
   text-transform: uppercase
-  nav
-    ul
-      margin-left: 0
-      li
-        border-left-color: white !important
+
+  nav ul
+    margin-left: 0
+
+    li
+      border-left-color: white !important
 </style>

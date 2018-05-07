@@ -24,7 +24,7 @@
           <h2
             data-testid="categoryName"
             class="cell">{{ categoryName }}</h2>
-          <ItemCount :count="count" />
+          <ItemCount :count="count"/>
         </div>
         <ActivityFilterControls
           :current-filters="currentFilters"

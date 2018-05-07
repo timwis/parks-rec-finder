@@ -64,9 +64,11 @@ export default {
   margin-bottom: 1rem
   background: black
   height: 280px
+
   img
     width: 100%
     height: 100%
+
   .name
     position: absolute
     top: 1rem
@@ -75,11 +77,12 @@ export default {
     color: white
     font-weight: bold
     width: 20rem
+
   .photo
     display: block
     opacity: .5
     object-fit: cover
+
   .description
     display: none
-
 </style>

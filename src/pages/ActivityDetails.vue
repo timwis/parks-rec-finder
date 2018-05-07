@@ -212,15 +212,19 @@ export default {
   +fixed-header($activities)
   text-align: center
   padding: 1rem
+
   @media screen and (max-width: 39.9375em)
     padding: .5rem
+
   h2
     font-weight: bold
     padding: 1rem 0
     @media screen and (max-width: 39.9375em)
       padding: 0
+
   ul li
     padding-right: 1rem
+
 .registration-status
   padding: 1rem
   text-align: center

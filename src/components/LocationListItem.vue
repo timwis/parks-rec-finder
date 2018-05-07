@@ -55,12 +55,15 @@ export default {
 <style lang="sass" scoped>
 .icon
   color: $locations
+
 .location-data
   display: inline-block
+
 li
   margin-bottom: 1rem
   padding-bottom: 1rem
   border-bottom: 1px solid black
+
   &:last-child
     border-bottom: none
 </style>
