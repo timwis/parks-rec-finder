@@ -6,8 +6,7 @@
       <button
         class="close-button"
         @click="close">
-        <font-awesome-icon
-          icon="times" />
+        <font-awesome-icon icon="times"/>
       </button>
       <h2 class="text-center ">How to use the finder</h2>
       <div class="modal-content">
@@ -30,6 +29,7 @@
     </section>
   </div>
 </template>
+
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
@@ -51,6 +51,7 @@ export default {
   }
 }
 </script>
+
 <style lang="sass" scoped>
 .overlay
   width: 100%
@@ -74,5 +75,4 @@ export default {
 
 .close-button
   float: right
-
 </style>

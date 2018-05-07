@@ -50,7 +50,6 @@
       :lat-lng="searchLocationGeometry"
       :icon="searchLocationIcon"
       data-testid="searchLocationGeometry"/>
-
   </LMap>
 </template>
 

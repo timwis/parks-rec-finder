@@ -8,7 +8,7 @@
       class="cell"
       @search="onSearch"/>
     <router-view class="cell auto"/>
-    <SiteFooter />
+    <SiteFooter/>
   </div>
 </template>
 

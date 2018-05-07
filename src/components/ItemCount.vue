@@ -1,10 +1,8 @@
 <template>
-  <div
-    class="item-count">
-    <div
-      class="icon">
-      <font-awesome-icon
-        icon="map-marker-alt" /></div>
+  <div class="item-count">
+    <div class="icon">
+      <font-awesome-icon icon="map-marker-alt"/>
+    </div>
     <span data-testid="count">{{ count }}</span>
   </div>
 </template>
@@ -24,6 +22,7 @@ export default {
   }
 }
 </script>
+
 <style lang="sass" scoped>
 .item-count
   position: absolute

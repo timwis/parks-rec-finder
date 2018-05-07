@@ -12,7 +12,7 @@
           class="cell auto">Ages:<br> {{ ageRange }}</div>
         <div
           v-if="gender"
-          class="cell auto" >Gender:<br> {{ gender }}</div>
+          class="cell auto">Gender:<br> {{ gender }}</div>
         <div
           v-if="feeDescription"
           class="cell auto">Cost:<br> {{ feeDescription }}</div>

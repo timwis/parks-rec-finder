@@ -56,7 +56,7 @@
             <font-awesome-icon
               icon="search"
               size="lg"
-              fixed-width />
+              fixed-width/>
           </button>
         </div>
       </form>
@@ -96,7 +96,7 @@
     </div>
     <HowToUse
       :visibility="isModalVisible"
-      @close="closeModal" />
+      @close="closeModal"/>
   </header>
 </template>
 
