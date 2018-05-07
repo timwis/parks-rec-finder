@@ -104,7 +104,7 @@
       </div>
     </aside>
     <button
-      class="button toggleMap hide-for-large"
+      class="button toggle-map hide-for-large"
       @click.prevent="toggleMap">
       Toggle map
     </button>

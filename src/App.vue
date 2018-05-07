@@ -79,9 +79,6 @@ main
       overflow-y: hidden
 
   .map
-    &.mapVisible
-      display: block
-
     @include xy-cell(24, false)
     width: 100%
     height: 100%
@@ -124,7 +121,7 @@ table
 h2
   font-weight: bold
 
-.toggleMap
+.toggle-map
   width: 100%
   position: fixed
   bottom: 0
