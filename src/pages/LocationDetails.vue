@@ -35,25 +35,19 @@
             v-if="fullAddress"
             title="Location"
             icon="map-marker">
-            <div class="detail">
-              <address>{{ fullAddress }}</address>
-            </div>
-            <div class="detail">
-              <a
-                :href="directionsUrl"
-                class="external">
-                Get directions
-              </a>
-            </div>
+            <address>{{ fullAddress }}</address>
+            <a
+              :href="directionsUrl"
+              class="external">
+              Get directions
+            </a>
           </DetailSection>
 
           <DetailSection
             v-if="phone"
             title="Contact"
             icon="phone">
-            <div class="detail">
-              <a :href="phoneLink">{{ phone }}</a>
-            </div>
+            <a :href="phoneLink">{{ phone }}</a>
           </DetailSection>
 
           <!-- <DetailSection
@@ -69,7 +63,7 @@
             v-if="schedules && schedules.length > 0"
             title="Regular hours"
             icon="clock-o">
-            <table class="detail">
+            <table>
               <tr
                 v-for="schedule in schedules"
                 :key="schedule.id">
@@ -88,12 +82,13 @@
             v-if="description"
             title="About this location"
             icon="file-o">
-            <div class="detail">{{ description }}</div>
+            {{ description }}
           </DetailSection>
 
           <DetailSection
             v-if="activities && activities.length > 0"
             :title="activities.length + ' activities offered here'"
+            :is-indented="false"
             data-testid="activitiesCount"
             class="activities-count">
             <ActivityList :activities="activities"/>
@@ -204,7 +199,4 @@ export default {
   +fixed-header($locations)
   text-align: center
   padding: 1rem
-.detail
-  margin: 0 1rem 0 2rem
-
 </style>
