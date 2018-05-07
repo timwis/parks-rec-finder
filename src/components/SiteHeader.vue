@@ -155,6 +155,7 @@ export default {
 input[type="search"]
   margin-bottom: 0
   font-size: 1rem
+
   @media screen and (max-width: 39.9375em)
     font-size: .85rem
 
@@ -163,6 +164,7 @@ input[type="search"]
 
 .page-title
   font-weight: bold
+
 .page-subtitle
   font-weight: normal
 
@@ -171,24 +173,28 @@ input[type="search"]
     .logo
         img
           max-width: 200px
+
     .app-divide
       min-height: 5rem
       margin: 0
+
     .page-title-container h1
       font-size: 2rem
 
-//clean up display on very small screens
+// clean up display on very small screens
 @media screen and (max-width: 39.9375em)
   #application
     .site-header
       padding: .5rem 0
+
       .page-title-container
         margin-bottom: .5rem
         margin-left: 0
+
         h2
           font-size: .85rem
 
-//account for extremely small screens > 360px wide
+// account for extremely small screens > 360px wide
 @media screen and (max-width: 25.71rem)
   .page-title-container a
     max-width: 17.86rem
@@ -199,19 +205,25 @@ input[type="search"]
 .mobile-menu
   width: 100%
   height: 100vh
+
   a:link, a:visited
     color: white
     text-transform: uppercase
+
   a:hover, a:active
     color: #25cef7
+
   ul
     margin-top: 2rem
     border-top: 1px solid white
+
     li
       border-bottom: 1px solid white
       padding: 1rem
+
 .submit
   height: 38px
+
   @media screen and (max-width: 39.9375em)
     height: 39px
 </style>

@@ -167,8 +167,8 @@ function categoryCountReducer (accumulator, category) {
   +fixed-header(white)
   padding: 1rem
   color: #444
+
   h2
     font-weight: bold
     line-height: 1rem
-
 </style>

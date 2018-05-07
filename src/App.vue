@@ -72,7 +72,7 @@ main
     @include breakpoint(large)
       @include xy-cell(8, false)
       @include xy-cell-block(true)
-      //foundation xy-cell includes with margins: false fail to remove width calc for gutters, so we're overriding
+      // foundation xy-cell includes with margins: false fail to remove width calc for gutters, so we're overriding
       width: 33.33333%
       position: relative
       height: 100%

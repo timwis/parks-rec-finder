@@ -66,6 +66,7 @@ export default {
   margin: 0 auto
   padding: 2rem
   color: #444
+
   @media screen and (max-width: 39.9375em)
     width: 100%
     padding: 1rem

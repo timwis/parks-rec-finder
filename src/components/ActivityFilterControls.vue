@@ -301,6 +301,7 @@ export default {
   top: 3.8rem
   bottom: 0
   width: 100%
+
 .overlay
   background: #f0f0f0
   height: 100vh
@@ -308,18 +309,24 @@ export default {
   padding: 0 1rem 1rem 1rem
   overflow-y: scroll
   position: absolute
+
 .h4
   padding: 1rem 0 0 0
+
 [type='checkbox'] + label, [type='radio'] + label
   display: block
+
 .filter-button
   background: $secondary
   text-align: left
+
 .filter-content
   height: calc(100vh + 12rem)
+
 .active-filters
   background: white
   padding: 0 1rem 1rem 1rem
+
 .fa-times
   color: white
 </style>

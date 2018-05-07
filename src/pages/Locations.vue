@@ -115,5 +115,4 @@ export default {
     +fixed-header($locations)
     padding: 0 1rem
     position: relative
-
 </style>

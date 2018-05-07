@@ -94,11 +94,12 @@ export default {
 <style lang="sass" scoped>
 .activity-list-item
   font-size: .9rem
+
 li
   border-bottom: 1px solid black
   margin-bottom: 1rem
   padding-bottom: 1rem
+
   &:last-child
     border-bottom: none
-
 </style>

@@ -33,6 +33,7 @@ export default {
   z-index: 9
   background: white
   color: #444
+
   .icon
     display: inline-block
     padding: 0 1rem 0 0

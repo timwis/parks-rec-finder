@@ -187,7 +187,7 @@ export default {
 <style lang="sass" scoped>
 .panel-head
   padding: 1rem
+
 h2
   margin-top: 0
-
 </style>
