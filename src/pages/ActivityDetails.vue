@@ -202,7 +202,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: `${this.categoryName} Activities`
+      title: this.name
     }
   }
 }
