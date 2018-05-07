@@ -7,7 +7,7 @@
         class="fa-fw"/>
       {{ title }}
     </h4>
-    <div class="detail"><slot/></div>
+    <div :class="{'is-indented': isIndented}"><slot/></div>
   </div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    isIndented: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -36,7 +40,7 @@ export default {
 .detail-section
   margin-bottom: 2rem
 
-.detail
+.is-indented
   margin-left: 2rem
   .detail
     margin-left: 0
