@@ -111,8 +111,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .panel-head.locations
-    +fixed-header($locations)
-    padding: 0 1rem
-    position: relative
+.panel-head.locations
+  +fixed-header($locations)
+  position: relative
+  color: white
+
+h2
+  padding: 0 1rem
 </style>
