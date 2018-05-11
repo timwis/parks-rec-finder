@@ -91,20 +91,17 @@ main
         display: block
 
 .results-container
-  height: calc(100vh - 22rem)
+  height: calc(100vh - 18rem)
   padding: 1rem
   overflow-y: scroll
-  @include breakpoint(large)
-    height: calc(100vh - 19rem)
 
 .results-container /deep/ .activities-count .results-container
   overflow: hidden
   padding: 0
 
-.panel-head.locations,
-.panel-head.activities
-  + .results-container
-    height: calc(100vh - 14rem)
+.panel-head.activities,
+.panel-head.locations
+  padding-bottom: 1rem
 
 .overflow-wrap
   overflow-wrap: break-word
