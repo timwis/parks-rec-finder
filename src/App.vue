@@ -97,7 +97,6 @@ main
   @include breakpoint(large)
     height: calc(100vh - 18rem)
 
-
 .results-container /deep/ .activities-count .results-container
   overflow: hidden
   padding: 0
