@@ -289,10 +289,9 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.filter-controls.open
-  position: absolute
+.filter-controls
+  position: relative
   z-index: 20
-  top: 3.8rem
   bottom: 0
   width: 100%
 
@@ -319,7 +318,8 @@ export default {
 
 .active-filters
   background: white
-  padding: 0 1rem 1rem 1rem
+  padding: 0 1rem 0 1rem
+  height: 3rem
 
 .fa-times
   color: white
