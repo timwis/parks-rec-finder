@@ -74,7 +74,7 @@ export default {
     z-index: 9
     color: white
     font-weight: bold
-    width: 20rem
+    width: 16rem
 
   .photo
     display: block
