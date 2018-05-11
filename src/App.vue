@@ -91,9 +91,12 @@ main
         display: block
 
 .results-container
-  height: calc(100vh - 18rem)
+  height: calc(100vh - 19rem)
   padding: 1rem
   overflow-y: scroll
+  @include breakpoint(large)
+    height: calc(100vh - 18rem)
+
 
 .results-container /deep/ .activities-count .results-container
   overflow: hidden
