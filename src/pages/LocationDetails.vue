@@ -30,7 +30,7 @@
             data-testid="name"
             class="cell">{{ name }}</h2>
         </div>
-        <div class="results-container">
+        <div class="location-detail-results-container">
           <DetailSection
             v-if="fullAddress"
             title="Location"
@@ -200,4 +200,9 @@ export default {
   +fixed-header($locations)
   text-align: center
   padding: 1rem
+
+.location-detail-results-container
+  height: 100vh
+  padding: 1rem
+  overflow-y: scroll
 </style>

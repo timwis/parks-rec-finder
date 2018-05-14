@@ -97,9 +97,10 @@ main
   @include breakpoint(large)
     height: calc(100vh - 18rem)
 
-.results-container /deep/ .activities-count .results-container
-  overflow: hidden
+.location-detail-results-container /deep/ .activities-count .results-container
+  height: 100%
   padding: 0
+  margin-bottom: 10rem
 
 .panel-head.activities,
 .panel-head.locations
