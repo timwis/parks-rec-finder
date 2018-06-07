@@ -2,7 +2,7 @@
   <LPopup>
     <h3>{{ name }}</h3>
     <div v-if="phone">
-      <font-awesome-icon icon="phone"/>
+      <FontAwesomeIcon icon="phone"/>
       {{ phone | formatPhone }}
     </div>
     <router-link

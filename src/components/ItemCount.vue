@@ -1,7 +1,7 @@
 <template>
   <div class="item-count">
     <div class="icon">
-      <font-awesome-icon icon="map-marker-alt"/>
+      <FontAwesomeIcon icon="map-marker-alt"/>
     </div>
     <span data-testid="count">{{ count }}</span>
   </div>

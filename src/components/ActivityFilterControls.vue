@@ -6,17 +6,17 @@
       data-testid="filterButton"
       class="button cell filter-button"
       @click="isOpen = !isOpen">
-      <font-awesome-icon icon="filter"/>
+      <FontAwesomeIcon icon="filter"/>
       Filters
       <span
         v-if="!isOpen"
         class="float-right">
-        <font-awesome-icon icon="plus"/>
+        <FontAwesomeIcon icon="plus"/>
       </span>
       <span
         v-else
         class="float-right">
-        <font-awesome-icon icon="minus"/>
+        <FontAwesomeIcon icon="minus"/>
       </span>
     </a>
     <div
@@ -205,7 +205,7 @@
         v-if="filters.cost"
         class="label">
         <a @click="removeFilter('cost')">
-          <font-awesome-icon icon="times"/>
+          <FontAwesomeIcon icon="times"/>
         </a>
         Cost: {{ filters.cost }}
       </span>
@@ -213,7 +213,7 @@
         v-if="filters.age"
         class="label">
         <a @click="removeFilter('age')">
-          <font-awesome-icon icon="times"/>
+          <FontAwesomeIcon icon="times"/>
         </a>
         Age: {{ filters.age }}
       </span>
@@ -221,7 +221,7 @@
         v-if="filters.gender"
         class="label">
         <a @click="removeFilter('gender')">
-          <font-awesome-icon icon="times"/>
+          <FontAwesomeIcon icon="times"/>
         </a>
         Gender: {{ filters.gender }}
       </span>
@@ -229,7 +229,7 @@
         v-if="filters.days.length > 0"
         class="label">
         <a @click="removeFilter('days')">
-          <font-awesome-icon icon="times"/>
+          <FontAwesomeIcon icon="times"/>
         </a>
         Days: {{ filters.days.join(', ') }}
       </span>
@@ -320,7 +320,4 @@ export default {
   background: white
   padding: 0 1rem 0 1rem
   height: 3rem
-
-.fa-times
-  color: white
 </style>
