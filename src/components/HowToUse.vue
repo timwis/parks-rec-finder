@@ -22,7 +22,10 @@
           <b>Browse by Category.</b>
           <p>Select one of the pictured categories.</p>
         </div>
-        <p>Once you get results, you can <b><i class="fa-xs fa-filter fa"/> filter</b> by age, fee, gender, and day of week to narrow down your search.</p>
+        <p>
+          Once you get results, you can <b><FontAwesomeIcon icon="filter"/> filter</b>
+          by age, fee, gender, and day of week to narrow down your search.
+        </p>
       </div>
     </section>
   </div>
