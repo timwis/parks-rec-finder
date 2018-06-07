@@ -294,6 +294,8 @@ export default class Carto {
         ) * ${METERS_TO_MILES_RATIO}
       `, 'distance')
       query.order('distance')
+    } else {
+      query.order('name')
     }
 
     return this.request(query)
