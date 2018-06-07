@@ -244,6 +244,8 @@ export default class Carto {
         ) * ${METERS_TO_MILES_RATIO}
       `, 'distance')
       query.order('distance')
+    } else {
+      query.order('name')
     }
     if (locationId) {
       query.where('ppr_programs.facility->>0 = @', locationId)
