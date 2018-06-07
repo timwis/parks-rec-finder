@@ -23,7 +23,7 @@
           <div
             v-if="isLoading"
             class="pam center">
-            <font-awesome-icon
+            <FontAwesomeIcon
               icon="spinner"
               spin
               size="lg"/>

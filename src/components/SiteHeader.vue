@@ -15,7 +15,7 @@
     <a
       class="mobile-menu-toggle hide-for-large cell shrink"
       @click.prevent="toggleMobileMenu">
-      <font-awesome-icon
+      <FontAwesomeIcon
         icon="bars"
         size="2x"/>
     </a>
@@ -53,7 +53,7 @@
           <button
             type="submit"
             class="cell button small-3 medium-2 submit">
-            <font-awesome-icon
+            <FontAwesomeIcon
               icon="search"
               size="lg"
               fixed-width/>

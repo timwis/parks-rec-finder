@@ -1,7 +1,7 @@
 <template>
   <li class="grid-x grid-padding-x">
     <span class="icon cell small-4">
-      <font-awesome-icon
+      <FontAwesomeIcon
         icon="map-marker-alt"
         size="4x"/>
     </span>
