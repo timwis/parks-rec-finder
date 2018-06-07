@@ -132,13 +132,6 @@
               <legend class="h4">Show activities on these days</legend>
               <div class="columns">
                 <input
-                  id="sunday"
-                  v-model="filters.days"
-                  type="checkbox"
-                  value="Sunday">
-                <label for="sunday">Sunday</label>
-
-                <input
                   id="monday"
                   v-model="filters.days"
                   type="checkbox"
@@ -179,6 +172,13 @@
                   type="checkbox"
                   value="Saturday">
                 <label for="saturday">Saturday</label>
+
+                <input
+                  id="sunday"
+                  v-model="filters.days"
+                  type="checkbox"
+                  value="Sunday">
+                <label for="sunday">Sunday</label>
               </div>
             </fieldset>
           </div>
