@@ -41,12 +41,12 @@
               <router-link
                 slot="activities"
                 to="/activities">
-                Activities ({{ activitiesCount }})
+                Activities
               </router-link>
               <router-link
                 slot="locations"
                 to="/locations">
-                Locations ({{ locationsCount }})
+                Locations
               </router-link>
             </TabSwitcher>
           </div>
@@ -119,18 +119,10 @@ export default {
       isLoading: false
     }
   },
-  computed: {
-    ...mapState([
-      'activityCategories',
-      'locationCategories'
-    ]),
-    activitiesCount () {
-      return this.activityCategories.reduce(categoryCountReducer, 0)
-    },
-    locationsCount () {
-      return this.locationCategories.reduce(categoryCountReducer, 0)
-    }
-  },
+  computed: mapState([
+    'activityCategories',
+    'locationCategories'
+  ]),
   created () {
     this.fetch()
   },
@@ -155,10 +147,6 @@ export default {
       }
     }
   }
-}
-
-function categoryCountReducer (accumulator, category) {
-  return accumulator + category.count
 }
 </script>
 
