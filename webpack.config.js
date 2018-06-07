@@ -52,6 +52,12 @@ module.exports = {
                     path.resolve(__dirname, './node_modules/foundation-sites/scss')
                   ]
                 }
+              },
+              {
+                loader: 'sass-resources-loader',
+                options: {
+                  resources: path.resolve(__dirname, './src/style/_variables.scss')
+                }
               }
             ],
             'sass': [
@@ -64,6 +70,12 @@ module.exports = {
                   includePaths: [
                     path.resolve(__dirname, './node_modules/foundation-sites/scss')
                   ]
+                }
+              },
+              {
+                loader: 'sass-resources-loader',
+                options: {
+                  resources: path.resolve(__dirname, './src/style/_variables.scss')
                 }
               }
             ]

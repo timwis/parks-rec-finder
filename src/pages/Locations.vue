@@ -1,19 +1,38 @@
 <template>
   <main>
-    <aside class="list">
-      <div v-if="isLoading">
-        Loading...
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar">
+      <div
+        v-if="isLoading"
+        class="pam center">
+        <font-awesome-icon
+          icon="spinner"
+          spin
+          size="3x"/>
       </div>
-      <div v-else-if="error">
-        Error: {{ error }}
+      <div
+        v-else-if="error"
+        data-testid="error"
+        class="pam">
+        <b>Error:</b> {{ error }}
       </div>
-      <div v-else>
-        <h2 data-testid="categoryName">{{ categoryName }}</h2>
-        <p data-testid="count">({{ count }})</p>
-
+      <div
+        v-else
+        class="grid-y medium-grid-frame">
+        <div
+          class="panel-head locations cell shrink medium-cell-block-container">
+          <h2 data-testid="categoryName">{{ categoryName }}</h2>
+          <ItemCount :count="count"/>
+        </div>
         <LocationList :locations="locations"/>
       </div>
     </aside>
+    <button
+      class="button toggle-map hide-for-large"
+      @click.prevent="toggleMap">
+      Toggle map
+    </button>
     <section class="map">
       <SiteMap :locations="locations"/>
     </section>
@@ -25,16 +44,21 @@ import { mapState, mapActions } from 'vuex'
 import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import LocationList from '~/components/LocationList'
+import ItemCount from '~/components/ItemCount'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
     SiteMap,
-    LocationList
+    LocationList,
+    ItemCount,
+    FontAwesomeIcon
   },
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -73,6 +97,9 @@ export default {
       } finally {
         this.isLoading = false
       }
+    },
+    toggleMap () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
@@ -82,3 +109,13 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.panel-head.locations
+  +fixed-header($locations)
+  position: relative
+  color: white
+
+h2
+  padding: 0 1rem
+</style>

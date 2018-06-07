@@ -1,15 +1,27 @@
 <template>
-  <li>
-    <h3>
-      <router-link :to="url">
-        {{ name }}
-      </router-link>
-    </h3>
-    <p>{{ locationName }}</p>
-    <p>{{ fullAddress }}</p>
-    <p v-if="ageRange">Ages: {{ ageRange }}</p>
-    <p v-if="feeDescription">Cost: {{ feeDescription }}</p>
-    <p v-if="gender">Gender: {{ gender }}</p>
+  <li class="activity-list-item grid-x grid-padding-x">
+    <div class="cell small-14">
+      <h3 class="overflow-wrap">
+        <router-link :to="url">
+          {{ name }}
+        </router-link>
+      </h3>
+      <div class="grid-x">
+        <div
+          v-if="ageRange"
+          class="cell auto">Ages:<br> {{ ageRange }}</div>
+        <div
+          v-if="gender"
+          class="cell auto">Gender:<br> {{ gender }}</div>
+        <div
+          v-if="feeDescription"
+          class="cell auto">Cost:<br> {{ feeDescription }}</div>
+      </div>
+    </div>
+    <div class="cell auto">
+      <p>{{ locationName }}</p>
+      <address>{{ fullAddress }}</address>
+    </div>
   </li>
 </template>
 
@@ -79,3 +91,15 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.activity-list-item
+  font-size: .9rem
+
+li
+  border-bottom: 1px solid black
+  margin-bottom: 1rem
+  padding-bottom: 1rem
+
+  &:last-child
+    border-bottom: none
+</style>

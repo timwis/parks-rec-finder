@@ -2,7 +2,7 @@
   <LPopup>
     <h3>{{ name }}</h3>
     <div v-if="phone">
-      <i class="fa fa-phone"/>
+      <font-awesome-icon icon="phone"/>
       {{ phone | formatPhone }}
     </div>
     <router-link
@@ -16,10 +16,12 @@
 <script>
 import { LPopup } from 'vue2-leaflet'
 import { formatPhone } from '~/util'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
-    LPopup
+    LPopup,
+    FontAwesomeIcon
   },
   filters: {
     formatPhone

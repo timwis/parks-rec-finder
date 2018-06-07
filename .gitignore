@@ -12,4 +12,4 @@ yarn-error.log
 *.sln
 
 # unused cypress directories
-test/videos
+tests/e2e/videos

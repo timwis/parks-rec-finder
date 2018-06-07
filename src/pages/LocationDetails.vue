@@ -1,77 +1,106 @@
 <template>
-  <main>
-    <aside class="list">
-      <div v-if="isLoading">
-        Loading...
+  <main class="location-detail-container">
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar">
+      <div
+        v-if="isLoading"
+        class="pam center">
+        <font-awesome-icon
+          icon="spinner"
+          spin
+          size="3x"/>
       </div>
       <div
         v-else-if="error"
-        data-testid="error">
-        Error: {{ error }}
+        data-testid="error"
+        class="pam">
+        <b>Error:</b> {{ error }}
       </div>
-      <div v-else>
-        <h2 data-testid="name">{{ name }}</h2>
-
-        <DetailSection
-          v-if="fullAddress"
-          title="Location"
-          icon="map-marker">
-          <address>{{ fullAddress }}</address>
-          <p>
+      <div
+        v-else
+        class="grid-y medium-grid-frame">
+        <div class="panel-head location-detail cell shrink medium-cell-block-container align-center grid-x">
+          <div class="cell">
+            <font-awesome-icon
+              icon="map-marker-alt"
+              size="4x"/>
+          </div>
+          <h2
+            data-testid="name"
+            class="cell">{{ name }}</h2>
+        </div>
+        <div class="location-detail-results-container">
+          <DetailSection
+            v-if="fullAddress"
+            title="Location"
+            icon="map-marker">
+            <address>{{ fullAddress }}</address>
             <a
               :href="directionsUrl"
               class="external">
               Get directions
             </a>
-          </p>
-        </DetailSection>
+          </DetailSection>
 
-        <DetailSection
-          v-if="phone"
-          title="Contact"
-          icon="phone">
-          <a :href="phoneLink">{{ phone }}</a>
-        </DetailSection>
+          <DetailSection
+            v-if="phone"
+            title="Contact"
+            icon="phone">
+            <a :href="phoneLink">{{ phone }}</a>
+          </DetailSection>
 
-        <DetailSection
-          v-if="siteContact"
-          title="Site contact"
-          icon="person">
-          {{ siteContact }}
-        </DetailSection>
+          <!-- <DetailSection
+            v-if="siteContact"
+            title="Site contact"
+            icon="user">
+            <div class="detail">
+              {{ siteContact }}
+            </div>
+          </DetailSection> -->
 
-        <DetailSection
-          v-if="schedules && schedules.length > 0"
-          title="Regular hours"
-          icon="clock-o">
-          <ul
-            v-for="schedule in schedules"
-            :key="schedule.id">
-            <li>
-              {{ schedule.days | formatDaysList }}
-              from
-              <time>{{ schedule.time_from | formatTime }}</time>
-              to
-              <time>{{ schedule.time_to | formatTime }}</time>
-            </li>
-          </ul>
-        </DetailSection>
+          <DetailSection
+            v-if="schedules && schedules.length > 0"
+            title="Regular hours"
+            icon="clock-o">
+            <table>
+              <tr
+                v-for="schedule in schedules"
+                :key="schedule.id">
+                <td>
+                  {{ schedule.days | formatDaysList }}
+                </td>
+                <td>
+                  <time>{{ schedule.time_from | formatTime }}</time> -
+                  <time>{{ schedule.time_to | formatTime }}</time>
+                </td>
+              </tr>
+            </table>
+          </DetailSection>
 
-        <DetailSection
-          v-if="description"
-          title="About this location"
-          icon="file-o">
-          <p>{{ description }}</p>
-        </DetailSection>
+          <DetailSection
+            v-if="description"
+            title="About this location"
+            icon="file-o">
+            {{ description }}
+          </DetailSection>
 
-        <DetailSection
-          v-if="activities && activities.length > 0"
-          :title="activities.length + ' activities offered here'"
-          data-testid="activitiesCount">
-          <ActivityList :activities="activities"/>
-        </DetailSection>
+          <DetailSection
+            v-if="activities && activities.length > 0"
+            :title="activities.length + ' activities offered here'"
+            :is-indented="false"
+            data-testid="activitiesCount"
+            class="activities-count">
+            <ActivityList :activities="activities"/>
+          </DetailSection>
+        </div>
       </div>
     </aside>
+    <button
+      class="button toggle-map hide-for-large"
+      @click.prevent="toggleMap">
+      Toggle map
+    </button>
     <section class="map">
       <SiteMap :location-details="locationDetails"/>
     </section>
@@ -84,6 +113,8 @@ import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import DetailSection from '~/components/DetailSection'
 import ActivityList from '~/components/ActivityList'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   concatAddress,
   formatPhone,
@@ -96,7 +127,8 @@ export default {
   components: {
     SiteMap,
     DetailSection,
-    ActivityList
+    ActivityList,
+    FontAwesomeIcon
   },
   filters: {
     formatTime,
@@ -105,7 +137,8 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -150,6 +183,9 @@ export default {
       } finally {
         this.isLoading = false
       }
+    },
+    toggleMap () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
@@ -159,3 +195,14 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.location-detail
+  +fixed-header($locations)
+  text-align: center
+  padding: 1rem
+
+.location-detail-results-container
+  height: 100vh
+  padding: 1rem
+  overflow-y: scroll
+</style>

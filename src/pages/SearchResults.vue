@@ -1,44 +1,55 @@
 <template>
   <main>
-    <aside class="list">
-      <h2>Search results</h2>
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar search-results">
+      <div class="grid-y medium-grid-frame">
+        <div class="panel-head">
+          <h2>Search results</h2>
+          <div
+            v-if="isLoading"
+            class="pam center">
+            <font-awesome-icon
+              icon="spinner"
+              spin
+              size="3x"/>
+          </div>
+          <div
+            v-else-if="error"
+            data-testid="error"
+            class="pam">
+            <b>Error:</b> {{ error }}
+          </div>
+          <div v-else>
+            <p data-testid="resultsSummary">
+              Showing {{ count }} results
+              <span v-if="searchTerm">
+                for <b>{{ searchTerm }}</b>
+              </span>
+              <span v-if="searchLocation">
+                near <b>{{ searchLocation }}</b>
+              </span>
+            </p>
+          </div>
+          <TabSwitcher :active-tab="activeTab">
+            <router-link
+              slot="activities"
+              :to="{ path: '/search/activities', query }">
+              Activities ({{ filteredActivities.length }})
+            </router-link>
+            <router-link
+              slot="locations"
+              :to="{ path: '/search/locations', query }">
+              Locations ({{ locations.length }})
+            </router-link>
+          </TabSwitcher>
 
-      <div v-if="isLoading">
-        Loading...
-      </div>
-      <div v-else-if="error">
-        Error: {{ error }}
-      </div>
-      <div v-else>
-        <p data-testid="resultsSummary">
-          Showing {{ count }} results
-          <span v-if="searchTerm">
-            for <b>{{ searchTerm }}</b>
-          </span>
-          <span v-if="searchLocation">
-            near <b>{{ searchLocation }}</b>
-          </span>
-        </p>
-
-        <TabSwitcher :active-tab="activeTab">
-          <router-link
-            slot="activities"
-            :to="{ path: '/search/activities', query }">
-            Activities ({{ filteredActivities.length }})
-          </router-link>
-          <router-link
-            slot="locations"
-            :to="{ path: '/search/locations', query }">
-            Locations ({{ locations.length }})
-          </router-link>
-        </TabSwitcher>
-
+        </div>
         <div v-if="activeTab === 'activities'">
           <ActivityFilterControls
             v-if="activities.length > 0"
             :current-filters="currentFilters"
             @change="setFilters"/>
-
           <ActivityList :activities="filteredActivities"/>
         </div>
 
@@ -47,6 +58,11 @@
           :locations="locations"/>
       </div>
     </aside>
+    <button
+      class="button toggle-map hide-for-large"
+      @click.prevent="toggleMap">
+      Toggle map
+    </button>
     <section class="map">
       <SiteMap
         v-if="activeTab === 'activities'"
@@ -69,6 +85,7 @@ import ActivityFilterControls from '~/components/ActivityFilterControls'
 import ActivityList from '~/components/ActivityList'
 import LocationList from '~/components/LocationList'
 import TabSwitcher from '~/components/TabSwitcher'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
@@ -76,7 +93,8 @@ export default {
     ActivityFilterControls,
     ActivityList,
     LocationList,
-    TabSwitcher
+    TabSwitcher,
+    FontAwesomeIcon
   },
   props: {
     activeTab: {
@@ -87,7 +105,8 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -150,6 +169,9 @@ export default {
           query: this.query
         })
       }
+    },
+    toggleMap () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
@@ -163,3 +185,10 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+.panel-head
+  padding: 1rem
+
+h2
+  margin-top: 0
+</style>

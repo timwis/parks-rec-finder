@@ -1,0 +1,10 @@
+$locations: #a5097e
+$activities: #2176d2
+$secondary: #c9e3ff
+
+=fixed-header($background)
+  color: white
+  display: inline-flex
+  flex-direction: row
+  z-index: 10
+  background: $background

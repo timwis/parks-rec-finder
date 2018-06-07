@@ -3,10 +3,11 @@
     <h4>
       <i
         v-if="icon"
-        :class="iconClass"/>
+        :class="iconClass"
+        class="fa-fw"/>
       {{ title }}
     </h4>
-    <slot/>
+    <div :class="{'is-indented': isIndented}"><slot/></div>
   </div>
 </template>
 
@@ -20,6 +21,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    isIndented: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -31,7 +36,13 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 .detail-section
-  margin-bottom: 10px
+  margin-bottom: 2rem
+
+.is-indented
+  margin-left: 2rem
+
+  .detail
+    margin-left: 0
 </style>

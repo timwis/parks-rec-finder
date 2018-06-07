@@ -1,100 +1,113 @@
 <template>
-  <main>
-    <aside class="list">
-      <div v-if="isLoading">
-        Loading...
+  <main class="activity-detail-container">
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar">
+      <div
+        v-if="isLoading"
+        class="pam center">
+        <font-awesome-icon
+          icon="spinner"
+          spin
+          size="3x"/>
       </div>
       <div
         v-else-if="error"
-        data-testid="error">
-        Error: {{ error }}
+        data-testid="error"
+        class="pam">
+        <b>Error:</b> {{ error }}
       </div>
-      <div v-else>
-        <h2 data-testid="name">{{ name }}</h2>
-
-        <ul>
-          <li v-if="ageRange">Age: {{ ageRange }}</li>
-          <li v-if="gender">Gender: {{ gender }}</li>
-          <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
-        </ul>
-
-        <DetailSection
-          v-if="locationFullAddress"
-          title="Location"
-          icon="map-marker">
-          <address>
-            <router-link :to="locationUrl">
-              {{ locationName }}
-            </router-link>
-            <br>
-            {{ locationFullAddress }}
-          </address>
-          <router-link :to="locationUrl">
-            View this location
-          </router-link>
-        </DetailSection>
-
-        <DetailSection
-          v-if="locationPhone"
-          title="Contact"
-          icon="phone">
-          <a :href="locationPhoneLink">{{ locationPhone }}</a>
-        </DetailSection>
-
-        <DetailSection
-          v-if="description"
-          title="About this activity"
-          icon="file-o">
-          <p>{{ description }}</p>
-        </DetailSection>
-
-        <DetailSection
-          v-if="schedules && schedules.length > 0"
-          title="Schedules"
-          icon="calendar">
-          <ul
-            v-for="schedule in schedules"
-            :key="schedule.id">
-            <li>
-              Between
-              <time :datetime="schedule.date_from">
-                {{ schedule.date_from | formatDate }}
-              </time>
-              and
-              <time :datetime="schedule.date_to">
-                {{ schedule.date_to | formatDate }}
-              </time>
-              on
-              {{ schedule.days | formatDaysList }}
-              from
-              <time>{{ schedule.time_from | formatTime }}</time>
-              to
-              <time>{{ schedule.time_to | formatTime }}</time>
-            </li>
+      <div
+        v-else
+        class="grid-y medium-grid-frame">
+        <div class="panel-head activity-detail grid-x align-center">
+          <h2
+            class="cell"
+            data-testid="name">{{ name }}</h2>
+          <ul class="cell inline-list">
+            <li v-if="ageRange">Age: {{ ageRange }}</li>
+            <li v-if="gender">Gender: {{ gender }}</li>
+            <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
           </ul>
-        </DetailSection>
+        </div>
+        <div class="results-container">
+          <div class="registration-status">
+            <p v-if="registrationStatus">
+              <b>Registration</b> - {{ registrationStatus }}
+            </p>
+            <p v-if="registrationLink">
+              To sign up visit
+              <a
+                :href="registrationLink"
+                class="external">
+                {{ registrationLink }}
+              </a>
+            </p>
+          </div>
+          <DetailSection
+            v-if="locationFullAddress"
+            title="Location"
+            icon="map-marker">
+            <address>
+              <router-link :to="locationUrl">
+                {{ locationName }}
+              </router-link>
+              <br>
+              {{ locationFullAddress }}
+            </address>
+            <router-link :to="locationUrl">
+              View this location
+            </router-link>
+          </DetailSection>
 
-        <DetailSection
-          v-if="registrationStatus || registrationLink || locationPhone"
-          title="Registration"
-          icon="info-circle">
-          <p v-if="registrationStatus">
-            Status: <em>{{ registrationStatus }}</em>
-          </p>
-          <p v-if="registrationLink">
-            To sign up visit
-            <a
-              :href="registrationLink"
-              class="external">
-              {{ registrationLink }}
-            </a>
-          </p>
-          <p v-else>
-            To sign up or learn more, use the contact information listed above!
-          </p>
-        </DetailSection>
+          <DetailSection
+            v-if="locationPhone"
+            title="Contact"
+            icon="phone">
+            <a :href="locationPhoneLink">{{ locationPhone }}</a>
+          </DetailSection>
+
+          <DetailSection
+            v-if="description"
+            title="About this activity"
+            icon="file-o">
+            <p>{{ description }}</p>
+          </DetailSection>
+
+          <DetailSection
+            v-if="schedules && schedules.length > 0"
+            title="Program schedules"
+            icon="calendar">
+            <div
+              v-for="schedule in schedules"
+              :key="schedule.id">
+              <b>Start Date:</b> {{ schedule.date_from | formatDate }}<br>
+              <b>End Date:</b> {{ schedule.date_to | formatDate }}
+              <table>
+                <tr
+                  v-for="day in schedule.days"
+                  :key="day.id">
+                  <td>{{ day }}</td>
+                  <td>{{ schedule.time_from | formatTime }} - {{ schedule.time_to | formatTime }}</td>
+                </tr>
+              </table>
+            </div>
+          </DetailSection>
+
+          <DetailSection
+            v-if="registrationStatus || registrationLink || locationPhone"
+            title="Registration information"
+            icon="info-circle">
+            <p>To sign up or learn more, use the contact information above.</p>
+          </DetailSection>
+        </div>
       </div>
     </aside>
+    <button
+      class="button toggle-map hide-for-large"
+      @click.prevent="toggleMap">
+      Toggle map
+    </button>
     <section class="map">
       <SiteMap :activity-details="activityDetails"/>
     </section>
@@ -106,6 +119,8 @@ import { mapState, mapActions } from 'vuex'
 import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import DetailSection from '~/components/DetailSection'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 import {
   concatAddress,
   getAgeRange,
@@ -119,7 +134,8 @@ import {
 export default {
   components: {
     SiteMap,
-    DetailSection
+    DetailSection,
+    FontAwesomeIcon
   },
   filters: {
     formatDate,
@@ -129,7 +145,8 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -179,6 +196,9 @@ export default {
       } finally {
         this.isLoading = false
       }
+    },
+    toggleMap () {
+      this.isSidebarVisible = !this.isSidebarVisible
     }
   },
   metaInfo () {
@@ -188,3 +208,25 @@ export default {
   }
 }
 </script>
+<style lang="sass">
+.panel-head.activity-detail
+  +fixed-header($activities)
+  text-align: center
+  padding: 1rem
+
+  @media screen and (max-width: 39.9375em)
+    padding: .5rem
+
+  h2
+    font-weight: bold
+    padding: 1rem 0
+    @media screen and (max-width: 39.9375em)
+      padding: 0
+
+  ul li
+    padding-right: 1rem
+
+.registration-status
+  padding: 1rem
+  text-align: center
+</style>

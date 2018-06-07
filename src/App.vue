@@ -8,15 +8,22 @@
       class="cell"
       @search="onSearch"/>
     <router-view class="cell auto"/>
+    <SiteFooter/>
   </div>
 </template>
 
 <script>
 import SiteHeader from './components/SiteHeader'
+import SiteFooter from './components/SiteFooter'
+import fontawesome from '@fortawesome/fontawesome'
+import { faMapMarkerAlt, faSpinner, faFilter, faPlus, faMinus, faTimes, faPhone, faImage } from '@fortawesome/fontawesome-free-solid/'
+
+fontawesome.library.add(faSpinner, faMapMarkerAlt, faFilter, faPlus, faMinus, faTimes, faPhone, faImage)
 
 export default {
   components: {
-    SiteHeader
+    SiteHeader,
+    SiteFooter
   },
   computed: {
     searchTerm () {
@@ -54,10 +61,69 @@ $fa-font-path: "~font-awesome/fonts"
 main
   @include xy-grid(horizontal)
 
-  .list
-    @include xy-cell(8)
-    @include xy-cell-block(true)
+  .sidebar
+    min-height: 100vh
+    position: fixed
+    background: white
+    z-index: 15000
+    @include xy-cell(24, false)
+    width: 100%
+
+    @include breakpoint(large)
+      @include xy-cell(8, false)
+      @include xy-cell-block(true)
+      // foundation xy-cell includes with margins: false fail to remove width calc for gutters, so we're overriding
+      width: 33.33333%
+      position: relative
+      height: 100%
+      overflow-y: hidden
 
   .map
-    @include xy-cell(16, false, 0)
+    @include xy-cell(24, false)
+    width: 100%
+    height: 100%
+
+    @include breakpoint(large)
+      @include xy-cell(16, false)
+      width: 66.66667%
+
+      @include breakpoint(large)
+        display: block
+
+.results-container
+  height: calc(100vh - 19rem)
+  padding: 1rem
+  overflow-y: scroll
+  @include breakpoint(large)
+    height: calc(100vh - 18rem)
+
+.location-detail-results-container /deep/ .activities-count .results-container
+  height: 100%
+  padding: 0
+  margin-bottom: 10rem
+
+.panel-head.activities,
+.panel-head.locations
+  padding-bottom: 1rem
+
+.overflow-wrap
+  overflow-wrap: break-word
+
+address
+  font-style: normal
+
+table
+  background: #f0f0f0
+  width: auto
+  td
+    padding: .5rem
+
+h2
+  font-weight: bold
+
+.toggle-map
+  width: 100%
+  position: fixed
+  bottom: 0
+  z-index: 15000
 </style>

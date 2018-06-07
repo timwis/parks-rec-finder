@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <ul>
+  <div class="cell medium-cell-block-y medium-cell-block-container results-container">
+    <ul class="no-bullet">
       <ActivityListItem
         v-for="activity in activities"
         :key="activity.id"

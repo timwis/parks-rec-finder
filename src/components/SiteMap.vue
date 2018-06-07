@@ -2,7 +2,8 @@
   <LMap
     ref="map"
     :zoom="defaultZoom"
-    :center="defaultCenter">
+    :center="defaultCenter"
+    :style="{height: fullHeight + 'px'}">
     <LTileLayer
       :url="basemap"
       :tile-layer-class="esriTileLayer"/>
@@ -49,7 +50,6 @@
       :lat-lng="searchLocationGeometry"
       :icon="searchLocationIcon"
       data-testid="searchLocationGeometry"/>
-
   </LMap>
 </template>
 
@@ -65,6 +65,8 @@ import { TILES_BASEMAP, TILES_LABELS } from '~/config'
 import ActivityMarkerPopup from '~/components/ActivityMarkerPopup'
 import LocationMarkerPopup from '~/components/LocationMarkerPopup'
 
+const headerHeight = 134
+
 // TODO: Think of a better name for this component...
 // Map is a reserved element name in HTML, but
 // SiteMap has a different meaning normally
@@ -77,6 +79,10 @@ export default {
     LocationMarkerPopup
   },
   props: {
+    isVisible: {
+      type: Boolean,
+      default: null
+    },
     activities: {
       type: Array,
       default: null
@@ -117,7 +123,8 @@ export default {
       }),
       searchLocationIcon: new L.DivIcon.SVGIcon({
         color: 'orange'
-      })
+      }),
+      fullHeight: document.documentElement.clientHeight - headerHeight
     }
   },
   computed: {
@@ -170,6 +177,18 @@ export default {
         const geometries = [ this.locationDetails.geometry ]
         this.$refs.map.fitBounds(geometries)
       }
+    }
+  },
+  mounted () {
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy  () {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  methods: {
+    handleResize (event) {
+      this.fullHeight = document.documentElement.clientHeight - headerHeight
+      this.$refs.map.mapObject.invalidateSize()
     }
   }
 }

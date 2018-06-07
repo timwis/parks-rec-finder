@@ -1,63 +1,91 @@
 <template>
   <main>
-    <aside class="list">
-      <section v-if="activeTab === 'activities'">
-        <h2>Things to do</h2>
-        <p>Choose a category from the list below to find an activity.</p>
-      </section>
+    <aside class="sidebar">
+      <div class="grid-y medium-grid-frame">
+        <div class="panel-head grid-x">
+          <div
+            v-if="activeTab === 'activities'"
+            class="activities cell">
+            <section>
+              <h2>Things to do</h2>
+              <p>Choose a category from the list below to find an activity.</p>
+            </section>
+          </div>
+          <div
+            v-else-if="activeTab === 'locations'"
+            class="locations cell">
+            <section>
+              <h2>Places to go</h2>
+              <p>Choose a category from the list below to explore our locations.</p>
+            </section>
+          </div>
 
-      <section v-else-if="activeTab === 'locations'">
-        <h2>Places to go</h2>
-        <p>Choose a category from the list below to explore our locations.</p>
-      </section>
+          <div
+            v-if="isLoading"
+            class="pam center">
+            <font-awesome-icon
+              icon="spinner"
+              spin
+              size="lg"/>
+          </div>
+          <div
+            v-else-if="error"
+            data-testid="error"
+            class="pam">
+            <b>Error:</b> {{ error }}
+          </div>
+          <div
+            v-else
+            class="cell">
+            <TabSwitcher :active-tab="activeTab">
+              <router-link
+                slot="activities"
+                to="/activities">
+                Activities ({{ activitiesCount }})
+              </router-link>
+              <router-link
+                slot="locations"
+                to="/locations">
+                Locations ({{ locationsCount }})
+              </router-link>
+            </TabSwitcher>
+          </div>
+        </div>
 
-      <div v-if="isLoading">
-        Loading...
-      </div>
-      <div v-else-if="error">
-        Error: {{ error }}
-      </div>
-      <div v-else>
-        <TabSwitcher :active-tab="activeTab">
-          <router-link
-            slot="activities"
-            to="/activities">
-            Activities ({{ activitiesCount }})
-          </router-link>
-          <router-link
-            slot="locations"
-            to="/locations">
-            Locations ({{ locationsCount }})
-          </router-link>
-        </TabSwitcher>
+        <div class="cell medium-cell-block-y medium-cell-block-container results-container">
+          <ul
+            v-if="activeTab === 'activities'"
+            data-testid="activityCategories"
+            class="no-bullet">
+            <CategoryListItem
+              v-for="category in activityCategories"
+              :key="category.id"
+              :name="category.name"
+              :count="category.count"
+              :photo="category.photo"
+              :slug="category.slug"
+              :description="category.description"
+              url-prefix="activities"/>
+          </ul>
 
-        <ul
-          v-if="activeTab === 'activities'"
-          data-testid="activityCategories">
-          <CategoryListItem
-            v-for="category in activityCategories"
-            :key="category.id"
-            :name="category.name"
-            :count="category.count"
-            :photo="category.photo"
-            :slug="category.slug"
-            url-prefix="activities"/>
-        </ul>
-
-        <ul
-          v-if="activeTab === 'locations'"
-          data-testid="locationCategories">
-          <CategoryListItem
-            v-for="category in locationCategories"
-            :key="category.id"
-            :name="category.name"
-            :count="category.count"
-            :photo="category.photo"
-            :slug="category.slug"
-            url-prefix="locations"/>
-        </ul>
+          <ul
+            v-if="activeTab === 'locations'"
+            data-testid="locationCategories"
+            class="no-bullet">
+            <CategoryListItem
+              v-for="category in locationCategories"
+              :key="category.id"
+              :name="category.name"
+              :count="category.count"
+              :photo="category.photo"
+              :slug="category.slug"
+              :description="category.description"
+              url-prefix="locations"/>
+          </ul>
+        </div>
       </div>
     </aside>
+
     <section class="map">
       <SiteMap/>
     </section>
@@ -70,12 +98,14 @@ import Raven from 'raven-js'
 import SiteMap from '~/components/SiteMap'
 import CategoryListItem from '~/components/CategoryListItem'
 import TabSwitcher from '~/components/TabSwitcher'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   components: {
     SiteMap,
     CategoryListItem,
-    TabSwitcher
+    TabSwitcher,
+    FontAwesomeIcon
   },
   props: {
     activeTab: {
@@ -131,3 +161,14 @@ function categoryCountReducer (accumulator, category) {
   return accumulator + category.count
 }
 </script>
+
+<style lang="sass" scoped>
+.panel-head
+  +fixed-header(white)
+  padding: 1rem
+  color: #444
+
+  h2
+    font-weight: bold
+    line-height: 1rem
+</style>

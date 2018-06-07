@@ -36,7 +36,15 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.leaflet-container a
+  color: #0f4d90
+
+.leaflet-container a:hover
+  color: #444
+
 ul
+  margin-left: .5rem
+  font-family: "Open Sans"
   max-height: 150px
   overflow-y: auto
 </style>
