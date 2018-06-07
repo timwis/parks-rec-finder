@@ -155,7 +155,8 @@ export default {
       activities: (state) => state.locationDetails.activities
     }),
     directionsUrl () {
-      return `https://www.google.com/maps/dir/?api=1&query=${this.fullAddress}`
+      const encodedAddress = encodeURIComponent(this.fullAddress)
+      return `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`
     }
   },
   watch: {
