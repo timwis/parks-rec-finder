@@ -269,6 +269,7 @@ export default class Carto {
       .field('json_build_array(ST_Y(ppr_website_locatorpoints.the_geom), ST_X(ppr_website_locatorpoints.the_geom))', 'geometry')
       .from('ppr_facilities')
       .join('ppr_website_locatorpoints', null, 'ppr_website_locatorpoints.linkid = ppr_facilities.website_locator_points_link_id')
+      .where('facility_is_published = true')
 
     if (categoryId) {
       query.where('ppr_facilities.location_type ? @', categoryId) // '?' is jsonb operator; '@' is substitution param
