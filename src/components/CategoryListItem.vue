@@ -83,4 +83,12 @@ export default {
 
   .description
     display: none
+
+  @media screen and (max-width: 39.9375em)
+    .category
+      max-height: 200px
+
+    img
+      max-height: 200px
+
 </style>
