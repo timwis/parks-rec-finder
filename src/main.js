@@ -25,7 +25,7 @@ Vue.use(VueMq, {
   breakpoints: {
     sm: '39.9375em',
     md: '63.9375em',
-    lg: Infinity,
+    lg: Infinity
   }
 })
 

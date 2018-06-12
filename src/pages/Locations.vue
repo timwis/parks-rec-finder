@@ -34,8 +34,9 @@
       Toggle map
     </button>
     <section class="map">
-      <SiteMap :locations="locations"
-        v-if="$mq == 'lg' || !isSidebarVisible"/>
+      <SiteMap
+        v-if="$mq == 'lg' || !isSidebarVisible"
+        :locations="locations"/>
     </section>
   </main>
 </template>

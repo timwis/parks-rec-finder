@@ -38,8 +38,9 @@
       Toggle map
     </button>
     <section class="map">
-      <SiteMap :activities="filteredActivities"
-        v-if="$mq == 'lg' || !isSidebarVisible"/>
+      <SiteMap
+        v-if="$mq == 'lg' || !isSidebarVisible"
+        :activities="filteredActivities"/>
     </section>
   </main>
 </template>
@@ -59,13 +60,13 @@ export default {
     ActivityFilterControls,
     ActivityList,
     ItemCount,
-    FontAwesomeIcon,
+    FontAwesomeIcon
   },
   data () {
     return {
       error: null,
       isLoading: false,
-      isSidebarVisible: true,
+      isSidebarVisible: true
     }
   },
   computed: {
@@ -110,7 +111,7 @@ export default {
         this.isLoading = false
       }
     },
-    toggleMap (){
+    toggleMap () {
       this.isSidebarVisible = !this.isSidebarVisible
     }
   },
