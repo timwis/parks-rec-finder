@@ -92,8 +92,9 @@ main
 
 .results-container
   height: calc(100vh - 19rem)
-  padding: 1rem
+  padding: .5rem 1rem
   overflow-y: scroll
+
   @include breakpoint(large)
     height: calc(100vh - 18rem)
 

@@ -189,6 +189,9 @@ export default {
 .panel-head
   padding: 1rem
 
+  @media screen and (max-width: 39.9375em)
+    padding: .5rem 1rem
+
 h2
   margin-top: 0
 </style>
