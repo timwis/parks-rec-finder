@@ -109,7 +109,8 @@
       Toggle map
     </button>
     <section class="map">
-      <SiteMap :activity-details="activityDetails"/>
+      <SiteMap :activity-details="activityDetails"
+        v-if="$mq == 'lg' || !isSidebarVisible"/>
     </section>
   </main>
 </template>
@@ -212,14 +213,13 @@ export default {
 .panel-head.activity-detail
   +fixed-header($activities)
   text-align: center
-  padding: 1rem
+  padding: 0 5px
 
   @media screen and (max-width: 39.9375em)
     padding: .5rem
 
   h2
     font-weight: bold
-    padding: 1rem 0
     @media screen and (max-width: 39.9375em)
       padding: 0
 

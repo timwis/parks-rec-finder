@@ -65,11 +65,11 @@
     </button>
     <section class="map">
       <SiteMap
-        v-if="activeTab === 'activities'"
+        v-if="(activeTab === 'activities') && ($mq == 'lg' || !isSidebarVisible)"
         :activities="filteredActivities"
         :search-location-geometry="searchLocationGeometry"/>
       <SiteMap
-        v-else-if="activeTab === 'locations'"
+        v-else-if="(activeTab === 'locations') && ($mq == 'lg' || !isSidebarVisible)"
         :locations="locations"
         :search-location-geometry="searchLocationGeometry"/>
     </section>

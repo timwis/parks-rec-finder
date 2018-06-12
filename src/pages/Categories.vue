@@ -87,7 +87,8 @@
     </aside>
 
     <section class="map">
-      <SiteMap/>
+      <SiteMap
+        v-if="$mq == 'lg' || !isSidebarVisible"/>
     </section>
   </main>
 </template>
