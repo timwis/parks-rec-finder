@@ -152,6 +152,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
 input[type="search"]
   margin-bottom: 0
   font-size: 1rem
@@ -173,6 +174,8 @@ input[type="search"]
 
 #application
   .site-header
+    z-index: 50000
+
     .logo
         img
           max-width: 200px
