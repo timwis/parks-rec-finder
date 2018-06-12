@@ -1,6 +1,8 @@
 <template>
   <main>
-    <aside class="sidebar">
+    <aside
+      v-if="isSidebarVisible"
+      class="sidebar">
       <div class="grid-y medium-grid-frame">
         <div class="panel-head grid-x">
           <div
@@ -117,7 +119,8 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isSidebarVisible: true
     }
   },
   computed: mapState([
