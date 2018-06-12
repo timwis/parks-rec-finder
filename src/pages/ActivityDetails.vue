@@ -214,10 +214,10 @@ export default {
 .panel-head.activity-detail
   +fixed-header($activities)
   text-align: center
-  padding: 0 5px
+  padding: 1rem
 
   @media screen and (max-width: 39.9375em)
-    padding: .5rem
+    padding: 5px
 
   h2
     font-weight: bold
@@ -233,7 +233,7 @@ export default {
 .registration-status
   padding: 1rem
   text-align: center
-  
+
   @media screen and (max-width: 39.9375em)
     padding: 0
 </style>

@@ -157,8 +157,11 @@ export default {
 <style lang="sass" scoped>
 .panel-head
   +fixed-header(white)
-  padding: 1rem
   color: #444
+  padding: 1rem
+
+  @media screen and (max-width: 39.9375em)
+    padding: .5rem 1rem
 
   h2
     font-weight: bold
