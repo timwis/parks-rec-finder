@@ -201,10 +201,15 @@ export default {
 .location-detail
   +fixed-header($locations)
   text-align: center
-  padding: 1rem
+  padding: 1rem 1rem 0 1rem
 
 .location-detail-results-container
-  height: 100vh
+  height: calc(100vh - 19rem)
   padding: 1rem
   overflow-y: scroll
+
+@media screen and (max-width: 39.9375em)
+  .fa-4x
+    font-size: 2rem
+
 </style>
