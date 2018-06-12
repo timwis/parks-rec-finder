@@ -24,7 +24,7 @@
           <h2
             class="cell"
             data-testid="name">{{ name }}</h2>
-          <ul class="cell inline-list">
+          <ul class="cell inline-list no-margin">
             <li v-if="ageRange">Age: {{ ageRange }}</li>
             <li v-if="gender">Gender: {{ gender }}</li>
             <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
@@ -223,11 +223,17 @@ export default {
     font-weight: bold
     @media screen and (max-width: 39.9375em)
       padding: 0
+      font-size: 1.2rem
+      margin: .7rem 0
 
   ul li
     padding-right: 1rem
+    font-size: .9rem
 
 .registration-status
   padding: 1rem
   text-align: center
+  
+  @media screen and (max-width: 39.9375em)
+    padding: 0
 </style>
