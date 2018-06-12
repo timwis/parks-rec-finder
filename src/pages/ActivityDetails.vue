@@ -36,7 +36,7 @@
               <b>Registration</b> - {{ registrationStatus }}
             </p>
             <p v-if="registrationLink">
-              To sign up visit
+              To sign up visit: <br />
               <a
                 :href="registrationLink"
                 class="external">
