@@ -1,7 +1,7 @@
 <template>
   <main class="location-detail-container">
     <aside
-      v-if="isSidebarVisible"
+      v-if="isMapVisible"
       class="sidebar">
       <div
         v-if="isLoading"
@@ -102,7 +102,9 @@
       Toggle map
     </button>
     <section class="map">
-      <SiteMap :location-details="locationDetails"/>
+      <SiteMap
+        v-if="$mq === 'lg' || !isMapVisible"
+        :location-details="locationDetails"/>
     </section>
   </main>
 </template>
@@ -138,7 +140,7 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isSidebarVisible: true
+      isMapVisible: true
     }
   },
   computed: {
@@ -186,7 +188,7 @@ export default {
       }
     },
     toggleMap () {
-      this.isSidebarVisible = !this.isSidebarVisible
+      this.isMapVisible = !this.isMapVisible
     }
   },
   metaInfo () {
@@ -200,10 +202,15 @@ export default {
 .location-detail
   +fixed-header($locations)
   text-align: center
-  padding: 1rem
+  padding: 1rem 1rem 0 1rem
 
 .location-detail-results-container
-  height: 100vh
+  height: calc(100vh - 19rem)
   padding: 1rem
   overflow-y: scroll
+
+@media screen and (max-width: 39.9375em)
+  .fa-4x
+    font-size: 2rem
+
 </style>

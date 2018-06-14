@@ -1,7 +1,7 @@
 <template>
   <main class="activity-detail-container">
     <aside
-      v-if="isSidebarVisible"
+      v-if="isMapVisible"
       class="sidebar">
       <div
         v-if="isLoading"
@@ -24,7 +24,7 @@
           <h2
             class="cell"
             data-testid="name">{{ name }}</h2>
-          <ul class="cell inline-list">
+          <ul class="cell inline-list no-margin">
             <li v-if="ageRange">Age: {{ ageRange }}</li>
             <li v-if="gender">Gender: {{ gender }}</li>
             <li v-if="feeDescription">Cost: {{ feeDescription }}</li>
@@ -36,7 +36,7 @@
               <b>Registration</b> - {{ registrationStatus }}
             </p>
             <p v-if="registrationLink">
-              To sign up visit
+              To sign up visit: <br>
               <a
                 :href="registrationLink"
                 class="external">
@@ -109,7 +109,9 @@
       Toggle map
     </button>
     <section class="map">
-      <SiteMap :activity-details="activityDetails"/>
+      <SiteMap
+        v-if="$mq === 'lg' || !isMapVisible"
+        :activity-details="activityDetails"/>
     </section>
   </main>
 </template>
@@ -146,7 +148,7 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isSidebarVisible: true
+      isMapVisible: true
     }
   },
   computed: {
@@ -198,7 +200,7 @@ export default {
       }
     },
     toggleMap () {
-      this.isSidebarVisible = !this.isSidebarVisible
+      this.isMapVisible = !this.isMapVisible
     }
   },
   metaInfo () {
@@ -215,18 +217,23 @@ export default {
   padding: 1rem
 
   @media screen and (max-width: 39.9375em)
-    padding: .5rem
+    padding: 5px
 
   h2
     font-weight: bold
-    padding: 1rem 0
     @media screen and (max-width: 39.9375em)
       padding: 0
+      font-size: 1.2rem
+      margin: .7rem 0
 
   ul li
     padding-right: 1rem
+    font-size: .9rem
 
 .registration-status
   padding: 1rem
   text-align: center
+
+  @media screen and (max-width: 39.9375em)
+    padding: 0
 </style>

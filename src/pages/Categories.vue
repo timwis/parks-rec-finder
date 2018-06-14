@@ -1,6 +1,8 @@
 <template>
   <main>
-    <aside class="sidebar">
+    <aside
+      v-if="isMapVisible"
+      class="sidebar">
       <div class="grid-y medium-grid-frame">
         <div class="panel-head grid-x">
           <div
@@ -87,7 +89,8 @@
     </aside>
 
     <section class="map">
-      <SiteMap/>
+      <SiteMap
+        v-if="$mq === 'lg' || !isMapVisible"/>
     </section>
   </main>
 </template>
@@ -116,7 +119,8 @@ export default {
   data () {
     return {
       error: null,
-      isLoading: false
+      isLoading: false,
+      isMapVisible: true
     }
   },
   computed: mapState([
@@ -153,8 +157,11 @@ export default {
 <style lang="sass" scoped>
 .panel-head
   +fixed-header(white)
-  padding: 1rem
   color: #444
+  padding: 1rem
+
+  @media screen and (max-width: 39.9375em)
+    padding: .5rem 1rem
 
   h2
     font-weight: bold

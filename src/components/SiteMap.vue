@@ -79,10 +79,6 @@ export default {
     LocationMarkerPopup
   },
   props: {
-    isVisible: {
-      type: Boolean,
-      default: null
-    },
     activities: {
       type: Array,
       default: null

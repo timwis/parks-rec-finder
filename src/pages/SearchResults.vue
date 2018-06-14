@@ -1,7 +1,7 @@
 <template>
   <main>
     <aside
-      v-if="isSidebarVisible"
+      v-if="isMapVisible"
       class="sidebar search-results">
       <div class="grid-y medium-grid-frame">
         <div class="panel-head">
@@ -65,11 +65,11 @@
     </button>
     <section class="map">
       <SiteMap
-        v-if="activeTab === 'activities'"
+        v-if="(activeTab === 'activities') && ($mq === 'lg' || !isMapVisible)"
         :activities="filteredActivities"
         :search-location-geometry="searchLocationGeometry"/>
       <SiteMap
-        v-else-if="activeTab === 'locations'"
+        v-else-if="(activeTab === 'locations') && ($mq === 'lg' || !isMapVisible)"
         :locations="locations"
         :search-location-geometry="searchLocationGeometry"/>
     </section>
@@ -106,7 +106,7 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isSidebarVisible: true
+      isMapVisible: true
     }
   },
   computed: {
@@ -171,7 +171,7 @@ export default {
       }
     },
     toggleMap () {
-      this.isSidebarVisible = !this.isSidebarVisible
+      this.isMapVisible = !this.isMapVisible
     }
   },
   metaInfo () {
@@ -188,6 +188,9 @@ export default {
 <style lang="sass" scoped>
 .panel-head
   padding: 1rem
+
+  @media screen and (max-width: 39.9375em)
+    padding: .5rem 1rem
 
 h2
   margin-top: 0

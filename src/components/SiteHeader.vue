@@ -152,9 +152,13 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
 input[type="search"]
   margin-bottom: 0
   font-size: 1rem
+  border-radius: 0
+  -webkit-border-radius: 0px
+  -webkit-appearance: none
 
   @media screen and (max-width: 39.9375em)
     font-size: .85rem
@@ -170,6 +174,8 @@ input[type="search"]
 
 #application
   .site-header
+    z-index: 50000
+
     .logo
         img
           max-width: 200px

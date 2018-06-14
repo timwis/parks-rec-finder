@@ -62,10 +62,14 @@ export default {
   margin-bottom: 1rem
   background: black
   height: 280px
+  @media screen and (max-width: 39.9375em)
+    height: 200px
 
   img
     width: 100%
     height: 100%
+    @media screen and (max-width: 39.9375em)
+      height: 200px
 
   .name
     position: absolute
