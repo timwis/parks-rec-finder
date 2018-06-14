@@ -1,7 +1,7 @@
 <template>
   <main>
     <aside
-      v-if="isSidebarVisible"
+      v-if="isMapVisible"
       class="sidebar">
       <div
         v-if="isLoading"
@@ -35,7 +35,7 @@
     </button>
     <section class="map">
       <SiteMap
-        v-if="$mq == 'lg' || !isSidebarVisible"
+        v-if="$mq === 'lg' || !isMapVisible"
         :locations="locations"/>
     </section>
   </main>
@@ -60,7 +60,7 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isSidebarVisible: true
+      isMapVisible: true
     }
   },
   computed: {
@@ -101,7 +101,7 @@ export default {
       }
     },
     toggleMap () {
-      this.isSidebarVisible = !this.isSidebarVisible
+      this.isMapVisible = !this.isMapVisible
     }
   },
   metaInfo () {

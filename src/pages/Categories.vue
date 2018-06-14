@@ -1,7 +1,7 @@
 <template>
   <main>
     <aside
-      v-if="isSidebarVisible"
+      v-if="isMapVisible"
       class="sidebar">
       <div class="grid-y medium-grid-frame">
         <div class="panel-head grid-x">
@@ -90,7 +90,7 @@
 
     <section class="map">
       <SiteMap
-        v-if="$mq == 'lg' || !isSidebarVisible"/>
+        v-if="$mq === 'lg' || !isMapVisible"/>
     </section>
   </main>
 </template>
@@ -120,7 +120,7 @@ export default {
     return {
       error: null,
       isLoading: false,
-      isSidebarVisible: true
+      isMapVisible: true
     }
   },
   computed: mapState([
