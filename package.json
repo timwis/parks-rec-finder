@@ -21,6 +21,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.10",
     "@fortawesome/vue-fontawesome": "0.0.22",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "camelcase-keys": "^3.0.0",
     "date-fns": "^1.29.0",
     "esri-leaflet": "^2.1.4",
