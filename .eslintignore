@@ -1,5 +1,0 @@
-build/*.js
-config/*.js
-src/vendor/**/*.js
-sub_modules/**/*.js
-
